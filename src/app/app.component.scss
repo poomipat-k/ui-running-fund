@@ -13,5 +13,5 @@ $footer-height: 20.1rem;
 
 .min-content-hight {
     // navbar is absolute takes no space
-    min-height: calc(100vh - $footer-height);
+    min-height: calc(100vh  - $footer-height);
 }
