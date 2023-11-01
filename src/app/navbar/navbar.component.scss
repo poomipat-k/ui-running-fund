@@ -1,26 +1,33 @@
+@import '../app.component.scss';
+
 .navbar {
     display: flex;
     background-color:  #344054;
-    height: 7.2rem;
+    height: $navbar-height;
     align-items: center;
-
-    &__left-group {
-        display: flex;
-    }
+    width: 100%;
+    position: fixed;
 
     &__body {
         display: flex;
         width: 100%;
         justify-content: space-between;
-        padding-left: 12.2rem;
-        padding-right: 12.2rem;
+        padding-left: $content-padding;
+        padding-right: $content-padding;
         height: 4.8rem;
         font-size: 1.8rem;
         line-height: 2.97rem;
         font-weight: 400;
         font-family: "font400";
         color: #ffffff;
+        position: fixed;
+        overflow: hidden;
     }
+
+    &__left-group {
+        display: flex;
+    }
+
 
     &__logo {
         width: 12rem;

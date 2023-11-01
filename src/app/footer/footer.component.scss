@@ -1,0 +1,38 @@
+@import '../app.component.scss';
+
+.footer {
+    width: 100%;
+    height: $footer-height;
+    padding-top: 1.6rem;
+
+    &__horizontal-line {
+        border-top: 1px solid #667085;
+        padding-bottom: 1.6rem;
+    }
+
+    &__container {
+        margin-top: 1.6rem;
+        background-color: antiquewhite;
+        height: 11.2rem;
+        display: flex;
+        justify-content: space-between;
+    }
+
+    &__group-left {
+        display: flex;
+        align-items: center;
+        height: 7rem;
+    }
+
+    &__credit {
+
+    }
+
+    &__logo--1 {
+        height: 6.5rem;
+    }
+
+    &__logo--2 {
+        height: 7rem;
+    }
+}

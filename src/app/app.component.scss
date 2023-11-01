@@ -1,4 +1,17 @@
-body {
-    margin: 0;
-    padding: 0;
+$navbar-height: 7.2rem;
+$content-padding: 12.2rem;
+$footer-height: 20.1rem;
+
+.nav-absolute-height {
+    padding-top: $navbar-height
+}
+
+.content-space-width {
+    padding-left: $content-padding;
+    padding-right: $content-padding;
+}
+
+.min-content-hight {
+    // navbar is absolute takes no space
+    min-height: calc(100vh - $footer-height);
 }
