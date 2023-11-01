@@ -1,1 +1,33 @@
 /* You can add global styles to this file, and also import other style files */
+
+* ,
+*::after,
+*::before {
+    margin: 0;
+    padding: 0;
+    box-sizing: inherit;
+}
+
+html {
+    // set global 1rem = 10px;
+    font-size: 10px;
+}
+
+body {
+    box-sizing: border-box;
+}
+
+@font-face {
+    font-family: 'font400';
+    src: url('/assets/IBMPlexSansThai-Regular.ttf');
+}
+
+@font-face {
+    font-family: 'font500';
+    src: url('/assets/IBMPlexSansThai-Medium.ttf');
+}
+
+@font-face {
+    font-family: 'font600';
+    src: url('/assets/IBMPlexSansThai-SemiBold.ttf');
+}

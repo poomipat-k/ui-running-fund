@@ -1,0 +1,75 @@
+.navbar {
+    display: flex;
+    background-color:  #344054;
+    height: 7.2rem;
+    align-items: center;
+
+    &__left-group {
+        display: flex;
+    }
+
+    &__body {
+        display: flex;
+        width: 100%;
+        justify-content: space-between;
+        padding-left: 12.2rem;
+        padding-right: 12.2rem;
+        height: 4.8rem;
+        font-size: 1.8rem;
+        line-height: 2.97rem;
+        font-weight: 400;
+        font-family: "font400";
+        color: #ffffff;
+    }
+
+    &__logo {
+        width: 12rem;
+        border: 0;
+        display: flex;
+        align-items: center;
+    }
+
+    &__menu {
+        display: flex;
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        margin-left: 4.8rem;
+        align-items: center;
+    }
+
+    &__user {
+        display: flex;
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        align-items: center;
+    }
+
+}
+
+.margin-left:not(:first-child) {
+    margin-left: 3.6rem;
+}
+
+a:link, a:visited {
+    color: #ffffff;
+    text-decoration: none;
+}
+
+a:hover {
+    color: #FEB273;
+    font-weight: 600;
+}
+
+a:active {
+    filter: brightness(90%);
+}
+
+.vertical-line {
+    height: 2.4em;
+    border: 1px solid #ffffff;
+    border-left: 0;
+    margin-left: 1.6rem;
+    margin-right: 1.6rem;
+}
