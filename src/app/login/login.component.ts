@@ -61,8 +61,4 @@ export class LoginComponent implements OnInit {
       }
     }
   }
-
-  onLogout() {
-    this.userService.logout();
-  }
 }
