@@ -12,21 +12,10 @@ import { UserService } from '../services/user.service';
   templateUrl: './home.component.html',
   styleUrls: ['home.component.scss'],
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent {
   reviewers: User[] = [];
-  userService: UserService = inject(UserService);
 
   constructor() {
-    // this.reviewers = this.userService.getReviewers();
     console.log('===Home constructor');
-  }
-
-  ngOnInit(): void {
-    console.log('====ngOnInit');
-    this.userService.getReviewers().subscribe((result) => {
-      console.log('===result: ', result);
-      if (!result) {
-      }
-    });
   }
 }

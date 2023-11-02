@@ -1,83 +1,82 @@
-@import '../app.component.scss';
-@import '../../styles.scss';
+@import "../app.component.scss";
+@import "../../styles.scss";
 
 .navbar {
+  display: flex;
+  background-color: #344054;
+  height: $navbar-height;
+  align-items: center;
+  width: 100%;
+  position: fixed;
+
+  &__body {
     display: flex;
-    background-color:  #344054;
-    height: $navbar-height;
-    align-items: center;
     width: 100%;
+    justify-content: space-between;
+    padding-left: $content-padding;
+    padding-right: $content-padding;
+    height: 4.8rem;
+    font-size: 1.8rem;
+    line-height: 2.97rem;
+    font-weight: 400;
+    font-family: $custom-font;
+    color: #ffffff;
     position: fixed;
+    overflow: hidden;
+  }
 
-    &__body {
-        display: flex;
-        width: 100%;
-        justify-content: space-between;
-        padding-left: $content-padding;
-        padding-right: $content-padding;
-        height: 4.8rem;
-        font-size: 1.8rem;
-        line-height: 2.97rem;
-        font-weight: 400;
-        font-family: $custom-font;
-        color: #ffffff;
-        position: fixed;
-        overflow: hidden;
-    }
+  &__left-group {
+    display: flex;
+  }
 
-    &__left-group {
-        display: flex;
-    }
+  &__logo {
+    width: 12rem;
+    border: 0;
+    display: flex;
+    align-items: center;
+  }
 
+  &__menu {
+    display: flex;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    margin-left: 4.8rem;
+    align-items: center;
+  }
 
-    &__logo {
-        width: 12rem;
-        border: 0;
-        display: flex;
-        align-items: center;
-    }
-
-    &__menu {
-        display: flex;
-        list-style: none;
-        padding: 0;
-        margin: 0;
-        margin-left: 4.8rem;
-        align-items: center;
-    }
-
-    &__user {
-        display: flex;
-        list-style: none;
-        padding: 0;
-        margin: 0;
-        align-items: center;
-    }
-
+  &__user {
+    display: flex;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    align-items: center;
+  }
 }
 
-a:link, a:visited {
-    color: #ffffff;
-    text-decoration: none;
+a:link,
+a:visited {
+  color: #ffffff;
+  text-decoration: none;
 }
 
 a:hover {
-    color: #FEB273;
-    font-weight: 600;
+  color: #feb273;
+  font-weight: 600;
 }
 
 a:active {
-    filter: brightness(110%);
+  filter: brightness(110%);
 }
 
 .vertical-line {
-    height: 2.4em;
-    border: 1px solid #ffffff;
-    border-left: 0;
-    margin-left: 1.6rem;
-    margin-right: 1.6rem;
+  height: 2.4em;
+  border: 1px solid #ffffff;
+  border-left: 0;
+  margin-left: 1.6rem;
+  margin-right: 1.6rem;
 }
 
 .margin-left:not(:first-child) {
-    margin-left: 3.6rem;
+  margin-left: 3.6rem;
 }

@@ -1,0 +1,16 @@
+<div class="login">
+  <div class="login__dropdown">
+    <label for="reviewer" class="login__label"
+      >เลือกผู้รีวิว เพื่อเข้าใช้งาน:</label
+    >
+    <select name="reviewer" id="reviewer" class="login__dropdown-item">
+      <option *ngFor="let rev of reviewers" value="rev.id">
+        {{ rev.first_name }}
+      </option>
+    </select>
+  </div>
+
+  <div class="login__button-container">
+    <button class="login__button">เข้าสู่ระบบ</button>
+  </div>
+</div>
