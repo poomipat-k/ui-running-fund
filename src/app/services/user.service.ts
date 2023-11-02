@@ -1,22 +1,26 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, catchError, of, throwError } from 'rxjs';
+import { Observable, Subject, catchError, of, throwError } from 'rxjs';
 import { User } from '../models/user';
 
 @Injectable({
   providedIn: 'root',
 })
 export class UserService {
+  currentUserSubject = new Subject<User>();
+
+  private loggedInUser: User;
   private readonly baseUrl = 'http://localhost:8080/api';
+
   constructor(private readonly http: HttpClient) {}
 
-  public getReviewers(): Observable<User[]> {
+  getReviewers(): Observable<User[]> {
     return this.http
       .get<User[]>(`${this.baseUrl}/reviewers`)
       .pipe(catchError(this.handleError));
   }
 
-  public isLoggedIn(): Observable<boolean> {
+  isLoggedIn(): Observable<boolean> {
     let userId = localStorage.getItem('token');
     if (!userId) {
       return of(false);
@@ -26,6 +30,26 @@ export class UserService {
       return of(false);
     }
     return of(true);
+  }
+
+  getCurrentUser(): User {
+    return this.loggedInUser;
+  }
+
+  // TODO: refactor later
+  login(user: User): void {
+    if (user) {
+      this.loggedInUser = user;
+      localStorage.setItem('token', String(user.id));
+      this.currentUserSubject.next(user);
+    }
+  }
+
+  // TODO: refactor later
+  logout(): void {
+    this.loggedInUser = new User();
+    localStorage.removeItem('token');
+    this.currentUserSubject.next(this.loggedInUser);
   }
 
   private handleError(error: HttpErrorResponse) {

@@ -1,20 +1,38 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit, inject } from '@angular/core';
-import { UserService } from '../services/user.service';
+import { Component, OnInit, ViewChild, inject } from '@angular/core';
+import {
+  FormControl,
+  FormGroup,
+  NgForm,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { User } from '../models/user';
+import { UserService } from '../services/user.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [CommonModule],
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
+  imports: [CommonModule, ReactiveFormsModule],
 })
 export class LoginComponent implements OnInit {
+  protected loginForm: FormGroup;
+
   reviewers: User[] = [];
-  userService: UserService = inject(UserService);
+
+  private userService: UserService = inject(UserService);
+  private router: Router = inject(Router);
+
+  get submitButtonDisabled(): boolean {
+    return false;
+  }
 
   ngOnInit(): void {
+    this.initForm();
+
     this.userService.getReviewers().subscribe((result) => {
       console.log('===result: ', result);
       if (!result) {
@@ -23,5 +41,28 @@ export class LoginComponent implements OnInit {
         this.reviewers = result;
       }
     });
+  }
+
+  private initForm(): void {
+    this.loginForm = new FormGroup({
+      reviewer: new FormControl(null, [Validators.required]),
+    });
+  }
+
+  onSubmit() {
+    console.log('====onSubmit', this.loginForm);
+    const reviewerId = this.loginForm.value?.reviewer;
+    if (reviewerId & +reviewerId) {
+      const user = this.reviewers.find((r) => r.id === +reviewerId);
+      console.log('===onSubmit user:', user);
+      if (user) {
+        this.userService.login(user);
+        this.router.navigate(['/']);
+      }
+    }
+  }
+
+  onLogout() {
+    this.userService.logout();
   }
 }

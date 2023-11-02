@@ -15,7 +15,7 @@
     </div>
 
     <ul class="navbar__user">
-      <li>นายกลั่นกรอง โครงการ</li>
+      <li>{{ currentUser.first_name + " " + currentUser.last_name }}</li>
       <div class="vertical-line"></div>
       <a [routerLink]="'/'"> <li>ออกจากระบบ</li></a>
     </ul>

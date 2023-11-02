@@ -3,7 +3,7 @@ import { ActivatedRouteSnapshot, Router } from '@angular/router';
 import { tap } from 'rxjs';
 import { UserService } from '../services/user.service';
 
-export const authGuard = (next: ActivatedRouteSnapshot) => {
+export const authGuard = (_next: ActivatedRouteSnapshot) => {
   const router = inject(Router);
   const service = inject(UserService);
   return service.isLoggedIn().pipe(
