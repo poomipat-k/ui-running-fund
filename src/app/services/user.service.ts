@@ -1,6 +1,6 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, catchError, throwError } from 'rxjs';
+import { Observable, catchError, of, throwError } from 'rxjs';
 import { User } from '../models/user';
 
 @Injectable({
@@ -10,10 +10,22 @@ export class UserService {
   private readonly baseUrl = 'http://localhost:8080/api';
   constructor(private readonly http: HttpClient) {}
 
-  getReviewers(): Observable<User[]> {
+  public getReviewers(): Observable<User[]> {
     return this.http
       .get<User[]>(`${this.baseUrl}/reviewers`)
       .pipe(catchError(this.handleError));
+  }
+
+  public isLoggedIn(): Observable<boolean> {
+    let userId = localStorage.getItem('token');
+    if (!userId) {
+      return of(false);
+    }
+    userId = JSON.parse(userId);
+    if (!userId) {
+      return of(false);
+    }
+    return of(true);
   }
 
   private handleError(error: HttpErrorResponse) {

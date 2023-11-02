@@ -15,7 +15,6 @@ export class LoginComponent implements OnInit {
   userService: UserService = inject(UserService);
 
   ngOnInit(): void {
-    console.log('====ngOnInit');
     this.userService.getReviewers().subscribe((result) => {
       console.log('===result: ', result);
       if (!result) {

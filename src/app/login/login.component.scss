@@ -1,3 +1,5 @@
+@import "../../styles.scss";
+
 .login {
   width: 92.6rem;
   height: 56.3rem;
@@ -5,7 +7,7 @@
   box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
   margin: auto;
   margin-top: 7rem;
-
+  padding: 5rem;
   &__label {
     margin-right: 2rem;
     font-size: 2.4rem;
@@ -13,22 +15,44 @@
 
   &__dropdown {
     width: 50rem;
-    background-color: red;
     margin: auto;
   }
 
-  &__dropdown-item {
-    height: 3rem;
+  &__dropdown-box {
+    height: 5rem;
     width: 20rem;
+  }
+
+  &__dropdown-item {
+    font-size: 2.4rem;
   }
 
   &__button-container {
     margin: auto;
-    width: 20rem;
+    width: 50rem;
     margin-top: 2rem;
   }
+
   &__button {
-    width: 20rem;
-    height: 10rem;
+    width: 41.5rem;
+    height: 6rem;
+    border-radius: 8px;
+    border: none;
+    background-color: #feb273;
+    color: white;
+
+    font-family: $custom-font;
+    font-weight: 600;
+    font-size: 1.8rem;
+    line-height: 2.97rem;
+
+    &:hover {
+      cursor: pointer;
+      filter: brightness(110%);
+    }
+
+    &:active {
+      filter: brightness(120%);
+    }
   }
 }

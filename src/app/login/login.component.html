@@ -3,8 +3,12 @@
     <label for="reviewer" class="login__label"
       >เลือกผู้รีวิว เพื่อเข้าใช้งาน:</label
     >
-    <select name="reviewer" id="reviewer" class="login__dropdown-item">
-      <option *ngFor="let rev of reviewers" value="rev.id">
+    <select name="reviewer" id="reviewer" class="login__dropdown-box">
+      <option
+        *ngFor="let rev of reviewers"
+        value="rev.id"
+        class="login__dropdown-item"
+      >
         {{ rev.first_name }}
       </option>
     </select>
