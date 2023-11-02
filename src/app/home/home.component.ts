@@ -23,5 +23,10 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
     console.log('====ngOnInit');
+    this.userService.getReviewers().subscribe((result) => {
+      console.log('===result: ', result);
+      if (!result) {
+      }
+    });
   }
 }
