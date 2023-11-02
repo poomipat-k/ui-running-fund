@@ -67,7 +67,7 @@ a:hover {
 }
 
 a:active {
-    filter: brightness(90%);
+    filter: brightness(110%);
 }
 
 .vertical-line {
@@ -76,4 +76,8 @@ a:active {
     border-left: 0;
     margin-left: 1.6rem;
     margin-right: 1.6rem;
+}
+
+.margin-left:not(:first-child) {
+    margin-left: 3.6rem;
 }
