@@ -47,7 +47,6 @@
 
 .badge {
   &__container {
-    width: 13.5rem;
     height: 3.2rem;
     display: flex;
     justify-content: center;
@@ -57,7 +56,13 @@
     text-align: center;
 
     &--pendingReview {
+      width: 13.5rem;
       background-color: #fff6d5;
+    }
+
+    &--reviewed {
+      background-color: #ecfdf3;
+      width: 14.6rem;
     }
   }
 
@@ -69,6 +74,19 @@
 
     &--pendingReview {
       color: #fd853a;
+    }
+
+    &--reviewed {
+      color: #027a48;
+    }
+  }
+
+  &__icon {
+    &-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-right: 4px;
     }
   }
 }
@@ -109,6 +127,7 @@ tbody > tr:nth-child(2n + 1) {
   background-color: #eaecf0;
 }
 
+// Utils classes
 .width-135 {
   width: 13.5rem;
 }
