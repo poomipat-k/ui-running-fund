@@ -39,6 +39,7 @@ export class HomeComponent implements OnInit {
     {
       name: 'สถานะการกลั่นกรอง',
       class: 'width-200',
+      type: 'badge',
     },
     {
       name: 'หมายเหตุ',
@@ -47,6 +48,7 @@ export class HomeComponent implements OnInit {
     {
       name: 'ดาวน์โหลด',
       class: 'width-92',
+      type: 'download-icon',
     },
   ];
 
@@ -82,7 +84,7 @@ export class HomeComponent implements OnInit {
               row.project_code,
               this.dateToStringWithLongMonth(row.project_created_at),
               row.project_name,
-              row.review_id ? 'กลั่นกรองเรียบร้อย' : 'ยังไม่ได้กลั่นกรอง',
+              row.review_id ? 'reviewed' : 'pendingReview',
               this.dateToStringWithLongMonth(row.reviewed_at),
               row.download_link,
             ];
