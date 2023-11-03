@@ -38,7 +38,7 @@ export class HomeComponent implements OnInit {
     },
     {
       name: 'สถานะการกลั่นกรอง',
-      class: 'width-178',
+      class: 'width-200',
     },
     {
       name: 'หมายเหตุ',

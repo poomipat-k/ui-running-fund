@@ -11,17 +11,18 @@
   }
 
   &__header {
+    height: 4.4rem;
     padding: 1.2rem 2.4rem;
     font-family: $custom-font;
     font-weight: 400;
     font-size: 1.6rem;
-    line-height: 1.8rem;
+    line-height: 0;
     text-align: left;
-    height: 4.4rem;
     color: #667085;
   }
 
   &__cell {
+    height: 7.2rem;
     padding: 1.6rem 2.4rem;
     text-align: left;
     font-family: $custom-font;
@@ -37,16 +38,21 @@ tbody > tr > td:nth-of-type(1) {
   color: #101828;
 }
 
+thead > tr > th:last-of-type {
+  padding: 1rem;
+}
+
+tbody > tr > td:last-of-type {
+  padding: 1.6rem 0;
+  text-align: center;
+}
+
 .width-135 {
   width: 13.5rem;
 }
 
 .width-200 {
   width: 20rem;
-}
-
-.width-178 {
-  width: 17.8rem;
 }
 
 .width-255 {
