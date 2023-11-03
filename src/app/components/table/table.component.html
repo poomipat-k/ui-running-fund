@@ -1,0 +1,21 @@
+<table class="table margin-top-24">
+  <thead>
+    <tr>
+      <th
+        *ngFor="let col of columns"
+        scope="col"
+        [class]="['table__header', col.class].join(' ')"
+      >
+        {{ col.name }}
+      </th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <tr *ngFor="let row of data">
+      <td *ngFor="let cell of row" class="table__cell">
+        {{ cell }}
+      </td>
+    </tr>
+  </tbody>
+</table>

@@ -1,13 +1,16 @@
 <div class="dashboard dashboard__container">
   <div class="dashboard__header-container">
     <h1 class="dashboard__header-text">โครงการที่ขอทุนสนับสนุน</h1>
-    <span>(5 ก.ย. 2566 - 21 พ.ย. 2566)</span>
+    <span class="dashboard__header-period">({{ fromDate }}- {{ toDate }})</span>
   </div>
   <div class="dashboard__toolbar">
-    <p class="dashboard__toolbar-count">ทั้งหมด 5 โครงการ</p>
+    <p class="dashboard__toolbar-count">ทั้งหมด {{ data.length }} โครงการ</p>
     <div class="dashboard__toolbar-filter">
       <p>จัดเรียงโดย</p>
       <img src="/assets/sliders_icon.svg" alt="row sorting icon" />
     </div>
+  </div>
+  <div>
+    <app-table [columns]="columns" [data]="data"></app-table>
   </div>
 </div>
