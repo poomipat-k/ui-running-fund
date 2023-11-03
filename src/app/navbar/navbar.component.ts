@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { UserService } from '../services/user.service';
 import { User } from '../models/user';
@@ -11,16 +11,21 @@ import { User } from '../models/user';
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.scss'],
 })
-export class NavbarComponent {
+export class NavbarComponent implements OnInit {
   userService: UserService = inject(UserService);
   router: Router = inject(Router);
+  protected reviewers: User[] = [];
 
   protected currentUser = new User();
 
-  constructor() {
+  constructor() {}
+
+  ngOnInit(): void {
     this.userService.currentUserSubject.subscribe((user) => {
       this.currentUser = user;
     });
+
+    this.userService.autoLogin();
   }
 
   onLogout() {

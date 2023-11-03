@@ -14,13 +14,23 @@ export class UserService {
 
   constructor(private readonly http: HttpClient) {}
 
-  getReviewers(): Observable<User[]> {
+  public getReviewers(): Observable<User[]> {
     return this.http
       .get<User[]>(`${this.baseUrl}/reviewers`)
       .pipe(catchError(this.handleError));
   }
 
-  isLoggedIn(): Observable<boolean> {
+  public getReviewerById(userId: string): Observable<User> {
+    return this.http
+      .get<User>(`${this.baseUrl}/reviewer`, {
+        headers: {
+          Authorization: `Bearer ${userId}`,
+        },
+      })
+      .pipe(catchError(this.handleError));
+  }
+
+  public isLoggedIn(): Observable<boolean> {
     let userId = localStorage.getItem('token');
     if (!userId) {
       return of(false);
@@ -32,12 +42,12 @@ export class UserService {
     return of(true);
   }
 
-  getCurrentUser(): User {
+  public getCurrentUser(): User {
     return this.loggedInUser;
   }
 
   // TODO: refactor later
-  login(user: User): void {
+  public login(user: User): void {
     if (user) {
       this.loggedInUser = user;
       localStorage.setItem('token', String(user.id));
@@ -45,12 +55,23 @@ export class UserService {
     }
   }
 
-  // TODO: refactor later
-  logout(): void {
+  public autoLogin(): void {
+    let userId = localStorage.getItem('token');
+    if (userId) {
+      this.getReviewerById(userId).subscribe((user) => {
+        if (user) {
+          this.login(user);
+        }
+      });
+    }
+  }
+
+  public logout(): void {
     this.loggedInUser = new User();
     localStorage.removeItem('token');
     this.currentUserSubject.next(this.loggedInUser);
   }
+  // End refactor
 
   private handleError(error: HttpErrorResponse) {
     if (error.status === 0) {

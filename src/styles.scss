@@ -1,20 +1,21 @@
 /* You can add global styles to this file, and also import other style files */
 
-$custom-font: 'IBM Plex Sans Thai', sans-serif;
+$custom-font: "IBM Plex Sans Thai", sans-serif;
+$inter: "Inter", sans-serif;
 
-* ,
+*,
 *::after,
 *::before {
-    margin: 0;
-    padding: 0;
-    box-sizing: inherit;
+  margin: 0;
+  padding: 0;
+  box-sizing: inherit;
 }
 
 html {
-    // set global 1rem = 10px;
-    font-size: 10px;
+  // set global 1rem = 10px;
+  font-size: 10px;
 }
 
 body {
-    box-sizing: border-box;
+  box-sizing: border-box;
 }

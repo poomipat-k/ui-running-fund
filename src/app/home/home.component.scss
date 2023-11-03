@@ -1,9 +1,54 @@
-.dummy {
-    margin-top: 2rem;
+@import "../../styles.scss";
+
+.dashboard {
+  font-family: $custom-font;
+  &__container {
     width: 100%;
     border: 1px solid red;
-}
+    margin-top: 5.9rem;
+  }
 
-p {
-    font-size: 36px;
+  &__header {
+    &-container {
+      display: flex;
+      align-items: center;
+    }
+    &-text {
+      font-weight: 600;
+      font-size: 2rem;
+      line-height: 2.8rem;
+      color: #344054;
+      margin-right: 4px;
+    }
+
+    &-period {
+      font-weight: 400;
+      font-size: 1.6rem;
+      line-height: 2.8rem;
+      color: #667085;
+    }
+  }
+
+  &__toolbar {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 8px;
+
+    &-count {
+      font-family: $inter;
+      font-weight: 400;
+      font-size: 1.6rem;
+      line-height: 2rem;
+      color: #667085;
+    }
+
+    &-filter {
+      display: flex;
+
+      font-weight: 500;
+      font-size: 1.4rem;
+      line-height: 2rem;
+      color: #667085;
+    }
+  }
 }

@@ -21,7 +21,7 @@ import { Router } from '@angular/router';
 export class LoginComponent implements OnInit {
   protected loginForm: FormGroup;
 
-  reviewers: User[] = [];
+  protected reviewers: User[] = [];
 
   private userService: UserService = inject(UserService);
   private router: Router = inject(Router);
@@ -34,9 +34,8 @@ export class LoginComponent implements OnInit {
     this.initForm();
 
     this.userService.getReviewers().subscribe((result) => {
-      console.log('===result: ', result);
       if (!result) {
-        console.error('+++SOMETHING WRONG');
+        console.log('====SOMETHING WRONG');
       } else {
         this.reviewers = result;
       }
@@ -54,7 +53,6 @@ export class LoginComponent implements OnInit {
     const reviewerId = this.loginForm.value?.reviewer;
     if (reviewerId & +reviewerId) {
       const user = this.reviewers.find((r) => r.id === +reviewerId);
-      console.log('===onSubmit user:', user);
       if (user) {
         this.userService.login(user);
         this.router.navigate(['/']);
