@@ -3,9 +3,10 @@ import { Component, OnInit, inject } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
 import { TableComponent } from '../components/table/table.component';
+import { ReviewPeriod } from '../models/review-period';
+import { ReviewerDashboardRow } from '../models/reviewer-dashboard-row';
 import { User } from '../models/user';
 import { ProjectService } from '../services/project.service';
-import { ReviewPeriod } from '../models/review-period';
 import { UserService } from '../services/user.service';
 
 @Component({
@@ -23,7 +24,7 @@ export class HomeComponent implements OnInit {
   reviewPeriod: ReviewPeriod;
   fromDate: string;
   toDate: string;
-
+  protected data: string[][] = [];
   protected columns = [
     {
       name: 'รหัสโครงการ',
@@ -51,8 +52,6 @@ export class HomeComponent implements OnInit {
       type: 'download-icon',
     },
   ];
-
-  protected data: any[] = [];
 
   constructor() {}
 
@@ -91,6 +90,25 @@ export class HomeComponent implements OnInit {
           });
         }
       });
+  }
+
+  toggleFilter(columnName = 'ชื่อโครงการ'): void {
+    if (!this.data) {
+      return;
+    }
+    const colIndex = this.columns.findIndex((c) => c.name === columnName);
+    if (colIndex === -1) {
+      return;
+    }
+    this.data.sort((a, b) => {
+      if (a[colIndex] > b[colIndex]) {
+        return -1;
+      }
+      if (a[colIndex] < b[colIndex]) {
+        return 1;
+      }
+      return 0;
+    });
   }
 
   private dateToStringWithShortMonth(dateStr: string) {
