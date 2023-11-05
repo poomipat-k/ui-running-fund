@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input } from '@angular/core';
 import { TableCellTemplateComponent } from '../table-cell-template/table-cell-template.component';
+import { TableColumn } from 'src/app/models/table-column';
 
 @Component({
   selector: 'app-table',
@@ -10,8 +11,6 @@ import { TableCellTemplateComponent } from '../table-cell-template/table-cell-te
   styleUrls: ['./table.component.scss'],
 })
 export class TableComponent {
-  @Input() columns: any[];
+  @Input() columns: TableColumn[];
   @Input() data: any[];
-  @Input() boldColumnIndexes: number[] = [];
-  @Input() compactColumnIndexes: number[] = [];
 }

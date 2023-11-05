@@ -30,23 +30,24 @@
     line-height: 2rem;
     font-weight: 400;
     color: #667085;
+
+    &--bold {
+      font-weight: 500;
+      color: #101828;
+    }
+
+    &--header-compact {
+      padding: 1rem;
+    }
+
+    &--compact {
+      padding: 1.6rem 0;
+      text-align: center;
+    }
   }
 }
 
-tbody > tr > td:nth-of-type(1) {
-  font-weight: 500;
-  color: #101828;
-}
-
-thead > tr > th:last-of-type {
-  padding: 1rem;
-}
-
-tbody > tr > td:last-of-type {
-  padding: 1.6rem 0;
-  text-align: center;
-}
-
+// stripe rows
 tbody > tr:nth-child(2n + 1) {
   background-color: #eaecf0;
 }

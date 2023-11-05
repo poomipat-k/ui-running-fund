@@ -1,5 +1,6 @@
-import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Component, Input } from '@angular/core';
+import { ColumnTypeEnum } from 'src/app/enums/column-type';
 
 @Component({
   selector: 'app-table-cell-template',
@@ -9,6 +10,6 @@ import { CommonModule } from '@angular/common';
   styleUrls: ['./table-cell-template.component.scss'],
 })
 export class TableCellTemplateComponent {
-  @Input() cellType: string;
-  @Input() cellValue: unknown;
+  @Input() cellType?: ColumnTypeEnum;
+  @Input() cellValue: string;
 }

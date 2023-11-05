@@ -31,6 +31,7 @@ export class HomeComponent implements OnInit {
     {
       name: 'รหัสโครงการ',
       class: 'width-135',
+      bold: true,
     },
     {
       name: 'วันที่สร้าง',
@@ -52,6 +53,7 @@ export class HomeComponent implements OnInit {
       name: 'ดาวน์โหลด',
       class: 'width-92',
       type: ColumnTypeEnum.DownloadIcon,
+      compact: true,
     },
   ];
 

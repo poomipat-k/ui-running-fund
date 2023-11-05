@@ -4,7 +4,11 @@
       <th
         *ngFor="let col of columns"
         scope="col"
-        [class]="['table__header', col.class].join(' ')"
+        [class]="[
+          'table__header',
+          col.class,
+          col.compact ? 'table__cell--header-compact' : ''
+        ]"
       >
         {{ col.name }}
       </th>
@@ -13,7 +17,14 @@
 
   <tbody>
     <tr *ngFor="let row of data">
-      <td *ngFor="let cell of row; let i = index" class="table__cell">
+      <td
+        *ngFor="let cell of row; let i = index"
+        [class]="[
+          'table__cell',
+          columns[i].bold ? 'table__cell--bold' : '',
+          columns[i].compact ? 'table__cell--compact' : ''
+        ]"
+      >
         <app-table-cell-template
           [cellType]="columns[i].type"
           [cellValue]="cell"
