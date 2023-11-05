@@ -9,6 +9,7 @@ import { ProjectService } from '../services/project.service';
 import { UserService } from '../services/user.service';
 import { TableColumn } from '../models/table-column';
 import { ColumnTypeEnum } from '../enums/column-type';
+import { BadgeType } from '../enums/badge-type';
 
 @Component({
   selector: 'app-home',
@@ -84,7 +85,7 @@ export class HomeComponent implements OnInit {
               row.project_code,
               this.dateToStringWithLongMonth(row.project_created_at),
               row.project_name,
-              row.review_id ? 'reviewed' : 'pendingReview',
+              row.review_id ? BadgeType.Reviewed : BadgeType.PendingReview,
               this.dateToStringWithLongMonth(row.reviewed_at),
               row.download_link,
             ];

@@ -6,11 +6,11 @@
 
   <!-- Status badge -->
   <ng-container *ngSwitchCase="'Badge'">
-    <ng-container *ngIf="cellValue === 'reviewed'">
+    <ng-container *ngIf="cellValue === 'Reviewed'">
       <ng-container *ngTemplateOutlet="badgeReviewed"></ng-container>
     </ng-container>
 
-    <ng-container *ngIf="cellValue === 'pendingReview'">
+    <ng-container *ngIf="cellValue === 'PendingReview'">
       <ng-container *ngTemplateOutlet="badgePendingReview"></ng-container>
     </ng-container>
   </ng-container>

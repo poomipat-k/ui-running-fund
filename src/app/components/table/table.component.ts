@@ -12,4 +12,6 @@ import { TableCellTemplateComponent } from '../table-cell-template/table-cell-te
 export class TableComponent {
   @Input() columns: any[];
   @Input() data: any[];
+  @Input() boldColumnIndexes: number[] = [];
+  @Input() compactColumnIndexes: number[] = [];
 }
