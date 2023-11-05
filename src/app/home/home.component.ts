@@ -4,10 +4,11 @@ import { RouterModule } from '@angular/router';
 
 import { TableComponent } from '../components/table/table.component';
 import { ReviewPeriod } from '../models/review-period';
-import { ReviewerDashboardRow } from '../models/reviewer-dashboard-row';
 import { User } from '../models/user';
 import { ProjectService } from '../services/project.service';
 import { UserService } from '../services/user.service';
+import { TableColumn } from '../models/table-column';
+import { ColumnTypeEnum } from '../enums/column-type';
 
 @Component({
   selector: 'app-home',
@@ -25,7 +26,7 @@ export class HomeComponent implements OnInit {
   fromDate: string;
   toDate: string;
   protected data: string[][] = [];
-  protected columns = [
+  protected columns: TableColumn[] = [
     {
       name: 'รหัสโครงการ',
       class: 'width-135',
@@ -40,7 +41,7 @@ export class HomeComponent implements OnInit {
     {
       name: 'สถานะการกลั่นกรอง',
       class: 'width-200',
-      type: 'badge',
+      type: ColumnTypeEnum.Badge,
     },
     {
       name: 'หมายเหตุ',
@@ -49,7 +50,7 @@ export class HomeComponent implements OnInit {
     {
       name: 'ดาวน์โหลด',
       class: 'width-92',
-      type: 'download-icon',
+      type: ColumnTypeEnum.DownloadIcon,
     },
   ];
 

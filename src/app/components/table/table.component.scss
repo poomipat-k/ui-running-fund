@@ -31,18 +31,6 @@
     font-weight: 400;
     color: #667085;
   }
-
-  &__icon {
-    width: 3.6rem;
-    height: 3.6rem;
-
-    &--link {
-      display: block;
-      width: 3.6rem;
-      height: 3.6rem;
-      margin: auto;
-    }
-  }
 }
 
 tbody > tr > td:nth-of-type(1) {
@@ -82,69 +70,4 @@ tbody > tr:nth-child(2n + 1) {
 
 .margin-top-24 {
   margin-top: 2.4rem;
-}
-
-// Badge
-.badge {
-  &__container {
-    height: 3.2rem;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 6px 8px 6px 10px;
-    border-radius: 1.6rem;
-    text-align: center;
-
-    &--pendingReview {
-      width: 13.5rem;
-      background-color: #fff6d5;
-    }
-
-    &--reviewed {
-      background-color: #ecfdf3;
-      width: 14.6rem;
-    }
-  }
-
-  &__text {
-    font-family: $custom-font;
-    font-weight: 500;
-    font-size: 1.4rem;
-    line-height: 2rem;
-
-    &--pendingReview {
-      color: #fd853a;
-    }
-
-    &--reviewed {
-      color: #027a48;
-    }
-  }
-
-  &__icon {
-    &-container {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      margin-right: 4px;
-    }
-  }
-}
-
-.dot {
-  &__container {
-    width: 12px;
-    height: 12px;
-    margin-right: 4px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-
-  &__icon {
-    width: 8px;
-    height: 8px;
-    border-radius: 8px;
-    background-color: #fd853a;
-  }
 }

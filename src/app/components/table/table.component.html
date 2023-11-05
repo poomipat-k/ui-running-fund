@@ -14,62 +14,10 @@
   <tbody>
     <tr *ngFor="let row of data">
       <td *ngFor="let cell of row; let i = index" class="table__cell">
-        <ng-container [ngSwitch]="columns[i].type">
-          <!-- Download icon template -->
-          <ng-container *ngSwitchCase="'download-icon'">
-            <ng-container *ngTemplateOutlet="downloadIcon"></ng-container>
-          </ng-container>
-
-          <!-- Status badge templates -->
-          <ng-container *ngSwitchCase="'badge'">
-            <ng-container *ngIf="cell === 'reviewed'">
-              <ng-container *ngTemplateOutlet="badgeReviewed"></ng-container>
-            </ng-container>
-
-            <ng-container *ngIf="cell === 'pendingReview'">
-              <ng-container
-                *ngTemplateOutlet="badgePendingReview"
-              ></ng-container>
-            </ng-container>
-          </ng-container>
-
-          <!-- Default text template -->
-          <ng-container *ngSwitchDefault>
-            <ng-container *ngTemplateOutlet="text"></ng-container>
-          </ng-container>
-        </ng-container>
-
-        <!-- Table cell templates -->
-        <ng-template #text>
-          {{ cell }}
-        </ng-template>
-
-        <ng-template #downloadIcon>
-          <a [href]="cell" target="_blank" class="table__icon--link">
-            <img src="/assets/download_icon.svg" class="table__icon"
-          /></a>
-        </ng-template>
-
-        <ng-template #badgePendingReview>
-          <div class="badge__container badge__container--pendingReview">
-            <div class="dot__container">
-              <div class="dot__icon"></div>
-            </div>
-            <p class="badge__text badge__text--pendingReview">
-              ยังไม่ได้กลั่นกรอง
-            </p>
-          </div>
-        </ng-template>
-
-        <ng-template #badgeReviewed>
-          <div class="badge__container badge__container--reviewed">
-            <div class="badge__icon-container">
-              <img src="/assets/check_icon.svg" alt="check icon" />
-            </div>
-            <p class="badge__text badge__text--reviewed">กลั่นกรองเรียบร้อย</p>
-          </div>
-        </ng-template>
-        <!-- END Table cell templates -->
+        <app-table-cell-template
+          [cellType]="columns[i].type"
+          [cellValue]="cell"
+        ></app-table-cell-template>
       </td>
     </tr>
   </tbody>
