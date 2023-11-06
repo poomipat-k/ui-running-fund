@@ -2,19 +2,21 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit, inject } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
+import { FilterComponent } from '../components/filter/filter.component';
 import { TableComponent } from '../components/table/table.component';
+import { BadgeType } from '../enums/badge-type';
+import { ColumnTypeEnum } from '../enums/column-type';
+import { FilterOption } from '../models/filter-option';
 import { ReviewPeriod } from '../models/review-period';
+import { TableColumn } from '../models/table-column';
 import { User } from '../models/user';
 import { ProjectService } from '../services/project.service';
 import { UserService } from '../services/user.service';
-import { TableColumn } from '../models/table-column';
-import { ColumnTypeEnum } from '../enums/column-type';
-import { BadgeType } from '../enums/badge-type';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule, RouterModule, TableComponent],
+  imports: [CommonModule, RouterModule, TableComponent, FilterComponent],
   templateUrl: './home.component.html',
   styleUrls: ['home.component.scss'],
 })
@@ -23,10 +25,12 @@ export class HomeComponent implements OnInit {
   private readonly projectService: ProjectService = inject(ProjectService);
   private readonly userService: UserService = inject(UserService);
 
-  reviewPeriod: ReviewPeriod;
-  fromDate: string;
-  toDate: string;
+  private reviewPeriod: ReviewPeriod;
+
+  protected fromDate: string;
+  protected toDate: string;
   protected data: string[][] = [];
+
   protected columns: TableColumn[] = [
     {
       name: 'รหัสโครงการ',
@@ -35,6 +39,7 @@ export class HomeComponent implements OnInit {
     },
     {
       name: 'วันที่สร้าง',
+      format: 'datetime',
       class: 'width-200',
     },
     {
@@ -47,6 +52,7 @@ export class HomeComponent implements OnInit {
     },
     {
       name: 'หมายเหตุ',
+      format: 'datetime',
       class: 'width-255',
     },
     {
@@ -55,6 +61,22 @@ export class HomeComponent implements OnInit {
       type: ColumnTypeEnum.DownloadIcon,
       compact: true,
     },
+  ];
+
+  protected filterOptions: FilterOption[] = [
+    {
+      id: 1,
+      display: 'เรียงตามตัวอักษร',
+      name: 'ชื่อโครงการ',
+      order: 'ASC',
+    },
+    {
+      id: 2,
+      display: 'ใหม่ - เก่า',
+      name: 'วันที่สร้าง',
+      order: 'DESC',
+    },
+    { id: 3, display: 'เก่า - ใหม่', name: 'วันที่สร้าง', order: 'ASC' },
   ];
 
   constructor() {}
@@ -96,23 +118,51 @@ export class HomeComponent implements OnInit {
       });
   }
 
-  toggleFilter(columnName = 'ชื่อโครงการ'): void {
+  onSortFilterChanged(option: FilterOption) {
+    console.log('===MAIN onFilterChanged option:', option);
+    this.sortRows(this.data, option);
+  }
+
+  private sortRows(data: string[][], option: FilterOption) {
     if (!this.data) {
       return;
     }
-    const colIndex = this.columns.findIndex((c) => c.name === columnName);
-    if (colIndex === -1) {
+    const columnIndex = this.columns.findIndex((c) => c.name === option.name);
+    if (columnIndex === -1) {
       return;
     }
-    this.data.sort((a, b) => {
-      if (a[colIndex] > b[colIndex]) {
-        return -1;
-      }
-      if (a[colIndex] < b[colIndex]) {
-        return 1;
-      }
-      return 0;
-    });
+    console.log('===this.data', this.data);
+    const isAsc = option.order === 'ASC';
+    console.log('===columnIndex', columnIndex);
+    if (this.columns[columnIndex].format === 'datetime') {
+      console.log('==datetime');
+      data.sort((a, b) => {
+        const aDate = new Date(a[columnIndex]);
+        const bDate = new Date(b[columnIndex]);
+        console.log(a);
+        console.log(b);
+        console.log(aDate);
+        console.log(bDate);
+        console.log('=====');
+        if (aDate > bDate) {
+          return isAsc ? 1 : -1;
+        }
+        if (aDate < bDate) {
+          return isAsc ? -1 : 1;
+        }
+        return 0;
+      });
+    } else {
+      data.sort((a, b) => {
+        if (a[columnIndex] > b[columnIndex]) {
+          return isAsc ? 1 : -1;
+        }
+        if (a[columnIndex] < b[columnIndex]) {
+          return isAsc ? -1 : 1;
+        }
+        return 0;
+      });
+    }
   }
 
   private dateToStringWithShortMonth(dateStr: string) {

@@ -5,10 +5,10 @@
   </div>
   <div class="dashboard__toolbar">
     <p class="dashboard__toolbar-count">ทั้งหมด {{ data.length }} โครงการ</p>
-    <div class="dashboard__toolbar-filter" (click)="toggleFilter()">
-      <p>จัดเรียงโดย</p>
-      <img src="/assets/sliders_icon.svg" alt="row sorting icon" />
-    </div>
+    <app-com-filter
+      [filterOptions]="filterOptions"
+      (selectedFilter)="onSortFilterChanged($event)"
+    ></app-com-filter>
   </div>
   <div>
     <app-table [columns]="columns" [data]="data"></app-table>
