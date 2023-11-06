@@ -35,6 +35,8 @@
       (click)="onDowloadIconClicked($event)"
       (mouseenter)="onMouseEnterDownloadLink()"
       (mouseleave)="onMouseLeaveDownloadLink()"
+      (mousedown)="onMouseDownDownloadLink()"
+      draggable="false"
     >
       <div class="icon">
         <app-com-svg-download

@@ -1,23 +1,29 @@
 <div class="navbar">
   <div class="navbar__body">
     <div class="navbar__left-group">
-      <a [routerLink]="'/'" class="navbar__logo">
+      <a [routerLink]="'/'" class="navbar__logo" draggable="false">
         <img src="/assets/navbar_logo.svg" alt="Thai Jogging logo" />
       </a>
 
       <ul class="navbar__menu">
-        <a [routerLink]="'/'" class="margin-left"> <li>หน้าหลัก</li></a>
-        <a [routerLink]="'/'" class="margin-left">
-          <li>วิธีการกลั่นกรองโครงการ</li></a
-        >
-        <a [routerLink]="'/'" class="margin-left"> <li>ขอความช่วยเหลือ</li></a>
+        <a [routerLink]="'/'" class="margin-left" draggable="false">
+          <li>หน้าหลัก</li>
+        </a>
+        <a [routerLink]="'/'" class="margin-left" draggable="false">
+          <li>วิธีการกลั่นกรองโครงการ</li>
+        </a>
+        <a [routerLink]="'/'" class="margin-left" draggable="false">
+          <li>ขอความช่วยเหลือ</li>
+        </a>
       </ul>
     </div>
 
     <ul class="navbar__user">
       <li>{{ currentUser.first_name + " " + currentUser.last_name }}</li>
       <div class="vertical-line"></div>
-      <a (click)="onLogout()" class="navbar__logout"> <li>ออกจากระบบ</li></a>
+      <a (click)="onLogout()" class="navbar__logout" draggable="false">
+        <li>ออกจากระบบ</li>
+      </a>
     </ul>
   </div>
 </div>

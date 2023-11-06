@@ -27,4 +27,8 @@ export class TableCellTemplateComponent {
   onMouseLeaveDownloadLink() {
     this.hoverOverDowloadLink = false;
   }
+
+  onMouseDownDownloadLink() {
+    this.hoverOverDowloadLink = false;
+  }
 }
