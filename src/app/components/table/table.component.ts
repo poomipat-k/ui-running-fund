@@ -1,8 +1,9 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input, inject } from '@angular/core';
-import { TableCellTemplateComponent } from '../table-cell-template/table-cell-template.component';
-import { TableColumn } from 'src/app/models/table-column';
 import { Router } from '@angular/router';
+import { TableCell } from 'src/app/models/table-cell';
+import { TableColumn } from 'src/app/models/table-column';
+import { TableCellTemplateComponent } from '../table-cell-template/table-cell-template.component';
 
 @Component({
   selector: 'app-table',
@@ -13,7 +14,7 @@ import { Router } from '@angular/router';
 })
 export class TableComponent {
   @Input() columns: TableColumn[];
-  @Input() data: string[][];
+  @Input() data: TableCell[][];
   @Input() idColumnIndex = 0;
 
   routerService: Router = inject(Router);

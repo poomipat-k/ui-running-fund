@@ -8,6 +8,7 @@ import { BadgeType } from '../enums/badge-type';
 import { ColumnTypeEnum } from '../enums/column-type';
 import { FilterOption } from '../models/filter-option';
 import { ReviewPeriod } from '../models/review-period';
+import { TableCell } from '../models/table-cell';
 import { TableColumn } from '../models/table-column';
 import { User } from '../models/user';
 import { ProjectService } from '../services/project.service';
@@ -29,7 +30,7 @@ export class HomeComponent implements OnInit {
 
   protected fromDate: string;
   protected toDate: string;
-  protected data: string[][] = [];
+  protected data: TableCell[][] = [];
 
   protected columns: TableColumn[] = [
     {
@@ -106,12 +107,32 @@ export class HomeComponent implements OnInit {
         if (result) {
           this.data = result.map((row) => {
             return [
-              row.project_code,
-              this.dateToStringWithLongMonth(row.project_created_at),
-              row.project_name,
-              row.review_id ? BadgeType.Reviewed : BadgeType.PendingReview,
-              this.dateToStringWithLongMonth(row.reviewed_at),
-              row.download_link,
+              {
+                display: row.project_code,
+                value: row.project_code,
+              },
+              {
+                display: this.dateToStringWithLongMonth(row.project_created_at),
+                value: row.project_created_at,
+              },
+              {
+                display: row.project_name,
+                value: row.project_name,
+              },
+              {
+                display: row.review_id
+                  ? BadgeType.Reviewed
+                  : BadgeType.PendingReview,
+                value: row.review_id,
+              },
+              {
+                display: this.dateToStringWithLongMonth(row.reviewed_at),
+                value: row.reviewed_at,
+              },
+              {
+                display: row.download_link,
+                value: row.download_link,
+              },
             ];
           });
         }
@@ -119,11 +140,10 @@ export class HomeComponent implements OnInit {
   }
 
   onSortFilterChanged(option: FilterOption) {
-    console.log('===MAIN onFilterChanged option:', option);
     this.sortRows(this.data, option);
   }
 
-  private sortRows(data: string[][], option: FilterOption) {
+  private sortRows(data: TableCell[][], option: FilterOption) {
     if (!this.data) {
       return;
     }
@@ -131,19 +151,11 @@ export class HomeComponent implements OnInit {
     if (columnIndex === -1) {
       return;
     }
-    console.log('===this.data', this.data);
     const isAsc = option.order === 'ASC';
-    console.log('===columnIndex', columnIndex);
     if (this.columns[columnIndex].format === 'datetime') {
-      console.log('==datetime');
       data.sort((a, b) => {
-        const aDate = new Date(a[columnIndex]);
-        const bDate = new Date(b[columnIndex]);
-        console.log(a);
-        console.log(b);
-        console.log(aDate);
-        console.log(bDate);
-        console.log('=====');
+        const aDate = new Date(a[columnIndex].value);
+        const bDate = new Date(b[columnIndex].value);
         if (aDate > bDate) {
           return isAsc ? 1 : -1;
         }
@@ -154,10 +166,10 @@ export class HomeComponent implements OnInit {
       });
     } else {
       data.sort((a, b) => {
-        if (a[columnIndex] > b[columnIndex]) {
+        if (a[columnIndex].value > b[columnIndex].value) {
           return isAsc ? 1 : -1;
         }
-        if (a[columnIndex] < b[columnIndex]) {
+        if (a[columnIndex].value < b[columnIndex].value) {
           return isAsc ? -1 : 1;
         }
         return 0;

@@ -1,6 +1,9 @@
 @import "../../../styles.scss";
 
 .filter {
+  user-select: none;
+  -webkit-user-select: none;
+
   display: flex;
 
   font-weight: 500;
