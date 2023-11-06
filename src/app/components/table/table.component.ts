@@ -1,7 +1,8 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input } from '@angular/core';
+import { Component, Input, inject } from '@angular/core';
 import { TableCellTemplateComponent } from '../table-cell-template/table-cell-template.component';
 import { TableColumn } from 'src/app/models/table-column';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-table',
@@ -12,5 +13,13 @@ import { TableColumn } from 'src/app/models/table-column';
 })
 export class TableComponent {
   @Input() columns: TableColumn[];
-  @Input() data: any[];
+  @Input() data: string[][];
+  @Input() idColumnIndex = 0;
+
+  routerService: Router = inject(Router);
+  protected clickedId: string;
+
+  onRowClicked(id: string) {
+    this.routerService.navigate(['/review/project', id]);
+  }
 }

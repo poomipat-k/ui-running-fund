@@ -1,5 +1,7 @@
 @import "../../../styles.scss";
 
+$cell-height: 7.2rem;
+
 .table {
   width: 100%;
   border-collapse: collapse;
@@ -8,6 +10,10 @@
   table,
   tr {
     border: 1px solid #eaecf0;
+  }
+
+  &__row {
+    cursor: pointer;
   }
 
   &__header {
@@ -22,7 +28,7 @@
   }
 
   &__cell {
-    height: 7.2rem;
+    height: $cell-height;
     padding: 1.6rem 2.4rem;
     text-align: left;
     font-family: $custom-font;
@@ -30,6 +36,9 @@
     line-height: 2rem;
     font-weight: 400;
     color: #667085;
+
+    // Parent of download icon position absolute
+    position: relative;
 
     &--bold {
       font-weight: 500;

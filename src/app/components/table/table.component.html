@@ -16,7 +16,12 @@
   </thead>
 
   <tbody>
-    <tr *ngFor="let row of data">
+    <tr
+      *ngFor="let row of data"
+      class="table__row"
+      (click)="onRowClicked(row[idColumnIndex])"
+      [id]="row[idColumnIndex]"
+    >
       <td
         *ngFor="let cell of row; let i = index"
         [class]="[

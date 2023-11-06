@@ -28,8 +28,19 @@
 
 <ng-template #downloadIcon>
   <ng-container *ngIf="cellValue">
-    <a [href]="cellValue" target="_blank" class="icon">
-      <img src="/assets/download_icon.svg" class="icon--link" />
+    <a
+      [href]="cellValue"
+      target="_blank"
+      class="icon--link"
+      (click)="onDowloadIconClicked($event)"
+      (mouseenter)="onMouseEnterDownloadLink()"
+      (mouseleave)="onMouseLeaveDownloadLink()"
+    >
+      <div class="icon">
+        <app-com-svg-download
+          [hoverOverDowloadLink]="hoverOverDowloadLink"
+        ></app-com-svg-download>
+      </div>
     </a>
   </ng-container>
 </ng-template>
