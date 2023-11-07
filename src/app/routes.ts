@@ -18,7 +18,7 @@ const routeConfig: Routes = [
     title: 'Login',
   },
   {
-    path: 'review/project/:projectId',
+    path: 'review/project/:projectCode',
     component: ReviewDetailsComponent,
   },
   {

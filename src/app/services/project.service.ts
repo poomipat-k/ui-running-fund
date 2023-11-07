@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable, catchError, throwError } from 'rxjs';
 import { ReviewPeriod } from '../models/review-period';
 import { ReviewerDashboardRow } from '../models/reviewer-dashboard-row';
+import { ReviewerProjectDetails } from '../models/reviewer-project-details';
 
 @Injectable({
   providedIn: 'root',
@@ -23,18 +24,36 @@ export class ProjectService {
     fromDate: string,
     toDate: string
   ): Observable<ReviewerDashboardRow[]> {
-    return this.http.post<ReviewerDashboardRow[]>(
-      `${this.baseUrl}/projects/reviewer`,
-      {
-        fromDate,
-        toDate,
-      },
-      {
-        headers: {
-          Authorization: `Bearer ${userId}`,
+    return this.http
+      .post<ReviewerDashboardRow[]>(
+        `${this.baseUrl}/projects/reviewer`,
+        {
+          fromDate,
+          toDate,
         },
-      }
-    );
+        {
+          headers: {
+            Authorization: `Bearer ${userId}`,
+          },
+        }
+      )
+      .pipe(catchError(this.handleError));
+  }
+
+  getProjectDetailsForReviewer(
+    userId: number,
+    projectCode: string
+  ): Observable<ReviewerProjectDetails> {
+    return this.http
+      .get<ReviewerProjectDetails>(
+        `${this.baseUrl}/review/project/${projectCode}`,
+        {
+          headers: {
+            Authorization: `Bearer ${userId}`,
+          },
+        }
+      )
+      .pipe(catchError(this.handleError));
   }
 
   private handleError(error: HttpErrorResponse) {

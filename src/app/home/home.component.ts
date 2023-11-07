@@ -103,7 +103,6 @@ export class HomeComponent implements OnInit {
         this.reviewPeriod.to_date
       )
       .subscribe((result) => {
-        console.log('===Dashboard result:', result);
         if (result) {
           this.data = result.map((row) => {
             return [

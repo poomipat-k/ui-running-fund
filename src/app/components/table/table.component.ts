@@ -15,12 +15,11 @@ import { TableCellTemplateComponent } from '../table-cell-template/table-cell-te
 export class TableComponent {
   @Input() columns: TableColumn[];
   @Input() data: TableCell[][];
-  @Input() idColumnIndex = 0;
+  @Input() keyColumnIndex = 0;
 
   routerService: Router = inject(Router);
-  protected clickedId: string;
 
-  onRowClicked(id: string) {
-    this.routerService.navigate(['/review/project', id]);
+  onRowClicked(projectCode: string) {
+    this.routerService.navigate(['/review/project', projectCode]);
   }
 }

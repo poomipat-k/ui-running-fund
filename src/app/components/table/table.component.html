@@ -19,8 +19,7 @@
     <tr
       *ngFor="let row of data"
       class="table__row"
-      (click)="onRowClicked(row[idColumnIndex].value)"
-      [id]="row[idColumnIndex]"
+      (click)="onRowClicked(row[keyColumnIndex].value)"
     >
       <td
         *ngFor="let cell of row; let i = index"
