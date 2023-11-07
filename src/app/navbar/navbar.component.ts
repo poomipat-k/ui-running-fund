@@ -21,7 +21,7 @@ export class NavbarComponent implements OnInit {
   constructor() {}
 
   ngOnInit(): void {
-    this.userService.currentUserSubject.subscribe((user) => {
+    this.userService.currentUserSubject$.subscribe((user) => {
       this.currentUser = user;
     });
 

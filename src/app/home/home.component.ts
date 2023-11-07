@@ -13,6 +13,7 @@ import { TableColumn } from '../models/table-column';
 import { User } from '../models/user';
 import { ProjectService } from '../services/project.service';
 import { UserService } from '../services/user.service';
+import { forkJoin, mergeMap, of } from 'rxjs';
 
 @Component({
   selector: 'app-home',
@@ -83,26 +84,32 @@ export class HomeComponent implements OnInit {
   constructor() {}
 
   ngOnInit(): void {
-    this.projectService.getReviewPeriod().subscribe((p) => {
-      if (p) {
-        this.fromDate = this.dateToStringWithShortMonth(p.from_date);
-        this.toDate = this.dateToStringWithShortMonth(p.to_date);
-        this.reviewPeriod = p;
-
-        this.getReviewDashboard();
-      }
-    });
+    this.loadReviewDashboard();
   }
 
-  getReviewDashboard() {
-    const user = this.userService.getCurrentUser();
-    this.projectService
-      .getReviewDashboard(
-        user.id,
-        this.reviewPeriod.from_date,
-        this.reviewPeriod.to_date
+  private loadReviewDashboard() {
+    forkJoin([
+      this.projectService.getReviewPeriod(),
+      this.userService.isLoggedIn(),
+    ])
+      .pipe(
+        mergeMap(([p, isLoggedIn]) => {
+          if (!isLoggedIn || !p) {
+            return of(null);
+          }
+          this.fromDate = this.dateToStringWithShortMonth(p.from_date);
+          this.toDate = this.dateToStringWithShortMonth(p.to_date);
+          this.reviewPeriod = p;
+          const user = this.userService.getCurrentUser();
+          return this.projectService.getReviewDashboard(
+            user.id,
+            this.reviewPeriod.from_date,
+            this.reviewPeriod.to_date
+          );
+        })
       )
       .subscribe((result) => {
+        console.log('==result', result);
         if (result) {
           this.data = result.map((row) => {
             return [
@@ -137,6 +144,50 @@ export class HomeComponent implements OnInit {
         }
       });
   }
+
+  // getReviewDashboard() {
+  //   const user = this.userService.getCurrentUser();
+  //   this.projectService
+  //     .getReviewDashboard(
+  //       user.id,
+  //       this.reviewPeriod.from_date,
+  //       this.reviewPeriod.to_date
+  //     )
+  //     .subscribe((result) => {
+  //       if (result) {
+  //         this.data = result.map((row) => {
+  //           return [
+  //             {
+  //               display: row.project_code,
+  //               value: row.project_code,
+  //             },
+  //             {
+  //               display: this.dateToStringWithLongMonth(row.project_created_at),
+  //               value: row.project_created_at,
+  //             },
+  //             {
+  //               display: row.project_name,
+  //               value: row.project_name,
+  //             },
+  //             {
+  //               display: row.review_id
+  //                 ? BadgeType.Reviewed
+  //                 : BadgeType.PendingReview,
+  //               value: row.review_id,
+  //             },
+  //             {
+  //               display: this.dateToStringWithLongMonth(row.reviewed_at),
+  //               value: row.reviewed_at,
+  //             },
+  //             {
+  //               display: row.download_link,
+  //               value: row.download_link,
+  //             },
+  //           ];
+  //         });
+  //       }
+  //     });
+  // }
 
   onSortFilterChanged(option: FilterOption) {
     this.sortRows(this.data, option);

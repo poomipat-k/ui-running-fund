@@ -1,8 +1,8 @@
-import { Component, Input, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Component, Input, OnInit, inject } from '@angular/core';
+import { mergeMap, of } from 'rxjs';
 import { ProjectService } from '../services/project.service';
 import { UserService } from '../services/user.service';
-import { switchMap } from 'rxjs';
 
 @Component({
   selector: 'app-review-details',
@@ -21,17 +21,22 @@ export class ReviewDetailsComponent implements OnInit {
   constructor() {}
 
   ngOnInit(): void {
-    // const user = this.userService.getCurrentUser();
-    this.userService.currentUserSubject.subscribe((user) => {
-      console.log('==user', user);
-      if (user.id) {
-        this.projectService
-          .getProjectDetailsForReviewer(user.id, this.projectCode)
-          .subscribe((result) => {
-            console.log('===result', result);
-          });
-      }
-    });
-    // this.projectService.getProjectDetailsForReviewer(4, this.projectCode);
+    this.userService.currentUserSubject$
+      .pipe(
+        mergeMap((user) => {
+          if (user.id) {
+            return this.projectService.getProjectDetailsForReviewer(
+              user.id,
+              this.projectCode
+            );
+          }
+          return of(null);
+        })
+      )
+      .subscribe((result) => {
+        if (result) {
+          console.log('==Success result', result);
+        }
+      });
   }
 }

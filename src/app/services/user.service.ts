@@ -1,13 +1,14 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, Subject, catchError, of, throwError } from 'rxjs';
+import { BehaviorSubject, Observable, catchError, of, throwError } from 'rxjs';
 import { User } from '../models/user';
 
 @Injectable({
   providedIn: 'root',
 })
 export class UserService {
-  currentUserSubject = new Subject<User>();
+  private readonly currentUserSubject = new BehaviorSubject<User>(new User());
+  currentUserSubject$ = this.currentUserSubject.asObservable();
 
   private loggedInUser: User;
   private readonly baseUrl = 'http://localhost:8080/api';
