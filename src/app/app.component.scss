@@ -16,3 +16,12 @@ $footer-height: 20.1rem;
   // 1.4 rem is footer top margin
   min-height: calc(100vh - $footer-height - 1.4rem);
 }
+
+.background {
+  &--white {
+    background-color: #fff;
+  }
+  &--gray {
+    background-color: #f2f4f6;
+  }
+}

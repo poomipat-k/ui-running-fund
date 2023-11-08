@@ -1,15 +1,16 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit, ViewChild, inject } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import {
   FormControl,
   FormGroup,
-  NgForm,
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
+import { Router } from '@angular/router';
 import { User } from '../models/user';
 import { UserService } from '../services/user.service';
-import { Router } from '@angular/router';
+import { ThemeService } from '../services/theme.service';
+import { BackgroundColor } from '../enums/background-color';
 
 @Component({
   selector: 'app-login',
@@ -25,12 +26,15 @@ export class LoginComponent implements OnInit {
 
   private userService: UserService = inject(UserService);
   private router: Router = inject(Router);
+  private readonly themeService: ThemeService = inject(ThemeService);
 
   get submitButtonDisabled(): boolean {
     return false;
   }
 
   ngOnInit(): void {
+    this.themeService.changeBackgroundColor(BackgroundColor.white);
+
     this.initForm();
 
     this.userService.getReviewers().subscribe((result) => {

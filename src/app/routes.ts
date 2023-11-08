@@ -3,7 +3,7 @@ import { authGuard } from './guard/auth.guard';
 import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
-import { ReviewDetailsComponent } from './review-details/review-details.component';
+import { ReviewerFlowPagesComponent } from './reviewer-flow-pages/reviewer-flow-pages.component';
 
 const routeConfig: Routes = [
   {
@@ -19,7 +19,7 @@ const routeConfig: Routes = [
   },
   {
     path: 'review/project/:projectCode',
-    component: ReviewDetailsComponent,
+    component: ReviewerFlowPagesComponent,
   },
   {
     path: '**',

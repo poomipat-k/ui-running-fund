@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit, inject } from '@angular/core';
+import { AfterViewInit, Component, OnInit, inject } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
 import { FilterComponent } from '../components/filter/filter.component';
@@ -14,6 +14,8 @@ import { User } from '../models/user';
 import { ProjectService } from '../services/project.service';
 import { UserService } from '../services/user.service';
 import { forkJoin, mergeMap, of } from 'rxjs';
+import { BackgroundColor } from '../enums/background-color';
+import { ThemeService } from '../services/theme.service';
 
 @Component({
   selector: 'app-home',
@@ -26,6 +28,7 @@ export class HomeComponent implements OnInit {
   reviewers: User[] = [];
   private readonly projectService: ProjectService = inject(ProjectService);
   private readonly userService: UserService = inject(UserService);
+  private readonly themeService: ThemeService = inject(ThemeService);
 
   private reviewPeriod: ReviewPeriod;
 
@@ -84,6 +87,7 @@ export class HomeComponent implements OnInit {
   constructor() {}
 
   ngOnInit(): void {
+    this.themeService.changeBackgroundColor(BackgroundColor.white);
     this.loadReviewDashboard();
   }
 
@@ -144,50 +148,6 @@ export class HomeComponent implements OnInit {
         }
       });
   }
-
-  // getReviewDashboard() {
-  //   const user = this.userService.getCurrentUser();
-  //   this.projectService
-  //     .getReviewDashboard(
-  //       user.id,
-  //       this.reviewPeriod.from_date,
-  //       this.reviewPeriod.to_date
-  //     )
-  //     .subscribe((result) => {
-  //       if (result) {
-  //         this.data = result.map((row) => {
-  //           return [
-  //             {
-  //               display: row.project_code,
-  //               value: row.project_code,
-  //             },
-  //             {
-  //               display: this.dateToStringWithLongMonth(row.project_created_at),
-  //               value: row.project_created_at,
-  //             },
-  //             {
-  //               display: row.project_name,
-  //               value: row.project_name,
-  //             },
-  //             {
-  //               display: row.review_id
-  //                 ? BadgeType.Reviewed
-  //                 : BadgeType.PendingReview,
-  //               value: row.review_id,
-  //             },
-  //             {
-  //               display: this.dateToStringWithLongMonth(row.reviewed_at),
-  //               value: row.reviewed_at,
-  //             },
-  //             {
-  //               display: row.download_link,
-  //               value: row.download_link,
-  //             },
-  //           ];
-  //         });
-  //       }
-  //     });
-  // }
 
   onSortFilterChanged(option: FilterOption) {
     this.sortRows(this.data, option);

@@ -1,0 +1,14 @@
+<div class="container">
+  <h1>Pages Controller component</h1>
+  <ng-container *ngIf="pageIndex === 1">
+    <app-review-reviewer-involvement></app-review-reviewer-involvement>
+  </ng-container>
+  <ng-container *ngIf="pageIndex === 2">
+    <app-review-general-details></app-review-general-details>
+  </ng-container>
+  <div class="margin-top-20"></div>
+  <button (click)="prevPage()">
+    {{ pageIndex === 1 ? "ยกเลิก" : "ย้อนกลับ" }}
+  </button>
+  <button (click)="nextPage()">ต่อไป -></button>
+</div>
