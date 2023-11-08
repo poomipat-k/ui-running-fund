@@ -7,10 +7,10 @@ import {
   Validators,
 } from '@angular/forms';
 import { Router } from '@angular/router';
-import { User } from '../models/user';
+import { User } from '../shared/models/user';
 import { UserService } from '../services/user.service';
 import { ThemeService } from '../services/theme.service';
-import { BackgroundColor } from '../enums/background-color';
+import { BackgroundColor } from '../shared/enums/background-color';
 
 @Component({
   selector: 'app-login',

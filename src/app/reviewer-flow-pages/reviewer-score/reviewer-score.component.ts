@@ -3,12 +3,17 @@ import { Component, Input } from '@angular/core';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 
 @Component({
-  selector: 'app-review-general-details',
+  selector: 'app-reviewer-score',
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule],
-  templateUrl: './general-details.component.html',
-  styleUrls: ['./general-details.component.scss'],
+  templateUrl: './reviewer-score.component.html',
+  styleUrls: ['./reviewer-score.component.scss'],
 })
-export class GeneralDetailsComponent {
+export class ReviewerScoreComponent {
   @Input() form: FormGroup;
+
+  onClick() {
+    console.log('+++Onclick');
+    console.log(this.form);
+  }
 }

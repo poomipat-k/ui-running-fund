@@ -1,0 +1,113 @@
+@import "../../../styles.scss";
+
+.container {
+  display: grid;
+  grid-template-columns: minmax(21.7rem, 1fr) 4fr;
+  grid-template-rows: 12.2rem 0.5px 16.3rem 0.5px 1fr;
+  grid-template-areas:
+    "label1 field1"
+    "hr hr"
+    "label2 field2"
+    "hr hr"
+    "label3 field3";
+}
+
+.label {
+  display: flex;
+  height: 3rem;
+  align-items: center;
+
+  font-family: $custom-font;
+  font-weight: 700;
+  font-size: 1.8rem;
+  font-style: normal;
+  line-height: normal;
+  color: #344054;
+
+  &__icon {
+    width: 1.1rem;
+    height: 1.1rem;
+    border-radius: 1.1rem;
+    background-color: #fb6514;
+    margin-left: 1.5rem;
+    margin-right: 1.4rem;
+  }
+}
+
+.data {
+  height: 3rem;
+
+  &__flex {
+    display: flex;
+  }
+}
+
+.textbox {
+  border: none;
+  border-bottom: 0.5px solid rgba(28, 27, 31, 0.97);
+  outline: none;
+
+  font-family: $custom-font-looped;
+  font-weight: 400;
+  font-size: 1.8rem;
+  font-style: normal;
+  line-height: normal;
+  color: #667085;
+
+  &:disabled {
+    background-color: white;
+  }
+}
+
+.prefix {
+  font-family: $custom-font-looped;
+  font-size: 1.8rem;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}
+
+.hr {
+  background: #949494;
+}
+
+// utils
+.mt {
+  &-13 {
+    margin-top: 1.3rem;
+  }
+
+  &-39 {
+    margin-top: 3.9rem;
+  }
+
+  &-40 {
+    margin-top: 4rem;
+  }
+
+  &-45 {
+    margin-top: 4.5rem;
+  }
+
+  &-46 {
+    margin-top: 4.6rem;
+  }
+
+  &-47 {
+    margin-top: 4.7rem;
+  }
+}
+
+.mr-16 {
+  margin-right: 1.6rem;
+}
+
+.width {
+  &-479 {
+    width: 47.9rem;
+  }
+
+  &-725 {
+    width: 72.5rem;
+  }
+}

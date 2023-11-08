@@ -1,11 +1,71 @@
+@import "../../styles.scss";
+
 .container {
   border-radius: 2rem;
   background-color: #fff;
-  border: 1px solid red;
+  margin-top: 8.8rem;
+  padding: 2.4rem 7.8rem 5rem 7.9rem;
 }
 
-.margin-top-20 {
+.header {
+  display: flex;
+  justify-content: space-between;
+  height: 8.6rem;
+  font-family: $custom-font;
+
+  &__main {
+    width: 63.8rem;
+    color: #344054;
+    font-size: 2.4rem;
+    font-weight: 700;
+    line-height: 4.3rem;
+  }
+
+  &__details {
+    margin-top: 1rem;
+    height: 5.3rem;
+  }
+  &__line {
+    display: flex;
+    height: 2.6rem;
+    justify-content: right;
+    align-items: center;
+
+    &:not(:first-child) {
+      margin-top: 1px;
+    }
+
+    &--bold-1 {
+      font-weight: 500;
+      font-size: 1.6rem;
+      line-height: normal;
+      margin-right: 1rem;
+    }
+
+    &--bold-2 {
+      font-weight: 500;
+      font-size: 1.6rem;
+      line-height: normal;
+      margin-right: 1.3rem;
+    }
+
+    &-normal-1 {
+      font-weight: 400;
+      font-size: 1.6rem;
+      line-height: 2rem;
+      color: #667085;
+    }
+
+    &-normal-2 {
+      font-weight: 400;
+      font-size: 1.6rem;
+      line-height: normal;
+      color: #667085;
+    }
+  }
+}
+
+.hr {
+  border-top: 0.5px solid #949494;
   margin-top: 2rem;
 }
-
-// #F2F4F6;

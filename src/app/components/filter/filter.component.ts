@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { FilterOption } from 'src/app/models/filter-option';
+import { FilterOption } from '../../shared/models/filter-option';
 
 @Component({
   selector: 'app-com-filter',

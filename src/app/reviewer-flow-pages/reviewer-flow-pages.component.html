@@ -1,12 +1,42 @@
 <div class="container">
-  <h1>Pages Controller component</h1>
-  <ng-container *ngIf="pageIndex === 1">
-    <app-review-reviewer-involvement></app-review-reviewer-involvement>
-  </ng-container>
-  <ng-container *ngIf="pageIndex === 2">
-    <app-review-general-details></app-review-general-details>
-  </ng-container>
-  <div class="margin-top-20"></div>
+  <div>
+    <div class="header">
+      <h1 class="header__main">
+        แบบแสดงการมีส่วนได้เสียในการพิจารณากลั่นกรองทางวิชาการ
+        สำหรับผู้ทรงคุณวุฒิ
+      </h1>
+      <div class="header__details">
+        <div class="header__line">
+          <div class="header__line--bold header__line--bold-1">รหัสโครงการ</div>
+          <div class="header__line-normal-1">Unique</div>
+        </div>
+        <div class="header__line">
+          <div class="header__line--bold header__line--bold-2">วันที่สร้าง</div>
+          <div class="header__line-normal-2">6 กันยายน 2566</div>
+        </div>
+      </div>
+    </div>
+    <hr class="hr" />
+  </div>
+
+  <form [formGroup]="form">
+    <ng-container *ngIf="pageIndex === 1">
+      <app-review-reviewer-interested-person
+        #interestedPerson
+        [form]="form"
+      ></app-review-reviewer-interested-person>
+    </ng-container>
+
+    <ng-container *ngIf="pageIndex === 2">
+      <app-review-general-details [form]="form"></app-review-general-details>
+    </ng-container>
+
+    <ng-container *ngIf="pageIndex === 3">
+      <app-reviewer-score [form]="form"></app-reviewer-score>
+    </ng-container>
+
+    <div style="margin-top: 30px"></div>
+  </form>
   <button (click)="prevPage()">
     {{ pageIndex === 1 ? "ยกเลิก" : "ย้อนกลับ" }}
   </button>

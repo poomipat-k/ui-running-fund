@@ -1,0 +1,72 @@
+<form [formGroup]="form">
+  <div class="container">
+    <!-- Row 1 -->
+    <div class="label mt-46">
+      <div class="label__icon"></div>
+      <p>ข้อมูลผู้ทรงคุณวุฒิ</p>
+    </div>
+
+    <div class="data data__flex mt-47">
+      <p class="prefix mr-16">ข้าพเจ้า</p>
+      <input
+        type="text"
+        class="textbox width-479"
+        [value]="reviewerFullName"
+        [disabled]="true"
+      />
+    </div>
+
+    <span class="hr"></span>
+    <span class="hr"></span>
+    <!-- Row 2 -->
+    <div class="label mt-39">
+      <div class="label__icon"></div>
+      <p>ข้อมูลโครงการ</p>
+    </div>
+    <div class="data mt-40">
+      <p class="prefix">
+        ซึ่งทำหน้าที่ผู้ทรงคุณวุฒิในการพิจารณากลั่นกรองทางวิชาการ แผนงาน
+        ชุดโครงการ หรือโครงการ
+      </p>
+      <input
+        type="text"
+        class="textbox width-725 mt-13"
+        [value]="projectName"
+        [disabled]="true"
+      />
+    </div>
+
+    <span class="hr"></span>
+    <span class="hr"></span>
+    <!-- Row 3 -->
+    <div class="label mt-45">
+      <div class="label__icon"></div>
+      <p>การมีส่วนได้เสีย</p>
+    </div>
+    <div class="data mt-46">
+      <p class="prefix">
+        ข้าพเจ้าได้ตรวจสอบการมีส่วนเกี่ยวข้องหรือส่วนได้เสียแล้ว ขอรับรองว่า
+      </p>
+      <!-- Interested person radio -->
+      <div>
+        <div *ngFor="let isInterested of [false, true]">
+          <input
+            type="radio"
+            [value]="isInterested"
+            formControlName="isInterestedPerson"
+            (change)="onIsInterestedPersonChanged()"
+          />
+          <label>
+            {{
+              isInterested
+                ? "มีส่วนเกี่ยวข้อง หรือมีส่วนได้เสียโดยตรงกับผู้เสนอแผนงาน ชุดโครงการ หรือโครงการ ดังนี้"
+                : "ไม่มีส่วนเกี่ยวข้อง หรือมีส่วนได้เสียโดยตรงกับผู้เสนอแผนงาน ชุดโครงการ หรือโครงการ"
+            }}
+          </label>
+        </div>
+        <div *ngIf="showDetailsQuestion">Details Question here</div>
+      </div>
+    </div>
+    <!-- End Form -->
+  </div>
+</form>

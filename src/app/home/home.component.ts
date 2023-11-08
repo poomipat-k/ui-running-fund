@@ -1,21 +1,21 @@
 import { CommonModule } from '@angular/common';
-import { AfterViewInit, Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
+import { forkJoin, mergeMap, of } from 'rxjs';
 import { FilterComponent } from '../components/filter/filter.component';
 import { TableComponent } from '../components/table/table.component';
-import { BadgeType } from '../enums/badge-type';
-import { ColumnTypeEnum } from '../enums/column-type';
-import { FilterOption } from '../models/filter-option';
-import { ReviewPeriod } from '../models/review-period';
-import { TableCell } from '../models/table-cell';
-import { TableColumn } from '../models/table-column';
-import { User } from '../models/user';
+import { BackgroundColor } from '../shared/enums/background-color';
+import { BadgeType } from '../shared/enums/badge-type';
+import { ColumnTypeEnum } from '../shared/enums/column-type';
 import { ProjectService } from '../services/project.service';
-import { UserService } from '../services/user.service';
-import { forkJoin, mergeMap, of } from 'rxjs';
-import { BackgroundColor } from '../enums/background-color';
 import { ThemeService } from '../services/theme.service';
+import { UserService } from '../services/user.service';
+import { FilterOption } from '../shared/models/filter-option';
+import { ReviewPeriod } from '../shared/models/review-period';
+import { TableCell } from '../shared/models/table-cell';
+import { TableColumn } from '../shared/models/table-column';
+import { User } from '../shared/models/user';
 
 @Component({
   selector: 'app-home',

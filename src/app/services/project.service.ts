@@ -1,9 +1,9 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, catchError, throwError } from 'rxjs';
-import { ReviewPeriod } from '../models/review-period';
-import { ReviewerDashboardRow } from '../models/reviewer-dashboard-row';
-import { ReviewerProjectDetails } from '../models/reviewer-project-details';
+import { ReviewPeriod } from '../shared/models/review-period';
+import { ReviewerDashboardRow } from '../shared/models/reviewer-dashboard-row';
+import { ReviewerProjectDetails } from '../shared/models/reviewer-project-details';
 
 @Injectable({
   providedIn: 'root',

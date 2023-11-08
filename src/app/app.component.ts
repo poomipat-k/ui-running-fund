@@ -2,7 +2,7 @@ import { AfterViewInit, Component, OnInit, inject } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { FooterComponent } from './footer/footer.component';
 import { NavbarComponent } from './navbar/navbar.component';
-import { BackgroundColor } from './enums/background-color';
+import { BackgroundColor } from './shared/enums/background-color';
 import { ThemeService } from './services/theme.service';
 import { delay } from 'rxjs';
 

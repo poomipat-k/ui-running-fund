@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit, inject } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { UserService } from '../services/user.service';
-import { User } from '../models/user';
+import { User } from '../shared/models/user';
 
 @Component({
   selector: 'app-navbar',

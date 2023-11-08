@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input } from '@angular/core';
-import { ColumnTypeEnum } from 'src/app/enums/column-type';
+
+import { ColumnTypeEnum } from '../../shared/enums/column-type';
 import { SVGDownloadComponent } from '../svg/download/download.component';
 
 @Component({

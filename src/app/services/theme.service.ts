@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { BackgroundColor } from '../enums/background-color';
+import { BackgroundColor } from '../shared/enums/background-color';
 
 @Injectable({
   providedIn: 'root',
