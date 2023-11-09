@@ -2,12 +2,10 @@
   <p>{{ filterText }}</p>
   <img src="/assets/sliders_icon.svg" alt="row sorting icon" />
   <div [class]="['filter__dropdown', showOptions ? '' : 'hide']">
-    <p
-      *ngFor="let option of filterOptions"
-      class="filter__dropdown-option"
-      (click)="onSelectFilter(option)"
-    >
+    @for (option of filterOptions; track option.id) {
+    <p class="filter__dropdown-option" (click)="onSelectFilter(option)">
       {{ option.display }}
     </p>
+    }
   </div>
 </div>

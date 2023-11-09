@@ -21,11 +21,13 @@ export class ReviewerInterestedPerson implements OnInit {
 
   protected interestedPersonOptions: RadioOption[] = [
     {
+      id: 1,
       display:
         'ไม่มีส่วนเกี่ยวข้อง หรือมีส่วนได้เสียโดยตรงกับผู้เสนอแผนงาน ชุดโครงการ หรือโครงการ',
       value: false,
     },
     {
+      id: 2,
       display:
         'มีส่วนเกี่ยวข้อง หรือมีส่วนได้เสียโดยตรงกับผู้เสนอแผนงาน ชุดโครงการ หรือโครงการ ดังนี้',
       value: true,

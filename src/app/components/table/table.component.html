@@ -1,8 +1,8 @@
 <table class="table margin-top-24">
   <thead>
     <tr>
+      @for (col of columns; track $index) {
       <th
-        *ngFor="let col of columns"
         scope="col"
         [class]="[
           'table__header',
@@ -12,28 +12,28 @@
       >
         {{ col.name }}
       </th>
+      }
     </tr>
   </thead>
 
   <tbody>
-    <tr
-      *ngFor="let row of data"
-      class="table__row"
-      (click)="onRowClicked(row[keyColumnIndex].value)"
-    >
+    @for (row of data; track $index) {
+    <tr class="table__row" (click)="onRowClicked(row[keyColumnIndex].value)">
+      @for (cell of row; track $index) {
       <td
-        *ngFor="let cell of row; let i = index"
         [class]="[
           'table__cell',
-          columns[i].bold ? 'table__cell--bold' : '',
-          columns[i].compact ? 'table__cell--compact' : ''
+          columns[$index].bold ? 'table__cell--bold' : '',
+          columns[$index].compact ? 'table__cell--compact' : ''
         ]"
       >
         <app-table-cell-template
-          [cellType]="columns[i].type"
+          [cellType]="columns[$index].type"
           [cellValue]="cell.display"
         ></app-table-cell-template>
       </td>
+      }
     </tr>
+    }
   </tbody>
 </table>

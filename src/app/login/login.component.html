@@ -10,13 +10,11 @@
         class="login__dropdown-box"
         formControlName="reviewer"
       >
-        <option
-          *ngFor="let review of reviewers"
-          class="login__dropdown-item"
-          [value]="review.id"
-        >
+        @for (review of reviewers; track review.id) {
+        <option class="login__dropdown-item" [value]="review.id">
           {{ review.first_name }}
         </option>
+        }
       </select>
 
       <div class="login__button-container">
