@@ -48,22 +48,25 @@
         ข้าพเจ้าได้ตรวจสอบการมีส่วนเกี่ยวข้องหรือส่วนได้เสียแล้ว ขอรับรองว่า
       </p>
       <!-- Interested person radio -->
-      <div>
-        <div *ngFor="let isInterested of [false, true]">
+      <div class="mt-14">
+        <label
+          *ngFor="let isInterested of [false, true]"
+          class="radio__container radio__label"
+        >
+          {{
+            isInterested
+              ? "มีส่วนเกี่ยวข้อง หรือมีส่วนได้เสียโดยตรงกับผู้เสนอแผนงาน ชุดโครงการ หรือโครงการ ดังนี้"
+              : "ไม่มีส่วนเกี่ยวข้อง หรือมีส่วนได้เสียโดยตรงกับผู้เสนอแผนงาน ชุดโครงการ หรือโครงการ"
+          }}
           <input
             type="radio"
             [value]="isInterested"
             formControlName="isInterestedPerson"
             (change)="onIsInterestedPersonChanged()"
+            class="radio"
           />
-          <label>
-            {{
-              isInterested
-                ? "มีส่วนเกี่ยวข้อง หรือมีส่วนได้เสียโดยตรงกับผู้เสนอแผนงาน ชุดโครงการ หรือโครงการ ดังนี้"
-                : "ไม่มีส่วนเกี่ยวข้อง หรือมีส่วนได้เสียโดยตรงกับผู้เสนอแผนงาน ชุดโครงการ หรือโครงการ"
-            }}
-          </label>
-        </div>
+          <span class="radio__checkmark"></span>
+        </label>
         <div *ngIf="showDetailsQuestion">Details Question here</div>
       </div>
     </div>
