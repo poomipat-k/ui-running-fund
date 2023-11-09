@@ -1,25 +1,10 @@
-<ng-container [ngSwitch]="cellType">
-  <!-- Download icon -->
-  <ng-container *ngSwitchCase="'DownloadIcon'">
-    <ng-container *ngTemplateOutlet="downloadIcon"></ng-container>
-  </ng-container>
-
-  <!-- Status badge -->
-  <ng-container *ngSwitchCase="'Badge'">
-    <ng-container *ngIf="cellValue === 'Reviewed'">
-      <ng-container *ngTemplateOutlet="badgeReviewed"></ng-container>
-    </ng-container>
-
-    <ng-container *ngIf="cellValue === 'PendingReview'">
-      <ng-container *ngTemplateOutlet="badgePendingReview"></ng-container>
-    </ng-container>
-  </ng-container>
-
-  <!-- Default text -->
-  <ng-container *ngSwitchDefault>
-    <ng-container *ngTemplateOutlet="text"></ng-container>
-  </ng-container>
-</ng-container>
+@switch (cellType) { @case ('DownloadIcon') {
+<ng-container *ngTemplateOutlet="downloadIcon"></ng-container>
+} @case ('Badge') { @if (cellValue === 'Reviewed') {
+<ng-container *ngTemplateOutlet="badgeReviewed"></ng-container>} @else if
+(cellValue === 'PendingReview') {
+<ng-container *ngTemplateOutlet="badgePendingReview"></ng-container>} } @default
+{ <ng-container *ngTemplateOutlet="text"></ng-container>} }
 
 <!-- Cell Templates -->
 <ng-template #text>
@@ -27,24 +12,24 @@
 </ng-template>
 
 <ng-template #downloadIcon>
-  <ng-container *ngIf="cellValue">
-    <a
-      [href]="cellValue"
-      target="_blank"
-      class="icon--link"
-      (click)="onDowloadIconClicked($event)"
-      (mouseenter)="onMouseEnterDownloadLink()"
-      (mouseleave)="onMouseLeaveDownloadLink()"
-      (mousedown)="onMouseDownDownloadLink()"
-      draggable="false"
-    >
-      <div class="icon">
-        <app-com-svg-download
-          [hoverOverDowloadLink]="hoverOverDowloadLink"
-        ></app-com-svg-download>
-      </div>
-    </a>
-  </ng-container>
+  @if (cellValue) {
+  <a
+    [href]="cellValue"
+    target="_blank"
+    class="icon--link"
+    (click)="onDowloadIconClicked($event)"
+    (mouseenter)="onMouseEnterDownloadLink()"
+    (mouseleave)="onMouseLeaveDownloadLink()"
+    (mousedown)="onMouseDownDownloadLink()"
+    draggable="false"
+  >
+    <div class="icon">
+      <app-com-svg-download
+        [hoverOverDowloadLink]="hoverOverDowloadLink"
+      ></app-com-svg-download>
+    </div>
+  </a>
+  }
 </ng-template>
 
 <ng-template #badgePendingReview>

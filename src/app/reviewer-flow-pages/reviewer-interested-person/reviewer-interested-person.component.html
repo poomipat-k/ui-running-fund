@@ -56,7 +56,8 @@
           radioStyle="review-1"
         ></app-com-radio>
 
-        <div *ngIf="form.value.isInterestedPerson">
+        @if (form.value.isInterestedPerson) {
+        <div>
           <p class="prefix ml-59 mt-15">
             กรณีที่ตนเองมีความเกี่ยวข้องกับผู้เสนอโครงการในลักษณะดังต่อไปนี้
           </p>
@@ -67,6 +68,7 @@
             radioStyle="review-1"
           ></app-com-radio>
         </div>
+        }
       </div>
     </div>
     <!-- End process 1 form -->

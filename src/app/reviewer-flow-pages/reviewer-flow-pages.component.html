@@ -20,20 +20,14 @@
   </div>
 
   <form [formGroup]="form">
-    <ng-container *ngIf="pageIndex === 1">
-      <app-review-reviewer-interested-person
-        #interestedPerson
-        [form]="form"
-      ></app-review-reviewer-interested-person>
-    </ng-container>
-
-    <ng-container *ngIf="pageIndex === 2">
-      <app-review-general-details [form]="form"></app-review-general-details>
-    </ng-container>
-
-    <ng-container *ngIf="pageIndex === 3">
-      <app-reviewer-score [form]="form"></app-reviewer-score>
-    </ng-container>
+    @switch (pageIndex) { @case (1) {
+    <app-review-reviewer-interested-person
+      #interestedPerson
+      [form]="form"
+    ></app-review-reviewer-interested-person
+    >} @case (2) {
+    <app-review-general-details [form]="form"></app-review-general-details>}
+    @case (3) { <app-reviewer-score [form]="form"></app-reviewer-score>} }
 
     <div style="margin-top: 30px"></div>
   </form>
