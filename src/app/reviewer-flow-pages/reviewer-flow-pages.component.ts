@@ -69,8 +69,8 @@ export class ReviewerFlowPagesComponent implements OnInit {
       return;
     } else {
       this.pageIndex++;
+      console.log(this.form);
     }
-    console.log(this.form);
   }
 
   protected prevPage(): void {
@@ -96,7 +96,6 @@ export class ReviewerFlowPagesComponent implements OnInit {
       )
       .subscribe((result) => {
         if (result) {
-          // console.log('==Success result', result);
         }
       });
   }
@@ -104,6 +103,7 @@ export class ReviewerFlowPagesComponent implements OnInit {
   private initForm() {
     this.form = new FormGroup({
       isInterestedPerson: new FormControl(null, Validators.required),
+      interestPersonType: new FormControl(null),
     });
   }
 }

@@ -1,0 +1,13 @@
+<form [formGroup]="form">
+  <label *ngFor="let option of options" [class]="labelClasses">
+    {{ option.display }}
+    <input
+      type="radio"
+      [value]="option.value"
+      [formControlName]="controlName"
+      (change)="_onChanged()"
+      class="radio"
+    />
+    <span class="radio__checkmark"></span>
+  </label>
+</form>

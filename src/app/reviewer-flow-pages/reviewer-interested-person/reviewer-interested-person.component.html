@@ -1,5 +1,5 @@
 <form [formGroup]="form">
-  <div class="container">
+  <div [class]="containerClass">
     <!-- Row 1 -->
     <div class="label mt-46">
       <div class="label__icon"></div>
@@ -49,27 +49,26 @@
       </p>
       <!-- Interested person radio -->
       <div class="mt-14">
-        <label
-          *ngFor="let isInterested of [false, true]"
-          class="radio__container radio__label"
-        >
-          {{
-            isInterested
-              ? "มีส่วนเกี่ยวข้อง หรือมีส่วนได้เสียโดยตรงกับผู้เสนอแผนงาน ชุดโครงการ หรือโครงการ ดังนี้"
-              : "ไม่มีส่วนเกี่ยวข้อง หรือมีส่วนได้เสียโดยตรงกับผู้เสนอแผนงาน ชุดโครงการ หรือโครงการ"
-          }}
-          <input
-            type="radio"
-            [value]="isInterested"
-            formControlName="isInterestedPerson"
-            (change)="onIsInterestedPersonChanged()"
-            class="radio"
-          />
-          <span class="radio__checkmark"></span>
-        </label>
-        <div *ngIf="showDetailsQuestion">Details Question here</div>
+        <app-com-radio
+          [form]="form"
+          [options]="interestedPersonOptions"
+          [controlName]="'isInterestedPerson'"
+          radioStyle="review-1"
+        ></app-com-radio>
+
+        <div *ngIf="form.value.isInterestedPerson">
+          <p class="prefix ml-59 mt-15">
+            กรณีที่ตนเองมีความเกี่ยวข้องกับผู้เสนอโครงการในลักษณะดังต่อไปนี้
+          </p>
+          <app-com-radio
+            [form]="form"
+            [options]="interestedPersonTypeOptions"
+            [controlName]="'interestPersonType'"
+            radioStyle="review-1"
+          ></app-com-radio>
+        </div>
       </div>
     </div>
-    <!-- End Form -->
+    <!-- End process 1 form -->
   </div>
 </form>
