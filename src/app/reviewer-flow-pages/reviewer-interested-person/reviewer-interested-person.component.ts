@@ -52,6 +52,7 @@ export class ReviewerInterestedPerson implements OnInit {
 
   public isFormValid(): boolean {
     const controls = this.fieldNames.map((f) => this.form.get(f));
+    // this.form.get('interestedPersonType');
     return !controls.some((c) => !c?.valid);
   }
 }

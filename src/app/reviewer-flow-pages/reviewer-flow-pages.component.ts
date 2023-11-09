@@ -105,7 +105,7 @@ export class ReviewerFlowPagesComponent implements OnInit {
   private initForm() {
     this.form = new FormGroup({
       isInterestedPerson: new FormControl(null, Validators.required),
-      interestPersonType: new FormControl(null),
+      interestedPersonType: new FormControl(null),
     });
   }
 }
