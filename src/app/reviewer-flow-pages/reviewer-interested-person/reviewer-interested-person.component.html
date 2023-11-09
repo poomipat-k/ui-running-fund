@@ -53,19 +53,19 @@
           [form]="form"
           [options]="interestedPersonOptions"
           [controlName]="'isInterestedPerson'"
-          radioStyle="review-1"
+          radioStyle="review-1a"
         ></app-com-radio>
 
         @if (form.value.isInterestedPerson) {
-        <div>
-          <p class="prefix ml-59 mt-15">
-            กรณีที่ตนเองมีความเกี่ยวข้องกับผู้เสนอโครงการในลักษณะดังต่อไปนี้
-          </p>
+        <p class="prefix ml-59 mt-15">
+          กรณีที่ตนเองมีความเกี่ยวข้องกับผู้เสนอโครงการในลักษณะดังต่อไปนี้
+        </p>
+        <div class="ml-30">
           <app-com-radio
             [form]="form"
             [options]="interestedPersonTypeOptions"
             [controlName]="'interestPersonType'"
-            radioStyle="review-1"
+            radioStyle="review-1b"
           ></app-com-radio>
         </div>
         }

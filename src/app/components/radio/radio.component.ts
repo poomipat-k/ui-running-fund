@@ -15,12 +15,14 @@ export class RadioComponent implements OnInit {
   @Input() options: RadioOption[] = [];
   @Input() controlName = '';
   @Input() onChanged: () => void;
-  @Input() radioStyle = 'review-1';
+  @Input() radioStyle = 'review-1a';
 
   get labelClasses(): string[] {
     const classes = ['radio__container', 'radio__label'];
-    if (this.radioStyle === 'review-1') {
-      classes.push('radio__container--review-1');
+    if (this.radioStyle === 'review-1a') {
+      classes.push('radio__container--review-1a');
+    } else if (this.radioStyle === 'review-1b') {
+      classes.push('radio__container--review-1b');
     }
     return classes;
   }

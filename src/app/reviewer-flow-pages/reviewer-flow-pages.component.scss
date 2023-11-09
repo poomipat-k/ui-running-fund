@@ -69,3 +69,51 @@
   border-top: 0.5px solid #949494;
   margin-top: 2rem;
 }
+
+.button {
+  display: flex;
+  padding: 1.25rem 1.5rem;
+  width: 13rem;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  font-family: $custom-font;
+  font-size: 1.5rem;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  cursor: pointer;
+
+  &--cancel {
+    border: 1px solid #878c97;
+    color: #878c97;
+    background-color: #fff;
+  }
+
+  &--next {
+    margin-left: 1rem;
+    border: none;
+    background-color: #feb273;
+    color: #344054;
+
+    &:hover {
+      background-color: #ffbe88;
+      color: #424f64;
+    }
+
+    &:active {
+      background-color: #ffa167;
+    }
+
+    &-icon {
+      margin-left: 6.7px;
+      width: 2rem;
+      height: 2rem;
+    }
+  }
+
+  &__container {
+    display: flex;
+    justify-content: center;
+  }
+}

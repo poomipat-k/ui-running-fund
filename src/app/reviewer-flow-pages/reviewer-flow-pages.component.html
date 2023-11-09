@@ -31,8 +31,15 @@
 
     <div style="margin-top: 30px"></div>
   </form>
-  <button (click)="prevPage()">
-    {{ pageIndex === 1 ? "ยกเลิก" : "ย้อนกลับ" }}
-  </button>
-  <button (click)="nextPage()">ต่อไป -></button>
+  <div class="button__container">
+    <button class="button button--cancel" (click)="prevPage()">
+      {{ pageIndex === 1 ? "ยกเลิก" : "ย้อนกลับ" }}
+    </button>
+    <button class="button button--next" (click)="nextPage()">
+      ถัดไป
+      <div class="button--next-icon">
+        <app-com-svg-arrow-forward></app-com-svg-arrow-forward>
+      </div>
+    </button>
+  </div>
 </div>

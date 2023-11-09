@@ -17,13 +17,18 @@
     -ms-user-select: none;
     user-select: none;
 
-    &--review-1 {
+    &--review-1a {
       display: flex;
       padding-left: 2.8rem;
 
       &:not(:first-child) {
         margin-top: 8px;
       }
+    }
+
+    &--review-1b {
+      display: flex;
+      padding-left: 2.9rem;
     }
   }
 
@@ -36,7 +41,7 @@
     color: #344054;
   }
 
-  // Our custom checkmark
+  // Custom checkmark
   &__checkmark {
     position: absolute;
     top: 3px;

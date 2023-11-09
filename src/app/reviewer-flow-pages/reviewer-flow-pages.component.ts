@@ -15,6 +15,7 @@ import { BackgroundColor } from '../shared/enums/background-color';
 import { GeneralDetailsComponent } from './general-details/general-details.component';
 import { ReviewerInterestedPerson } from './reviewer-interested-person/reviewer-interested-person.component';
 import { ReviewerScoreComponent } from './reviewer-score/reviewer-score.component';
+import { ArrowForwardComponent } from '../components/svg/arrow-forward/arrow-forward.component';
 
 @Component({
   selector: 'app-reviewer-flow-pages',
@@ -25,6 +26,7 @@ import { ReviewerScoreComponent } from './reviewer-score/reviewer-score.componen
     GeneralDetailsComponent,
     ReviewerScoreComponent,
     ReactiveFormsModule,
+    ArrowForwardComponent,
   ],
   templateUrl: './reviewer-flow-pages.component.html',
   styleUrls: ['./reviewer-flow-pages.component.scss'],
