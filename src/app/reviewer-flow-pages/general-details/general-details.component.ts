@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input } from '@angular/core';
-import { FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { Component } from '@angular/core';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-review-general-details',
@@ -10,5 +10,5 @@ import { FormGroup, ReactiveFormsModule } from '@angular/forms';
   styleUrls: ['./general-details.component.scss'],
 })
 export class GeneralDetailsComponent {
-  @Input() form: FormGroup;
+  protected projectName = 'ชื่อโครงการขอทุนสนับสนุน';
 }

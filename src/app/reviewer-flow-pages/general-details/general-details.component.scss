@@ -1,0 +1,86 @@
+@import "../../../styles.scss";
+
+.container {
+  display: flex;
+  margin-top: 5em;
+}
+
+.header {
+  display: flex;
+  //   width: 19.8rem;
+  flex-basis: 24.3rem;
+  align-items: flex-start;
+
+  &__icon {
+    width: 3.6rem;
+    height: 3.6rem;
+    border-radius: 50%;
+    background-color: #344054;
+
+    font-family: $custom-font;
+    font-size: 1.8rem;
+    font-weight: 700;
+    line-height: 3.6rem;
+    text-align: center;
+    color: #fff;
+  }
+}
+
+.bold-text {
+  font-family: $custom-font;
+  font-weight: 700;
+  font-size: 2rem;
+  line-height: normal;
+  color: #344054;
+}
+
+.details {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  align-items: stretch;
+
+  &__row {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+    height: 3.3rem;
+  }
+}
+
+.textbox {
+  border: none;
+  border-bottom: 0.5px solid #7a7a7a;
+  outline: none;
+  font-family: $custom-font-looped;
+  font-weight: 400;
+  font-size: 1.8rem;
+  font-style: normal;
+  line-height: normal;
+  color: #7a7a7a;
+  height: 4.2rem;
+  flex: 1;
+
+  &:disabled {
+    background-color: white;
+  }
+}
+
+//   Utils
+.pdt {
+  &-3 {
+    padding-top: 3px;
+  }
+}
+
+.mt {
+  &-3 {
+    margin-top: 3px;
+  }
+}
+
+.ml {
+  &-13 {
+    margin-left: 1.3rem;
+  }
+}

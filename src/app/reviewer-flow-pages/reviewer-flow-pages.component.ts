@@ -53,6 +53,7 @@ export class ReviewerFlowPagesComponent implements OnInit {
     this.initForm();
 
     this.loadDetails();
+    this.pageIndex++;
   }
 
   protected nextPage(): void {

@@ -1,1 +1,38 @@
-<form [formGroup]="form">Test General</form>
+<div class="container">
+  <div class="header">
+    <div class="header__icon">1</div>
+    <h1 class="bold-text ml-13 pdt-3">ข้อมูลพื้นฐาน</h1>
+  </div>
+  <!-- Form -->
+  <div class="details mt-3">
+    <div class="details__row">
+      <p class="bold-text">ชื่อโครงการ</p>
+      <input
+        type="text"
+        class="textbox"
+        [value]="projectName"
+        [disabled]="true"
+      />
+    </div>
+
+    <div class="details__row">
+      <p class="bold-text">รหัสโครงการ</p>
+      <input
+        type="text"
+        class="textbox"
+        [value]="projectName"
+        [disabled]="true"
+      />
+    </div>
+
+    <div class="details__row">
+      <p class="bold-text">ชื่อหัวหน้าโครงการ/องค์กร</p>
+      <input
+        type="text"
+        class="textbox"
+        [value]="projectName"
+        [disabled]="true"
+      />
+    </div>
+  </div>
+</div>
