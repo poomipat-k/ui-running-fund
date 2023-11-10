@@ -61,22 +61,11 @@ export class ReviewerFlowPagesComponent implements OnInit {
     }
     // validate page
 
-    if (this.pageIndex === 1 && !this.form1.isFormValid()) {
-      const isInterestedPersonControl = this.form.get('ip.isInterestedPerson');
-      const interestedPersonTypeControl = this.form.get(
-        'ip.interestedPersonType'
-      );
-      if (isInterestedPersonControl) {
-        isInterestedPersonControl.markAsTouched({ onlySelf: true });
-      }
-      if (interestedPersonTypeControl) {
-        interestedPersonTypeControl.markAsTouched({ onlySelf: true });
-      }
-      console.log('===formIsNotValid');
-      return;
-    } else {
+    if (this.pageIndex === 1 && this.form1.validToGoNext()) {
       this.pageIndex++;
       console.log(this.form);
+    } else {
+      console.log('===not valid to go next');
     }
   }
 

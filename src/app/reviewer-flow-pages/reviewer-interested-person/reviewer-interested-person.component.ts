@@ -65,7 +65,7 @@ export class ReviewerInterestedPerson implements OnInit {
 
   ngOnInit(): void {}
 
-  onInterestedPersonChanged(): void {
+  protected onInterestedPersonChanged(): void {
     const groupControl = this.form.get('ip');
     if (this.form.value?.ip?.isInterestedPerson) {
       (this.form.get('ip') as FormGroup).addControl(
@@ -77,7 +77,29 @@ export class ReviewerInterestedPerson implements OnInit {
     (groupControl as FormGroup)?.removeControl('interestedPersonType');
   }
 
-  public isFormValid(): boolean {
+  private markFieldsTouched() {
+    const isInterestedPersonControl = this.form.get('ip.isInterestedPerson');
+    const interestedPersonTypeControl = this.form.get(
+      'ip.interestedPersonType'
+    );
+    if (isInterestedPersonControl) {
+      isInterestedPersonControl.markAsTouched({ onlySelf: true });
+    }
+    if (interestedPersonTypeControl) {
+      interestedPersonTypeControl.markAsTouched({ onlySelf: true });
+    }
+  }
+
+  public validToGoNext(): boolean {
+    if (!this.isFormValid()) {
+      this.markFieldsTouched();
+      return false;
+    } else {
+      return true;
+    }
+  }
+
+  private isFormValid(): boolean {
     return this.form.get('ip')?.valid ?? false;
   }
 }

@@ -62,7 +62,10 @@
         ></app-com-radio>
         <!-- Error Text non selected on Submit -->
         @if (showError1) {
-        <p>ErrorText 1</p>
+        <div class="error ml-28">
+          <img src="/assets/error_icon.svg" alt="error icon" />
+          <p class="error__text">กรุณาเลือกตัวเลือก</p>
+        </div>
         } @if (form.value.ip.isInterestedPerson) {
         <p class="prefix ml-59 mt-15">
           กรณีที่ตนเองมีความเกี่ยวข้องกับผู้เสนอโครงการในลักษณะดังต่อไปนี้
@@ -77,7 +80,10 @@
           ></app-com-radio>
         </div>
         @if (showError2) {
-        <p class="ml-30">ErrorText 2</p>
+        <div class="error ml-59">
+          <img src="/assets/error_icon.svg" alt="error icon" />
+          <p class="error__text">กรุณาเลือกตัวเลือก</p>
+        </div>
         } }
       </div>
     </div>

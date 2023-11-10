@@ -73,6 +73,19 @@
   padding-left: 2.8rem;
 }
 
+.error {
+  display: flex;
+  font-family: $custom-font-looped;
+  font-size: 1.3rem;
+  font-weight: 400;
+  line-height: normal;
+  color: #ec4a0a;
+
+  &__text {
+    margin-left: 4px;
+  }
+}
+
 // utils
 .mt {
   &-13 {
@@ -118,6 +131,10 @@
 }
 
 .ml {
+  &-28 {
+    margin-left: 2.8rem;
+  }
+
   &-30 {
     margin-left: 3rem;
   }
