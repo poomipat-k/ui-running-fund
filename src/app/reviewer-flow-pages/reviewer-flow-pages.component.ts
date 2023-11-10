@@ -67,6 +67,14 @@ export class ReviewerFlowPagesComponent implements OnInit {
     // validate page
 
     if (this.pageIndex === 1 && !this.form1.isFormValid()) {
+      const isInterestedPersonControl = this.form.get('isInterestedPerson');
+      const interestedPersonTypeControl = this.form.get('interestedPersonType');
+      if (isInterestedPersonControl) {
+        isInterestedPersonControl.markAsTouched({ onlySelf: true });
+      }
+      if (interestedPersonTypeControl) {
+        interestedPersonTypeControl.markAsTouched({ onlySelf: true });
+      }
       console.log('===formIsNotValid');
       return;
     } else {
@@ -105,7 +113,7 @@ export class ReviewerFlowPagesComponent implements OnInit {
   private initForm() {
     this.form = new FormGroup({
       isInterestedPerson: new FormControl(null, Validators.required),
-      interestedPersonType: new FormControl(null),
+      // interestedPersonType: new FormControl(null),
     });
   }
 }

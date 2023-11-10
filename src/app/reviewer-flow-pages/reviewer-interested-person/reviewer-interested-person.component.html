@@ -39,24 +39,31 @@
     <span class="hr"></span>
     <span class="hr"></span>
     <!-- Row 3 -->
+
+    <!-- 1st Col -->
     <div class="label mt-45">
       <div class="label__icon"></div>
       <p>การมีส่วนได้เสีย</p>
     </div>
+    <!-- 2nd Col -->
     <div class="data mt-46">
       <p class="prefix">
         ข้าพเจ้าได้ตรวจสอบการมีส่วนเกี่ยวข้องหรือส่วนได้เสียแล้ว ขอรับรองว่า
       </p>
-      <!-- Interested person radio -->
+      <!-- Radio -->
       <div class="mt-14">
         <app-com-radio
           [form]="form"
           [options]="interestedPersonOptions"
           [controlName]="'isInterestedPerson'"
           radioStyle="review-1a"
+          [onChanged]="onInterestedPersonChanged"
         ></app-com-radio>
-
-        @if (form.value.isInterestedPerson) {
+        <!-- Error Text non selected on Submit -->
+        @if (!form.get("isInterestedPerson")?.valid &&
+        form.get("isInterestedPerson")?.touched) {
+        <p>ErrorText 1</p>
+        } @if (form.value.isInterestedPerson) {
         <p class="prefix ml-59 mt-15">
           กรณีที่ตนเองมีความเกี่ยวข้องกับผู้เสนอโครงการในลักษณะดังต่อไปนี้
         </p>
@@ -68,7 +75,10 @@
             radioStyle="review-1b"
           ></app-com-radio>
         </div>
-        }
+        @if (!form.get("interestedPersonType")?.valid &&
+        form.get("interestedPersonType")?.touched) {
+        <p class="ml-30">ErrorText 2</p>
+        } }
       </div>
     </div>
     <!-- End process 1 form -->

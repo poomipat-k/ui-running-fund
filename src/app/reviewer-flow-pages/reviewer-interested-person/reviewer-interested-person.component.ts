@@ -1,6 +1,11 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
-import { FormGroup, ReactiveFormsModule } from '@angular/forms';
+import {
+  FormControl,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { RadioComponent } from '../../components/radio/radio.component';
 import { RadioOption } from '../../shared/models/radio-option';
 import { InterestedPersonTypeData } from './radio-options';
@@ -38,7 +43,7 @@ export class ReviewerInterestedPerson implements OnInit {
     InterestedPersonTypeData;
 
   // Component fields
-  private fieldNames: string[] = ['isInterestedPerson'];
+  private fieldNames: string[] = ['isInterestedPerson', 'interestedPersonType'];
 
   get containerClass(): string[] {
     return this.form.value?.isInterestedPerson
@@ -50,9 +55,21 @@ export class ReviewerInterestedPerson implements OnInit {
 
   ngOnInit(): void {}
 
+  onInterestedPersonChanged(): void {
+    if (!this.form.value?.isInterestedPerson) {
+      this.form.removeControl('interestedPersonType');
+      return;
+    }
+    this.form.addControl(
+      'interestedPersonType',
+      new FormControl(null, Validators.required)
+    );
+  }
+
   public isFormValid(): boolean {
-    const controls = this.fieldNames.map((f) => this.form.get(f));
-    // this.form.get('interestedPersonType');
+    const controls = this.fieldNames
+      .map((f) => this.form.get(f))
+      .filter((c) => !!c);
     return !controls.some((c) => !c?.valid);
   }
 }

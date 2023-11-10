@@ -28,9 +28,8 @@
     >} @case (2) {
     <app-review-general-details [form]="form"></app-review-general-details>}
     @case (3) { <app-reviewer-score [form]="form"></app-reviewer-score>} }
-
-    <div style="margin-top: 30px"></div>
   </form>
+
   <div class="button__container">
     <button class="button button--cancel" (click)="prevPage()">
       {{ pageIndex === 1 ? "ยกเลิก" : "ย้อนกลับ" }}
