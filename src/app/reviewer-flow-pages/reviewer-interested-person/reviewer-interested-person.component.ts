@@ -42,34 +42,42 @@ export class ReviewerInterestedPerson implements OnInit {
   protected interestedPersonTypeOptions: RadioOption[] =
     InterestedPersonTypeData;
 
-  // Component fields
-  private fieldNames: string[] = ['isInterestedPerson', 'interestedPersonType'];
-
   get containerClass(): string[] {
-    return this.form.value?.isInterestedPerson
+    return this.form.value?.ip?.isInterestedPerson
       ? ['container', 'container--expand']
       : ['container'];
   }
 
+  get showError1(): boolean {
+    return (
+      !this.form.get('ip.isInterestedPerson')?.valid &&
+      (this.form.get('ip.isInterestedPerson')?.touched ?? false)
+    );
+  }
+
+  get showError2(): boolean {
+    return (
+      !this.form.get('ip.interestedPersonType')?.valid &&
+      (this.form.get('ip.interestedPersonType')?.touched ?? false)
+    );
+  }
   constructor() {}
 
   ngOnInit(): void {}
 
   onInterestedPersonChanged(): void {
-    if (!this.form.value?.isInterestedPerson) {
-      this.form.removeControl('interestedPersonType');
+    const groupControl = this.form.get('ip');
+    if (this.form.value?.ip?.isInterestedPerson) {
+      (this.form.get('ip') as FormGroup).addControl(
+        'interestedPersonType',
+        new FormControl(null, Validators.required)
+      );
       return;
     }
-    this.form.addControl(
-      'interestedPersonType',
-      new FormControl(null, Validators.required)
-    );
+    (groupControl as FormGroup)?.removeControl('interestedPersonType');
   }
 
   public isFormValid(): boolean {
-    const controls = this.fieldNames
-      .map((f) => this.form.get(f))
-      .filter((c) => !!c);
-    return !controls.some((c) => !c?.valid);
+    return this.form.get('ip')?.valid ?? false;
   }
 }

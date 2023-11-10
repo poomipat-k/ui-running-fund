@@ -41,12 +41,7 @@ export class ReviewerFlowPagesComponent implements OnInit {
   private readonly themeService: ThemeService = inject(ThemeService);
 
   protected pageIndex = 1;
-  private pages = [
-    ReviewerInterestedPerson,
-    GeneralDetailsComponent,
-    ReviewerScoreComponent,
-  ];
-  private maxPageIndex = this.pages.length;
+  private maxPageIndex = 3;
 
   private readonly userService: UserService = inject(UserService);
   private readonly projectService: ProjectService = inject(ProjectService);
@@ -67,8 +62,10 @@ export class ReviewerFlowPagesComponent implements OnInit {
     // validate page
 
     if (this.pageIndex === 1 && !this.form1.isFormValid()) {
-      const isInterestedPersonControl = this.form.get('isInterestedPerson');
-      const interestedPersonTypeControl = this.form.get('interestedPersonType');
+      const isInterestedPersonControl = this.form.get('ip.isInterestedPerson');
+      const interestedPersonTypeControl = this.form.get(
+        'ip.interestedPersonType'
+      );
       if (isInterestedPersonControl) {
         isInterestedPersonControl.markAsTouched({ onlySelf: true });
       }
@@ -112,8 +109,9 @@ export class ReviewerFlowPagesComponent implements OnInit {
 
   private initForm() {
     this.form = new FormGroup({
-      isInterestedPerson: new FormControl(null, Validators.required),
-      // interestedPersonType: new FormControl(null),
+      ip: new FormGroup({
+        isInterestedPerson: new FormControl(null, Validators.required),
+      }),
     });
   }
 }

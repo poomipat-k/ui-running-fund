@@ -12,8 +12,9 @@ import { RadioOption } from '../../shared/models/radio-option';
 })
 export class RadioComponent implements OnInit {
   @Input() form: FormGroup;
-  @Input() options: RadioOption[] = [];
+  @Input() groupName: string;
   @Input() controlName = '';
+  @Input() options: RadioOption[] = [];
   @Input() onChanged: () => void;
   @Input() radioStyle = 'review-1a';
 

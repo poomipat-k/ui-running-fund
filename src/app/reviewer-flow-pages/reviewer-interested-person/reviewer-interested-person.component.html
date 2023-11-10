@@ -1,5 +1,5 @@
-<form [formGroup]="form">
-  <div [class]="containerClass">
+<ng-container [formGroup]="form">
+  <div [class]="containerClass" formGroupName="ip">
     <!-- Row 1 -->
     <div class="label mt-46">
       <div class="label__icon"></div>
@@ -55,15 +55,15 @@
         <app-com-radio
           [form]="form"
           [options]="interestedPersonOptions"
+          groupName="ip"
           [controlName]="'isInterestedPerson'"
           radioStyle="review-1a"
           [onChanged]="onInterestedPersonChanged"
         ></app-com-radio>
         <!-- Error Text non selected on Submit -->
-        @if (!form.get("isInterestedPerson")?.valid &&
-        form.get("isInterestedPerson")?.touched) {
+        @if (showError1) {
         <p>ErrorText 1</p>
-        } @if (form.value.isInterestedPerson) {
+        } @if (form.value.ip.isInterestedPerson) {
         <p class="prefix ml-59 mt-15">
           กรณีที่ตนเองมีความเกี่ยวข้องกับผู้เสนอโครงการในลักษณะดังต่อไปนี้
         </p>
@@ -71,16 +71,16 @@
           <app-com-radio
             [form]="form"
             [options]="interestedPersonTypeOptions"
+            groupName="ip"
             [controlName]="'interestedPersonType'"
             radioStyle="review-1b"
           ></app-com-radio>
         </div>
-        @if (!form.get("interestedPersonType")?.valid &&
-        form.get("interestedPersonType")?.touched) {
+        @if (showError2) {
         <p class="ml-30">ErrorText 2</p>
         } }
       </div>
     </div>
     <!-- End process 1 form -->
   </div>
-</form>
+</ng-container>
