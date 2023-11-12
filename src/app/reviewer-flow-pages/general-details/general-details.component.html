@@ -6,33 +6,56 @@
   <!-- Form -->
   <div class="details mt-3">
     <div class="details__row">
-      <p class="bold-text">ชื่อโครงการ</p>
+      <label class="bold-text">ชื่อโครงการ</label>
       <input
         type="text"
-        class="textbox"
+        class="textbox pdl-3 ml-28"
         [value]="projectName"
         [disabled]="true"
       />
     </div>
 
     <div class="details__row">
-      <p class="bold-text">รหัสโครงการ</p>
+      <label class="bold-text">รหัสโครงการ</label>
       <input
         type="text"
-        class="textbox"
-        [value]="projectName"
+        class="textbox ml-14"
+        [value]="projectCode"
         [disabled]="true"
       />
     </div>
 
     <div class="details__row">
-      <p class="bold-text">ชื่อหัวหน้าโครงการ/องค์กร</p>
+      <label class="bold-text">ชื่อหัวหน้าโครงการ/องค์กร</label>
       <input
         type="text"
-        class="textbox"
-        [value]="projectName"
+        class="textbox ml-22"
+        [value]="projectLeader"
         [disabled]="true"
       />
+    </div>
+
+    <div class="details__row">
+      <label class="bold-text">สถานที่จัดการแข่งขัน</label>
+      <input
+        type="text"
+        class="textbox ml-17"
+        [value]="projectLocation"
+        [disabled]="true"
+      />
+    </div>
+
+    <div class="details__row">
+      <label class="bold-text">สถานที่จัดการแข่งขัน</label>
+      <div class="checkbox-container ml-30">
+        @for (item of projectTypeCheckBox; track item.id) {
+        <app-com-checkbox
+          [name]="item.name"
+          [display]="item.display"
+          [value]="item.value"
+        ></app-com-checkbox>
+        }
+      </div>
     </div>
   </div>
 </div>

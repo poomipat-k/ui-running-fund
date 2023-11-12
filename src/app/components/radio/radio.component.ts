@@ -18,16 +18,6 @@ export class RadioComponent implements OnInit {
   @Input() onChanged: () => void;
   @Input() radioStyle = 'review-1a';
 
-  get labelClasses(): string[] {
-    const classes = ['radio__container', 'radio__label'];
-    if (this.radioStyle === 'review-1a') {
-      classes.push('radio__container--review-1a');
-    } else if (this.radioStyle === 'review-1b') {
-      classes.push('radio__container--review-1b');
-    }
-    return classes;
-  }
-
   ngOnInit(): void {
     if (this.onChanged) {
       this._onChanged = this.onChanged;

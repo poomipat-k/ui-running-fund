@@ -1,7 +1,7 @@
 <div class="filter" (click)="toggleFilter()">
   <p>{{ filterText }}</p>
   <img src="/assets/sliders_icon.svg" alt="row sorting icon" />
-  <div [class]="['filter__dropdown', showOptions ? '' : 'hide']">
+  <div [ngClass]="{ filter__dropdown: true, hide: !showOptions }">
     @for (option of filterOptions; track option.id) {
     <p class="filter__dropdown-option" (click)="onSelectFilter(option)">
       {{ option.display }}

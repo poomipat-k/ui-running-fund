@@ -45,6 +45,10 @@
     flex-direction: row;
     align-items: flex-end;
     height: 3.3rem;
+
+    &:not(:first-child) {
+      margin-top: 3.3rem;
+    }
   }
 }
 
@@ -54,11 +58,10 @@
   outline: none;
   font-family: $custom-font-looped;
   font-weight: 400;
-  font-size: 1.8rem;
-  font-style: normal;
+  font-size: 2rem;
   line-height: normal;
-  color: #7a7a7a;
-  height: 4.2rem;
+  color: #344054;
+  height: 3.3rem;
   flex: 1;
 
   &:disabled {
@@ -73,6 +76,12 @@
   }
 }
 
+.pdl {
+  &-3 {
+    padding-left: 3px;
+  }
+}
+
 .mt {
   &-3 {
     margin-top: 3px;
@@ -82,5 +91,24 @@
 .ml {
   &-13 {
     margin-left: 1.3rem;
+  }
+
+  &-14 {
+    margin-left: 1.4rem;
+  }
+
+  &-17 {
+    margin-left: 1.7rem;
+  }
+
+  &-22 {
+    margin-left: 2.2rem;
+  }
+
+  &-28 {
+    margin-left: 2.8rem;
+  }
+  &-30 {
+    margin-left: 3rem;
   }
 }
