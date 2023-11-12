@@ -1,4 +1,3 @@
-@if (form) {
 <ng-container [formGroup]="form">
   @if (groupName) {
   <ng-container [formGroupName]="groupName">
@@ -24,14 +23,7 @@
     }
   </ng-container>
   } @else { @for (option of options; track option.id) {
-  <label
-    [ngClass]="{
-      radio__container: true,
-      radio__label: true,
-      'radio__container--review-1a': radioStyle === 'review-1a',
-      'radio__container--review-1b': this.radioStyle === 'review-1b'
-    }"
-  >
+  <label [ngClass]="labelClasses">
     {{ option.display }}
     <input
       type="radio"
@@ -44,23 +36,3 @@
   </label>
   } }
 </ng-container>
-} @else { @for (option of options; track option.id) {
-<label
-  [ngClass]="{
-    radio__container: true,
-    radio__label: true,
-    'radio__container--review-1a': radioStyle === 'review-1a',
-    'radio__container--review-1b': this.radioStyle === 'review-1b'
-  }"
->
-  {{ option.display }}
-  <input
-    type="radio"
-    [value]="option.value"
-    [formControlName]="controlName"
-    (change)="_onChanged()"
-    class="radio"
-  />
-  <span class="radio__checkmark"></span>
-</label>
-} }

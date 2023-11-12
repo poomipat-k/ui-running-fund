@@ -13,4 +13,5 @@ export class CheckboxComponent {
   @Input() name: string;
   @Input() display: string;
   @Input() disabled = false;
+  @Input() checked = false;
 }

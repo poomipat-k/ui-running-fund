@@ -65,6 +65,9 @@ export class ReviewerFlowPagesComponent implements OnInit {
     if (this.pageIndex === 1 && this.form1.validToGoNext()) {
       this.pageIndex++;
       console.log(this.form);
+    } else if (this.pageIndex === 2) {
+      this.pageIndex++;
+      console.log(this.form);
     } else {
       console.log('===not valid to go next');
     }

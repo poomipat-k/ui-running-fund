@@ -55,10 +55,41 @@
             [display]="item.display"
             [value]="item.value"
             [disabled]="true"
+            [checked]="item.checked"
           ></app-com-checkbox-view>
         </div>
         }
       </div>
+    </div>
+
+    <div class="details__row">
+      <label class="bold-text">จำนวนผู้เข้าร่วมที่คาดหวัง</label>
+      <input
+        type="text"
+        class="textbox ml-17"
+        [value]="expectedRunner"
+        [disabled]="true"
+      />
+    </div>
+
+    <div class="details__row">
+      <label class="bold-text">กลุ่มเป้าหมาย</label>
+      <input
+        type="text"
+        class="textbox ml-17"
+        [value]="targetGroup"
+        [disabled]="true"
+      />
+    </div>
+
+    <div class="details__row">
+      <label class="bold-text">ประวัติการรับทุนอุปถัมภ์จาก สสส.</label>
+      <app-com-radio-view
+        [options]="hadReceivedFundOptions"
+        radioStyle="review-2a"
+        [disabled]="true"
+        [selectedValue]="false"
+      ></app-com-radio-view>
     </div>
   </div>
 </div>

@@ -2,11 +2,18 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CheckboxComponent } from '../../components/checkbox-view/checkbox.component';
+import { RadioViewComponent } from '../../components/radio-view/radio-view.component';
+import { RadioOption } from '../../shared/models/radio-option';
 
 @Component({
   selector: 'app-review-general-details',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, CheckboxComponent],
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    CheckboxComponent,
+    RadioViewComponent,
+  ],
   templateUrl: './general-details.component.html',
   styleUrls: ['./general-details.component.scss'],
 })
@@ -17,11 +24,39 @@ export class GeneralDetailsComponent {
   protected projectLocation = 'กาดหลวง เชียงใหม่';
 
   protected projectTypeCheckBox = [
-    { id: 1, display: 'Fun Run', value: 'fun_run', name: 'fun_run' },
-    { id: 2, display: '<5km', value: '5km', name: '5km' },
-    { id: 3, display: '<10km', value: '10km', name: '10km' },
-    { id: 4, display: '<20km', value: '20km', name: '20km' },
-    { id: 5, display: '<42km', value: '42km', name: '42km' },
-    { id: 6, display: 'Others', value: 'others', name: 'others' },
+    {
+      id: 1,
+      display: 'Fun Run',
+      value: 'fun_run',
+      name: 'fun_run',
+      checked: false,
+    },
+    { id: 2, display: '<5km', value: '5km', name: '5km', checked: false },
+    { id: 3, display: '<10km', value: '10km', name: '10km', checked: true },
+    { id: 4, display: '<20km', value: '20km', name: '20km', checked: true },
+    { id: 5, display: '<42km', value: '42km', name: '42km', checked: false },
+    {
+      id: 6,
+      display: 'Others',
+      value: 'others',
+      name: 'others',
+      checked: false,
+    },
+  ];
+
+  protected expectedRunner = '1,000 คน';
+  protected targetGroup = 'วัยรุ่นและผู้ใหญ่';
+
+  protected hadReceivedFundOptions: RadioOption[] = [
+    {
+      id: 1,
+      display: 'เคย',
+      value: true,
+    },
+    {
+      id: 2,
+      display: 'ไม่เคย',
+      value: false,
+    },
   ];
 }
