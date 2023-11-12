@@ -69,6 +69,15 @@
   }
 }
 
+.checkbox-container {
+  display: flex;
+  align-items: center;
+
+  &:not(:first-child) {
+    margin-left: 2.4rem;
+  }
+}
+
 //   Utils
 .pdt {
   &-3 {

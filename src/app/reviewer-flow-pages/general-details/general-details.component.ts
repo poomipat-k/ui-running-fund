@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
-import { CheckboxComponent } from '../../components/checkbox/checkbox.component';
+import { CheckboxComponent } from '../../components/checkbox-view/checkbox.component';
 
 @Component({
   selector: 'app-review-general-details',

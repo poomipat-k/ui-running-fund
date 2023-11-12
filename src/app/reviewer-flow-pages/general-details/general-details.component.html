@@ -49,11 +49,14 @@
       <label class="bold-text">สถานที่จัดการแข่งขัน</label>
       <div class="checkbox-container ml-30">
         @for (item of projectTypeCheckBox; track item.id) {
-        <app-com-checkbox
-          [name]="item.name"
-          [display]="item.display"
-          [value]="item.value"
-        ></app-com-checkbox>
+        <div class="checkbox-container">
+          <app-com-checkbox-view
+            [name]="item.name"
+            [display]="item.display"
+            [value]="item.value"
+            [disabled]="true"
+          ></app-com-checkbox-view>
+        </div>
         }
       </div>
     </div>
