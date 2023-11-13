@@ -106,9 +106,9 @@ export class HomeComponent implements OnInit {
           this.reviewPeriod = p;
           const user = this.userService.getCurrentUser();
           return this.projectService.getReviewDashboard(
-            user.id,
-            this.reviewPeriod.from_date,
-            this.reviewPeriod.to_date
+            user?.id,
+            this.reviewPeriod?.from_date,
+            this.reviewPeriod?.to_date
           );
         })
       )

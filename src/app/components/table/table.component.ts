@@ -6,7 +6,7 @@ import { TableColumn } from '../../shared/models/table-column';
 import { TableCellTemplateComponent } from '../table-cell-template/table-cell-template.component';
 
 @Component({
-  selector: 'app-table',
+  selector: 'app-com-table',
   standalone: true,
   imports: [CommonModule, TableCellTemplateComponent],
   templateUrl: './table.component.html',
@@ -14,8 +14,9 @@ import { TableCellTemplateComponent } from '../table-cell-template/table-cell-te
 })
 export class TableComponent {
   @Input() columns: TableColumn[];
-  @Input() data: TableCell[][];
+  @Input() data: TableCell[][] = [];
   @Input() keyColumnIndex = 0;
+  @Input() emptyText: string;
 
   routerService: Router = inject(Router);
 

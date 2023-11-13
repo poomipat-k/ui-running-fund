@@ -1,3 +1,4 @@
+@if (data.length) {
 <table class="table margin-top-24">
   <thead>
     <tr>
@@ -37,3 +38,32 @@
     }
   </tbody>
 </table>
+} @else {
+<table class="table margin-top-24">
+  <thead>
+    <tr>
+      @for (col of columns; track $index) {
+      <th
+        scope="col"
+        [class]="[
+          'table__header',
+          col.class,
+          col.compact ? 'table__cell--header-compact' : ''
+        ]"
+      >
+        {{ col.name }}
+      </th>
+      }
+    </tr>
+  </thead>
+</table>
+
+<div class="empty">
+  <div>
+    <div>
+      <img src="/assets/cloud_off.svg" alt="cloud off icon" />
+    </div>
+    <p class="empty__text">{{ emptyText }}</p>
+  </div>
+</div>
+}
