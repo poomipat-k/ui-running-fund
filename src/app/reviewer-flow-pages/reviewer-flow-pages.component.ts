@@ -89,6 +89,7 @@ export class ReviewerFlowPagesComponent implements OnInit {
     this.projectService.getReviewCriteria(1).subscribe((result) => {
       if (result) {
         this.reviewCriteriaList = result;
+        console.log(this.reviewCriteriaList);
       }
     });
   }

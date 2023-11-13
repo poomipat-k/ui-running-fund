@@ -28,51 +28,13 @@
     </div>
   </div>
 
-  <div class="container__main">
-    <p>
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Libero saepe eum
-      error fugit unde assumenda cumque quae vitae voluptates vel? Quae
-      voluptatum aspernatur sequi nisi et minima similique suscipit beatae?
-    </p>
-    <p>
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Libero saepe eum
-      error fugit unde assumenda cumque quae vitae voluptates vel? Quae
-      voluptatum aspernatur sequi nisi et minima similique suscipit beatae?
-    </p>
-    <p>
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Libero saepe eum
-      error fugit unde assumenda cumque quae vitae voluptates vel? Quae
-      voluptatum aspernatur sequi nisi et minima similique suscipit beatae?
-    </p>
-    <p>
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Libero saepe eum
-      error fugit unde assumenda cumque quae vitae voluptates vel? Quae
-      voluptatum aspernatur sequi nisi et minima similique suscipit beatae?
-    </p>
-    <p>
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Libero saepe eum
-      error fugit unde assumenda cumque quae vitae voluptates vel? Quae
-      voluptatum aspernatur sequi nisi et minima similique suscipit beatae?
-    </p>
-    <p>
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Libero saepe eum
-      error fugit unde assumenda cumque quae vitae voluptates vel? Quae
-      voluptatum aspernatur sequi nisi et minima similique suscipit beatae?
-    </p>
-    <p>
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Libero saepe eum
-      error fugit unde assumenda cumque quae vitae voluptates vel? Quae
-      voluptatum aspernatur sequi nisi et minima similique suscipit beatae?
-    </p>
-    <p>
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Libero saepe eum
-      error fugit unde assumenda cumque quae vitae voluptates vel? Quae
-      voluptatum aspernatur sequi nisi et minima similique suscipit beatae?
-    </p>
-    <p>
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Libero saepe eum
-      error fugit unde assumenda cumque quae vitae voluptates vel? Quae
-      voluptatum aspernatur sequi nisi et minima similique suscipit beatae?
-    </p>
+  <div class="main">
+    @for (group of groupHeaders; track group.id) {
+    <div class="main__group">{{ group.groupName }}</div>
+    @for (c of criteriaList; track $index) { @if (c.criteria_version === 1 &&
+    c.group_number === group.id) {
+    <p [innerHTML]="buildQuestionText(c)"></p>
+    <br />
+    } } }
   </div>
 </div>

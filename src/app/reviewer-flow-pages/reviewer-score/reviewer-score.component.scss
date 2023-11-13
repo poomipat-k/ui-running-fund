@@ -2,17 +2,38 @@
 
 .container {
   display: flex;
-
-  &__main {
-    font-size: 4rem;
-    flex: 1;
-  }
 }
 
 .sticky {
   position: sticky;
   top: 10rem;
   align-self: flex-start;
+}
+
+.main {
+  flex: 1;
+
+  &__group {
+    padding: 1rem 0px 1rem 2rem;
+    background-color: #f2edeb;
+
+    font-family: $custom-font-looped;
+    font-size: 1.6rem;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    color: #344054;
+
+    &::after {
+      content: "*";
+      font-family: $custom-font-looped;
+      font-size: 1.6rem;
+      font-style: normal;
+      font-weight: 500;
+      line-height: normal;
+      color: #ec4a0a;
+    }
+  }
 }
 
 .header {
@@ -39,8 +60,7 @@
   font-family: $custom-font;
   font-weight: 700;
   font-size: 1.8rem;
-  //   line-height: normal;
-  line-height: 2.1rem;
+  line-height: normal;
   color: #344054;
   flex-shrink: 0;
 }
