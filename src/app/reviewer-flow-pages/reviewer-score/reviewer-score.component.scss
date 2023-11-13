@@ -33,21 +33,55 @@
     text-align: center;
     color: #fff;
   }
-
-  &__text {
-    flex: 1;
-  }
 }
 
 .bold-text {
   font-family: $custom-font;
   font-weight: 700;
   font-size: 1.8rem;
-  line-height: normal;
+  //   line-height: normal;
+  line-height: 2.1rem;
   color: #344054;
+  flex-shrink: 0;
+}
+
+.sticky {
+  position: sticky;
+  margin-top: 6px;
+  top: 9rem;
+
+  &__header {
+    font-family: $custom-font-looped;
+    font-size: 1.6rem;
+    font-weight: 500;
+    line-height: normal;
+    color: #c4320a;
+  }
+
+  &__number {
+    font-family: $custom-font-looped;
+    font-size: 1.6rem;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    color: #c4320a;
+  }
+
+  &__text {
+    color: #344054;
+    font-family: $custom-font-looped;
+    font-size: 1.6rem;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    margin-top: 4px;
+  }
 }
 
 .mt {
+  &-15 {
+    margin-top: 1.5rem;
+  }
   &-29 {
     margin-top: 2.9rem;
   }
