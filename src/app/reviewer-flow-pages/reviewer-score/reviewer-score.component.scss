@@ -1,0 +1,66 @@
+@import "../../../styles.scss";
+
+.container {
+  display: flex;
+
+  &__main {
+    font-size: 4rem;
+    flex: 1;
+  }
+}
+
+.sticky {
+  position: sticky;
+  top: 10rem;
+  align-self: flex-start;
+}
+
+.header {
+  flex-basis: 28.4rem;
+  display: flex;
+
+  &__icon {
+    height: 3.6rem;
+    flex-basis: 3.6rem;
+    flex-shrink: 0;
+    border-radius: 50%;
+    background-color: #344054;
+
+    font-family: $custom-font;
+    font-size: 1.8rem;
+    font-weight: 700;
+    line-height: 3.6rem;
+    text-align: center;
+    color: #fff;
+  }
+
+  &__text {
+    flex: 1;
+  }
+}
+
+.bold-text {
+  font-family: $custom-font;
+  font-weight: 700;
+  font-size: 1.8rem;
+  line-height: normal;
+  color: #344054;
+}
+
+.mt {
+  &-29 {
+    margin-top: 2.9rem;
+  }
+}
+
+.ml {
+  &-13 {
+    margin-left: 1.3rem;
+  }
+}
+
+.pdt {
+  &-5 {
+    padding-top: 5px;
+  }
+}

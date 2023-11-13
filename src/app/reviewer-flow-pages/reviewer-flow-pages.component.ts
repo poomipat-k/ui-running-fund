@@ -8,14 +8,15 @@ import {
 } from '@angular/forms';
 import { Router } from '@angular/router';
 import { mergeMap, of } from 'rxjs';
+import { ArrowForwardComponent } from '../components/svg/arrow-forward/arrow-forward.component';
 import { ProjectService } from '../services/project.service';
 import { ThemeService } from '../services/theme.service';
 import { UserService } from '../services/user.service';
 import { BackgroundColor } from '../shared/enums/background-color';
+import { ReviewCriteria } from '../shared/models/review-criteria';
 import { GeneralDetailsComponent } from './general-details/general-details.component';
 import { ReviewerInterestedPerson } from './reviewer-interested-person/reviewer-interested-person.component';
 import { ReviewerScoreComponent } from './reviewer-score/reviewer-score.component';
-import { ArrowForwardComponent } from '../components/svg/arrow-forward/arrow-forward.component';
 
 @Component({
   selector: 'app-reviewer-flow-pages',
@@ -36,6 +37,7 @@ export class ReviewerFlowPagesComponent implements OnInit {
   // url params
   @Input() projectCode: string;
   protected form: FormGroup;
+  protected reviewCriteriaList: ReviewCriteria[] = [];
 
   private readonly routerService: Router = inject(Router);
   private readonly themeService: ThemeService = inject(ThemeService);
@@ -52,7 +54,10 @@ export class ReviewerFlowPagesComponent implements OnInit {
     this.themeService.changeBackgroundColor(BackgroundColor.gray);
     this.initForm();
 
+    this.loadReviewCriteria();
     this.loadDetails();
+
+    this.pageIndex += 2;
   }
 
   protected nextPage(): void {
@@ -80,6 +85,14 @@ export class ReviewerFlowPagesComponent implements OnInit {
     this.routerService.navigate(['/']);
   }
 
+  private loadReviewCriteria() {
+    this.projectService.getReviewCriteria(1).subscribe((result) => {
+      if (result) {
+        this.reviewCriteriaList = result;
+      }
+    });
+  }
+
   private loadDetails() {
     this.userService.currentUserSubject$
       .pipe(
@@ -94,6 +107,7 @@ export class ReviewerFlowPagesComponent implements OnInit {
         })
       )
       .subscribe((result) => {
+        console.log('===loadDetails result:', result);
         if (result) {
         }
       });

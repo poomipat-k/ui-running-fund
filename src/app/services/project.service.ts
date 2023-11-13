@@ -4,6 +4,7 @@ import { Observable, catchError, throwError } from 'rxjs';
 import { ReviewPeriod } from '../shared/models/review-period';
 import { ReviewerDashboardRow } from '../shared/models/reviewer-dashboard-row';
 import { ReviewerProjectDetails } from '../shared/models/reviewer-project-details';
+import { ReviewCriteria } from '../shared/models/review-criteria';
 
 @Injectable({
   providedIn: 'root',
@@ -52,6 +53,14 @@ export class ProjectService {
             Authorization: `Bearer ${userId}`,
           },
         }
+      )
+      .pipe(catchError(this.handleError));
+  }
+
+  getReviewCriteria(criteriaVersion = 1): Observable<ReviewCriteria[]> {
+    return this.http
+      .get<ReviewCriteria[]>(
+        `${this.baseUrl}/review/criteria/${criteriaVersion}`
       )
       .pipe(catchError(this.handleError));
   }

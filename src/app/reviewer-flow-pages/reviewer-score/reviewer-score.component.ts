@@ -11,9 +11,4 @@ import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 })
 export class ReviewerScoreComponent {
   @Input() form: FormGroup;
-
-  onClick() {
-    console.log('+++Onclick');
-    console.log(this.form);
-  }
 }
