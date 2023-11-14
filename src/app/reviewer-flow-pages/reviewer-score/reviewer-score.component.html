@@ -34,7 +34,13 @@
     @for (c of criteriaList; track $index) { @if (c.criteria_version === 1 &&
     c.group_number === group.id) {
     <p [innerHTML]="buildQuestionText(c)"></p>
-    <br />
+    <!-- <app-com-radio
+      [form]="form"
+      [options]="scoreOptions"
+      groupName="score"
+      [controlName]="'isInterestedPerson'"
+      radioStyle="review-1a"
+    ></app-com-radio> -->
     } } }
   </div>
 </div>

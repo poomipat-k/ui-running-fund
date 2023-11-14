@@ -31,7 +31,9 @@
       [form]="form"
       [criteriaList]="reviewCriteriaList"
     ></app-reviewer-score
-    >} }
+    >} @case (4) {
+    <app-reviewer-summary></app-reviewer-summary>
+    }}
   </form>
 
   <div class="button__container mt-40">

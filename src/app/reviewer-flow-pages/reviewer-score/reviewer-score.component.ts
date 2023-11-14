@@ -1,19 +1,49 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input, inject } from '@angular/core';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { ReviewCriteria } from '../../shared/models/review-criteria';
 import { DomSanitizer } from '@angular/platform-browser';
+import { RadioComponent } from '../../components/radio/radio.component';
+import { ReviewCriteria } from '../../shared/models/review-criteria';
+import { RadioOption } from '../../shared/models/radio-option';
 
 @Component({
   selector: 'app-reviewer-score',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, RadioComponent],
   templateUrl: './reviewer-score.component.html',
   styleUrls: ['./reviewer-score.component.scss'],
 })
 export class ReviewerScoreComponent {
   @Input() form: FormGroup;
   @Input() criteriaList: ReviewCriteria[] = [];
+
+  protected scoreOptions: RadioOption[] = [
+    {
+      id: 1,
+      value: 1,
+      display: 1,
+    },
+    {
+      id: 2,
+      value: 2,
+      display: 2,
+    },
+    {
+      id: 3,
+      value: 3,
+      display: 3,
+    },
+    {
+      id: 4,
+      value: 4,
+      display: 4,
+    },
+    {
+      id: 5,
+      value: 5,
+      display: 5,
+    },
+  ];
 
   protected groupHeaders = [
     {

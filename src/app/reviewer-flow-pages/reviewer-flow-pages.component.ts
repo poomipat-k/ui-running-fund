@@ -1,5 +1,12 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input, OnInit, ViewChild, inject } from '@angular/core';
+import {
+  Component,
+  Input,
+  OnDestroy,
+  OnInit,
+  ViewChild,
+  inject,
+} from '@angular/core';
 import {
   FormControl,
   FormGroup,
@@ -7,7 +14,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { Router } from '@angular/router';
-import { mergeMap, of } from 'rxjs';
+import { Subscription, forkJoin, mergeMap, of } from 'rxjs';
 import { ArrowForwardComponent } from '../components/svg/arrow-forward/arrow-forward.component';
 import { ProjectService } from '../services/project.service';
 import { ThemeService } from '../services/theme.service';
@@ -17,6 +24,7 @@ import { ReviewCriteria } from '../shared/models/review-criteria';
 import { GeneralDetailsComponent } from './general-details/general-details.component';
 import { ReviewerInterestedPerson } from './reviewer-interested-person/reviewer-interested-person.component';
 import { ReviewerScoreComponent } from './reviewer-score/reviewer-score.component';
+import { ReviewerSummaryComponent } from './reviewer-summary/reviewer-summary.component';
 
 @Component({
   selector: 'app-reviewer-flow-pages',
@@ -28,11 +36,12 @@ import { ReviewerScoreComponent } from './reviewer-score/reviewer-score.componen
     ReviewerScoreComponent,
     ReactiveFormsModule,
     ArrowForwardComponent,
+    ReviewerSummaryComponent,
   ],
   templateUrl: './reviewer-flow-pages.component.html',
   styleUrls: ['./reviewer-flow-pages.component.scss'],
 })
-export class ReviewerFlowPagesComponent implements OnInit {
+export class ReviewerFlowPagesComponent implements OnInit, OnDestroy {
   @ViewChild('interestedPerson') form1: ReviewerInterestedPerson;
   // url params
   @Input() projectCode: string;
@@ -43,21 +52,26 @@ export class ReviewerFlowPagesComponent implements OnInit {
   private readonly themeService: ThemeService = inject(ThemeService);
 
   protected pageIndex = 1;
-  private maxPageIndex = 3;
+  private maxPageIndex = 4;
 
   private readonly userService: UserService = inject(UserService);
   private readonly projectService: ProjectService = inject(ProjectService);
+
+  private readonly subs: Subscription[] = [];
 
   constructor() {}
 
   ngOnInit(): void {
     this.themeService.changeBackgroundColor(BackgroundColor.gray);
-    this.initForm();
 
-    this.loadReviewCriteria();
-    this.loadDetails();
+    this.initForm();
+    this.prepareData();
 
     this.pageIndex += 2;
+  }
+
+  ngOnDestroy(): void {
+    this.subs.forEach((s) => s.unsubscribe());
   }
 
   protected nextPage(): void {
@@ -68,8 +82,9 @@ export class ReviewerFlowPagesComponent implements OnInit {
 
     if (this.pageIndex === 1 && this.form1.validToGoNext()) {
       this.pageIndex++;
-      console.log(this.form);
     } else if (this.pageIndex === 2) {
+      this.pageIndex++;
+    } else if (this.pageIndex === 3) {
       this.pageIndex++;
       console.log(this.form);
     } else {
@@ -85,33 +100,43 @@ export class ReviewerFlowPagesComponent implements OnInit {
     this.routerService.navigate(['/']);
   }
 
-  private loadReviewCriteria() {
-    this.projectService.getReviewCriteria(1).subscribe((result) => {
-      if (result) {
-        this.reviewCriteriaList = result;
-        console.log(this.reviewCriteriaList);
-      }
-    });
-  }
-
-  private loadDetails() {
-    this.userService.currentUserSubject$
-      .pipe(
-        mergeMap((user) => {
-          if (user.id) {
+  private prepareData() {
+    this.subs.push(
+      forkJoin([
+        this.projectService.getReviewCriteria(1),
+        this.userService.isLoggedIn(),
+      ])
+        .pipe(
+          mergeMap(([criteriaList, isLoggedIn]) => {
+            if (!isLoggedIn || !criteriaList || criteriaList.length === 0) {
+              return of(null);
+            }
+            this.reviewCriteriaList = criteriaList;
+            this.addScoreFormControls(criteriaList);
+            const user = this.userService.getCurrentUser();
             return this.projectService.getProjectDetailsForReviewer(
               user.id,
               this.projectCode
             );
-          }
-          return of(null);
+          })
+        )
+        .subscribe((result) => {
+          console.log('===result', result);
         })
-      )
-      .subscribe((result) => {
-        console.log('===loadDetails result:', result);
-        if (result) {
-        }
-      });
+    );
+  }
+
+  private addScoreFormControls(criteriaList: ReviewCriteria[]) {
+    if (!criteriaList || criteriaList.length === 0) {
+      return;
+    }
+    const group = this.form.get('score') as FormGroup;
+    criteriaList.forEach((c) => {
+      group.addControl(
+        `${c.criteria_version}_${c.order_number}`,
+        new FormControl(null, Validators.required)
+      );
+    });
   }
 
   private initForm() {
@@ -119,6 +144,7 @@ export class ReviewerFlowPagesComponent implements OnInit {
       ip: new FormGroup({
         isInterestedPerson: new FormControl(null, Validators.required),
       }),
+      score: new FormGroup({}),
     });
   }
 }
