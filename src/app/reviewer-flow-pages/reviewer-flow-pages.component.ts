@@ -42,7 +42,9 @@ import { ReviewerSummaryComponent } from './reviewer-summary/reviewer-summary.co
   styleUrls: ['./reviewer-flow-pages.component.scss'],
 })
 export class ReviewerFlowPagesComponent implements OnInit, OnDestroy {
-  @ViewChild('interestedPerson') form1: ReviewerInterestedPerson;
+  @ViewChild('interestedPerson')
+  interestedPersonComponent: ReviewerInterestedPerson;
+  @ViewChild('reviewerScore') reviewerScoreComponent: ReviewerScoreComponent;
   // url params
   @Input() projectCode: string;
   protected form: FormGroup;
@@ -80,11 +82,17 @@ export class ReviewerFlowPagesComponent implements OnInit, OnDestroy {
     }
     // validate page
 
-    if (this.pageIndex === 1 && this.form1.validToGoNext()) {
+    if (
+      this.pageIndex === 1 &&
+      this.interestedPersonComponent.validToGoNext()
+    ) {
       this.pageIndex++;
     } else if (this.pageIndex === 2) {
       this.pageIndex++;
-    } else if (this.pageIndex === 3) {
+    } else if (
+      this.pageIndex === 3 &&
+      this.reviewerScoreComponent.validToGoNext()
+    ) {
       this.pageIndex++;
       console.log(this.form);
     } else {
@@ -120,9 +128,7 @@ export class ReviewerFlowPagesComponent implements OnInit, OnDestroy {
             );
           })
         )
-        .subscribe((result) => {
-          console.log('===result', result);
-        })
+        .subscribe((_result) => {})
     );
   }
 

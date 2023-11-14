@@ -6,6 +6,7 @@
   // Hide browser deault radio
   position: absolute;
   opacity: 0;
+  cursor: pointer;
 
   &__item--horizontal {
     &:not(:first-child) {

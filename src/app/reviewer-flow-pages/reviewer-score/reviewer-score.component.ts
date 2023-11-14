@@ -1,10 +1,10 @@
-import { CommonModule } from '@angular/common';
+import { CommonModule, ViewportScroller } from '@angular/common';
 import { Component, Input, inject } from '@angular/core';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { DomSanitizer } from '@angular/platform-browser';
 import { RadioComponent } from '../../components/radio/radio.component';
-import { ReviewCriteria } from '../../shared/models/review-criteria';
 import { RadioOption } from '../../shared/models/radio-option';
+import { ReviewCriteria } from '../../shared/models/review-criteria';
 
 @Component({
   selector: 'app-reviewer-score',
@@ -16,6 +16,8 @@ import { RadioOption } from '../../shared/models/radio-option';
 export class ReviewerScoreComponent {
   @Input() form: FormGroup;
   @Input() criteriaList: ReviewCriteria[] = [];
+
+  private readonly scroller: ViewportScroller = inject(ViewportScroller);
 
   protected scoreOptions: RadioOption[] = [
     {
@@ -73,8 +75,51 @@ export class ReviewerScoreComponent {
     },
   ];
 
-  buildControlName(criteria: ReviewCriteria): string {
-    return `${criteria.criteria_version}_${criteria.order_number}`;
+  buildControlName(c: ReviewCriteria): string {
+    return `${c.criteria_version}_${c.order_number}`;
+  }
+
+  buildFormAccessName(c: ReviewCriteria) {
+    return `score.${c.criteria_version}_${c.order_number}`;
+  }
+
+  validToGoNext(): boolean {
+    if (!this.isFormValid()) {
+      this.markFieldsTouched();
+      return false;
+    } else {
+      return true;
+    }
+  }
+
+  private markFieldsTouched() {
+    const group = this.form.get('score') as FormGroup;
+    group.markAllAsTouched();
+
+    // Score to first invalid element
+    this.scrollToFirstInvalidItem(group);
+  }
+
+  private scrollToFirstInvalidItem(group: FormGroup) {
+    const firstControlId = this.getFirstInvalidControl(group);
+    if (firstControlId) {
+      this.scroller.setOffset([0, 80]);
+      this.scroller.scrollToAnchor(firstControlId);
+    }
+  }
+
+  private getFirstInvalidControl(group: FormGroup): string {
+    const keys = Object.keys(group.controls);
+    for (const k of keys) {
+      if (!group.controls[k].valid) {
+        return k;
+      }
+    }
+    return '';
+  }
+
+  private isFormValid(): boolean {
+    return this.form.get('score')?.valid ?? false;
   }
 
   protected readonly sanitizer: DomSanitizer = inject(DomSanitizer);

@@ -34,14 +34,38 @@
       color: #ec4a0a;
     }
   }
+}
 
-  &__question {
+.question {
+  &__box {
+    padding: 1rem 2rem 2rem 2em;
+
+    &:not(:first-child) {
+      border-top: 1px dashed #cdc1be;
+    }
+  }
+
+  &__text {
     font-family: $custom-font-looped;
     font-size: 16px;
     font-style: normal;
     font-weight: 400;
     line-height: normal;
     color: #344054;
+  }
+}
+
+.error {
+  // display: none;
+  display: flex;
+  font-family: $custom-font-looped;
+  font-size: 1.3rem;
+  font-weight: 400;
+  line-height: normal;
+  color: #ec4a0a;
+
+  &__text {
+    margin-left: 4px;
   }
 }
 
@@ -108,6 +132,10 @@
 }
 
 .mt {
+  &-10 {
+    margin-top: 1rem;
+  }
+
   &-15 {
     margin-top: 1.5rem;
   }

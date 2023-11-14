@@ -31,17 +31,29 @@
   <div class="main">
     @for (group of groupHeaders; track group.id) {
     <div class="main__group">{{ group.groupName }}</div>
-    @for (c of criteriaList; track $index) { @if (c.criteria_version === 1 &&
-    c.group_number === group.id) {
-    <p [innerHTML]="buildQuestionText(c)" class="main__question"></p>
-    <app-com-radio
-      [form]="form"
-      [options]="scoreOptions"
-      groupName="score"
-      [controlName]="buildControlName(c)"
-      radioStyle="review-3a"
-      direction="horizontal"
-    ></app-com-radio>
-    } } }
+    <div>
+      @for (c of criteriaList; track $index) { @if (c.criteria_version === 1 &&
+      c.group_number === group.id) {
+      <div class="question__box" [id]="buildControlName(c)">
+        <p [innerHTML]="buildQuestionText(c)" class="question__text"></p>
+        <app-com-radio
+          [form]="form"
+          [options]="scoreOptions"
+          groupName="score"
+          [controlName]="buildControlName(c)"
+          radioStyle="review-3a"
+          direction="horizontal"
+        ></app-com-radio>
+        @if (!form.get(buildFormAccessName(c))?.valid &&
+        form.get(buildFormAccessName(c))?.touched ) {
+        <div class="error mt-10">
+          <img src="/assets/error_icon.svg" alt="error icon" />
+          <p class="error__text">กรุณาให้คะแนนในส่วนนี้</p>
+        </div>
+        }
+      </div>
+      } }
+    </div>
+    }
   </div>
 </div>
