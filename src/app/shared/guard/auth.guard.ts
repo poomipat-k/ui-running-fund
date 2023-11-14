@@ -1,7 +1,7 @@
 import { inject } from '@angular/core';
 import { ActivatedRouteSnapshot, Router } from '@angular/router';
 import { tap } from 'rxjs';
-import { UserService } from '../services/user.service';
+import { UserService } from '../../services/user.service';
 
 export const authGuard = (_next: ActivatedRouteSnapshot) => {
   const router = inject(Router);

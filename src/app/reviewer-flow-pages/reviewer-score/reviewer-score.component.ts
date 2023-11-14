@@ -12,6 +12,7 @@ import { RadioComponent } from '../../components/radio/radio.component';
 import { RadioOption } from '../../shared/models/radio-option';
 import { ReviewCriteria } from '../../shared/models/review-criteria';
 import { CheckboxOption } from '../../shared/models/checkbox-option';
+import { requiredCheckBoxToBeCheckedValidator } from '../../shared/validators/requiredCheckbox';
 
 @Component({
   selector: 'app-reviewer-score',
@@ -146,14 +147,17 @@ export class ReviewerScoreComponent {
   onSummaryRadioChanged(): void {
     const group = this.form.get('score') as FormGroup;
     if (this.form.value?.score?.summary === 'to_be_revised') {
-      const improvementFormGroup = new FormGroup({
-        project_quality: new FormControl(false),
-        standard: new FormControl(false),
-        vision_and_image: new FormControl(false),
-        benefit: new FormControl(false),
-        experience_and_reliability: new FormControl(false),
-        fund_and_output: new FormControl(false),
-      });
+      const improvementFormGroup = new FormGroup(
+        {
+          project_quality: new FormControl(false),
+          standard: new FormControl(false),
+          vision_and_image: new FormControl(false),
+          benefit: new FormControl(false),
+          experience_and_reliability: new FormControl(false),
+          fund_and_output: new FormControl(false),
+        },
+        requiredCheckBoxToBeCheckedValidator()
+      );
       group.addControl('improvement', improvementFormGroup);
       return;
     }
@@ -196,7 +200,6 @@ export class ReviewerScoreComponent {
 
   private getFirstInvalidControl(group: FormGroup): string {
     const keys = Object.keys(group.controls).sort();
-    console.log(keys);
     for (const k of keys) {
       if (!group.controls[k].valid) {
         return k;
