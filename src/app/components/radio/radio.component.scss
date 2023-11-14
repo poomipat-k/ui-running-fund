@@ -17,6 +17,13 @@
     position: relative;
     display: flex;
 
+    font-family: $custom-font-looped;
+    font-size: 1.8rem;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    color: #344054;
+
     cursor: pointer;
     -webkit-user-select: none;
     -moz-user-select: none;
@@ -41,15 +48,6 @@
       display: flex;
       padding-left: 2.8rem;
     }
-  }
-
-  &__label {
-    font-family: $custom-font-looped;
-    font-size: 1.8rem;
-    font-style: normal;
-    font-weight: 400;
-    line-height: normal;
-    color: #344054;
   }
 
   // Custom checkmark
@@ -85,10 +83,5 @@
 
   &__3-a {
     margin-left: 2.7rem;
-    label {
-      & :not(:first-child) {
-        margin-left: 4.8rem;
-      }
-    }
   }
 }

@@ -21,25 +21,13 @@ export class RadioComponent implements OnInit {
 
   get labelClasses(): string[] {
     if (this.radioStyle === 'review-1a') {
-      return [
-        'radio__container',
-        'radio__label',
-        'radio__container--review-1a',
-      ];
+      return ['radio__container', 'radio__container--review-1a'];
     } else if (this.radioStyle === 'review-1b') {
-      return [
-        'radio__container',
-        'radio__label',
-        'radio__container--review-1b',
-      ];
+      return ['radio__container', 'radio__container--review-1b'];
     } else if (this.radioStyle === 'review-3a') {
-      return [
-        'radio__container',
-        'radio__label',
-        'radio__container--review-3a',
-      ];
+      return ['radio__container', 'radio__container--review-3a'];
     }
-    return ['radio__container', 'radio__label'];
+    return ['radio__container'];
   }
 
   ngOnInit(): void {
