@@ -5,10 +5,10 @@ import { CommonModule } from '@angular/common';
   selector: 'app-com-checkbox-view',
   standalone: true,
   imports: [CommonModule],
-  templateUrl: './checkbox.component.html',
-  styleUrl: './checkbox.component.scss',
+  templateUrl: './checkbox-view.component.html',
+  styleUrl: './checkbox-view.component.scss',
 })
-export class CheckboxComponent {
+export class CheckboxViewComponent {
   @Input() value: any;
   @Input() name: string;
   @Input() display: string;

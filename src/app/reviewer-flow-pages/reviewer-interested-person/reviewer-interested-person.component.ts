@@ -66,9 +66,9 @@ export class ReviewerInterestedPerson implements OnInit {
   ngOnInit(): void {}
 
   onInterestedPersonChanged(): void {
-    const groupControl = this.form.get('ip');
+    const groupControl = this.form.get('ip') as FormGroup;
     if (this.form.value?.ip?.isInterestedPerson) {
-      (this.form.get('ip') as FormGroup).addControl(
+      groupControl.addControl(
         'interestedPersonType',
         new FormControl(null, Validators.required)
       );

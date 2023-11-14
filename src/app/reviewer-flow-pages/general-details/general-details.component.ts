@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
-import { CheckboxComponent } from '../../components/checkbox-view/checkbox.component';
+import { CheckboxViewComponent } from '../../components/checkbox-view/checkbox-view.component';
 import { RadioViewComponent } from '../../components/radio-view/radio-view.component';
 import { RadioOption } from '../../shared/models/radio-option';
 
@@ -11,7 +11,7 @@ import { RadioOption } from '../../shared/models/radio-option';
   imports: [
     CommonModule,
     ReactiveFormsModule,
-    CheckboxComponent,
+    CheckboxViewComponent,
     RadioViewComponent,
   ],
   templateUrl: './general-details.component.html',

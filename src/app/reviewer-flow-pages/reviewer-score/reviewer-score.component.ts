@@ -1,15 +1,27 @@
 import { CommonModule, ViewportScroller } from '@angular/common';
 import { Component, Input, inject } from '@angular/core';
-import { FormGroup, ReactiveFormsModule } from '@angular/forms';
+import {
+  FormControl,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { DomSanitizer } from '@angular/platform-browser';
+import { CheckboxComponent } from '../../components/checkbox/checkbox.component';
 import { RadioComponent } from '../../components/radio/radio.component';
 import { RadioOption } from '../../shared/models/radio-option';
 import { ReviewCriteria } from '../../shared/models/review-criteria';
+import { CheckboxOption } from '../../shared/models/checkbox-option';
 
 @Component({
   selector: 'app-reviewer-score',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, RadioComponent],
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    RadioComponent,
+    CheckboxComponent,
+  ],
   templateUrl: './reviewer-score.component.html',
   styleUrls: ['./reviewer-score.component.scss'],
 })
@@ -93,9 +105,59 @@ export class ReviewerScoreComponent {
     },
   ];
 
+  protected improvementCheckboxOptions: CheckboxOption[] = [
+    {
+      id: 1,
+      display: 'คุณภาพข้อเสนอโครงการ',
+      value: 'project_quality',
+    },
+    {
+      id: 2,
+      display: 'มาตรฐานการจัดงานวิ่งเพื่อสุขภาพ',
+      value: 'standard',
+    },
+    {
+      id: 3,
+      display:
+        'แนวทางและภาพลักษณ์ที่สอดคล้องสำนักงานกองทุนสนับสนุนการสร้างเสริมสุขภาพ (สสส.)',
+      value: 'vision_and_image',
+    },
+    {
+      id: 4,
+      display: 'ประโยชน์ของการนำเสนอองค์กร สสส. ในการสนับสนุนทุนอุปถัมภ์',
+      value: 'benefit',
+    },
+    {
+      id: 5,
+      display: 'คุณภาพข้อเสนอโครงการ',
+      value: 'experience_and_reliability',
+    },
+    {
+      id: 6,
+      display: 'คุณภาพข้อเสนอโครงการ',
+      value: 'fund_and_output',
+    },
+  ];
+
   onSummaryRadioChanged(): void {
-    const group = this.form.get('score');
-    // if (this.form)
+    const group = this.form.get('score') as FormGroup;
+    if (this.form.value?.score?.summary === 'to_be_revised') {
+      console.log('===Add control');
+      const improvementFormGroup = new FormGroup({
+        project_quality: new FormControl(),
+        standard: new FormControl(),
+        vision_and_image: new FormControl(),
+        benefit: new FormControl(),
+        experience_and_reliability: new FormControl(),
+        fund_and_output: new FormControl(),
+      });
+      group.addControl('improvement', improvementFormGroup);
+      console.log('===group', group);
+    } else {
+      console.log('===removeControl');
+      group.removeControl('improvement');
+      console.log('===group', group);
+    }
   }
 
   // onInterestedPersonChanged(): void {
