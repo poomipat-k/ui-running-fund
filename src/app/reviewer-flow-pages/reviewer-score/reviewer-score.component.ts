@@ -129,48 +129,37 @@ export class ReviewerScoreComponent {
     },
     {
       id: 5,
-      display: 'คุณภาพข้อเสนอโครงการ',
+      display: 'ความน่าเชื่อถือและประสบการณ์การจัดงาน',
       value: 'experience_and_reliability',
     },
     {
       id: 6,
-      display: 'คุณภาพข้อเสนอโครงการ',
+      display: 'งบประมาณที่ขอรับการสนับสนุน และผลที่คาดว่าจะได้รับ',
       value: 'fund_and_output',
     },
   ];
 
+  get scoreFormGroupControl(): FormGroup {
+    return this.form.get('score') as FormGroup;
+  }
+
   onSummaryRadioChanged(): void {
     const group = this.form.get('score') as FormGroup;
     if (this.form.value?.score?.summary === 'to_be_revised') {
-      console.log('===Add control');
       const improvementFormGroup = new FormGroup({
-        project_quality: new FormControl(),
-        standard: new FormControl(),
-        vision_and_image: new FormControl(),
-        benefit: new FormControl(),
-        experience_and_reliability: new FormControl(),
-        fund_and_output: new FormControl(),
+        project_quality: new FormControl(false),
+        standard: new FormControl(false),
+        vision_and_image: new FormControl(false),
+        benefit: new FormControl(false),
+        experience_and_reliability: new FormControl(false),
+        fund_and_output: new FormControl(false),
       });
       group.addControl('improvement', improvementFormGroup);
-      console.log('===group', group);
-    } else {
-      console.log('===removeControl');
-      group.removeControl('improvement');
-      console.log('===group', group);
+      return;
     }
+    group.removeControl('improvement');
+    return;
   }
-
-  // onInterestedPersonChanged(): void {
-  //   const groupControl = this.form.get('ip');
-  //   if (this.form.value?.ip?.isInterestedPerson) {
-  //     (this.form.get('ip') as FormGroup).addControl(
-  //       'interestedPersonType',
-  //       new FormControl(null, Validators.required)
-  //     );
-  //     return;
-  //   }
-  //   (groupControl as FormGroup)?.removeControl('interestedPersonType');
-  // }
 
   buildControlName(c: ReviewCriteria): string {
     return `${c.criteria_version}_${c.order_number}`;

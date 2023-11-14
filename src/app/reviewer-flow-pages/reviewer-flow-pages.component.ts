@@ -69,7 +69,7 @@ export class ReviewerFlowPagesComponent implements OnInit, OnDestroy {
     this.initForm();
     this.prepareData();
 
-    this.pageIndex += 2;
+    // this.pageIndex += 2;
   }
 
   ngOnDestroy(): void {
@@ -97,8 +97,10 @@ export class ReviewerFlowPagesComponent implements OnInit, OnDestroy {
       this.pageIndex === 1 &&
       this.interestedPersonComponent.validToGoNext()
     ) {
+      console.log(this.form);
       this.pageIndex++;
     } else if (this.pageIndex === 2) {
+      console.log(this.form);
       this.pageIndex++;
     } else if (
       this.pageIndex === 3 &&
