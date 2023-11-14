@@ -79,18 +79,29 @@
         </div>
 
         @if (form.value?.score?.summary === 'to_be_revised' ) {
-        <div id="improvement">
-          <div class="main__improvement">
+        <div id="improvement" class="improvement">
+          <div class="improvement__text">
             โครงการควรจะต้องมีการปรับแก้ไขเพิ่มเติมรายละเอียดให้มีความเหมาะสม
             โดยเฉพาะประเด็นด้านใด
           </div>
-          @for (item of improvementCheckboxOptions; track item.id) {
-          <app-com-checkbox
-            [display]="item.display"
-            [form]="scoreFormGroupControl"
-            groupName="improvement"
-            [controlName]="item.value"
-          ></app-com-checkbox>
+          <div class="improvement__checkbox-container">
+            @for (item of improvementCheckboxOptions; track item.id) {
+            <div class="improvement__checkbox">
+              <app-com-checkbox
+                [display]="item.display"
+                [form]="scoreFormGroupControl"
+                groupName="improvement"
+                [controlName]="item.value"
+              ></app-com-checkbox>
+            </div>
+            }
+          </div>
+          @if (!form.get('score.improvement')?.valid &&
+          form.get('score.improvement')?.touched ) {
+          <div class="error">
+            <img src="/assets/error_icon.svg" alt="error icon" />
+            <p class="error__text">สามารถเลือกได้หลายข้อ</p>
+          </div>
           }
         </div>
         }

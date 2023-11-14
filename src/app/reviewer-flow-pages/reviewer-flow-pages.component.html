@@ -37,7 +37,26 @@
     }}
   </form>
 
-  <div class="button__container mt-40">
+  @if (pageIndex === 3 || pageIndex === 4) {
+  <div
+    [ngClass]="{
+      warning: true,
+      'mt-95': pageIndex === 3,
+      'mt-72': pageIndex === 4
+    }"
+  >
+    <p>โปรดตรวจสอบข้อมูลให้เรียบร้อย</p>
+  </div>
+  }
+  <div
+    [ngClass]="{
+      button__container: true,
+      'mt-40': pageIndex === 1,
+      'mt-72': pageIndex === 2,
+      'mt-16': pageIndex === 3,
+      'mt-18': pageIndex === 4
+    }"
+  >
     <button class="button button--cancel" (click)="prevPage()">
       {{ pageIndex === 1 ? "ยกเลิก" : "ย้อนกลับ" }}
     </button>
