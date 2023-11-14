@@ -33,14 +33,15 @@
     <div class="main__group">{{ group.groupName }}</div>
     @for (c of criteriaList; track $index) { @if (c.criteria_version === 1 &&
     c.group_number === group.id) {
-    <p [innerHTML]="buildQuestionText(c)"></p>
-    <!-- <app-com-radio
+    <p [innerHTML]="buildQuestionText(c)" class="main__question"></p>
+    <app-com-radio
       [form]="form"
       [options]="scoreOptions"
       groupName="score"
-      [controlName]="'isInterestedPerson'"
-      radioStyle="review-1a"
-    ></app-com-radio> -->
+      [controlName]="buildControlName(c)"
+      radioStyle="review-3a"
+      direction="horizontal"
+    ></app-com-radio>
     } } }
   </div>
 </div>

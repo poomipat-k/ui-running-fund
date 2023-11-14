@@ -17,15 +17,29 @@ export class RadioComponent implements OnInit {
   @Input() options: RadioOption[] = [];
   @Input() onChanged: () => void;
   @Input() radioStyle = 'review-1a';
+  @Input() direction = 'vertical';
 
   get labelClasses(): string[] {
-    const classes = ['radio__container', 'radio__label'];
     if (this.radioStyle === 'review-1a') {
-      classes.push('radio__container--review-1a');
+      return [
+        'radio__container',
+        'radio__label',
+        'radio__container--review-1a',
+      ];
     } else if (this.radioStyle === 'review-1b') {
-      classes.push('radio__container--review-1b');
+      return [
+        'radio__container',
+        'radio__label',
+        'radio__container--review-1b',
+      ];
+    } else if (this.radioStyle === 'review-3a') {
+      return [
+        'radio__container',
+        'radio__label',
+        'radio__container--review-3a',
+      ];
     }
-    return classes;
+    return ['radio__container', 'radio__label'];
   }
 
   ngOnInit(): void {

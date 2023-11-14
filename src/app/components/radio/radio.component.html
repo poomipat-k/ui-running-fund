@@ -1,38 +1,53 @@
 <ng-container [formGroup]="form">
   @if (groupName) {
   <ng-container [formGroupName]="groupName">
-    @for (option of options; track option.id) {
-    <label
+    <div
       [ngClass]="{
-        radio__container: true,
-        radio__label: true,
-        'radio__container--review-1a': radioStyle === 'review-1a',
-        'radio__container--review-1b': this.radioStyle === 'review-1b'
+        horizontal: direction === 'horizontal',
+        'horizontal__3-a': radioStyle === 'review-3a'
       }"
     >
-      {{ option.display }}
-      <input
-        type="radio"
-        [value]="option.value"
-        [formControlName]="controlName"
-        (change)="_onChanged()"
-        class="radio"
-      />
-      <span class="radio__checkmark"></span>
-    </label>
-    }
+      @for (option of options; track option.id) {
+      <div
+        [ngClass]="{ 'radio__item--horizontal': direction === 'horizontal' }"
+      >
+        <label [ngClass]="labelClasses">
+          {{ option.display }}
+          <input
+            type="radio"
+            [value]="option.value"
+            [formControlName]="controlName"
+            (change)="_onChanged()"
+            class="radio"
+          />
+          <span class="radio__checkmark"></span>
+        </label>
+      </div>
+      }
+    </div>
   </ng-container>
-  } @else { @for (option of options; track option.id) {
-  <label [ngClass]="labelClasses">
-    {{ option.display }}
-    <input
-      type="radio"
-      [value]="option.value"
-      [formControlName]="controlName"
-      (change)="_onChanged()"
-      class="radio"
-    />
-    <span class="radio__checkmark"></span>
-  </label>
-  } }
+  } @else {
+  <div
+    [ngClass]="{
+      horizontal: direction === 'horizontal',
+      'horizontal__3-a': radioStyle === 'review-3a'
+    }"
+  >
+    @for (option of options; track option.id) {
+    <div [ngClass]="{ 'radio__item--horizontal': direction === 'horizontal' }">
+      <label [ngClass]="labelClasses">
+        {{ option.display }}
+        <input
+          type="radio"
+          [value]="option.value"
+          [formControlName]="controlName"
+          (change)="_onChanged()"
+          class="radio"
+        />
+        <span class="radio__checkmark"></span>
+      </label>
+    </div>
+    }
+  </div>
+  }
 </ng-container>

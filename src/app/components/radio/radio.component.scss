@@ -7,6 +7,12 @@
   position: absolute;
   opacity: 0;
 
+  &__item--horizontal {
+    &:not(:first-child) {
+      margin-left: 4.8rem;
+    }
+  }
+
   &__container {
     position: relative;
     display: flex;
@@ -29,6 +35,11 @@
     &--review-1b {
       display: flex;
       padding-left: 2.9rem;
+    }
+
+    &--review-3a {
+      display: flex;
+      padding-left: 2.8rem;
     }
   }
 
@@ -65,6 +76,19 @@
       width: 10px;
       border-radius: 50%;
       background-color: #9c2a10;
+    }
+  }
+}
+
+.horizontal {
+  display: flex;
+
+  &__3-a {
+    margin-left: 2.7rem;
+    label {
+      & :not(:first-child) {
+        margin-left: 4.8rem;
+      }
     }
   }
 }

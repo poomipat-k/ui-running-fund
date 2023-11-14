@@ -34,6 +34,15 @@
       color: #ec4a0a;
     }
   }
+
+  &__question {
+    font-family: $custom-font-looped;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    color: #344054;
+  }
 }
 
 .header {

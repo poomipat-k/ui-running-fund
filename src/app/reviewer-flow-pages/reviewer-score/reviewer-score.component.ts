@@ -73,6 +73,10 @@ export class ReviewerScoreComponent {
     },
   ];
 
+  buildControlName(criteria: ReviewCriteria): string {
+    return `${criteria.criteria_version}_${criteria.order_number}`;
+  }
+
   protected readonly sanitizer: DomSanitizer = inject(DomSanitizer);
 
   protected buildQuestionText(criteria: ReviewCriteria): string {
