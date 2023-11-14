@@ -55,5 +55,31 @@
       } }
     </div>
     }
+    <div>
+      <div class="main__group">7. สรุปความเห็น</div>
+      <div class="question__box--summary" id="summary">
+        <app-com-radio
+          [form]="form"
+          [options]="summaryDropdownOptions"
+          groupName="score"
+          controlName="summary"
+          radioStyle="review-3b"
+        ></app-com-radio>
+        @if (!form.get('score.summary')?.valid &&
+        form.get('score.summary')?.touched ) {
+        <div class="error mt-10">
+          <img src="/assets/error_icon.svg" alt="error icon" />
+          <p class="error__text">กรุณาให้คะแนนในส่วนนี้</p>
+        </div>
+        }
+      </div>
+    </div>
+
+    <div>
+      <div class="main__improvement">
+        โครงการควรจะต้องมีการปรับแก้ไขเพิ่มเติมรายละเอียดให้มีความเหมาะสม
+        โดยเฉพาะประเด็นด้านใด
+      </div>
+    </div>
   </div>
 </div>

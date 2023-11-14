@@ -4,12 +4,16 @@
     <div
       [ngClass]="{
         horizontal: direction === 'horizontal',
-        'horizontal__3-a': radioStyle === 'review-3a'
+        horizontal__3a: radioStyle === 'review-3a',
       }"
     >
       @for (option of options; track option.id) {
       <div
-        [ngClass]="{ 'radio__item--horizontal': direction === 'horizontal' }"
+        [ngClass]="{
+          'radio__item--horizontal': direction === 'horizontal',
+          'radio__item-1a': radioStyle === 'review-1a',
+          'radio__item-3b': radioStyle === 'review-3b'
+        }"
       >
         <label [ngClass]="labelClasses">
           {{ option.display }}
@@ -30,8 +34,9 @@
   <div
     [ngClass]="{
       horizontal: direction === 'horizontal',
-      'horizontal__3-a': radioStyle === 'review-3a'
+      horizontal__3a: radioStyle === 'review-3a',
     }"
+    style="margin-top: 14px"
   >
     @for (option of options; track option.id) {
     <div [ngClass]="{ 'radio__item--horizontal': direction === 'horizontal' }">

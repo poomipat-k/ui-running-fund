@@ -76,6 +76,17 @@ export class ReviewerFlowPagesComponent implements OnInit, OnDestroy {
     this.subs.forEach((s) => s.unsubscribe());
   }
 
+  private initForm() {
+    this.form = new FormGroup({
+      ip: new FormGroup({
+        isInterestedPerson: new FormControl(null, Validators.required),
+      }),
+      score: new FormGroup({
+        summary: new FormControl(null, Validators.required),
+      }),
+    });
+  }
+
   protected nextPage(): void {
     if (this.pageIndex >= this.maxPageIndex) {
       return;
@@ -97,6 +108,7 @@ export class ReviewerFlowPagesComponent implements OnInit, OnDestroy {
       console.log(this.form);
     } else {
       console.log('===not valid to go next');
+      console.log(this.form);
     }
   }
 
@@ -142,15 +154,6 @@ export class ReviewerFlowPagesComponent implements OnInit, OnDestroy {
         `${c.criteria_version}_${c.order_number}`,
         new FormControl(null, Validators.required)
       );
-    });
-  }
-
-  private initForm() {
-    this.form = new FormGroup({
-      ip: new FormGroup({
-        isInterestedPerson: new FormControl(null, Validators.required),
-      }),
-      score: new FormGroup({}),
     });
   }
 }

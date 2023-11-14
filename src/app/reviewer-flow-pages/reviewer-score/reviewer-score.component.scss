@@ -34,6 +34,28 @@
       color: #ec4a0a;
     }
   }
+
+  &__improvement {
+    padding: 2rem 2rem 3rem 5rem;
+    background-color: white;
+
+    font-family: $custom-font-looped;
+    font-size: 1.6rem;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    color: #344054;
+
+    &::after {
+      content: "*";
+      font-family: $custom-font-looped;
+      font-size: 1.6rem;
+      font-style: normal;
+      font-weight: 500;
+      line-height: normal;
+      color: #ec4a0a;
+    }
+  }
 }
 
 .question {
@@ -42,6 +64,10 @@
 
     &:not(:first-child) {
       border-top: 1px dashed #cdc1be;
+    }
+
+    &--summary {
+      padding: 2rem 2rem 3rem 2em;
     }
   }
 
@@ -56,7 +82,6 @@
 }
 
 .error {
-  // display: none;
   display: flex;
   font-family: $custom-font-looped;
   font-size: 1.3rem;

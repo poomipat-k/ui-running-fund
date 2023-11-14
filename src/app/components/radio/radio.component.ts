@@ -26,6 +26,8 @@ export class RadioComponent implements OnInit {
       return ['radio__container', 'radio__container--review-1b'];
     } else if (this.radioStyle === 'review-3a') {
       return ['radio__container', 'radio__container--review-3a'];
+    } else if (this.radioStyle === 'review-3b') {
+      return ['radio__container', 'radio__container--review-3b'];
     }
     return ['radio__container'];
   }

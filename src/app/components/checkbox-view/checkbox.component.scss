@@ -24,12 +24,12 @@
   &__box {
     width: 2rem;
     height: 2rem;
-    border-radius: 6px;
-    border: 1px solid #d0d5dd;
+    border-radius: 2px;
+    border: 2px solid #344054;
 
     &:checked {
-      border: 1px solid #344054;
-      background-color: #fffaf5;
+      border: 2px solid #344054;
+      background-color: #344054;
     }
 
     &:checked ~ .checkbox__mark {
@@ -45,6 +45,10 @@
     top: 50%;
     left: 3px;
     transform: translateY(-50%);
+  }
+
+  &__path {
+    stroke: white;
   }
 }
 

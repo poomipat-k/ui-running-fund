@@ -8,9 +8,23 @@
   opacity: 0;
   cursor: pointer;
 
-  &__item--horizontal {
-    &:not(:first-child) {
-      margin-left: 4.8rem;
+  &__item {
+    &--horizontal {
+      &:not(:first-child) {
+        margin-left: 4.8rem;
+      }
+    }
+
+    &-1a {
+      &:not(:first-child) {
+        margin-top: 8px;
+      }
+    }
+
+    &-3b {
+      &:not(:first-child) {
+        margin-top: 14px;
+      }
     }
   }
 
@@ -34,10 +48,6 @@
     &--review-1a {
       display: flex;
       padding-left: 2.8rem;
-
-      &:not(:first-child) {
-        margin-top: 8px;
-      }
     }
 
     &--review-1b {
@@ -46,6 +56,11 @@
     }
 
     &--review-3a {
+      display: flex;
+      padding-left: 2.8rem;
+    }
+
+    &--review-3b {
       display: flex;
       padding-left: 2.8rem;
     }
@@ -81,8 +96,9 @@
 
 .horizontal {
   display: flex;
+  margin-top: 1rem;
 
-  &__3-a {
+  &__3a {
     margin-left: 2.7rem;
   }
 }

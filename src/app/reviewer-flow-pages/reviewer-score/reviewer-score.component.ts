@@ -75,6 +75,41 @@ export class ReviewerScoreComponent {
     },
   ];
 
+  protected summaryDropdownOptions: RadioOption[] = [
+    {
+      id: 1,
+      value: 'ok',
+      display: 'โครงการมีความเหมาะสมต่อการสนับสนุนทุนอุปถัมภ์โดยไม่ต้องแก้ไข',
+    },
+    {
+      id: 2,
+      value: 'to_be_revised',
+      display: 'โครงการจะต้องมีการปรับแก้ไขเพิ่มเติมรายละเอียดให้มีความเหมาะสม',
+    },
+    {
+      id: 3,
+      value: 'not_ok',
+      display: 'ภาพรวมโครงการไม่มีความเหมาะสมต่อการสนับสนุนทุนอุปถัมภ์',
+    },
+  ];
+
+  onSummaryRadioChanged(): void {
+    const group = this.form.get('score');
+    // if (this.form)
+  }
+
+  // onInterestedPersonChanged(): void {
+  //   const groupControl = this.form.get('ip');
+  //   if (this.form.value?.ip?.isInterestedPerson) {
+  //     (this.form.get('ip') as FormGroup).addControl(
+  //       'interestedPersonType',
+  //       new FormControl(null, Validators.required)
+  //     );
+  //     return;
+  //   }
+  //   (groupControl as FormGroup)?.removeControl('interestedPersonType');
+  // }
+
   buildControlName(c: ReviewCriteria): string {
     return `${c.criteria_version}_${c.order_number}`;
   }
@@ -109,7 +144,8 @@ export class ReviewerScoreComponent {
   }
 
   private getFirstInvalidControl(group: FormGroup): string {
-    const keys = Object.keys(group.controls);
+    const keys = Object.keys(group.controls).sort();
+    console.log(keys);
     for (const k of keys) {
       if (!group.controls[k].valid) {
         return k;
