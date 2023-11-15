@@ -17,6 +17,8 @@ export class TableComponent {
   @Input() data: TableCell[][] = [];
   @Input() keyColumnIndex = 0;
   @Input() emptyText: string;
+  @Input() stripeRows = true;
+  @Input() headerGray = false;
 
   routerService: Router = inject(Router);
 

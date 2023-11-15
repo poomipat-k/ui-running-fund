@@ -143,7 +143,6 @@ export class ReviewerScoreComponent implements OnInit {
 
   fillAll() {
     const control = this.form.get('score') as FormGroup;
-    console.log(control);
     const option: { [key: string]: number } = {};
     for (let i = 1; i <= 20; i++) {
       option[`1_${i}`] = Math.ceil(Math.random() * 5);

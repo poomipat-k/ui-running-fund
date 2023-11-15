@@ -6,7 +6,12 @@
     <div class="header mb-14">ตารางสรุปคะแนน</div>
     <div>
       <div>
-        <app-com-table [columns]="columns" [data]="data"></app-com-table>
+        <app-com-table
+          [columns]="columns"
+          [data]="data"
+          [stripeRows]="false"
+          [headerGray]="true"
+        ></app-com-table>
       </div>
     </div>
   </div>

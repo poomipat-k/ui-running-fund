@@ -16,6 +16,15 @@
   }
 }
 
+.bold {
+  font-family: $custom-font-looped;
+  font-size: 1.6rem;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 2rem;
+  color: #344054;
+}
+
 // Badge
 .badge {
   &__container {

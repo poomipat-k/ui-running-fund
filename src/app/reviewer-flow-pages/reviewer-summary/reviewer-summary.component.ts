@@ -24,6 +24,7 @@ export class ReviewerSummaryComponent {
     },
     {
       name: 'คะแนน',
+      class: 'width-176',
     },
   ];
 
@@ -31,6 +32,7 @@ export class ReviewerSummaryComponent {
     let result: TableCell[][] = [];
     if (criteiaGroup) {
       let j = 0;
+      let sumTotal = 0;
       for (let i = 0; i < criteiaGroup.length; i++) {
         const topic = criteiaGroup[i].groupName;
         let sumScore = 0;
@@ -52,8 +54,21 @@ export class ReviewerSummaryComponent {
           { display: topic, value: topic },
           { display: `${sumScore} คะแนน`, value: sumScore },
         ];
+        sumTotal += sumScore;
         result.push(row);
       }
+      result.push([
+        {
+          display: 'คะแนนรวม (เต็ม 100 คะแนน)',
+          value: 'คะแนนรวม (เต็ม 100 คะแนน)',
+          className: 'bold',
+        },
+        {
+          display: `${sumTotal} คะแนน`,
+          value: sumTotal,
+          className: 'bold',
+        },
+      ]);
     }
     return result;
   }

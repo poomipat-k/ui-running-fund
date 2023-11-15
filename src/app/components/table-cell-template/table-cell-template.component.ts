@@ -14,6 +14,7 @@ import { SVGDownloadComponent } from '../svg/download/download.component';
 export class TableCellTemplateComponent {
   @Input() cellType?: ColumnTypeEnum;
   @Input() cellValue: string;
+  @Input() bold = false;
 
   protected hoverOverDowloadLink = false;
 

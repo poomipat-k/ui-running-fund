@@ -5,12 +5,15 @@ $cell-height: 7.2rem;
 .table {
   width: 100%;
   border-collapse: collapse;
+  // border-collapse: separate;
+  // border-spacing: 0;
   // box-shadow: 0px 1px 2px 0px #1018280f;
   box-shadow: 0px 1px 2px 0px rgba(16, 24, 40, 0.06);
 
   table,
   tr {
     border: 1px solid #eaecf0;
+    // border: 1px solid red;
   }
 
   &__row {
@@ -26,6 +29,10 @@ $cell-height: 7.2rem;
     line-height: 0;
     text-align: left;
     color: #667085;
+
+    &--gray {
+      background-color: #f9fafb;
+    }
   }
 
   &__cell {
@@ -84,27 +91,37 @@ $cell-height: 7.2rem;
 }
 
 // stripe rows
-tbody > tr:nth-child(2n + 1) {
-  background-color: #f9fafb;
+.stripe {
+  tbody > tr:nth-child(2n + 1) {
+    background-color: #f9fafb;
+  }
 }
 
 // Utils classes
-.width-135 {
-  width: 13.5rem;
-}
-
-.width-200 {
-  width: 20rem;
-}
-
-.width-255 {
-  width: 25.5rem;
-}
-
-.width-92 {
-  width: 9.2rem;
+.width {
+  &-92 {
+    width: 9.2rem;
+  }
+  &-176 {
+    width: 17.6rem;
+  }
+  &-135 {
+    width: 13.5rem;
+  }
+  &-200 {
+    width: 20rem;
+  }
+  &-255 {
+    width: 25.5rem;
+  }
 }
 
 .margin-top-24 {
   margin-top: 2.4rem;
 }
+
+// th,
+// td {
+//   border-radius: 6px;
+//   border-spacing: 0;
+// }
