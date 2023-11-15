@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 
 import { Subscription, forkJoin, mergeMap, of } from 'rxjs';
 import { FilterComponent } from '../components/filter/filter.component';
@@ -84,6 +84,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     { id: 3, display: 'เก่า - ใหม่', name: 'วันที่สร้าง', order: 'ASC' },
   ];
 
+  routerService: Router = inject(Router);
   private readonly subs: Subscription[] = [];
 
   constructor() {}
@@ -95,6 +96,12 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.subs.forEach((s) => s.unsubscribe());
+  }
+
+  onTableRowClicked(row: TableCell[]) {
+    if (row.length > 0) {
+      this.routerService.navigate(['review', 'project', row[0].value]);
+    }
   }
 
   private loadReviewDashboard() {

@@ -15,7 +15,11 @@ $cell-height: 7.2rem;
   }
 
   &__row {
-    cursor: pointer;
+    cursor: default;
+
+    &--clickable {
+      cursor: pointer;
+    }
   }
 
   &__header {

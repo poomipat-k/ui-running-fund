@@ -19,7 +19,10 @@
 
   <tbody>
     @for (row of data; track $index) {
-    <tr class="table__row" (click)="onRowClicked(row[keyColumnIndex].value)">
+    <tr
+      [ngClass]="{ table__row: true, 'table__row--clickable': rowClickable }"
+      (click)="rowClicked.emit(row)"
+    >
       @for (cell of row; track $index) {
       <td
         [class]="[
