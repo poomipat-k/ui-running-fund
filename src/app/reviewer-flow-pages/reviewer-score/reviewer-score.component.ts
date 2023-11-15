@@ -1,18 +1,14 @@
 import { CommonModule, ViewportScroller } from '@angular/common';
-import { Component, Input, inject } from '@angular/core';
-import {
-  FormControl,
-  FormGroup,
-  ReactiveFormsModule,
-  Validators,
-} from '@angular/forms';
+import { Component, Input, OnInit, inject } from '@angular/core';
+import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { DomSanitizer } from '@angular/platform-browser';
 import { CheckboxComponent } from '../../components/checkbox/checkbox.component';
 import { RadioComponent } from '../../components/radio/radio.component';
+import { CheckboxOption } from '../../shared/models/checkbox-option';
 import { RadioOption } from '../../shared/models/radio-option';
 import { ReviewCriteria } from '../../shared/models/review-criteria';
-import { CheckboxOption } from '../../shared/models/checkbox-option';
 import { requiredCheckBoxToBeCheckedValidator } from '../../shared/validators/requiredCheckbox';
+import { criteiaGroup } from '../data/criteria-group';
 
 @Component({
   selector: 'app-reviewer-score',
@@ -26,7 +22,7 @@ import { requiredCheckBoxToBeCheckedValidator } from '../../shared/validators/re
   templateUrl: './reviewer-score.component.html',
   styleUrls: ['./reviewer-score.component.scss'],
 })
-export class ReviewerScoreComponent {
+export class ReviewerScoreComponent implements OnInit {
   @Input() form: FormGroup;
   @Input() criteriaList: ReviewCriteria[] = [];
 
@@ -60,33 +56,7 @@ export class ReviewerScoreComponent {
     },
   ];
 
-  protected groupHeaders = [
-    {
-      id: 1,
-      groupName: '1. ความเป็นมา หลักการและเหตุผล มีความชัดเจนหรือไม่ อย่างไร',
-    },
-    {
-      id: 2,
-      groupName: '2. มาตรฐานการจัดงานวิ่งเพื่อสุขภาพ',
-    },
-    {
-      id: 3,
-      groupName:
-        '3. แนวทางและภาพลักษณ์ที่สอดคล้องสำนักงานกองทุนสนับสนุนการสร้างเสริมสุขภาพ (สสส.)',
-    },
-    {
-      id: 4,
-      groupName: '4. ประโยชน์ของการนำเสนอองค์กร สสส. ในการสนับสนุนทุนอุปถัมภ์',
-    },
-    {
-      id: 5,
-      groupName: '5. ความน่าเชื่อถือและประสบการณ์การจัดงาน',
-    },
-    {
-      id: 6,
-      groupName: '6. งบประมาณที่ขอรับการสนับสนุน และผลที่คาดว่าจะได้รับ',
-    },
-  ];
+  protected groupHeaders: { id: number; groupName: string }[] = [];
 
   protected summaryDropdownOptions: RadioOption[] = [
     {
@@ -144,6 +114,12 @@ export class ReviewerScoreComponent {
     return this.form.get('score') as FormGroup;
   }
 
+  constructor() {}
+
+  ngOnInit(): void {
+    this.groupHeaders = criteiaGroup;
+  }
+
   onSummaryRadioChanged(): void {
     const group = this.form.get('score') as FormGroup;
     if (this.form.value?.score?.summary === 'to_be_revised') {
@@ -163,6 +139,16 @@ export class ReviewerScoreComponent {
     }
     group.removeControl('improvement');
     return;
+  }
+
+  fillAll() {
+    const control = this.form.get('score') as FormGroup;
+    console.log(control);
+    const option: { [key: string]: number } = {};
+    for (let i = 1; i <= 20; i++) {
+      option[`1_${i}`] = Math.ceil(Math.random() * 5);
+    }
+    control.patchValue(option);
   }
 
   buildControlName(c: ReviewCriteria): string {
@@ -217,6 +203,4 @@ export class ReviewerScoreComponent {
   protected buildQuestionText(criteria: ReviewCriteria): string {
     return `${criteria.group_number}.${criteria.in_group_number} ${criteria.display_text}`;
   }
-
-  constructor() {}
 }

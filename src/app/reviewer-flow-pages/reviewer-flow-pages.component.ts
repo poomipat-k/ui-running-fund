@@ -22,6 +22,7 @@ import { UserService } from '../services/user.service';
 import { BackgroundColor } from '../shared/enums/background-color';
 import { ReviewCriteria } from '../shared/models/review-criteria';
 import { GeneralDetailsComponent } from './general-details/general-details.component';
+import { ReviewerConfirmationComponent } from './reviewer-confirmation/reviewer-confirmation.component';
 import { ReviewerInterestedPerson } from './reviewer-interested-person/reviewer-interested-person.component';
 import { ReviewerScoreComponent } from './reviewer-score/reviewer-score.component';
 import { ReviewerSummaryComponent } from './reviewer-summary/reviewer-summary.component';
@@ -37,6 +38,7 @@ import { ReviewerSummaryComponent } from './reviewer-summary/reviewer-summary.co
     ReactiveFormsModule,
     ArrowForwardComponent,
     ReviewerSummaryComponent,
+    ReviewerConfirmationComponent,
   ],
   templateUrl: './reviewer-flow-pages.component.html',
   styleUrls: ['./reviewer-flow-pages.component.scss'],
@@ -54,7 +56,7 @@ export class ReviewerFlowPagesComponent implements OnInit, OnDestroy {
   private readonly themeService: ThemeService = inject(ThemeService);
 
   protected pageIndex = 1;
-  private maxPageIndex = 4;
+  private maxPageIndex = 5;
 
   private readonly userService: UserService = inject(UserService);
   private readonly projectService: ProjectService = inject(ProjectService);
@@ -69,7 +71,7 @@ export class ReviewerFlowPagesComponent implements OnInit, OnDestroy {
     this.initForm();
     this.prepareData();
 
-    // this.pageIndex += 2;
+    // this.pageIndex += 3;
   }
 
   ngOnDestroy(): void {
@@ -106,6 +108,9 @@ export class ReviewerFlowPagesComponent implements OnInit, OnDestroy {
       this.pageIndex === 3 &&
       this.reviewerScoreComponent.validToGoNext()
     ) {
+      this.pageIndex++;
+      console.log(this.form);
+    } else if (this.pageIndex === 4) {
       this.pageIndex++;
       console.log(this.form);
     } else {

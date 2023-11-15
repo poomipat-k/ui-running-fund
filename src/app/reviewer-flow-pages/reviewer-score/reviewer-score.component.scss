@@ -65,7 +65,7 @@
       margin: 1rem 0;
     }
 
-    &:not(:last-child) {
+    &:not(:first-child) {
       margin-top: 8px;
     }
   }

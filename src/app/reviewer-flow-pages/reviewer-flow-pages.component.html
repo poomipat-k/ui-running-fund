@@ -33,7 +33,12 @@
       [criteriaList]="reviewCriteriaList"
     ></app-reviewer-score
     >} @case (4) {
-    <app-reviewer-summary></app-reviewer-summary>
+    <app-reviewer-summary
+      [criteriaList]="reviewCriteriaList"
+      [form]="form"
+    ></app-reviewer-summary>
+    } @case (5) {
+    <app-reviewer-confirmation></app-reviewer-confirmation>
     }}
   </form>
 
