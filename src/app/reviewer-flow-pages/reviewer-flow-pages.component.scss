@@ -88,6 +88,12 @@
     border: 1px solid #878c97;
     color: #878c97;
     background-color: #fff;
+
+    &-icon {
+      width: 2rem;
+      height: 2rem;
+      margin-right: 7px;
+    }
   }
 
   &--next {
@@ -106,7 +112,7 @@
     }
 
     &-icon {
-      margin-left: 6.7px;
+      margin-left: 7px;
       width: 2rem;
       height: 2rem;
     }
@@ -136,6 +142,9 @@
   &-18 {
     margin-top: 1.8rem;
   }
+  &-33 {
+    margin-top: 3.3rem;
+  }
   &-40 {
     margin-top: 4rem;
   }
@@ -144,5 +153,26 @@
   }
   &-95 {
     margin-top: 9.5rem;
+  }
+}
+
+.pdb {
+  &-50 {
+    padding-bottom: 5rem;
+  }
+  &-100 {
+    padding-bottom: 10rem;
+  }
+
+  &-80 {
+    padding-bottom: 8rem;
+  }
+
+  &-116 {
+    padding-bottom: 11.6rem;
+  }
+
+  &-222 {
+    padding-bottom: 22.2rem;
   }
 }

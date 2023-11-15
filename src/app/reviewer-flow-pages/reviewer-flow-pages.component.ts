@@ -56,7 +56,7 @@ export class ReviewerFlowPagesComponent implements OnInit, OnDestroy {
   private readonly themeService: ThemeService = inject(ThemeService);
 
   protected pageIndex = 1;
-  private maxPageIndex = 5;
+  protected maxPageIndex = 5;
 
   private readonly userService: UserService = inject(UserService);
   private readonly projectService: ProjectService = inject(ProjectService);
@@ -71,7 +71,7 @@ export class ReviewerFlowPagesComponent implements OnInit, OnDestroy {
     this.initForm();
     this.prepareData();
 
-    this.pageIndex += 3;
+    // this.pageIndex += 4;
   }
 
   ngOnDestroy(): void {
@@ -91,11 +91,10 @@ export class ReviewerFlowPagesComponent implements OnInit, OnDestroy {
   }
 
   protected nextPage(): void {
-    if (this.pageIndex >= this.maxPageIndex) {
+    if (this.pageIndex === this.maxPageIndex) {
+      console.log('===submit', this.form.value);
       return;
     }
-    // validate page
-
     if (
       this.pageIndex === 1 &&
       this.interestedPersonComponent.validToGoNext()

@@ -1,4 +1,13 @@
-<div class="container">
+<div
+  [ngClass]="{
+    container: true,
+    'pdb-50': pageIndex === 1,
+    'pdb-100': pageIndex === 2,
+    'pdb-80': pageIndex === 3,
+    'pdb-116': pageIndex === 4,
+    'pdb-222': pageIndex === 5
+  }"
+>
   <div>
     <div class="header">
       <h1 class="header__main">
@@ -59,14 +68,24 @@
       'mt-40': pageIndex === 1,
       'mt-72': pageIndex === 2,
       'mt-16': pageIndex === 3,
-      'mt-18': pageIndex === 4
+      'mt-18': pageIndex === 4,
+      'mt-33': pageIndex === 5
     }"
   >
+    @if (pageIndex === 1) {
+    <button class="button button--cancel" (click)="prevPage()">ยกเลิก</button>
+    } @else {
     <button class="button button--cancel" (click)="prevPage()">
-      {{ pageIndex === 1 ? "ยกเลิก" : "ย้อนกลับ" }}
+      <img
+        src="/assets/arrow_back.svg"
+        alt="arror back"
+        class="button--cancel-icon"
+      />
+      <div>ย้อนกลับ</div>
     </button>
+    }
     <button class="button button--next" (click)="nextPage()">
-      ถัดไป
+      {{ pageIndex === maxPageIndex ? "ส่ง" : "ถัดไป" }}
       <div class="button--next-icon">
         <app-com-svg-arrow-forward></app-com-svg-arrow-forward>
       </div>
