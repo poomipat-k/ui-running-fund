@@ -86,6 +86,7 @@ export class ReviewerFlowPagesComponent implements OnInit, OnDestroy {
       score: new FormGroup({
         summary: new FormControl(null, Validators.required),
       }),
+      comment: new FormControl(),
     });
   }
 
