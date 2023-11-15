@@ -26,6 +26,9 @@ import { ReviewerConfirmationComponent } from './reviewer-confirmation/reviewer-
 import { ReviewerInterestedPerson } from './reviewer-interested-person/reviewer-interested-person.component';
 import { ReviewerScoreComponent } from './reviewer-score/reviewer-score.component';
 import { ReviewerSummaryComponent } from './reviewer-summary/reviewer-summary.component';
+import { ReviewerProjectDetails } from '../shared/models/reviewer-project-details';
+import { DateService } from '../services/date.service';
+import { User } from '../shared/models/user';
 
 @Component({
   selector: 'app-reviewer-flow-pages',
@@ -51,17 +54,35 @@ export class ReviewerFlowPagesComponent implements OnInit, OnDestroy {
   @Input() projectCode: string;
   protected form: FormGroup;
   protected reviewCriteriaList: ReviewCriteria[] = [];
-
-  private readonly routerService: Router = inject(Router);
-  private readonly themeService: ThemeService = inject(ThemeService);
-
+  protected apiData: ReviewerProjectDetails = new ReviewerProjectDetails();
   protected pageIndex = 1;
   protected maxPageIndex = 5;
+  private currentUser: User;
 
+  // Services
+  private readonly routerService: Router = inject(Router);
+  private readonly themeService: ThemeService = inject(ThemeService);
   private readonly userService: UserService = inject(UserService);
   private readonly projectService: ProjectService = inject(ProjectService);
+  protected readonly dateService: DateService = inject(DateService);
 
   private readonly subs: Subscription[] = [];
+
+  get projectCreatedAt(): string {
+    if (this.apiData.project_created_at) {
+      return this.dateService.dateToStringWithLongMonth(
+        this.apiData.project_created_at
+      );
+    }
+    return '';
+  }
+
+  get userFullName(): string {
+    if (!this.currentUser) {
+      return '';
+    }
+    return `${this.currentUser.first_name} ${this.currentUser.last_name}`;
+  }
 
   constructor() {}
 
@@ -141,13 +162,27 @@ export class ReviewerFlowPagesComponent implements OnInit, OnDestroy {
             this.reviewCriteriaList = criteriaList;
             this.addScoreFormControls(criteriaList);
             const user = this.userService.getCurrentUser();
+            this.currentUser = user;
+            console.log('===user', user);
             return this.projectService.getProjectDetailsForReviewer(
               user.id,
               this.projectCode
             );
           })
         )
-        .subscribe((_result) => {})
+        .subscribe((result) => {
+          console.log('===sub result:', result);
+          const data = new ReviewerProjectDetails();
+          if (result) {
+            data.project_id = result.project_id;
+            data.project_code = result.project_code;
+            data.project_created_at = result.project_created_at;
+            data.project_name = result.project_name;
+            data.reviewer_id = result.reviewer_id;
+            data.reviewed_at = result.reviewed_at;
+            this.apiData = data;
+          }
+        })
     );
   }
 

@@ -16,6 +16,7 @@ import { ReviewPeriod } from '../shared/models/review-period';
 import { TableCell } from '../shared/models/table-cell';
 import { TableColumn } from '../shared/models/table-column';
 import { User } from '../shared/models/user';
+import { DateService } from '../services/date.service';
 
 @Component({
   selector: 'app-home',
@@ -84,7 +85,9 @@ export class HomeComponent implements OnInit, OnDestroy {
     { id: 3, display: 'เก่า - ใหม่', name: 'วันที่สร้าง', order: 'ASC' },
   ];
 
-  routerService: Router = inject(Router);
+  private routerService: Router = inject(Router);
+  private dateService: DateService = inject(DateService);
+
   private readonly subs: Subscription[] = [];
 
   constructor() {}
@@ -115,8 +118,12 @@ export class HomeComponent implements OnInit, OnDestroy {
             if (!isLoggedIn || !p) {
               return of(null);
             }
-            this.fromDate = this.dateToStringWithShortMonth(p.from_date);
-            this.toDate = this.dateToStringWithShortMonth(p.to_date);
+            this.fromDate = this.dateService.dateToStringWithShortMonth(
+              p.from_date
+            );
+            this.toDate = this.dateService.dateToStringWithShortMonth(
+              p.to_date
+            );
             this.reviewPeriod = p;
             const user = this.userService.getCurrentUser();
             return this.projectService.getReviewDashboard(
@@ -136,7 +143,7 @@ export class HomeComponent implements OnInit, OnDestroy {
                   value: row.project_code,
                 },
                 {
-                  display: this.dateToStringWithLongMonth(
+                  display: this.dateService.dateToStringWithLongMonth(
                     row.project_created_at
                   ),
                   value: row.project_created_at,
@@ -152,7 +159,9 @@ export class HomeComponent implements OnInit, OnDestroy {
                   value: row.review_id,
                 },
                 {
-                  display: this.dateToStringWithLongMonth(row.reviewed_at),
+                  display: this.dateService.dateToStringWithLongMonth(
+                    row.reviewed_at
+                  ),
                   value: row.reviewed_at,
                 },
                 {
@@ -201,39 +210,6 @@ export class HomeComponent implements OnInit, OnDestroy {
         }
         return 0;
       });
-    }
-  }
-
-  private dateToStringWithShortMonth(dateStr: string) {
-    return this.transformDateString(dateStr, {
-      year: 'numeric',
-      month: 'short',
-      day: 'numeric',
-    });
-  }
-
-  private dateToStringWithLongMonth(dateStr: string) {
-    return this.transformDateString(dateStr, {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric',
-    });
-  }
-
-  private transformDateString(
-    dateString: string,
-    options?: Intl.DateTimeFormatOptions
-  ): string {
-    if (!dateString) {
-      return '';
-    }
-    const date = new Date(dateString);
-    try {
-      const result = date.toLocaleDateString('th-TH', options);
-      return result;
-    } catch (err) {
-      console.error('Error in transformDateString(): ', err);
-      return '';
     }
   }
 }

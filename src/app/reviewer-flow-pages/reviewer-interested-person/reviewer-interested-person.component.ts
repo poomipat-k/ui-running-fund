@@ -19,9 +19,9 @@ import { InterestedPersonTypeData } from './radio-options';
 })
 export class ReviewerInterestedPerson implements OnInit {
   @Input() form: FormGroup;
+  @Input() userFullName: string;
+  @Input() projectName: string;
 
-  protected reviewerFullName = 'ชื่อผู้ทรงคุณวุฒิ';
-  protected projectName = 'ชื่อโครงการขอทุนสนับสนุน';
   protected showDetailsQuestion = false;
 
   protected interestedPersonOptions: RadioOption[] = [

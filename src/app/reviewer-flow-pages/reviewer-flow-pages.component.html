@@ -17,11 +17,13 @@
       <div class="header__details">
         <div class="header__line">
           <div class="header__line--bold header__line--bold-1">รหัสโครงการ</div>
-          <div class="header__line-normal-1">Unique</div>
+          <div class="header__line-normal-1">{{ apiData.project_code }}</div>
         </div>
         <div class="header__line">
           <div class="header__line--bold header__line--bold-2">วันที่สร้าง</div>
-          <div class="header__line-normal-2">6 กันยายน 2566</div>
+          <div class="header__line-normal-2">
+            {{ projectCreatedAt }}
+          </div>
         </div>
       </div>
     </div>
@@ -33,9 +35,15 @@
     <app-review-reviewer-interested-person
       #interestedPerson
       [form]="form"
+      [userFullName]="userFullName"
+      [projectName]="apiData.project_name"
     ></app-review-reviewer-interested-person
-    >} @case (2) { <app-review-general-details></app-review-general-details>}
-    @case (3) {
+    >} @case (2) {
+    <app-review-general-details
+      [projectName]="apiData.project_name"
+      [projectCode]="apiData.project_code"
+    ></app-review-general-details
+    >} @case (3) {
     <app-reviewer-score
       #reviewerScore
       [form]="form"

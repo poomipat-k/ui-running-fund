@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CheckboxViewComponent } from '../../components/checkbox-view/checkbox-view.component';
 import { RadioViewComponent } from '../../components/radio-view/radio-view.component';
@@ -18,8 +18,9 @@ import { RadioOption } from '../../shared/models/radio-option';
   styleUrls: ['./general-details.component.scss'],
 })
 export class GeneralDetailsComponent {
-  protected projectName = 'ชื่อโครงการขอทุนสนับสนุน';
-  protected projectCode = 'Unique ID';
+  @Input() projectName: string;
+  @Input() projectCode: string;
+
   protected projectLeader = 'นายขอทุน สนับสนุน';
   protected projectLocation = 'กาดหลวง เชียงใหม่';
 
