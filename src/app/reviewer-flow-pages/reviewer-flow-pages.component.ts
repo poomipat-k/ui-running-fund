@@ -71,7 +71,7 @@ export class ReviewerFlowPagesComponent implements OnInit, OnDestroy {
     this.initForm();
     this.prepareData();
 
-    // this.pageIndex += 3;
+    this.pageIndex += 3;
   }
 
   ngOnDestroy(): void {
