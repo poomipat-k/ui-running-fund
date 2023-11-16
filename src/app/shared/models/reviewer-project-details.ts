@@ -8,7 +8,7 @@ export class ReviewerProjectDetails {
   reviewerId?: number;
   reviewedAt?: string;
   isInterestedPerson?: boolean;
-  interestedPesonType?: string;
+  interestedPersonType?: string;
   reviewDetails?: ReviewDetails[];
   constructor() {}
 }

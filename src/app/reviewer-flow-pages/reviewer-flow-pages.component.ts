@@ -163,7 +163,6 @@ export class ReviewerFlowPagesComponent implements OnInit, OnDestroy {
             this.addScoreFormControls(criteriaList);
             const user = this.userService.getCurrentUser();
             this.currentUser = user;
-            console.log('===user', user);
             return this.projectService.getProjectDetailsForReviewer(
               user.id,
               this.projectCode
@@ -181,7 +180,7 @@ export class ReviewerFlowPagesComponent implements OnInit, OnDestroy {
             data.reviewerId = result.reviewerId;
             data.reviewedAt = result.reviewedAt;
             data.isInterestedPerson = result.isInterestedPerson;
-            data.interestedPesonType = result.interestedPesonType;
+            data.interestedPersonType = result.interestedPersonType;
             data.reviewDetails = result.reviewDetails;
             this.apiData = data;
 
@@ -192,10 +191,31 @@ export class ReviewerFlowPagesComponent implements OnInit, OnDestroy {
   }
 
   private patchFormData(data: ReviewerProjectDetails) {
+    this.patchIntestedPerson(data);
     this.patchScores(data.reviewDetails);
   }
 
-  private patchIntestedPerson() {}
+  private patchIntestedPerson(data: ReviewerProjectDetails) {
+    if (
+      data.isInterestedPerson === null ||
+      data.isInterestedPerson === undefined
+    ) {
+      return;
+    }
+    const control = this.form.get('ip') as FormGroup;
+    if (!data.isInterestedPerson) {
+      control.patchValue({ isInterestedPerson: false });
+      return;
+    }
+
+    control.addControl(
+      'interestedPersonType',
+      new FormControl(data.interestedPersonType, Validators.required)
+    );
+    control.patchValue({
+      isInterestedPerson: true,
+    });
+  }
 
   private patchScores(reviewDetails: ReviewDetails[] | undefined) {
     if (reviewDetails && reviewDetails.length > 0) {
