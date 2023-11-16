@@ -81,32 +81,38 @@ export class ReviewerScoreComponent implements OnInit {
       id: 1,
       display: 'คุณภาพข้อเสนอโครงการ',
       value: 'project_quality',
+      controlName: 'projectQuality',
     },
     {
       id: 2,
       display: 'มาตรฐานการจัดงานวิ่งเพื่อสุขภาพ',
-      value: 'standard',
+      value: 'project_standard',
+      controlName: 'projectStandard',
     },
     {
       id: 3,
       display:
         'แนวทางและภาพลักษณ์ที่สอดคล้องสำนักงานกองทุนสนับสนุนการสร้างเสริมสุขภาพ (สสส.)',
       value: 'vision_and_image',
+      controlName: 'visionAndImage',
     },
     {
       id: 4,
       display: 'ประโยชน์ของการนำเสนอองค์กร สสส. ในการสนับสนุนทุนอุปถัมภ์',
       value: 'benefit',
+      controlName: 'benefit',
     },
     {
       id: 5,
       display: 'ความน่าเชื่อถือและประสบการณ์การจัดงาน',
       value: 'experience_and_reliability',
+      controlName: 'experienceAndReliability',
     },
     {
       id: 6,
       display: 'งบประมาณที่ขอรับการสนับสนุน และผลที่คาดว่าจะได้รับ',
       value: 'fund_and_output',
+      controlName: 'fundAndOutput',
     },
   ];
 
@@ -125,12 +131,12 @@ export class ReviewerScoreComponent implements OnInit {
     if (this.form.value?.score?.summary === 'to_be_revised') {
       const improvementFormGroup = new FormGroup(
         {
-          project_quality: new FormControl(false),
-          standard: new FormControl(false),
-          vision_and_image: new FormControl(false),
+          projectQuality: new FormControl(false),
+          projectStandard: new FormControl(false),
+          visionAndImage: new FormControl(false),
           benefit: new FormControl(false),
-          experience_and_reliability: new FormControl(false),
-          fund_and_output: new FormControl(false),
+          experienceAndReliability: new FormControl(false),
+          fundAndOutput: new FormControl(false),
         },
         requiredCheckBoxToBeCheckedValidator()
       );
