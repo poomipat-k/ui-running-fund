@@ -58,17 +58,17 @@
       }
       <div>
         <div class="main__group">7. สรุปความเห็น</div>
-        <div class="question__box--summary" id="summary">
+        <div class="question__box--summary" id="reviewSummary">
           <app-com-radio
             [form]="form"
             [options]="summaryDropdownOptions"
             groupName="score"
-            controlName="summary"
+            controlName="reviewSummary"
             radioStyle="review-3b"
             [onChanged]="onSummaryRadioChanged"
           ></app-com-radio>
-          @if (!form.get('score.summary')?.valid &&
-          form.get('score.summary')?.touched ) {
+          @if (!form.get('score.reviewSummary')?.valid &&
+          form.get('score.reviewSummary')?.touched ) {
           <div class="error mt-10">
             <img src="/assets/error_icon.svg" alt="error icon" />
             <p class="error__text">กรุณาให้คะแนนในส่วนนี้</p>
@@ -77,7 +77,7 @@
         </div>
       </div>
       <button (click)="fillAll()">Fill all</button>
-      @if (form.value?.score?.summary === 'to_be_revised' ) {
+      @if (form.value?.score?.reviewSummary === 'to_be_revised' ) {
       <div id="improvement" class="improvement">
         <div class="improvement__text">
           โครงการควรจะต้องมีการปรับแก้ไขเพิ่มเติมรายละเอียดให้มีความเหมาะสม

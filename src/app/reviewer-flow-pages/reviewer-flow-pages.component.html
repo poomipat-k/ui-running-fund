@@ -91,12 +91,15 @@
       />
       <div>ย้อนกลับ</div>
     </button>
-    }
+    } @if (pageIndex < maxPageIndex) {
     <button class="button button--next" (click)="nextPage()">
-      {{ pageIndex === maxPageIndex ? "ส่ง" : "ถัดไป" }}
+      ถัดไป
       <div class="button--next-icon">
         <app-com-svg-arrow-forward></app-com-svg-arrow-forward>
       </div>
     </button>
+    } @else {
+    <button class="button button--next" (click)="nextPage()">ส่ง</button>
+    }
   </div>
 </div>

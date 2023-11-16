@@ -5,7 +5,7 @@ import { TableComponent } from '../../components/table/table.component';
 import { ReviewCriteria } from '../../shared/models/review-criteria';
 import { TableCell } from '../../shared/models/table-cell';
 import { TableColumn } from '../../shared/models/table-column';
-import { criteiaGroup } from '../data/criteria-group';
+import { criteriaGroup } from '../data/criteria-group';
 
 @Component({
   selector: 'app-reviewer-summary',
@@ -30,11 +30,11 @@ export class ReviewerSummaryComponent {
 
   get data(): TableCell[][] {
     let result: TableCell[][] = [];
-    if (criteiaGroup) {
+    if (criteriaGroup) {
       let j = 0;
       let sumTotal = 0;
-      for (let i = 0; i < criteiaGroup.length; i++) {
-        const topic = criteiaGroup[i].groupName;
+      for (let i = 0; i < criteriaGroup.length; i++) {
+        const topic = criteriaGroup[i].groupName;
         let sumScore = 0;
         for (; j < this.criteriaList.length; j++) {
           const criteria = this.criteriaList[j];

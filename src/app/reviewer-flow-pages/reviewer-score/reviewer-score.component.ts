@@ -8,7 +8,7 @@ import { CheckboxOption } from '../../shared/models/checkbox-option';
 import { RadioOption } from '../../shared/models/radio-option';
 import { ReviewCriteria } from '../../shared/models/review-criteria';
 import { requiredCheckBoxToBeCheckedValidator } from '../../shared/validators/requiredCheckbox';
-import { criteiaGroup } from '../data/criteria-group';
+import { criteriaGroup } from '../data/criteria-group';
 
 @Component({
   selector: 'app-reviewer-score',
@@ -123,12 +123,12 @@ export class ReviewerScoreComponent implements OnInit {
   constructor() {}
 
   ngOnInit(): void {
-    this.groupHeaders = criteiaGroup;
+    this.groupHeaders = criteriaGroup;
   }
 
   onSummaryRadioChanged(): void {
     const group = this.form.get('score') as FormGroup;
-    if (this.form.value?.score?.summary === 'to_be_revised') {
+    if (this.form.value?.score?.reviewSummary === 'to_be_revised') {
       const improvementFormGroup = new FormGroup(
         {
           projectQuality: new FormControl(false),

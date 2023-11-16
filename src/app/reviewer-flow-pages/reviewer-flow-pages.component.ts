@@ -30,6 +30,8 @@ import { ReviewerConfirmationComponent } from './reviewer-confirmation/reviewer-
 import { ReviewerInterestedPerson } from './reviewer-interested-person/reviewer-interested-person.component';
 import { ReviewerScoreComponent } from './reviewer-score/reviewer-score.component';
 import { ReviewerSummaryComponent } from './reviewer-summary/reviewer-summary.component';
+import { requiredCheckBoxToBeCheckedValidator } from '../shared/validators/requiredCheckbox';
+import { ReviewerImprovement } from '../shared/models/review-improvement';
 
 @Component({
   selector: 'app-reviewer-flow-pages',
@@ -89,6 +91,7 @@ export class ReviewerFlowPagesComponent implements OnInit, OnDestroy {
   constructor() {}
 
   ngOnInit(): void {
+    console.log('===MAIN PAGE [OnInit]');
     this.themeService.changeBackgroundColor(BackgroundColor.gray);
     this.initForm();
     this.prepareData();
@@ -105,7 +108,7 @@ export class ReviewerFlowPagesComponent implements OnInit, OnDestroy {
         isInterestedPerson: new FormControl(null, Validators.required),
       }),
       score: new FormGroup({
-        summary: new FormControl(null, Validators.required),
+        reviewSummary: new FormControl(null, Validators.required),
       }),
       comment: new FormControl(),
     });
@@ -182,6 +185,22 @@ export class ReviewerFlowPagesComponent implements OnInit, OnDestroy {
             data.isInterestedPerson = result.isInterestedPerson;
             data.interestedPersonType = result.interestedPersonType;
             data.reviewDetails = result.reviewDetails;
+            data.reviewSummary = result.reviewSummary;
+            data.reviewerComment = result.reviewerComment;
+
+            data.reviewImprovement = new ReviewerImprovement();
+            data.reviewImprovement.benefit = result.reviewImprovement?.benefit;
+            data.reviewImprovement.experienceAndReliability =
+              result.reviewImprovement?.experienceAndReliability;
+            data.reviewImprovement.fundAndOutput =
+              result.reviewImprovement?.fundAndOutput;
+            data.reviewImprovement.projectQuality =
+              result.reviewImprovement?.projectQuality;
+            data.reviewImprovement.projectStandard =
+              result.reviewImprovement?.projectStandard;
+            data.reviewImprovement.visionAndImage =
+              result.reviewImprovement?.visionAndImage;
+
             this.apiData = data;
 
             this.patchFormData(result);
@@ -191,11 +210,13 @@ export class ReviewerFlowPagesComponent implements OnInit, OnDestroy {
   }
 
   private patchFormData(data: ReviewerProjectDetails) {
-    this.patchIntestedPerson(data);
+    this.patchInterestedPerson(data);
     this.patchScores(data.reviewDetails);
+    this.patchSummary(data);
+    this.patchComment(data.reviewerComment);
   }
 
-  private patchIntestedPerson(data: ReviewerProjectDetails) {
+  private patchInterestedPerson(data: ReviewerProjectDetails) {
     if (
       data.isInterestedPerson === null ||
       data.isInterestedPerson === undefined
@@ -220,10 +241,59 @@ export class ReviewerFlowPagesComponent implements OnInit, OnDestroy {
   private patchScores(reviewDetails: ReviewDetails[] | undefined) {
     if (reviewDetails && reviewDetails.length > 0) {
       const scores = this.buildScoresToPatch(reviewDetails);
-      const control = this.form.get('score') as FormGroup;
-      if (control) {
-        control.patchValue(scores);
+      const scoreGroupControl = this.form.get('score') as FormGroup;
+      if (scoreGroupControl) {
+        scoreGroupControl?.patchValue(scores);
       }
+    }
+  }
+
+  private patchSummary(data: ReviewerProjectDetails) {
+    if (data.reviewSummary === null || data.reviewSummary === undefined) {
+      return;
+    }
+    const scoreGroupControl = this.form.get('score') as FormGroup;
+    if (data.reviewSummary !== 'to_be_revised') {
+      scoreGroupControl?.removeControl('improvement');
+      scoreGroupControl?.patchValue({
+        reviewSummary: data.reviewSummary,
+      });
+      return;
+    }
+    // Add improvement checkbox when to_be_revised selected
+    const improvementFormGroup = new FormGroup(
+      {
+        projectQuality: new FormControl(
+          data?.reviewImprovement?.projectQuality ?? false
+        ),
+        projectStandard: new FormControl(
+          data?.reviewImprovement?.projectStandard ?? false
+        ),
+        visionAndImage: new FormControl(
+          data?.reviewImprovement?.visionAndImage ?? false
+        ),
+        benefit: new FormControl(data?.reviewImprovement?.benefit ?? false),
+        experienceAndReliability: new FormControl(
+          data?.reviewImprovement?.experienceAndReliability ?? false
+        ),
+        fundAndOutput: new FormControl(
+          data?.reviewImprovement?.fundAndOutput ?? false
+        ),
+      },
+      requiredCheckBoxToBeCheckedValidator()
+    );
+    scoreGroupControl.addControl('improvement', improvementFormGroup);
+    scoreGroupControl?.patchValue({
+      reviewSummary: data.reviewSummary,
+    });
+    return;
+  }
+
+  private patchComment(reviewerComment: string | undefined) {
+    if (reviewerComment) {
+      this.form.patchValue({
+        comment: reviewerComment,
+      });
     }
   }
 

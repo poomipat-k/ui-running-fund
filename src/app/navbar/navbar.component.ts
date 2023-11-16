@@ -1,8 +1,9 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { UserService } from '../services/user.service';
 import { User } from '../shared/models/user';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-navbar',
@@ -11,21 +12,28 @@ import { User } from '../shared/models/user';
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.scss'],
 })
-export class NavbarComponent implements OnInit {
+export class NavbarComponent implements OnInit, OnDestroy {
   userService: UserService = inject(UserService);
   router: Router = inject(Router);
   protected reviewers: User[] = [];
-
   protected currentUser = new User();
+
+  private readonly subs: Subscription[] = [];
 
   constructor() {}
 
   ngOnInit(): void {
-    this.userService.currentUserSubject$.subscribe((user) => {
-      this.currentUser = user;
-    });
+    this.subs.push(
+      this.userService.currentUserSubject$.subscribe((user) => {
+        this.currentUser = user;
+      })
+    );
 
     this.userService.autoLogin();
+  }
+
+  ngOnDestroy(): void {
+    this.subs.forEach((s) => s.unsubscribe());
   }
 
   onLogout() {

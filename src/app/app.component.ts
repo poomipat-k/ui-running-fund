@@ -1,10 +1,16 @@
-import { AfterViewInit, Component, OnInit, inject } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  OnDestroy,
+  OnInit,
+  inject,
+} from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { FooterComponent } from './footer/footer.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { BackgroundColor } from './shared/enums/background-color';
 import { ThemeService } from './services/theme.service';
-import { delay } from 'rxjs';
+import { Subscription, delay } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -13,7 +19,9 @@ import { delay } from 'rxjs';
   styleUrls: ['./app.component.scss'],
   imports: [RouterModule, NavbarComponent, FooterComponent],
 })
-export class AppComponent implements AfterViewInit {
+export class AppComponent implements AfterViewInit, OnDestroy {
+  private readonly subs: Subscription[] = [];
+
   protected backgroundColor = BackgroundColor.white;
 
   private readonly themeService: ThemeService = inject(ThemeService);
@@ -27,11 +35,17 @@ export class AppComponent implements AfterViewInit {
     }
   }
 
+  ngOnDestroy(): void {
+    this.subs.forEach((s) => s.unsubscribe());
+  }
+
   ngAfterViewInit(): void {
-    this.themeService.globalBackgroundColor$
-      .pipe(delay(0))
-      .subscribe((color) => {
-        this.backgroundColor = color;
-      });
+    this.subs.push(
+      this.themeService.globalBackgroundColor$
+        .pipe(delay(0))
+        .subscribe((color) => {
+          this.backgroundColor = color;
+        })
+    );
   }
 }

@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import {
   FormControl,
   FormGroup,
@@ -11,6 +11,7 @@ import { User } from '../shared/models/user';
 import { UserService } from '../services/user.service';
 import { ThemeService } from '../services/theme.service';
 import { BackgroundColor } from '../shared/enums/background-color';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-login',
@@ -19,7 +20,7 @@ import { BackgroundColor } from '../shared/enums/background-color';
   styleUrls: ['./login.component.scss'],
   imports: [CommonModule, ReactiveFormsModule],
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent implements OnInit, OnDestroy {
   protected loginForm: FormGroup;
 
   protected reviewers: User[] = [];
@@ -27,6 +28,8 @@ export class LoginComponent implements OnInit {
   private userService: UserService = inject(UserService);
   private router: Router = inject(Router);
   private readonly themeService: ThemeService = inject(ThemeService);
+
+  private readonly subs: Subscription[] = [];
 
   get submitButtonDisabled(): boolean {
     return false;
@@ -37,13 +40,19 @@ export class LoginComponent implements OnInit {
 
     this.initForm();
 
-    this.userService.getReviewers().subscribe((result) => {
-      if (!result) {
-        console.log('====SOMETHING WRONG');
-      } else {
-        this.reviewers = result;
-      }
-    });
+    this.subs.push(
+      this.userService.getReviewers().subscribe((result) => {
+        if (!result) {
+          console.error('====Cannot get Reviewers');
+        } else {
+          this.reviewers = result;
+        }
+      })
+    );
+  }
+
+  ngOnDestroy(): void {
+    this.subs.forEach((s) => s.unsubscribe());
   }
 
   private initForm(): void {

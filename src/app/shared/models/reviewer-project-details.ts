@@ -1,4 +1,5 @@
 import { ReviewDetails } from './review-details';
+import { ReviewerImprovement } from './review-improvement';
 
 export class ReviewerProjectDetails {
   projectId: number;
@@ -10,5 +11,9 @@ export class ReviewerProjectDetails {
   isInterestedPerson?: boolean;
   interestedPersonType?: string;
   reviewDetails?: ReviewDetails[];
+  reviewSummary?: string;
+  reviewerComment?: string;
+  reviewImprovement?: ReviewerImprovement;
+
   constructor() {}
 }

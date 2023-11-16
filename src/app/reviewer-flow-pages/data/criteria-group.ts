@@ -1,4 +1,4 @@
-export const criteiaGroup = [
+export const criteriaGroup = [
   {
     id: 1,
     groupName: '1. ความเป็นมา หลักการและเหตุผล มีความชัดเจนหรือไม่ อย่างไร',
