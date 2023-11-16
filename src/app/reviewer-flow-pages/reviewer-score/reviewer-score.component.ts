@@ -151,11 +151,11 @@ export class ReviewerScoreComponent implements OnInit {
   }
 
   buildControlName(c: ReviewCriteria): string {
-    return `${c.criteria_version}_${c.order_number}`;
+    return `${c.criteriaVersion}_${c.orderNumber}`;
   }
 
   buildFormAccessName(c: ReviewCriteria) {
-    return `score.${c.criteria_version}_${c.order_number}`;
+    return `score.${c.criteriaVersion}_${c.orderNumber}`;
   }
 
   validToGoNext(): boolean {
@@ -200,6 +200,6 @@ export class ReviewerScoreComponent implements OnInit {
   protected readonly sanitizer: DomSanitizer = inject(DomSanitizer);
 
   protected buildQuestionText(criteria: ReviewCriteria): string {
-    return `${criteria.group_number}.${criteria.in_group_number} ${criteria.display_text}`;
+    return `${criteria.groupNumber}.${criteria.inGroupNumber} ${criteria.displayText}`;
   }
 }

@@ -16,19 +16,20 @@ import {
 import { Router } from '@angular/router';
 import { Subscription, forkJoin, mergeMap, of } from 'rxjs';
 import { ArrowForwardComponent } from '../components/svg/arrow-forward/arrow-forward.component';
+import { DateService } from '../services/date.service';
 import { ProjectService } from '../services/project.service';
 import { ThemeService } from '../services/theme.service';
 import { UserService } from '../services/user.service';
 import { BackgroundColor } from '../shared/enums/background-color';
 import { ReviewCriteria } from '../shared/models/review-criteria';
+import { ReviewDetails } from '../shared/models/review-details';
+import { ReviewerProjectDetails } from '../shared/models/reviewer-project-details';
+import { User } from '../shared/models/user';
 import { GeneralDetailsComponent } from './general-details/general-details.component';
 import { ReviewerConfirmationComponent } from './reviewer-confirmation/reviewer-confirmation.component';
 import { ReviewerInterestedPerson } from './reviewer-interested-person/reviewer-interested-person.component';
 import { ReviewerScoreComponent } from './reviewer-score/reviewer-score.component';
 import { ReviewerSummaryComponent } from './reviewer-summary/reviewer-summary.component';
-import { ReviewerProjectDetails } from '../shared/models/reviewer-project-details';
-import { DateService } from '../services/date.service';
-import { User } from '../shared/models/user';
 
 @Component({
   selector: 'app-reviewer-flow-pages',
@@ -49,7 +50,8 @@ import { User } from '../shared/models/user';
 export class ReviewerFlowPagesComponent implements OnInit, OnDestroy {
   @ViewChild('interestedPerson')
   interestedPersonComponent: ReviewerInterestedPerson;
-  @ViewChild('reviewerScore') reviewerScoreComponent: ReviewerScoreComponent;
+  @ViewChild('reviewerScore')
+  reviewerScoreComponent: ReviewerScoreComponent;
   // url params
   @Input() projectCode: string;
   protected form: FormGroup;
@@ -69,9 +71,9 @@ export class ReviewerFlowPagesComponent implements OnInit, OnDestroy {
   private readonly subs: Subscription[] = [];
 
   get projectCreatedAt(): string {
-    if (this.apiData.project_created_at) {
+    if (this.apiData.projectCreatedAt) {
       return this.dateService.dateToStringWithLongMonth(
-        this.apiData.project_created_at
+        this.apiData.projectCreatedAt
       );
     }
     return '';
@@ -81,18 +83,16 @@ export class ReviewerFlowPagesComponent implements OnInit, OnDestroy {
     if (!this.currentUser) {
       return '';
     }
-    return `${this.currentUser.first_name} ${this.currentUser.last_name}`;
+    return `${this.currentUser.firstName} ${this.currentUser.lastName}`;
   }
 
   constructor() {}
 
   ngOnInit(): void {
     this.themeService.changeBackgroundColor(BackgroundColor.gray);
-
     this.initForm();
     this.prepareData();
-
-    // this.pageIndex += 4;
+    // this.pageIndex += 2;
   }
 
   ngOnDestroy(): void {
@@ -174,16 +174,47 @@ export class ReviewerFlowPagesComponent implements OnInit, OnDestroy {
           console.log('===sub result:', result);
           const data = new ReviewerProjectDetails();
           if (result) {
-            data.project_id = result.project_id;
-            data.project_code = result.project_code;
-            data.project_created_at = result.project_created_at;
-            data.project_name = result.project_name;
-            data.reviewer_id = result.reviewer_id;
-            data.reviewed_at = result.reviewed_at;
+            data.projectId = result.projectId;
+            data.projectCode = result.projectCode;
+            data.projectCreatedAt = result.projectCreatedAt;
+            data.projectName = result.projectName;
+            data.reviewerId = result.reviewerId;
+            data.reviewedAt = result.reviewedAt;
+            data.isInterestedPerson = result.isInterestedPerson;
+            data.interestedPesonType = result.interestedPesonType;
+            data.reviewDetails = result.reviewDetails;
             this.apiData = data;
+
+            this.patchFormData(result);
           }
         })
     );
+  }
+
+  private patchFormData(data: ReviewerProjectDetails) {
+    this.patchScores(data.reviewDetails);
+  }
+
+  private patchIntestedPerson() {}
+
+  private patchScores(reviewDetails: ReviewDetails[] | undefined) {
+    if (reviewDetails && reviewDetails.length > 0) {
+      const scores = this.buildScoresToPatch(reviewDetails);
+      const control = this.form.get('score') as FormGroup;
+      if (control) {
+        control.patchValue(scores);
+      }
+    }
+  }
+
+  private buildScoresToPatch(reviewDetails: ReviewDetails[] | undefined): {
+    [key: string]: number;
+  } {
+    const scores: { [key: string]: number } = {};
+    reviewDetails?.forEach((rd) => {
+      scores[`${rd.criteriaVersion}_${rd.criteriaOrderNumber}`] = rd.score;
+    });
+    return scores;
   }
 
   private addScoreFormControls(criteriaList: ReviewCriteria[]) {
@@ -193,7 +224,7 @@ export class ReviewerFlowPagesComponent implements OnInit, OnDestroy {
     const group = this.form.get('score') as FormGroup;
     criteriaList.forEach((c) => {
       group.addControl(
-        `${c.criteria_version}_${c.order_number}`,
+        `${c.criteriaVersion}_${c.orderNumber}`,
         new FormControl(null, Validators.required)
       );
     });

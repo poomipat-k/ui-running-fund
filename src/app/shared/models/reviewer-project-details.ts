@@ -1,9 +1,14 @@
+import { ReviewDetails } from './review-details';
+
 export class ReviewerProjectDetails {
-  project_id: number;
-  project_code: string;
-  project_created_at: string;
-  project_name: string;
-  reviewer_id?: number;
-  reviewed_at?: string;
+  projectId: number;
+  projectCode: string;
+  projectCreatedAt: string;
+  projectName: string;
+  reviewerId?: number;
+  reviewedAt?: string;
+  isInterestedPerson?: boolean;
+  interestedPesonType?: string;
+  reviewDetails?: ReviewDetails[];
   constructor() {}
 }

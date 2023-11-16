@@ -12,7 +12,7 @@
       >
         @for (review of reviewers; track review.id) {
         <option class="login__dropdown-item" [value]="review.id">
-          {{ review.first_name }}
+          {{ review.firstName }}
         </option>
         }
       </select>

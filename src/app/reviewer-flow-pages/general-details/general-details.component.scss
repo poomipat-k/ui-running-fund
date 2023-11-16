@@ -43,7 +43,7 @@
   &__row {
     display: flex;
     flex-direction: row;
-    align-items: flex-end;
+    align-items: center;
     height: 3.3rem;
 
     &:not(:first-child) {

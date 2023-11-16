@@ -38,10 +38,10 @@ export class ReviewerSummaryComponent {
         let sumScore = 0;
         for (; j < this.criteriaList.length; j++) {
           const criteria = this.criteriaList[j];
-          if (criteria.group_number === i + 1) {
+          if (criteria.groupNumber === i + 1) {
             const score =
               this.form?.value?.score[
-                `${criteria.criteria_version}_${criteria.order_number}`
+                `${criteria.criteriaVersion}_${criteria.orderNumber}`
               ];
             if (score) {
               sumScore += score;

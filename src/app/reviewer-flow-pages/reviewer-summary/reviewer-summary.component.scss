@@ -64,8 +64,13 @@
     line-height: normal;
     color: #667085;
   }
+
+  &:focus-visible {
+    outline: none;
+  }
 }
-ห .hr {
+
+.hr {
   width: 100%;
   height: 0.5px;
   background-color: #949494;

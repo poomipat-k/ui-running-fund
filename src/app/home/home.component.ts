@@ -119,17 +119,15 @@ export class HomeComponent implements OnInit, OnDestroy {
               return of(null);
             }
             this.fromDate = this.dateService.dateToStringWithShortMonth(
-              p.from_date
+              p.fromDate
             );
-            this.toDate = this.dateService.dateToStringWithShortMonth(
-              p.to_date
-            );
+            this.toDate = this.dateService.dateToStringWithShortMonth(p.toDate);
             this.reviewPeriod = p;
             const user = this.userService.getCurrentUser();
             return this.projectService.getReviewDashboard(
               user?.id,
-              this.reviewPeriod?.from_date,
-              this.reviewPeriod?.to_date
+              this.reviewPeriod?.fromDate,
+              this.reviewPeriod?.toDate
             );
           })
         )
@@ -139,34 +137,34 @@ export class HomeComponent implements OnInit, OnDestroy {
             this.data = result.map((row) => {
               return [
                 {
-                  display: row.project_code,
-                  value: row.project_code,
+                  display: row.projectCode,
+                  value: row.projectCode,
                 },
                 {
                   display: this.dateService.dateToStringWithLongMonth(
-                    row.project_created_at
+                    row.projectCreatedAt
                   ),
-                  value: row.project_created_at,
+                  value: row.projectCreatedAt,
                 },
                 {
-                  display: row.project_name,
-                  value: row.project_name,
+                  display: row.projectName,
+                  value: row.projectName,
                 },
                 {
-                  display: row.review_id
+                  display: row.reviewId
                     ? BadgeType.Reviewed
                     : BadgeType.PendingReview,
-                  value: row.review_id,
+                  value: row.reviewId,
                 },
                 {
                   display: this.dateService.dateToStringWithLongMonth(
-                    row.reviewed_at
+                    row.reviewedAt
                   ),
-                  value: row.reviewed_at,
+                  value: row.reviewedAt,
                 },
                 {
-                  display: row.download_link,
-                  value: row.download_link,
+                  display: row.downloadLink,
+                  value: row.downloadLink,
                 },
               ];
             });

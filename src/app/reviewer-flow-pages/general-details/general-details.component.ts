@@ -23,6 +23,7 @@ export class GeneralDetailsComponent {
 
   protected projectLeader = 'นายขอทุน สนับสนุน';
   protected projectLocation = 'กาดหลวง เชียงใหม่';
+  protected projectStartDate = '20 ธันวาคม 2566 เวลา 05:00 น. - 10:00 น.';
 
   protected projectTypeCheckBox = [
     {
