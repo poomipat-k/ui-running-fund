@@ -17,13 +17,13 @@ export class UserService {
 
   public getReviewers(): Observable<User[]> {
     return this.http
-      .get<User[]>(`${this.baseUrl}/reviewers`)
+      .get<User[]>(`${this.baseUrl}/user/reviewers`)
       .pipe(catchError(this.handleError));
   }
 
   public getReviewerById(userId: string): Observable<User> {
     return this.http
-      .get<User>(`${this.baseUrl}/reviewer`, {
+      .get<User>(`${this.baseUrl}/user/reviewer`, {
         headers: {
           Authorization: `Bearer ${userId}`,
         },

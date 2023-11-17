@@ -103,7 +103,7 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   onTableRowClicked(row: TableCell[]) {
     if (row.length > 0) {
-      this.routerService.navigate(['review', 'project', row[0].value]);
+      this.routerService.navigate(['project', 'review', row[0].value]);
     }
   }
 

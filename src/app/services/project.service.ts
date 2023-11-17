@@ -16,7 +16,7 @@ export class ProjectService {
 
   getReviewPeriod(): Observable<ReviewPeriod> {
     return this.http
-      .get<ReviewPeriod>(`${this.baseUrl}/projects/review-period`)
+      .get<ReviewPeriod>(`${this.baseUrl}/project/review-period`)
       .pipe(catchError(this.handleError));
   }
 
@@ -27,7 +27,7 @@ export class ProjectService {
   ): Observable<ReviewerDashboardRow[]> {
     return this.http
       .post<ReviewerDashboardRow[]>(
-        `${this.baseUrl}/projects/reviewer`,
+        `${this.baseUrl}/project/reviewer`,
         {
           fromDate,
           toDate,
@@ -47,7 +47,7 @@ export class ProjectService {
   ): Observable<ReviewerProjectDetails> {
     return this.http
       .get<ReviewerProjectDetails>(
-        `${this.baseUrl}/review/project/${projectCode}`,
+        `${this.baseUrl}/project/review/${projectCode}`,
         {
           headers: {
             Authorization: `Bearer ${userId}`,

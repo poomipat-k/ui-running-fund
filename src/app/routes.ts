@@ -18,7 +18,7 @@ const routeConfig: Routes = [
     title: 'Login',
   },
   {
-    path: 'review/project/:projectCode',
+    path: 'project/review/:projectCode',
     component: ReviewerFlowPagesComponent,
   },
   {

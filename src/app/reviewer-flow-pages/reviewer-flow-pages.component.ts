@@ -116,7 +116,11 @@ export class ReviewerFlowPagesComponent implements OnInit, OnDestroy {
 
   protected nextPage(): void {
     if (this.pageIndex === this.maxPageIndex) {
-      console.log('===submit', this.form.value);
+      if (this.form.valid) {
+        console.log('===submit', this.form.value);
+      } else {
+        console.log('===FORM not valid', this.form.value);
+      }
       return;
     }
     if (
