@@ -6,7 +6,7 @@ export class ReviewerProjectDetails {
   projectCode: string;
   projectCreatedAt: string;
   projectName: string;
-  reviewerId?: number;
+  reviewId?: number;
   reviewedAt?: string;
   isInterestedPerson?: boolean;
   interestedPersonType?: string;

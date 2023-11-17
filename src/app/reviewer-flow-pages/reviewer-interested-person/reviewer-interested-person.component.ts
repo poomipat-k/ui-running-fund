@@ -100,6 +100,10 @@ export class ReviewerInterestedPerson implements OnInit {
   }
 
   private isFormValid(): boolean {
-    return this.form.get('ip')?.valid ?? false;
+    const ipGroup = this.form.get('ip');
+    if (ipGroup?.disabled) {
+      return true;
+    }
+    return ipGroup?.valid ?? false;
   }
 }

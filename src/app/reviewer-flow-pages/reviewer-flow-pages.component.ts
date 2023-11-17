@@ -180,7 +180,7 @@ export class ReviewerFlowPagesComponent implements OnInit, OnDestroy {
             data.projectCode = result.projectCode;
             data.projectCreatedAt = result.projectCreatedAt;
             data.projectName = result.projectName;
-            data.reviewerId = result.reviewerId;
+            data.reviewId = result.reviewId;
             data.reviewedAt = result.reviewedAt;
             data.isInterestedPerson = result.isInterestedPerson;
             data.interestedPersonType = result.interestedPersonType;
@@ -214,6 +214,11 @@ export class ReviewerFlowPagesComponent implements OnInit, OnDestroy {
     this.patchScores(data.reviewDetails);
     this.patchSummary(data);
     this.patchComment(data.reviewerComment);
+    // Disable form when reviewer already reviewed
+    if (data.reviewId) {
+      this.form?.disable();
+    }
+    console.log('==form', this.form);
   }
 
   private patchInterestedPerson(data: ReviewerProjectDetails) {
@@ -236,6 +241,7 @@ export class ReviewerFlowPagesComponent implements OnInit, OnDestroy {
     control.patchValue({
       isInterestedPerson: true,
     });
+    return;
   }
 
   private patchScores(reviewDetails: ReviewDetails[] | undefined) {

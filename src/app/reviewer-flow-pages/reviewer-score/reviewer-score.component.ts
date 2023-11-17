@@ -200,7 +200,11 @@ export class ReviewerScoreComponent implements OnInit {
   }
 
   private isFormValid(): boolean {
-    return this.form.get('score')?.valid ?? false;
+    const scoreGroup = this.form.get('score');
+    if (scoreGroup?.disabled) {
+      return true;
+    }
+    return scoreGroup?.valid ?? false;
   }
 
   protected readonly sanitizer: DomSanitizer = inject(DomSanitizer);
