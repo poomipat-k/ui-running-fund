@@ -41,7 +41,7 @@ export class ReviewerSummaryComponent {
           if (criteria.groupNumber === i + 1) {
             const score =
               this.form?.value?.score[
-                `${criteria.criteriaVersion}_${criteria.orderNumber}`
+                `q_${criteria.criteriaVersion}_${criteria.orderNumber}`
               ];
             if (score) {
               sumScore += score;

@@ -312,7 +312,7 @@ export class ReviewerFlowPagesComponent implements OnInit, OnDestroy {
   } {
     const scores: { [key: string]: number } = {};
     reviewDetails?.forEach((rd) => {
-      scores[`${rd.criteriaVersion}_${rd.criteriaOrderNumber}`] = rd.score;
+      scores[`q_${rd.criteriaVersion}_${rd.criteriaOrderNumber}`] = rd.score;
     });
     return scores;
   }
@@ -324,7 +324,7 @@ export class ReviewerFlowPagesComponent implements OnInit, OnDestroy {
     const group = this.form.get('score') as FormGroup;
     criteriaList.forEach((c) => {
       group.addControl(
-        `${c.criteriaVersion}_${c.orderNumber}`,
+        `q_${c.criteriaVersion}_${c.orderNumber}`,
         new FormControl(null, Validators.required)
       );
     });

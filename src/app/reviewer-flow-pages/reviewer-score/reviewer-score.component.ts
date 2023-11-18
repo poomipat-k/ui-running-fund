@@ -151,17 +151,17 @@ export class ReviewerScoreComponent implements OnInit {
     const control = this.form.get('score') as FormGroup;
     const option: { [key: string]: number } = {};
     for (let i = 1; i <= 20; i++) {
-      option[`1_${i}`] = Math.ceil(Math.random() * 5);
+      option[`q_1_${i}`] = Math.ceil(Math.random() * 5);
     }
     control.patchValue(option);
   }
 
   buildControlName(c: ReviewCriteria): string {
-    return `${c.criteriaVersion}_${c.orderNumber}`;
+    return `q_${c.criteriaVersion}_${c.orderNumber}`;
   }
 
   buildFormAccessName(c: ReviewCriteria) {
-    return `score.${c.criteriaVersion}_${c.orderNumber}`;
+    return `score.q_${c.criteriaVersion}_${c.orderNumber}`;
   }
 
   validToGoNext(): boolean {
