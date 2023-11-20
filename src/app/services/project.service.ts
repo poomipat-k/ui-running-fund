@@ -1,10 +1,10 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, catchError, throwError } from 'rxjs';
+import { ReviewCriteria } from '../shared/models/review-criteria';
 import { ReviewPeriod } from '../shared/models/review-period';
 import { ReviewerDashboardRow } from '../shared/models/reviewer-dashboard-row';
 import { ReviewerProjectDetails } from '../shared/models/reviewer-project-details';
-import { ReviewCriteria } from '../shared/models/review-criteria';
 
 @Injectable({
   providedIn: 'root',
@@ -62,6 +62,16 @@ export class ProjectService {
       .get<ReviewCriteria[]>(
         `${this.baseUrl}/review/criteria/${criteriaVersion}`
       )
+      .pipe(catchError(this.handleError));
+  }
+
+  addReview(body: ReviewerProjectDetails, userId: number) {
+    return this.http
+      .post<number>(`${this.baseUrl}/project/review`, body, {
+        headers: {
+          Authorization: `Bearer ${userId}`,
+        },
+      })
       .pipe(catchError(this.handleError));
   }
 

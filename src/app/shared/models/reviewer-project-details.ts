@@ -3,6 +3,7 @@ import { ReviewerImprovement } from './review-improvement';
 
 export class ReviewerProjectDetails {
   projectId: number;
+  projectHistoryId: number;
   projectCode: string;
   projectCreatedAt: string;
   projectName: string;

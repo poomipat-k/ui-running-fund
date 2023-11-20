@@ -104,6 +104,7 @@ export class ReviewerFlowPagesComponent implements OnInit, OnDestroy {
 
   private initForm() {
     this.form = new FormGroup({
+      projectHistoryId: new FormControl(null, Validators.required),
       ip: new FormGroup({
         isInterestedPerson: new FormControl(null, Validators.required),
       }),
@@ -119,6 +120,11 @@ export class ReviewerFlowPagesComponent implements OnInit, OnDestroy {
     if (this.pageIndex === this.maxPageIndex) {
       if (this.form.valid) {
         console.log('===submit', this.form.value);
+        this.projectService
+          .addReview(this.form.value, this.currentUser.id)
+          .subscribe((id) => {
+            console.log('===ADDED id', id);
+          });
       } else {
         console.log('===FORM not valid', this.form.value);
       }
@@ -128,20 +134,16 @@ export class ReviewerFlowPagesComponent implements OnInit, OnDestroy {
       this.pageIndex === 1 &&
       this.interestedPersonComponent.validToGoNext()
     ) {
-      console.log(this.form);
       this.pageIndex++;
     } else if (this.pageIndex === 2) {
-      console.log(this.form);
       this.pageIndex++;
     } else if (
       this.pageIndex === 3 &&
       this.reviewerScoreComponent.validToGoNext()
     ) {
       this.pageIndex++;
-      console.log(this.form);
     } else if (this.pageIndex === 4) {
       this.pageIndex++;
-      console.log(this.form);
     } else {
       console.log('===not valid to go next');
       console.log(this.form);
@@ -182,6 +184,7 @@ export class ReviewerFlowPagesComponent implements OnInit, OnDestroy {
           const data = new ReviewerProjectDetails();
           if (result) {
             data.projectId = result.projectId;
+            data.projectHistoryId = result.projectHistoryId;
             data.projectCode = result.projectCode;
             data.projectCreatedAt = result.projectCreatedAt;
             data.projectName = result.projectName;
@@ -215,6 +218,7 @@ export class ReviewerFlowPagesComponent implements OnInit, OnDestroy {
   }
 
   private patchFormData(data: ReviewerProjectDetails) {
+    this.patchProjectHistoryId(data.projectHistoryId);
     this.patchInterestedPerson(data);
     this.patchScores(data.reviewDetails);
     this.patchSummary(data);
@@ -223,7 +227,14 @@ export class ReviewerFlowPagesComponent implements OnInit, OnDestroy {
     if (data.reviewId) {
       this.form?.disable();
     }
-    console.log('==form', this.form);
+  }
+
+  private patchProjectHistoryId(projectHistoryId: number) {
+    if (projectHistoryId) {
+      this.form.patchValue({
+        projectHistoryId: projectHistoryId,
+      });
+    }
   }
 
   private patchInterestedPerson(data: ReviewerProjectDetails) {
