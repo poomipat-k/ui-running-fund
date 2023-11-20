@@ -38,9 +38,9 @@
         <div class="question__box" [id]="buildControlName(c)">
           <p [innerHTML]="buildQuestionText(c)" class="question__text"></p>
           <app-com-radio
-            [form]="form"
+            [form]="reviewFormControlGroup"
             [options]="scoreOptions"
-            groupName="score"
+            groupName="scores"
             [controlName]="buildControlName(c)"
             radioStyle="review-3a"
             direction="horizontal"
@@ -62,13 +62,13 @@
           <app-com-radio
             [form]="form"
             [options]="summaryDropdownOptions"
-            groupName="score"
+            groupName="review"
             controlName="reviewSummary"
             radioStyle="review-3b"
             [onChanged]="onSummaryRadioChanged"
           ></app-com-radio>
-          @if (!form.get('score.reviewSummary')?.valid &&
-          form.get('score.reviewSummary')?.touched ) {
+          @if (!form.get('review.reviewSummary')?.valid &&
+          form.get('review.reviewSummary')?.touched ) {
           <div class="error mt-10">
             <img src="/assets/error_icon.svg" alt="error icon" />
             <p class="error__text">กรุณาให้คะแนนในส่วนนี้</p>
@@ -77,7 +77,7 @@
         </div>
       </div>
       <button (click)="fillAll()">Fill all</button>
-      @if (form.value?.score?.reviewSummary === 'to_be_revised' ) {
+      @if (form.value?.review?.reviewSummary === 'to_be_revised' ) {
       <div id="improvement" class="improvement">
         <div class="improvement__text">
           โครงการควรจะต้องมีการปรับแก้ไขเพิ่มเติมรายละเอียดให้มีความเหมาะสม
@@ -88,15 +88,15 @@
           <div class="improvement__checkbox">
             <app-com-checkbox
               [display]="item.display"
-              [form]="scoreFormGroupControl"
+              [form]="reviewFormControlGroup"
               groupName="improvement"
               [controlName]="item.controlName"
             ></app-com-checkbox>
           </div>
           }
         </div>
-        @if (!form.get('score.improvement')?.valid &&
-        form.get('score.improvement')?.touched ) {
+        @if (!form.get('review.improvement')?.valid &&
+        form.get('review.improvement')?.touched ) {
         <div class="error">
           <img src="/assets/error_icon.svg" alt="error icon" />
           <p class="error__text">สามารถเลือกได้หลายข้อ</p>

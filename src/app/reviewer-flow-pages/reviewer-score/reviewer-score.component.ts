@@ -2,6 +2,7 @@ import { CommonModule, ViewportScroller } from '@angular/common';
 import { Component, Input, OnInit, inject } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { DomSanitizer } from '@angular/platform-browser';
+
 import { CheckboxComponent } from '../../components/checkbox/checkbox.component';
 import { RadioComponent } from '../../components/radio/radio.component';
 import { CheckboxOption } from '../../shared/models/checkbox-option';
@@ -116,8 +117,8 @@ export class ReviewerScoreComponent implements OnInit {
     },
   ];
 
-  get scoreFormGroupControl(): FormGroup {
-    return this.form.get('score') as FormGroup;
+  get reviewFormControlGroup(): FormGroup {
+    return this.form.get('review') as FormGroup;
   }
 
   constructor() {}
@@ -127,8 +128,8 @@ export class ReviewerScoreComponent implements OnInit {
   }
 
   onSummaryRadioChanged(): void {
-    const group = this.form.get('score') as FormGroup;
-    if (this.form.value?.score?.reviewSummary === 'to_be_revised') {
+    const group = this.form.get('review') as FormGroup;
+    if (this.form.value?.review?.reviewSummary === 'to_be_revised') {
       const improvementFormGroup = new FormGroup(
         {
           projectQuality: new FormControl(false),
@@ -148,7 +149,7 @@ export class ReviewerScoreComponent implements OnInit {
   }
 
   fillAll() {
-    const control = this.form.get('score') as FormGroup;
+    const control = this.form.get('review.scores') as FormGroup;
     const option: { [key: string]: number } = {};
     for (let i = 1; i <= 20; i++) {
       option[`q_1_${i}`] = Math.ceil(Math.random() * 5);
@@ -161,7 +162,7 @@ export class ReviewerScoreComponent implements OnInit {
   }
 
   buildFormAccessName(c: ReviewCriteria) {
-    return `score.q_${c.criteriaVersion}_${c.orderNumber}`;
+    return `review.scores.q_${c.criteriaVersion}_${c.orderNumber}`;
   }
 
   validToGoNext(): boolean {
@@ -174,33 +175,44 @@ export class ReviewerScoreComponent implements OnInit {
   }
 
   private markFieldsTouched() {
-    const group = this.form.get('score') as FormGroup;
+    const group = this.form.get('review') as FormGroup;
     group.markAllAsTouched();
 
     // Score to first invalid element
-    this.scrollToFirstInvalidItem(group);
+    this.scrollToFirstInvalidItem();
   }
 
-  private scrollToFirstInvalidItem(group: FormGroup) {
-    const firstControlId = this.getFirstInvalidControl(group);
+  private scrollToFirstInvalidItem() {
+    const firstControlId = this.getFirstInvalidControl();
     if (firstControlId) {
       this.scroller.setOffset([0, 80]);
       this.scroller.scrollToAnchor(firstControlId);
     }
   }
 
-  private getFirstInvalidControl(group: FormGroup): string {
-    const keys = Object.keys(group.controls).sort();
+  private getFirstInvalidControl(): string {
+    const scoresGroup = this.form.get('review.scores') as FormGroup;
+    const keys = Object.keys(scoresGroup.controls);
     for (const k of keys) {
-      if (!group.controls[k].valid) {
+      if (!scoresGroup.controls[k].valid) {
         return k;
       }
+    }
+    // Check if review.reviewSummary is valid
+    const reviewSummary = this.form.get('review.reviewSummary');
+    if (!reviewSummary?.valid) {
+      return 'reviewSummary';
+    }
+    // Check if review.improvement is valid
+    const improvement = this.form.get('review.improvement');
+    if (!improvement?.valid) {
+      return 'improvement';
     }
     return '';
   }
 
   private isFormValid(): boolean {
-    const scoreGroup = this.form.get('score');
+    const scoreGroup = this.form.get('review');
     if (scoreGroup?.disabled) {
       return true;
     }

@@ -15,6 +15,7 @@ import {
 } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Subscription, forkJoin, mergeMap, of } from 'rxjs';
+
 import { ArrowForwardComponent } from '../components/svg/arrow-forward/arrow-forward.component';
 import { DateService } from '../services/date.service';
 import { ProjectService } from '../services/project.service';
@@ -23,16 +24,15 @@ import { UserService } from '../services/user.service';
 import { BackgroundColor } from '../shared/enums/background-color';
 import { ReviewCriteria } from '../shared/models/review-criteria';
 import { ReviewDetails } from '../shared/models/review-details';
+import { ReviewerImprovement } from '../shared/models/review-improvement';
 import { ReviewerProjectDetails } from '../shared/models/reviewer-project-details';
 import { User } from '../shared/models/user';
+import { requiredCheckBoxToBeCheckedValidator } from '../shared/validators/requiredCheckbox';
 import { GeneralDetailsComponent } from './general-details/general-details.component';
 import { ReviewerConfirmationComponent } from './reviewer-confirmation/reviewer-confirmation.component';
 import { ReviewerInterestedPerson } from './reviewer-interested-person/reviewer-interested-person.component';
 import { ReviewerScoreComponent } from './reviewer-score/reviewer-score.component';
 import { ReviewerSummaryComponent } from './reviewer-summary/reviewer-summary.component';
-import { requiredCheckBoxToBeCheckedValidator } from '../shared/validators/requiredCheckbox';
-import { ReviewerImprovement } from '../shared/models/review-improvement';
-
 @Component({
   selector: 'app-reviewer-flow-pages',
   standalone: true,
@@ -107,8 +107,9 @@ export class ReviewerFlowPagesComponent implements OnInit, OnDestroy {
       ip: new FormGroup({
         isInterestedPerson: new FormControl(null, Validators.required),
       }),
-      score: new FormGroup({
+      review: new FormGroup({
         reviewSummary: new FormControl(null, Validators.required),
+        scores: new FormGroup({}),
       }),
       comment: new FormControl(),
     });
@@ -251,7 +252,7 @@ export class ReviewerFlowPagesComponent implements OnInit, OnDestroy {
   private patchScores(reviewDetails: ReviewDetails[] | undefined) {
     if (reviewDetails && reviewDetails.length > 0) {
       const scores = this.buildScoresToPatch(reviewDetails);
-      const scoreGroupControl = this.form.get('score') as FormGroup;
+      const scoreGroupControl = this.form.get('review.scores') as FormGroup;
       if (scoreGroupControl) {
         scoreGroupControl?.patchValue(scores);
       }
@@ -262,7 +263,7 @@ export class ReviewerFlowPagesComponent implements OnInit, OnDestroy {
     if (data.reviewSummary === null || data.reviewSummary === undefined) {
       return;
     }
-    const scoreGroupControl = this.form.get('score') as FormGroup;
+    const scoreGroupControl = this.form.get('review') as FormGroup;
     if (data.reviewSummary !== 'to_be_revised') {
       scoreGroupControl?.removeControl('improvement');
       scoreGroupControl?.patchValue({
@@ -321,7 +322,7 @@ export class ReviewerFlowPagesComponent implements OnInit, OnDestroy {
     if (!criteriaList || criteriaList.length === 0) {
       return;
     }
-    const group = this.form.get('score') as FormGroup;
+    const group = this.form.get('review.scores') as FormGroup;
     criteriaList.forEach((c) => {
       group.addControl(
         `q_${c.criteriaVersion}_${c.orderNumber}`,
