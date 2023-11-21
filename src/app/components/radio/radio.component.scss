@@ -3,10 +3,14 @@
 .radio {
   width: 2em;
   height: 2rem;
-  // Hide browser deault radio
+  // Hide browser default radio
   position: absolute;
   opacity: 0;
   cursor: pointer;
+
+  &--disabled {
+    cursor: not-allowed;
+  }
 
   &__item {
     &--horizontal {
@@ -45,6 +49,10 @@
     -ms-user-select: none;
     user-select: none;
 
+    &--disabled {
+      cursor: not-allowed;
+    }
+
     &--review-1a {
       display: flex;
       padding-left: 2.8rem;
@@ -78,6 +86,7 @@
     border: 2px solid #a5a8ae;
   }
 
+  // checked state
   &:checked ~ &__checkmark {
     border: 2px solid #9c2a10;
 
@@ -90,6 +99,15 @@
       width: 10px;
       border-radius: 50%;
       background-color: #9c2a10;
+    }
+  }
+
+  &:disabled:checked ~ &__checkmark {
+    border: 2px solid #a5a8ae;
+
+    &::before {
+      content: "";
+      background-color: #a5a8ae;
     }
   }
 }

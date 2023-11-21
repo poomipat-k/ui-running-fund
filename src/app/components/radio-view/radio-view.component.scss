@@ -9,9 +9,13 @@
 .radio {
   width: 2em;
   height: 2rem;
-  // Hide browser deault radio
+  // Hide browser default radio
   position: absolute;
   opacity: 0;
+
+  &--disabled {
+    cursor: not-allowed;
+  }
 
   &__container {
     position: relative;
@@ -21,6 +25,10 @@
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
+
+    &--disabled {
+      cursor: not-allowed;
+    }
 
     &--review-2a {
       margin-left: 2.9rem;
@@ -65,6 +73,15 @@
       width: 10px;
       border-radius: 50%;
       background-color: #9c2a10;
+    }
+  }
+
+  &:disabled:checked ~ &__checkmark {
+    border: 2px solid #a5a8ae;
+
+    &::before {
+      content: "";
+      background-color: #a5a8ae;
     }
   }
 }

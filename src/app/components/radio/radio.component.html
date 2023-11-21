@@ -4,7 +4,7 @@
     <div
       [ngClass]="{
         horizontal: direction === 'horizontal',
-        horizontal__3a: radioStyle === 'review-3a',
+        horizontal__3a: radioStyle === 'review-3a'
       }"
     >
       @for (option of options; track option.id) {
@@ -23,6 +23,7 @@
             [formControlName]="controlName"
             (change)="_onChanged()"
             class="radio"
+            [ngClass]="{radio: true, 'radio--disabled': disabledStyle}"
           />
           <span class="radio__checkmark"></span>
         </label>
@@ -47,7 +48,7 @@
           [value]="option.value"
           [formControlName]="controlName"
           (change)="_onChanged()"
-          class="radio"
+          [ngClass]="{radio: true, 'radio--disabled': disabledStyle}"
         />
         <span class="radio__checkmark"></span>
       </label>

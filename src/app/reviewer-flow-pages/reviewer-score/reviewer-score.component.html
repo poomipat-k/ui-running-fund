@@ -44,6 +44,7 @@
             [controlName]="buildControlName(c)"
             radioStyle="review-3a"
             direction="horizontal"
+            [disabledStyle]="true"
           ></app-com-radio>
           @if (!form.get(buildFormAccessName(c))?.valid &&
           form.get(buildFormAccessName(c))?.touched ) {
@@ -66,6 +67,7 @@
             controlName="reviewSummary"
             radioStyle="review-3b"
             [onChanged]="onSummaryRadioChanged"
+            [disabledStyle]="true"
           ></app-com-radio>
           @if (!form.get('review.reviewSummary')?.valid &&
           form.get('review.reviewSummary')?.touched ) {
@@ -76,7 +78,7 @@
           }
         </div>
       </div>
-      <button (click)="fillAll()">Fill all</button>
+      <button [ngClass]="{hide: form.disabled}" (click)="fillAll()">Fill all</button>
       @if (form.value?.review?.reviewSummary === 'to_be_revised' ) {
       <div id="improvement" class="improvement">
         <div class="improvement__text">

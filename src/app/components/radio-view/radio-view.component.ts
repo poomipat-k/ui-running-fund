@@ -21,6 +21,9 @@ export class RadioViewComponent {
     if (this.radioStyle === 'review-2a') {
       classes.push('radio__container--review-2a');
     }
+    if (this.disabled) {
+      classes.push('radio__container--disabled');
+    }
     return classes;
   }
 }
