@@ -38,9 +38,11 @@
 
     &:disabled {
       border: 2px solid #a3a6ab;
+      background-color: #e7e7e7;
 
       &:checked {
-        border: 2px solid #344054;
+        border: 2px solid #a3a6ab;
+        background-color: #a3a6ab;
       }
     }
   }

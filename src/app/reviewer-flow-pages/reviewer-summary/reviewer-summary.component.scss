@@ -56,6 +56,10 @@
   line-height: normal;
   color: #344054;
 
+  &:disabled {
+    cursor: not-allowed;
+  }
+
   &::placeholder {
     font-family: $custom-font-looped;
     font-size: 1.6rem;
