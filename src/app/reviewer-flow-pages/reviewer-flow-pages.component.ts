@@ -91,7 +91,6 @@ export class ReviewerFlowPagesComponent implements OnInit, OnDestroy {
   constructor() {}
 
   ngOnInit(): void {
-    console.log('===MAIN PAGE [OnInit]');
     this.themeService.changeBackgroundColor(BackgroundColor.gray);
     this.initForm();
     this.prepareData();
@@ -121,7 +120,6 @@ export class ReviewerFlowPagesComponent implements OnInit, OnDestroy {
         this.projectService
           .addReview(this.form.value, this.currentUser.id)
           .subscribe((id) => {
-            console.log('===ADDED id', id);
             if (id) {
               this.form.disable();
               this.routerService.navigate(['/']);
@@ -145,8 +143,6 @@ export class ReviewerFlowPagesComponent implements OnInit, OnDestroy {
     } else if (this.pageIndex === 4) {
       this.pageIndex++;
     } else {
-      console.log('===not valid to go next');
-      console.log(this.form);
     }
   }
 
@@ -180,7 +176,6 @@ export class ReviewerFlowPagesComponent implements OnInit, OnDestroy {
           })
         )
         .subscribe((result) => {
-          console.log('===sub result:', result);
           const data = new ReviewerProjectDetails();
           if (result) {
             data.projectId = result.projectId;
@@ -226,7 +221,6 @@ export class ReviewerFlowPagesComponent implements OnInit, OnDestroy {
     // Disable form when reviewer already reviewed
     if (data.reviewId) {
       this.form?.disable();
-      console.log('==this.form disabled', this.form.disabled);
     }
   }
 

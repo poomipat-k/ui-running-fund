@@ -5,6 +5,7 @@ import { Router, RouterModule } from '@angular/router';
 import { Subscription, forkJoin, mergeMap, of } from 'rxjs';
 import { FilterComponent } from '../components/filter/filter.component';
 import { TableComponent } from '../components/table/table.component';
+import { DateService } from '../services/date.service';
 import { ProjectService } from '../services/project.service';
 import { ThemeService } from '../services/theme.service';
 import { UserService } from '../services/user.service';
@@ -16,7 +17,6 @@ import { ReviewPeriod } from '../shared/models/review-period';
 import { TableCell } from '../shared/models/table-cell';
 import { TableColumn } from '../shared/models/table-column';
 import { User } from '../shared/models/user';
-import { DateService } from '../services/date.service';
 
 @Component({
   selector: 'app-home',
@@ -83,6 +83,12 @@ export class HomeComponent implements OnInit, OnDestroy {
       order: 'DESC',
     },
     { id: 3, display: 'เก่า - ใหม่', name: 'วันที่สร้าง', order: 'ASC' },
+    {
+      id: 4,
+      display: 'สถานะการกลั่นกรอง',
+      name: 'priority',
+      order: 'ASC',
+    },
   ];
 
   private routerService: Router = inject(Router);
@@ -132,9 +138,8 @@ export class HomeComponent implements OnInit, OnDestroy {
           })
         )
         .subscribe((result) => {
-          console.log('==result', result);
           if (result) {
-            this.data = result.map((row) => {
+            const newData = result.map((row) => {
               return [
                 {
                   display: row.projectCode,
@@ -168,13 +173,49 @@ export class HomeComponent implements OnInit, OnDestroy {
                 },
               ];
             });
+            this.sortByStatusCreatedAt(newData);
+            this.data = newData;
           }
         })
     );
   }
 
   onSortFilterChanged(option: FilterOption) {
+    if (option.name === 'priority') {
+      this.sortByStatusCreatedAt(this.data);
+      return;
+    }
     this.sortRows(this.data, option);
+  }
+
+  private sortByStatusCreatedAt(data: TableCell[][]) {
+    if (!this.data) {
+      return;
+    }
+    const statusIndex = this.columns.findIndex(
+      (c) => c.name === 'สถานะการกลั่นกรอง'
+    );
+    const createdIndex = this.columns.findIndex(
+      (c) => c.name === 'วันที่สร้าง'
+    );
+    data.sort((a, b) => {
+      const aDate = new Date(a[createdIndex].value);
+      const bDate = new Date(b[createdIndex].value);
+      return (
+        a[statusIndex].display.localeCompare(b[statusIndex].display) ||
+        this.dateCompareAsc(aDate, bDate)
+      );
+    });
+  }
+
+  private dateCompareAsc(aDate: Date, bDate: Date) {
+    if (aDate > bDate) {
+      return 1;
+    }
+    if (aDate < bDate) {
+      return -1;
+    }
+    return 0;
   }
 
   private sortRows(data: TableCell[][], option: FilterOption) {

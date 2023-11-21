@@ -7,11 +7,11 @@ import {
   Validators,
 } from '@angular/forms';
 import { Router } from '@angular/router';
-import { User } from '../shared/models/user';
-import { UserService } from '../services/user.service';
-import { ThemeService } from '../services/theme.service';
-import { BackgroundColor } from '../shared/enums/background-color';
 import { Subscription } from 'rxjs';
+import { ThemeService } from '../services/theme.service';
+import { UserService } from '../services/user.service';
+import { BackgroundColor } from '../shared/enums/background-color';
+import { User } from '../shared/models/user';
 
 @Component({
   selector: 'app-login',
@@ -62,7 +62,6 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   onSubmit() {
-    console.log('====onSubmit', this.loginForm);
     const reviewerId = this.loginForm.value?.reviewer;
     if (reviewerId & +reviewerId) {
       const user = this.reviewers.find((r) => r.id === +reviewerId);
