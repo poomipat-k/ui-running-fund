@@ -44,7 +44,7 @@
             [controlName]="buildControlName(c)"
             radioStyle="review-3a"
             direction="horizontal"
-            [disabled]="true"
+            [disabled]="form.disabled"
           ></app-com-radio>
           @if (!form.get(buildFormAccessName(c))?.valid &&
           form.get(buildFormAccessName(c))?.touched ) {
@@ -67,7 +67,7 @@
             controlName="reviewSummary"
             radioStyle="review-3b"
             [onChanged]="onSummaryRadioChanged"
-            [disabled]="true"
+            [disabled]="form.disabled"
           ></app-com-radio>
           @if (!form.get('review.reviewSummary')?.valid &&
           form.get('review.reviewSummary')?.touched ) {

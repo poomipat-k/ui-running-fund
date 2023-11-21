@@ -1,16 +1,10 @@
-import {
-  AfterViewInit,
-  Component,
-  OnDestroy,
-  OnInit,
-  inject,
-} from '@angular/core';
+import { AfterViewInit, Component, OnDestroy, inject } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import { Subscription, delay } from 'rxjs';
 import { FooterComponent } from './footer/footer.component';
 import { NavbarComponent } from './navbar/navbar.component';
-import { BackgroundColor } from './shared/enums/background-color';
 import { ThemeService } from './services/theme.service';
-import { Subscription, delay } from 'rxjs';
+import { BackgroundColor } from './shared/enums/background-color';
 
 @Component({
   selector: 'app-root',
