@@ -84,6 +84,20 @@
   line-height: normal;
   cursor: pointer;
 
+  &:disabled {
+    background-color: #a5a6a7;
+    box-shadow: 0px 2px 8px 0px rgba(126, 36, 16, 0.25);
+
+    color: #4d535c;
+    cursor: not-allowed;
+
+    &:hover {
+      background-color: #a5a6a7;
+      box-shadow: 0px 2px 8px 0px rgba(126, 36, 16, 0.25);
+      color: #4d535c;
+    }
+  }
+
   &--cancel {
     border: 1px solid #878c97;
     color: #878c97;

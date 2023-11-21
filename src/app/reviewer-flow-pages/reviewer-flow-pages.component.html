@@ -99,7 +99,7 @@
       </div>
     </button>
     } @else {
-    <button class="button button--next" (click)="nextPage()">ส่ง</button>
+    <button class="button button--next" (click)="nextPage()" [disabled]="form.disabled">ส่ง</button>
     }
   </div>
 </div>

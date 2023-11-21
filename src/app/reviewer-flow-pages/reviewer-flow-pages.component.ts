@@ -118,12 +118,15 @@ export class ReviewerFlowPagesComponent implements OnInit, OnDestroy {
 
   protected nextPage(): void {
     if (this.pageIndex === this.maxPageIndex) {
-      if (this.form.valid) {
-        console.log('===submit', this.form.value);
+      if (this.form.valid && !this.form.disabled) {
         this.projectService
           .addReview(this.form.value, this.currentUser.id)
           .subscribe((id) => {
             console.log('===ADDED id', id);
+            if (id) {
+              this.form.disable();
+              this.routerService.navigate(['/']);
+            }
           });
       } else {
         console.log('===FORM not valid', this.form.value);
@@ -226,6 +229,7 @@ export class ReviewerFlowPagesComponent implements OnInit, OnDestroy {
     // Disable form when reviewer already reviewed
     if (data.reviewId) {
       this.form?.disable();
+      console.log('==this.form disabled', this.form.disabled);
     }
   }
 
