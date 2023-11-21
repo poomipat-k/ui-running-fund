@@ -23,7 +23,7 @@
             [formControlName]="controlName"
             (change)="_onChanged()"
             class="radio"
-            [ngClass]="{radio: true, 'radio--disabled': disabledStyle}"
+            [ngClass]="{radio: true, 'radio--disabled': disabled}"
           />
           <span class="radio__checkmark"></span>
         </label>
@@ -48,7 +48,7 @@
           [value]="option.value"
           [formControlName]="controlName"
           (change)="_onChanged()"
-          [ngClass]="{radio: true, 'radio--disabled': disabledStyle}"
+          [ngClass]="{radio: true, 'radio--disabled': disabled}"
         />
         <span class="radio__checkmark"></span>
       </label>

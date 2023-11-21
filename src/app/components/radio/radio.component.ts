@@ -18,7 +18,7 @@ export class RadioComponent implements OnInit {
   @Input() onChanged: () => void;
   @Input() radioStyle = 'review-1a';
   @Input() direction = 'vertical';
-  @Input() disabledStyle = false;
+  @Input() disabled = false;
 
   get labelClasses(): string[] {
     const classes = ['radio__container'];
@@ -32,7 +32,7 @@ export class RadioComponent implements OnInit {
       classes.push('radio__container--review-3b');
     }
 
-    if (this.disabledStyle) {
+    if (this.disabled) {
       classes.push('radio__container--disabled');
     }
     return classes;

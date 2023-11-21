@@ -59,7 +59,7 @@
           [controlName]="'isInterestedPerson'"
           radioStyle="review-1a"
           [onChanged]="onInterestedPersonChanged"
-          [disabledStyle]="form.disabled"
+          [disabled]="form.disabled"
         ></app-com-radio>
         <!-- Error Text non selected on Submit -->
         @if (showError1) {
@@ -78,7 +78,7 @@
             groupName="ip"
             [controlName]="'interestedPersonType'"
             radioStyle="review-1b"
-            [disabledStyle]="form.disabled"
+            [disabled]="form.disabled"
           ></app-com-radio>
         </div>
         @if (showError2) {

@@ -35,6 +35,14 @@
     &:checked ~ .checkbox__mark {
       display: block;
     }
+
+    &:disabled {
+      border: 2px solid #a3a6ab;
+
+      &:checked {
+        border: 2px solid #344054;
+      }
+    }
   }
 
   &__mark {

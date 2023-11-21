@@ -44,7 +44,7 @@
             [controlName]="buildControlName(c)"
             radioStyle="review-3a"
             direction="horizontal"
-            [disabledStyle]="true"
+            [disabled]="true"
           ></app-com-radio>
           @if (!form.get(buildFormAccessName(c))?.valid &&
           form.get(buildFormAccessName(c))?.touched ) {
@@ -67,7 +67,7 @@
             controlName="reviewSummary"
             radioStyle="review-3b"
             [onChanged]="onSummaryRadioChanged"
-            [disabledStyle]="true"
+            [disabled]="true"
           ></app-com-radio>
           @if (!form.get('review.reviewSummary')?.valid &&
           form.get('review.reviewSummary')?.touched ) {
@@ -93,6 +93,7 @@
               [form]="reviewFormControlGroup"
               groupName="improvement"
               [controlName]="item.controlName"
+              [disabled]="form.disabled"
             ></app-com-checkbox>
           </div>
           }
