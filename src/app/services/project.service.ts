@@ -1,6 +1,7 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Observable, catchError, throwError } from 'rxjs';
+import { environment } from 'src/environments/environment';
 import { ReviewCriteria } from '../shared/models/review-criteria';
 import { ReviewPeriod } from '../shared/models/review-period';
 import { ReviewerDashboardRow } from '../shared/models/reviewer-dashboard-row';
@@ -10,13 +11,14 @@ import { ReviewerProjectDetails } from '../shared/models/reviewer-project-detail
   providedIn: 'root',
 })
 export class ProjectService {
-  private readonly baseUrl = 'http://localhost:8080/api';
+  private baseApiUrl = environment.apiUrl;
+  private readonly http: HttpClient = inject(HttpClient);
 
-  constructor(private readonly http: HttpClient) {}
+  constructor() {}
 
   getReviewPeriod(): Observable<ReviewPeriod> {
     return this.http
-      .get<ReviewPeriod>(`${this.baseUrl}/project/review-period`)
+      .get<ReviewPeriod>(`${this.baseApiUrl}/project/review-period`)
       .pipe(catchError(this.handleError));
   }
 
@@ -27,7 +29,7 @@ export class ProjectService {
   ): Observable<ReviewerDashboardRow[]> {
     return this.http
       .post<ReviewerDashboardRow[]>(
-        `${this.baseUrl}/project/reviewer`,
+        `${this.baseApiUrl}/project/reviewer`,
         {
           fromDate,
           toDate,
@@ -47,7 +49,7 @@ export class ProjectService {
   ): Observable<ReviewerProjectDetails> {
     return this.http
       .get<ReviewerProjectDetails>(
-        `${this.baseUrl}/project/review/${projectCode}`,
+        `${this.baseApiUrl}/project/review/${projectCode}`,
         {
           headers: {
             Authorization: `Bearer ${userId}`,
@@ -60,14 +62,14 @@ export class ProjectService {
   getReviewCriteria(criteriaVersion = 1): Observable<ReviewCriteria[]> {
     return this.http
       .get<ReviewCriteria[]>(
-        `${this.baseUrl}/review/criteria/${criteriaVersion}`
+        `${this.baseApiUrl}/review/criteria/${criteriaVersion}`
       )
       .pipe(catchError(this.handleError));
   }
 
   addReview(body: ReviewerProjectDetails, userId: number) {
     return this.http
-      .post<number>(`${this.baseUrl}/project/review`, body, {
+      .post<number>(`${this.baseApiUrl}/project/review`, body, {
         headers: {
           Authorization: `Bearer ${userId}`,
         },

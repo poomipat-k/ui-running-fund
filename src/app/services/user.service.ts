@@ -1,6 +1,7 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { BehaviorSubject, Observable, catchError, of, throwError } from 'rxjs';
+import { environment } from 'src/environments/environment';
 import { User } from '../shared/models/user';
 
 @Injectable({
@@ -11,19 +12,20 @@ export class UserService {
   currentUserSubject$ = this.currentUserSubject.asObservable();
 
   private loggedInUser: User;
-  private readonly baseUrl = 'http://localhost:8080/api';
+  private baseApiUrl = environment.apiUrl;
 
-  constructor(private readonly http: HttpClient) {}
+  private readonly http: HttpClient = inject(HttpClient);
+  constructor() {}
 
   public getReviewers(): Observable<User[]> {
     return this.http
-      .get<User[]>(`${this.baseUrl}/user/reviewers`)
+      .get<User[]>(`${this.baseApiUrl}/user/reviewers`)
       .pipe(catchError(this.handleError));
   }
 
   public getReviewerById(userId: string): Observable<User> {
     return this.http
-      .get<User>(`${this.baseUrl}/user/reviewer`, {
+      .get<User>(`${this.baseApiUrl}/user/reviewer`, {
         headers: {
           Authorization: `Bearer ${userId}`,
         },
