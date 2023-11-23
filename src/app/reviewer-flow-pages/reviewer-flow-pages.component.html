@@ -20,7 +20,9 @@
           <div class="header__line-normal-1">{{ apiData.projectCode }}</div>
         </div>
         <div class="header__line">
-          <div class="header__line--bold header__line--bold-2">วันที่สร้าง</div>
+          <div class="header__line--bold header__line--bold-2">
+            วันที่ส่งยื่นข้อเสนอ
+          </div>
           <div class="header__line-normal-2">
             {{ projectCreatedAt }}
           </div>
@@ -99,7 +101,13 @@
       </div>
     </button>
     } @else {
-    <button class="button button--next" (click)="nextPage()" [disabled]="form.disabled">ส่ง</button>
+    <button
+      class="button button--next"
+      (click)="nextPage()"
+      [disabled]="form.disabled"
+    >
+      ส่ง
+    </button>
     }
   </div>
 </div>

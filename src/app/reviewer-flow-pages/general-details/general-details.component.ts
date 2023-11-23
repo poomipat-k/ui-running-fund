@@ -52,13 +52,13 @@ export class GeneralDetailsComponent {
   protected hadReceivedFundOptions: RadioOption[] = [
     {
       id: 1,
-      display: 'เคย',
-      value: true,
+      display: 'ไม่มีการประสานงาน',
+      value: false,
     },
     {
       id: 2,
-      display: 'ไม่เคย',
-      value: false,
+      display: 'มีการประสานงานและมีหนังสือนำส่ง',
+      value: true,
     },
   ];
 }

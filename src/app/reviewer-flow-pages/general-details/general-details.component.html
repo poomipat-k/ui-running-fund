@@ -92,14 +92,21 @@
       />
     </div>
 
-    <div class="details__row">
-      <label class="bold-text">ประวัติการรับทุนอุปถัมภ์จาก สสส.</label>
-      <app-com-radio-view
-        [options]="hadReceivedFundOptions"
-        radioStyle="review-2a"
-        [disabled]="true"
-        [selectedValue]="false"
-      ></app-com-radio-view>
+    <div class="details__row block">
+      <label class="bold-text mb-9"
+        >การประสานงานกับเครือข่ายสมาพันธ์เดิน-วิ่งเพื่อสุขภาพไทยภาค
+      </label>
+      <div class="collab">
+        <app-com-radio-view
+          [options]="hadReceivedFundOptions"
+          radioStyle="review-2a"
+          [disabled]="true"
+          [selectedValue]="false"
+        ></app-com-radio-view>
+        <a href="https://google.com" class="collab__link" target="_blank"
+          >ดาวน์โหลดหนังสือนำส่ง</a
+        >
+      </div>
     </div>
   </div>
 </div>

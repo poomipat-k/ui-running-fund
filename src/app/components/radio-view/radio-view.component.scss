@@ -31,7 +31,6 @@
     }
 
     &--review-2a {
-      margin-left: 2.9rem;
       padding-left: 2.8rem;
       cursor: not-allowed;
       &:not(:first-child) {
@@ -42,7 +41,7 @@
 
   &__label {
     font-family: $custom-font-looped;
-    font-size: 1.8rem;
+    font-size: 2rem;
     font-style: normal;
     font-weight: 400;
     line-height: normal;
