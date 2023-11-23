@@ -27,7 +27,7 @@ $cell-height: 7.2rem;
     padding: 1.2rem 2.4rem;
     font-family: $custom-font;
     font-weight: 400;
-    font-size: 1.6rem;
+    font-size: 1.8rem;
     line-height: 0;
     text-align: left;
     color: #667085;
@@ -42,7 +42,7 @@ $cell-height: 7.2rem;
     padding: 1.6rem 2.4rem;
     text-align: left;
     font-family: $custom-font;
-    font-size: 1.6rem;
+    font-size: 1.8rem;
     line-height: 2rem;
     font-weight: 400;
     color: #667085;
@@ -85,7 +85,7 @@ $cell-height: 7.2rem;
   &__text {
     margin-top: 1.2rem;
     font-family: $inter;
-    font-size: 1.6rem;
+    font-size: 1.8rem;
     font-weight: 500;
     line-height: 1.8rem;
     color: #667085;
@@ -107,8 +107,8 @@ $cell-height: 7.2rem;
   &-176 {
     width: 17.6rem;
   }
-  &-135 {
-    width: 13.5rem;
+  &-150 {
+    width: 15rem;
   }
   &-200 {
     width: 20rem;

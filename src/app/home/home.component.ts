@@ -40,7 +40,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   protected columns: TableColumn[] = [
     {
       name: 'รหัสโครงการ',
-      class: 'width-135',
+      class: 'width-150',
       bold: true,
     },
     {
@@ -52,20 +52,20 @@ export class HomeComponent implements OnInit, OnDestroy {
       name: 'ชื่อโครงการ',
     },
     {
+      name: 'ดาวน์โหลด',
+      class: 'width-92',
+      type: ColumnTypeEnum.DownloadIcon,
+      compact: true,
+    },
+    {
       name: 'สถานะการกลั่นกรอง',
       class: 'width-200',
       type: ColumnTypeEnum.Badge,
     },
     {
-      name: 'หมายเหตุ',
+      name: 'วันที่กลั่นกรองเสร็จ',
       format: 'datetime',
       class: 'width-255',
-    },
-    {
-      name: 'ดาวน์โหลด',
-      class: 'width-92',
-      type: ColumnTypeEnum.DownloadIcon,
-      compact: true,
     },
   ];
 
@@ -156,6 +156,10 @@ export class HomeComponent implements OnInit, OnDestroy {
                   value: row.projectName,
                 },
                 {
+                  display: row.downloadLink,
+                  value: row.downloadLink,
+                },
+                {
                   display: row.reviewId
                     ? BadgeType.Reviewed
                     : BadgeType.PendingReview,
@@ -166,10 +170,6 @@ export class HomeComponent implements OnInit, OnDestroy {
                     row.reviewedAt
                   ),
                   value: row.reviewedAt,
-                },
-                {
-                  display: row.downloadLink,
-                  value: row.downloadLink,
                 },
               ];
             });
