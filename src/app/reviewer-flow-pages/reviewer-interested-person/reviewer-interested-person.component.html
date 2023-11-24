@@ -11,7 +11,7 @@
       <input
         type="text"
         class="textbox width-479"
-        [value]="userFullName"
+        [value]="userFullName || ''"
         [disabled]="true"
       />
     </div>
@@ -31,7 +31,7 @@
       <input
         type="text"
         class="textbox width-725 mt-13"
-        [value]="projectName"
+        [value]="projectName || ''"
         [disabled]="true"
       />
     </div>

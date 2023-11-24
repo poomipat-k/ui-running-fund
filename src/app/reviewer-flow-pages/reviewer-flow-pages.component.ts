@@ -26,6 +26,7 @@ import { UserService } from '../services/user.service';
 import { BackgroundColor } from '../shared/enums/background-color';
 import { ReviewCriteria } from '../shared/models/review-criteria';
 import { ReviewDetails } from '../shared/models/review-details';
+import { ReviewerImprovement } from '../shared/models/review-improvement';
 import { ReviewerProjectDetails } from '../shared/models/reviewer-project-details';
 import { User } from '../shared/models/user';
 import { requiredCheckBoxToBeCheckedValidator } from '../shared/validators/requiredCheckbox';
@@ -192,7 +193,40 @@ export class ReviewerFlowPagesComponent implements OnInit, OnDestroy {
             );
           })
         )
-        .subscribe()
+        .subscribe((result) => {
+          const data = new ReviewerProjectDetails();
+          if (result) {
+            data.projectId = result.projectId;
+            data.projectHistoryId = result.projectHistoryId;
+            data.projectCode = result.projectCode;
+            data.projectCreatedAt = result.projectCreatedAt;
+            data.projectName = result.projectName;
+            data.reviewId = result.reviewId;
+            data.reviewedAt = result.reviewedAt;
+            data.isInterestedPerson = result.isInterestedPerson;
+            data.interestedPersonType = result.interestedPersonType;
+            data.reviewDetails = result.reviewDetails;
+            data.reviewSummary = result.reviewSummary;
+            data.reviewerComment = result.reviewerComment;
+
+            data.reviewImprovement = new ReviewerImprovement();
+            data.reviewImprovement.benefit = result.reviewImprovement?.benefit;
+            data.reviewImprovement.experienceAndReliability =
+              result.reviewImprovement?.experienceAndReliability;
+            data.reviewImprovement.fundAndOutput =
+              result.reviewImprovement?.fundAndOutput;
+            data.reviewImprovement.projectQuality =
+              result.reviewImprovement?.projectQuality;
+            data.reviewImprovement.projectStandard =
+              result.reviewImprovement?.projectStandard;
+            data.reviewImprovement.visionAndImage =
+              result.reviewImprovement?.visionAndImage;
+
+            this.apiData = data;
+
+            this.patchFormData(result);
+          }
+        })
     );
   }
 

@@ -18,8 +18,8 @@ import { RadioOption } from '../../shared/models/radio-option';
   styleUrls: ['./general-details.component.scss'],
 })
 export class GeneralDetailsComponent {
-  @Input() projectName: string;
-  @Input() projectCode: string;
+  @Input() projectName = '';
+  @Input() projectCode = '';
 
   protected projectLeader = 'นายขอทุน สนับสนุน';
   protected projectLocation = 'กาดหลวง เชียงใหม่';
