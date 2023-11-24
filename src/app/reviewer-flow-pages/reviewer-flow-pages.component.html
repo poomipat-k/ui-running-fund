@@ -58,7 +58,9 @@
     ></app-reviewer-summary>
     } @case (5) {
     <app-reviewer-confirmation></app-reviewer-confirmation>
-    }}
+    } @case (6) {
+    <app-review-success></app-review-success>
+    } }
   </form>
 
   @if (pageIndex === 3 || pageIndex === 4) {
@@ -110,7 +112,9 @@
     </button>
     }
   </div>
+  @if (showSuccessPopup) {
   <div class="popup">
     <app-com-success-popup displayText="รีวิวเรียบร้อย"></app-com-success-popup>
   </div>
+  }
 </div>

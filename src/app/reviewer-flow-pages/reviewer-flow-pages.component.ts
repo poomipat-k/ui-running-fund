@@ -30,6 +30,7 @@ import { ReviewerProjectDetails } from '../shared/models/reviewer-project-detail
 import { User } from '../shared/models/user';
 import { requiredCheckBoxToBeCheckedValidator } from '../shared/validators/requiredCheckbox';
 import { GeneralDetailsComponent } from './general-details/general-details.component';
+import { ReviewSuccessComponent } from './review-success/review-success.component';
 import { ReviewerConfirmationComponent } from './reviewer-confirmation/reviewer-confirmation.component';
 import { ReviewerInterestedPerson } from './reviewer-interested-person/reviewer-interested-person.component';
 import { ReviewerScoreComponent } from './reviewer-score/reviewer-score.component';
@@ -47,6 +48,7 @@ import { ReviewerSummaryComponent } from './reviewer-summary/reviewer-summary.co
     ReviewerSummaryComponent,
     ReviewerConfirmationComponent,
     SuccessPopupComponent,
+    ReviewSuccessComponent,
   ],
   templateUrl: './reviewer-flow-pages.component.html',
   styleUrls: ['./reviewer-flow-pages.component.scss'],
@@ -58,11 +60,13 @@ export class ReviewerFlowPagesComponent implements OnInit, OnDestroy {
   reviewerScoreComponent: ReviewerScoreComponent;
   // url params
   @Input() projectCode: string;
+
+  protected showSuccessPopup = false;
   protected form: FormGroup;
   protected reviewCriteriaList: ReviewCriteria[] = [];
   protected apiData: ReviewerProjectDetails = new ReviewerProjectDetails();
   protected pageIndex = 1;
-  protected maxPageIndex = 5;
+  protected maxPageIndex = 5; // submit page
   private currentUser: User;
 
   // Services
@@ -97,7 +101,7 @@ export class ReviewerFlowPagesComponent implements OnInit, OnDestroy {
     this.initForm();
     this.prepareData();
 
-    this.pageIndex = this.maxPageIndex;
+    // this.pageIndex = this.maxPageIndex;
   }
 
   ngOnDestroy(): void {
@@ -120,16 +124,7 @@ export class ReviewerFlowPagesComponent implements OnInit, OnDestroy {
 
   protected nextPage(): void {
     if (this.pageIndex === this.maxPageIndex) {
-      if (this.form.valid && !this.form.disabled) {
-        this.projectService
-          .addReview(this.form.value, this.currentUser.id)
-          .subscribe((id) => {
-            if (id) {
-              this.form.disable();
-              this.routerService.navigate(['/']);
-            }
-          });
-      }
+      this.submitForm();
       return;
     }
     if (
@@ -146,7 +141,26 @@ export class ReviewerFlowPagesComponent implements OnInit, OnDestroy {
       this.pageIndex++;
     } else if (this.pageIndex === 4) {
       this.pageIndex++;
+    }
+  }
+
+  private submitForm() {
+    if (this.form.valid && !this.form.disabled) {
+      this.projectService
+        .addReview(this.form.value, this.currentUser.id)
+        .subscribe((id) => {
+          console.log();
+          if (id) {
+            this.form.disable();
+            this.showSuccessPopup = true;
+            setTimeout(() => {
+              this.showSuccessPopup = false;
+              this.pageIndex++;
+            }, 4000);
+          }
+        });
     } else {
+      console.error('form is not valid', this.form.value);
     }
   }
 
