@@ -71,6 +71,51 @@
   top: 27.9rem;
   left: 50%;
   transform: translateX(-50%);
+
+  &--show {
+    visibility: visible; /* Show the snackbar */
+    /* Add animation: Take 0.5 seconds to fade in and out the snackbar.
+  However, delay the fade out process for 3.5 seconds */
+    -webkit-animation: fadein 0.5s, fadeout 0.5s 3.5s;
+    animation: fadein 0.5s, fadeout 0.5s 3.5s;
+  }
+}
+
+/* Animations to fade the snackbar in and out */
+@-webkit-keyframes fadein {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadein {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@-webkit-keyframes fadeout {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes fadeout {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
 }
 
 .hr {
@@ -164,6 +209,10 @@
   &-18 {
     margin-top: 1.8rem;
   }
+  &--31 {
+    margin-top: 3.1rem;
+  }
+
   &-33 {
     margin-top: 3.3rem;
   }
@@ -196,5 +245,9 @@
 
   &-222 {
     padding-bottom: 22.2rem;
+  }
+
+  &-242 {
+    padding-bottom: 24.2rem;
   }
 }

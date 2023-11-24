@@ -5,7 +5,8 @@
     'pdb-100': pageIndex === 2,
     'pdb-80': pageIndex === 3,
     'pdb-116': pageIndex === 4,
-    'pdb-222': pageIndex === 5
+    'pdb-222': pageIndex === 5,
+    'pdb-242': pageIndex === 6
   }"
 >
   <div>
@@ -81,12 +82,13 @@
       'mt-72': pageIndex === 2,
       'mt-16': pageIndex === 3,
       'mt-18': pageIndex === 4,
-      'mt-33': pageIndex === 5
+      'mt-33': pageIndex === 5,
+      'mt--31': pageIndex === 6
     }"
   >
     @if (pageIndex === 1) {
     <button class="button button--cancel" (click)="prevPage()">ยกเลิก</button>
-    } @else {
+    } @else if (pageIndex <= maxPageIndex) {
     <button class="button button--cancel" (click)="prevPage()">
       <img
         src="/assets/arrow_back.svg"
@@ -102,7 +104,7 @@
         <app-com-svg-arrow-forward></app-com-svg-arrow-forward>
       </div>
     </button>
-    } @else {
+    } @else if (pageIndex === maxPageIndex){
     <button
       class="button button--next"
       (click)="nextPage()"
@@ -110,10 +112,14 @@
     >
       ส่ง
     </button>
+    } @else {
+    <button class="button button--next" (click)="redirectToHomePage()">
+      กลับหน้าหลัก
+    </button>
     }
   </div>
   @if (showSuccessPopup) {
-  <div class="popup">
+  <div [ngClass]="{ popup: true, 'popup--show': showSuccessPopup }">
     <app-com-success-popup displayText="รีวิวเรียบร้อย"></app-com-success-popup>
   </div>
   }

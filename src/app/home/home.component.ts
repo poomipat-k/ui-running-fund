@@ -46,7 +46,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     {
       name: 'วันที่สร้าง',
       format: 'datetime',
-      class: 'width-200',
+      class: 'width-215',
     },
     {
       name: 'ชื่อโครงการ',
@@ -65,7 +65,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     {
       name: 'วันที่กลั่นกรองเสร็จ',
       format: 'datetime',
-      class: 'width-255',
+      class: 'width-215',
     },
   ];
 

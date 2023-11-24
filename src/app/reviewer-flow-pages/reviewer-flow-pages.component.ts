@@ -100,8 +100,6 @@ export class ReviewerFlowPagesComponent implements OnInit, OnDestroy {
     this.themeService.changeBackgroundColor(BackgroundColor.gray);
     this.initForm();
     this.prepareData();
-
-    // this.pageIndex = this.maxPageIndex;
   }
 
   ngOnDestroy(): void {
@@ -169,6 +167,10 @@ export class ReviewerFlowPagesComponent implements OnInit, OnDestroy {
       this.pageIndex--;
       return;
     }
+    this.routerService.navigate(['/']);
+  }
+
+  protected redirectToHomePage(): void {
     this.routerService.navigate(['/']);
   }
 

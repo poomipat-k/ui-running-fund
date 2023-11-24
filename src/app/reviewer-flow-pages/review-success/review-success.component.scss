@@ -1,0 +1,33 @@
+@import "../../../styles.scss";
+
+.container {
+  margin-top: 9.9rem;
+  text-align: center;
+}
+
+.icon-container {
+  width: 5.6rem;
+  height: 5.6rem;
+  border-radius: 50%;
+  background-color: #ebf8ee;
+  margin: auto;
+  position: relative;
+}
+
+.icon {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.text {
+  margin-top: 2rem;
+  color: #344054;
+  text-align: center;
+  font-family: $custom-font;
+  font-size: 2.4rem;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 3.2rem;
+}
