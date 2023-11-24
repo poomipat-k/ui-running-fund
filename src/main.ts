@@ -9,7 +9,6 @@ import routeConfig from './app/routes';
 bootstrapApplication(AppComponent, {
   providers: [
     provideRouter(routeConfig, withComponentInputBinding()),
-    // UserService,
     importProvidersFrom(HttpClientModule),
   ],
 }).catch((err) => console.error(err));

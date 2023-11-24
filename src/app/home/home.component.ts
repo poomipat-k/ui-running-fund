@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 
-import { Subscription, forkJoin, mergeMap, of } from 'rxjs';
+import { Subscription, concatMap, of } from 'rxjs';
 import { FilterComponent } from '../components/filter/filter.component';
 import { TableComponent } from '../components/table/table.component';
 import { DateService } from '../services/date.service';
@@ -115,13 +115,12 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   private loadReviewDashboard() {
     this.subs.push(
-      forkJoin([
-        this.projectService.getReviewPeriod(),
-        this.userService.isLoggedIn(),
-      ])
+      this.projectService
+        .getReviewPeriod()
         .pipe(
-          mergeMap(([p, isLoggedIn]) => {
-            if (!isLoggedIn || !p) {
+          concatMap((p) => {
+            const user = this.userService.getCurrentUser();
+            if (!user?.id) {
               return of(null);
             }
             this.fromDate = this.dateService.dateToStringWithShortMonth(
@@ -129,7 +128,6 @@ export class HomeComponent implements OnInit, OnDestroy {
             );
             this.toDate = this.dateService.dateToStringWithShortMonth(p.toDate);
             this.reviewPeriod = p;
-            const user = this.userService.getCurrentUser();
             return this.projectService.getReviewDashboard(
               user?.id,
               this.reviewPeriod?.fromDate,

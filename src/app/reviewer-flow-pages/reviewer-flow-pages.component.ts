@@ -14,8 +14,9 @@ import {
   Validators,
 } from '@angular/forms';
 import { Router } from '@angular/router';
-import { Subscription, forkJoin, mergeMap, of } from 'rxjs';
+import { Subscription, concatMap, of } from 'rxjs';
 
+import { environment } from '../../environments/environment';
 import { SuccessPopupComponent } from '../components/success-popup/success-popup.component';
 import { ArrowForwardComponent } from '../components/svg/arrow-forward/arrow-forward.component';
 import { DateService } from '../services/date.service';
@@ -25,7 +26,6 @@ import { UserService } from '../services/user.service';
 import { BackgroundColor } from '../shared/enums/background-color';
 import { ReviewCriteria } from '../shared/models/review-criteria';
 import { ReviewDetails } from '../shared/models/review-details';
-import { ReviewerImprovement } from '../shared/models/review-improvement';
 import { ReviewerProjectDetails } from '../shared/models/reviewer-project-details';
 import { User } from '../shared/models/user';
 import { requiredCheckBoxToBeCheckedValidator } from '../shared/validators/requiredCheckbox';
@@ -147,7 +147,6 @@ export class ReviewerFlowPagesComponent implements OnInit, OnDestroy {
       this.projectService
         .addReview(this.form.value, this.currentUser.id)
         .subscribe((id) => {
-          console.log();
           if (id) {
             this.form.disable();
             this.showSuccessPopup = true;
@@ -176,18 +175,16 @@ export class ReviewerFlowPagesComponent implements OnInit, OnDestroy {
 
   private prepareData() {
     this.subs.push(
-      forkJoin([
-        this.projectService.getReviewCriteria(1),
-        this.userService.isLoggedIn(),
-      ])
+      this.projectService
+        .getReviewCriteria(environment.reviewCriteriaVersion)
         .pipe(
-          mergeMap(([criteriaList, isLoggedIn]) => {
-            if (!isLoggedIn || !criteriaList || criteriaList.length === 0) {
+          concatMap((criteriaList) => {
+            const user = this.userService.getCurrentUser();
+            if (!user.id || !criteriaList || criteriaList.length === 0) {
               return of(null);
             }
             this.reviewCriteriaList = criteriaList;
             this.addScoreFormControls(criteriaList);
-            const user = this.userService.getCurrentUser();
             this.currentUser = user;
             return this.projectService.getProjectDetailsForReviewer(
               user.id,
@@ -195,40 +192,7 @@ export class ReviewerFlowPagesComponent implements OnInit, OnDestroy {
             );
           })
         )
-        .subscribe((result) => {
-          const data = new ReviewerProjectDetails();
-          if (result) {
-            data.projectId = result.projectId;
-            data.projectHistoryId = result.projectHistoryId;
-            data.projectCode = result.projectCode;
-            data.projectCreatedAt = result.projectCreatedAt;
-            data.projectName = result.projectName;
-            data.reviewId = result.reviewId;
-            data.reviewedAt = result.reviewedAt;
-            data.isInterestedPerson = result.isInterestedPerson;
-            data.interestedPersonType = result.interestedPersonType;
-            data.reviewDetails = result.reviewDetails;
-            data.reviewSummary = result.reviewSummary;
-            data.reviewerComment = result.reviewerComment;
-
-            data.reviewImprovement = new ReviewerImprovement();
-            data.reviewImprovement.benefit = result.reviewImprovement?.benefit;
-            data.reviewImprovement.experienceAndReliability =
-              result.reviewImprovement?.experienceAndReliability;
-            data.reviewImprovement.fundAndOutput =
-              result.reviewImprovement?.fundAndOutput;
-            data.reviewImprovement.projectQuality =
-              result.reviewImprovement?.projectQuality;
-            data.reviewImprovement.projectStandard =
-              result.reviewImprovement?.projectStandard;
-            data.reviewImprovement.visionAndImage =
-              result.reviewImprovement?.visionAndImage;
-
-            this.apiData = data;
-
-            this.patchFormData(result);
-          }
-        })
+        .subscribe()
     );
   }
 

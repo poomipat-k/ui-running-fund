@@ -1,6 +1,6 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
-import { BehaviorSubject, Observable, catchError, of, throwError } from 'rxjs';
+import { BehaviorSubject, Observable, catchError, throwError } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { User } from '../shared/models/user';
 
@@ -23,7 +23,7 @@ export class UserService {
       .pipe(catchError(this.handleError));
   }
 
-  public getReviewerById(userId: string): Observable<User> {
+  public getReviewerById(userId: number): Observable<User> {
     return this.http
       .get<User>(`${this.baseApiUrl}/user/reviewer`, {
         headers: {
@@ -33,16 +33,17 @@ export class UserService {
       .pipe(catchError(this.handleError));
   }
 
-  public isLoggedIn(): Observable<boolean> {
+  public getUserTokenIdFromStorage(): number {
     let userId = localStorage.getItem('token');
     if (!userId) {
-      return of(false);
+      return 0;
     }
     userId = JSON.parse(userId);
     if (!userId) {
-      return of(false);
+      return 0;
     }
-    return of(true);
+    const numId = +userId;
+    return numId || 0;
   }
 
   public getCurrentUser(): User {
@@ -55,17 +56,6 @@ export class UserService {
       this.loggedInUser = user;
       localStorage.setItem('token', String(user.id));
       this.currentUserSubject.next(user);
-    }
-  }
-
-  public autoLogin(): void {
-    let userId = localStorage.getItem('token');
-    if (userId) {
-      this.getReviewerById(userId).subscribe((user) => {
-        if (user) {
-          this.login(user);
-        }
-      });
     }
   }
 
@@ -90,7 +80,7 @@ export class UserService {
     }
     // Return an observable with a user-facing error message.
     return throwError(
-      () => new Error('Something bad happened; please try again later.')
+      () => new Error('[User Service]: please try again later.')
     );
   }
 }

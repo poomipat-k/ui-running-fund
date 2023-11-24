@@ -1,9 +1,9 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { UserService } from '../services/user.service';
 import { User } from '../shared/models/user';
-import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-navbar',
@@ -28,8 +28,6 @@ export class NavbarComponent implements OnInit, OnDestroy {
         this.currentUser = user;
       })
     );
-
-    this.userService.autoLogin();
   }
 
   ngOnDestroy(): void {
