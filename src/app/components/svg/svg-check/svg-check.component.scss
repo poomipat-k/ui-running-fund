@@ -1,0 +1,27 @@
+.size {
+  &--12 {
+    width: 1.2rem;
+    height: 1.2rem;
+  }
+
+  &--60 {
+    width: 6rem;
+    height: 6rem;
+  }
+}
+
+.color {
+  &--green {
+    stroke: #12b76a;
+  }
+
+  &--white {
+    stroke: #fff;
+  }
+}
+
+.stroke-width {
+  &--1 {
+    stroke-width: 1;
+  }
+}

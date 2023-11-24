@@ -5,6 +5,7 @@
   background-color: #fff;
   margin-top: 8.8rem;
   padding: 2.4rem 7.8rem 5rem 7.9rem;
+  position: relative;
 }
 
 .header {
@@ -63,6 +64,13 @@
       color: #667085;
     }
   }
+}
+
+.popup {
+  position: absolute;
+  top: 27.9rem;
+  left: 50%;
+  transform: translateX(-50%);
 }
 
 .hr {

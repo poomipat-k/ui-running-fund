@@ -16,6 +16,7 @@ import {
 import { Router } from '@angular/router';
 import { Subscription, forkJoin, mergeMap, of } from 'rxjs';
 
+import { SuccessPopupComponent } from '../components/success-popup/success-popup.component';
 import { ArrowForwardComponent } from '../components/svg/arrow-forward/arrow-forward.component';
 import { DateService } from '../services/date.service';
 import { ProjectService } from '../services/project.service';
@@ -45,6 +46,7 @@ import { ReviewerSummaryComponent } from './reviewer-summary/reviewer-summary.co
     ArrowForwardComponent,
     ReviewerSummaryComponent,
     ReviewerConfirmationComponent,
+    SuccessPopupComponent,
   ],
   templateUrl: './reviewer-flow-pages.component.html',
   styleUrls: ['./reviewer-flow-pages.component.scss'],
@@ -94,6 +96,8 @@ export class ReviewerFlowPagesComponent implements OnInit, OnDestroy {
     this.themeService.changeBackgroundColor(BackgroundColor.gray);
     this.initForm();
     this.prepareData();
+
+    this.pageIndex = this.maxPageIndex;
   }
 
   ngOnDestroy(): void {

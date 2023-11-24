@@ -3,11 +3,12 @@ import { Component, Input } from '@angular/core';
 
 import { ColumnTypeEnum } from '../../shared/enums/column-type';
 import { SVGDownloadComponent } from '../svg/download/download.component';
+import { SvgCheckComponent } from '../svg/svg-check/svg-check.component';
 
 @Component({
   selector: 'app-table-cell-template',
   standalone: true,
-  imports: [CommonModule, SVGDownloadComponent],
+  imports: [CommonModule, SVGDownloadComponent, SvgCheckComponent],
   templateUrl: './table-cell-template.component.html',
   styleUrls: ['./table-cell-template.component.scss'],
 })
@@ -16,21 +17,21 @@ export class TableCellTemplateComponent {
   @Input() cellValue: string;
   @Input() bold = false;
 
-  protected hoverOverDowloadLink = false;
+  protected hoverOverDownloadLink = false;
 
-  onDowloadIconClicked(e: MouseEvent) {
+  onDownloadIconClicked(e: MouseEvent) {
     e.stopPropagation();
   }
 
   onMouseEnterDownloadLink() {
-    this.hoverOverDowloadLink = true;
+    this.hoverOverDownloadLink = true;
   }
 
   onMouseLeaveDownloadLink() {
-    this.hoverOverDowloadLink = false;
+    this.hoverOverDownloadLink = false;
   }
 
   onMouseDownDownloadLink() {
-    this.hoverOverDowloadLink = false;
+    this.hoverOverDownloadLink = false;
   }
 }

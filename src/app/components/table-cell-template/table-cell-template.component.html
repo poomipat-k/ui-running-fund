@@ -17,7 +17,7 @@
     [href]="cellValue"
     target="_blank"
     class="icon--link"
-    (click)="onDowloadIconClicked($event)"
+    (click)="onDownloadIconClicked($event)"
     (mouseenter)="onMouseEnterDownloadLink()"
     (mouseleave)="onMouseLeaveDownloadLink()"
     (mousedown)="onMouseDownDownloadLink()"
@@ -25,7 +25,7 @@
   >
     <div class="icon">
       <app-com-svg-download
-        [hoverOverDowloadLink]="hoverOverDowloadLink"
+        [hoverOverDownloadLink]="hoverOverDownloadLink"
       ></app-com-svg-download>
     </div>
   </a>
@@ -44,7 +44,7 @@
 <ng-template #badgeReviewed>
   <div class="badge__container badge__container--reviewed">
     <div class="badge__icon-container">
-      <img src="/assets/check_icon.svg" alt="check icon" />
+      <app-com-svg-check></app-com-svg-check>
     </div>
     <p class="badge__text badge__text--reviewed">กลั่นกรองเรียบร้อย</p>
   </div>

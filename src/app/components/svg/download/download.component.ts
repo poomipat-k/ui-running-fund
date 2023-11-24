@@ -1,5 +1,5 @@
-import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'app-com-svg-download',
@@ -9,5 +9,5 @@ import { CommonModule } from '@angular/common';
   styleUrls: ['./download.component.scss'],
 })
 export class SVGDownloadComponent {
-  @Input() hoverOverDowloadLink = false;
+  @Input() hoverOverDownloadLink = false;
 }
