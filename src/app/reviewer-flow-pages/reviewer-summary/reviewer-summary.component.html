@@ -1,0 +1,36 @@
+<div class="container mt-47">
+  <div class="container__item--1">
+    <div class="icon">3</div>
+  </div>
+  <div class="container__item--2">
+    <div class="header mb-14">ตารางสรุปคะแนน</div>
+    <div>
+      <div>
+        <app-com-table
+          [columns]="columns"
+          [data]="data"
+          [stripeRows]="false"
+          [headerGray]="true"
+        ></app-com-table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="hr mt-53"></div>
+
+<div class="container mt-42">
+  <div class="container__item--1">
+    <div class="icon">4</div>
+  </div>
+  <div class="container__item--2">
+    <div class="header">ความเห็นโดยรวมและข้อเสนอแนะเพิ่มเติมอื่น ๆ (ถ้ามี)</div>
+    <div [formGroup]="form">
+      <textarea
+        formControlName="comment"
+        class="textarea"
+        placeholder="ระบุความคิดเห็นและข้อเสนอแนะ"
+      ></textarea>
+    </div>
+  </div>
+</div>

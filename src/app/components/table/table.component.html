@@ -1,0 +1,73 @@
+@if (data.length) {
+<table [ngClass]="{ 'table margin-top-24': true, stripe: stripeRows }">
+  <thead>
+    <tr [ngClass]="{ 'table__header--gray': headerGray }">
+      @for (col of columns; track $index) {
+      <th
+        scope="col"
+        [class]="[
+          'table__header',
+          col.class,
+          col.compact ? 'table__cell--header-compact' : ''
+        ]"
+      >
+        {{ col.name }}
+      </th>
+      }
+    </tr>
+  </thead>
+
+  <tbody>
+    @for (row of data; track $index) {
+    <tr
+      [ngClass]="{ table__row: true, 'table__row--clickable': rowClickable }"
+      (click)="rowClicked.emit(row)"
+    >
+      @for (cell of row; track $index) {
+      <td
+        [class]="[
+          'table__cell',
+          columns[$index].bold ? 'table__cell--bold' : '',
+          columns[$index].compact ? 'table__cell--compact' : ''
+        ]"
+      >
+        <app-table-cell-template
+          [cellType]="columns[$index].type"
+          [cellValue]="cell.display"
+          [bold]="cell.className === 'bold'"
+        ></app-table-cell-template>
+      </td>
+      }
+    </tr>
+    }
+  </tbody>
+</table>
+} @else {
+<table class="table margin-top-24">
+  <thead>
+    <tr>
+      @for (col of columns; track $index) {
+      <th
+        scope="col"
+        [class]="[
+          'table__header',
+          col.class,
+          col.compact ? 'table__cell--header-compact' : ''
+        ]"
+      >
+        {{ col.name }}
+      </th>
+      }
+    </tr>
+  </thead>
+</table>
+
+<div class="empty">
+  <div>
+    <div>
+      <img src="/assets/cloud_off.svg" alt="cloud off icon" />
+    </div>
+    <p class="empty__text">{{ emptyText }}</p>
+  </div>
+</div>
+}

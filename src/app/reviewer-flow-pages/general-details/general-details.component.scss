@@ -1,0 +1,144 @@
+@import "../../../styles.scss";
+
+.container {
+  display: flex;
+  margin-top: 5em;
+}
+
+.header {
+  display: flex;
+  //   width: 19.8rem;
+  flex-basis: 24.3rem;
+  align-items: flex-start;
+
+  &__icon {
+    width: 3.6rem;
+    height: 3.6rem;
+    border-radius: 50%;
+    background-color: #344054;
+
+    font-family: $custom-font;
+    font-size: 1.8rem;
+    font-weight: 700;
+    line-height: 3.6rem;
+    text-align: center;
+    color: #fff;
+  }
+}
+
+.bold-text {
+  font-family: $custom-font;
+  font-weight: 700;
+  font-size: 2rem;
+  line-height: normal;
+  color: #344054;
+}
+
+.details {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  align-items: stretch;
+
+  &__row {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    height: 3.3rem;
+
+    &:not(:first-child) {
+      margin-top: 3.3rem;
+    }
+  }
+}
+
+.textbox {
+  border: none;
+  border-bottom: 0.5px solid #7a7a7a;
+  outline: none;
+  font-family: $custom-font-looped;
+  font-weight: 400;
+  font-size: 2rem;
+  line-height: normal;
+  color: #344054;
+  height: 3.3rem;
+  flex: 1;
+
+  &:disabled {
+    background-color: white;
+  }
+}
+
+.checkbox-container {
+  display: flex;
+  align-items: center;
+
+  &:not(:first-child) {
+    margin-left: 2.4rem;
+  }
+}
+
+.collab {
+  display: flex;
+  margin-top: 9px;
+  height: 3.3rem;
+
+  &__link {
+    color: #344054;
+    font-family: $custom-font-looped;
+    font-size: 2rem;
+    font-style: normal;
+    line-height: normal;
+    font-weight: 500;
+    text-decoration-line: underline;
+    margin-left: 8px;
+  }
+}
+
+//   Utils
+.block {
+  display: block;
+}
+
+.pdt {
+  &-3 {
+    padding-top: 3px;
+  }
+}
+
+.pdl {
+  &-3 {
+    padding-left: 3px;
+  }
+}
+
+.mt {
+  &-3 {
+    margin-top: 3px;
+  }
+}
+
+.ml {
+  &-13 {
+    margin-left: 1.3rem;
+  }
+
+  &-14 {
+    margin-left: 1.4rem;
+  }
+
+  &-17 {
+    margin-left: 1.7rem;
+  }
+
+  &-22 {
+    margin-left: 2.2rem;
+  }
+
+  &-28 {
+    margin-left: 2.8rem;
+  }
+  &-30 {
+    margin-left: 3rem;
+  }
+}

@@ -1,0 +1,74 @@
+@import "../../../styles.scss";
+
+.checkbox {
+  &__label {
+    font-family: $custom-font-looped;
+    font-size: 2rem;
+    font-weight: 400;
+    line-height: 2.4rem;
+    color: #344054;
+
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    cursor: pointer;
+
+    display: grid;
+    grid-template-columns: 2rem auto;
+    gap: 1.4rem;
+    align-items: center;
+    position: relative;
+  }
+
+  &__box {
+    width: 2rem;
+    height: 2rem;
+    border-radius: 2px;
+    border: 2px solid #344054;
+
+    &:checked {
+      border: 2px solid #344054;
+      background-color: #344054;
+    }
+
+    &:checked ~ .checkbox__mark {
+      display: block;
+    }
+
+    &:disabled {
+      border: 2px solid #a3a6ab;
+      background-color: #e7e7e7;
+
+      &:checked {
+        border: 2px solid #a3a6ab;
+        background-color: #a3a6ab;
+      }
+    }
+  }
+
+  &__mark {
+    display: none;
+    position: absolute;
+    width: 14px;
+    height: 14px;
+    top: 50%;
+    left: 3px;
+    transform: translateY(-50%);
+  }
+
+  &__path {
+    stroke: white;
+  }
+}
+
+input[type="checkbox"] {
+  -webkit-appearance: none;
+  appearance: none;
+  background-color: #fff;
+  margin: 0;
+}
+
+.cursor-not-allow {
+  cursor: not-allowed;
+}

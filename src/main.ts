@@ -1,8 +1,14 @@
+import { HttpClientModule } from '@angular/common/http';
+import { importProvidersFrom } from '@angular/core';
 import { bootstrapApplication } from '@angular/platform-browser';
+import { provideRouter, withComponentInputBinding } from '@angular/router';
+
 import { AppComponent } from './app/app.component';
-import { provideRouter } from '@angular/router';
 import routeConfig from './app/routes';
 
 bootstrapApplication(AppComponent, {
-  providers: [provideRouter(routeConfig)],
+  providers: [
+    provideRouter(routeConfig, withComponentInputBinding()),
+    importProvidersFrom(HttpClientModule),
+  ],
 }).catch((err) => console.error(err));

@@ -1,0 +1,131 @@
+<div
+  [ngClass]="{
+    container: true,
+    'pdb-50': pageIndex === 1,
+    'pdb-100': pageIndex === 2,
+    'pdb-80': pageIndex === 3,
+    'pdb-116': pageIndex === 4,
+    'pdb-222': pageIndex === 5,
+    'pdb-242': pageIndex === 6
+  }"
+>
+  <div>
+    <div class="header">
+      <h1 class="header__main">
+        แบบแสดงการมีส่วนได้เสียในการพิจารณากลั่นกรองทางวิชาการ
+        สำหรับผู้ทรงคุณวุฒิ
+      </h1>
+      <div class="header__details">
+        <div class="header__line">
+          <div class="header__line--bold header__line--bold-1">รหัสโครงการ</div>
+          <div class="header__line-normal-1">{{ apiData.projectCode }}</div>
+        </div>
+        <div class="header__line">
+          <div class="header__line--bold header__line--bold-2">
+            วันที่ส่งยื่นข้อเสนอ
+          </div>
+          <div class="header__line-normal-2">
+            {{ projectCreatedAt }}
+          </div>
+        </div>
+      </div>
+    </div>
+    <hr class="hr" />
+  </div>
+
+  <form [formGroup]="form">
+    @switch (pageIndex) { @case (1) {
+    <app-review-reviewer-interested-person
+      #interestedPerson
+      [form]="form"
+      [userFullName]="userFullName"
+      [projectName]="apiData.projectName"
+    ></app-review-reviewer-interested-person
+    >} @case (2) {
+    <app-review-general-details
+      [projectName]="apiData.projectName"
+      [projectCode]="apiData.projectCode"
+    ></app-review-general-details
+    >} @case (3) {
+    <app-reviewer-score
+      #reviewerScore
+      [form]="form"
+      [criteriaList]="reviewCriteriaList"
+    ></app-reviewer-score
+    >} @case (4) {
+    <app-reviewer-summary
+      [criteriaList]="reviewCriteriaList"
+      [form]="form"
+    ></app-reviewer-summary>
+    } @case (5) {
+    <app-reviewer-confirmation></app-reviewer-confirmation>
+    } @case (6) {
+    <app-review-success></app-review-success>
+    } }
+  </form>
+
+  @if (pageIndex === 3 || pageIndex === 4) {
+  <div
+    [ngClass]="{
+      warning: true,
+      'mt-95': pageIndex === 3,
+      'mt-72': pageIndex === 4
+    }"
+  >
+    <p>โปรดตรวจสอบข้อมูลให้เรียบร้อย</p>
+  </div>
+  }
+  <div
+    [ngClass]="{
+      button__container: true,
+      'mt-40': pageIndex === 1,
+      'mt-72': pageIndex === 2,
+      'mt-16': pageIndex === 3,
+      'mt-18': pageIndex === 4,
+      'mt-33': pageIndex === 5,
+      'mt--31': pageIndex === 6
+    }"
+  >
+    @if (pageIndex === 1) {
+    <button class="button button--cancel" (click)="prevPage()">ยกเลิก</button>
+    } @else if (pageIndex <= maxPageIndex) {
+    <button class="button button--cancel" (click)="prevPage()">
+      <img
+        src="/assets/arrow_back.svg"
+        alt="arror back"
+        class="button--cancel-icon"
+      />
+      <div>ย้อนกลับ</div>
+    </button>
+    } @if (pageIndex < maxPageIndex) {
+    <button class="button button--next" (click)="nextPage()">
+      ถัดไป
+      <div class="button--next-icon">
+        <app-com-svg-arrow-forward></app-com-svg-arrow-forward>
+      </div>
+    </button>
+    } @else if (pageIndex === maxPageIndex){
+    <button
+      class="button button--next"
+      (click)="nextPage()"
+      [disabled]="form.disabled"
+    >
+      ส่ง
+    </button>
+    } @else {
+    <button class="button button--next" (click)="redirectToHomePage()">
+      กลับหน้าหลัก
+    </button>
+    }
+  </div>
+  @if (showSuccessPopup) {
+  <div [ngClass]="{ popup: true, 'popup--show': showSuccessPopup }">
+    <app-com-success-popup displayText="รีวิวเรียบร้อย"></app-com-success-popup>
+  </div>
+  } @else if (showErrorPopup) {
+  <div [ngClass]="{ popup: true, 'popup--show': showSuccessPopup }">
+    <app-com-error-popup displayText="รีวิวไม่สำเร็จ โปรดลองอีกครั้ง">
+    </app-com-error-popup>
+  </div>
+  }
+</div>

@@ -1,0 +1,94 @@
+<ng-container>
+  <div [class]="containerClass">
+    <!-- Row 1 -->
+    <div class="label mt-46">
+      <div class="label__icon"></div>
+      <p>ข้อมูลผู้ทรงคุณวุฒิ</p>
+    </div>
+
+    <div class="data data__flex mt-47">
+      <p class="prefix mr-16">ข้าพเจ้า</p>
+      <input
+        type="text"
+        class="textbox width-479"
+        [value]="userFullName || ''"
+        [disabled]="true"
+      />
+    </div>
+
+    <span class="hr"></span>
+    <span class="hr"></span>
+    <!-- Row 2 -->
+    <div class="label mt-39">
+      <div class="label__icon"></div>
+      <p>ข้อมูลโครงการ</p>
+    </div>
+    <div class="data mt-40">
+      <p class="prefix">
+        ซึ่งทำหน้าที่ผู้ทรงคุณวุฒิในการพิจารณากลั่นกรองทางวิชาการ แผนงาน
+        ชุดโครงการ หรือโครงการ
+      </p>
+      <input
+        type="text"
+        class="textbox width-725 mt-13"
+        [value]="projectName || ''"
+        [disabled]="true"
+      />
+    </div>
+
+    <span class="hr"></span>
+    <span class="hr"></span>
+    <!-- Row 3 -->
+
+    <!-- 1st Col -->
+    <div class="label mt-45">
+      <div class="label__icon"></div>
+      <p>การมีส่วนได้เสีย</p>
+    </div>
+    <!-- 2nd Col -->
+    <div class="data mt-46">
+      <p class="prefix">
+        ข้าพเจ้าได้ตรวจสอบการมีส่วนเกี่ยวข้องหรือส่วนได้เสียแล้ว ขอรับรองว่า
+      </p>
+      <!-- Radio -->
+      <div class="mt-14">
+        <app-com-radio
+          [form]="form"
+          [options]="interestedPersonOptions"
+          groupName="ip"
+          [controlName]="'isInterestedPerson'"
+          radioStyle="review-1a"
+          [onChanged]="onInterestedPersonChanged"
+          [disabled]="form.disabled"
+        ></app-com-radio>
+        <!-- Error Text non selected on Submit -->
+        @if (showError1) {
+        <div class="error ml-28">
+          <img src="/assets/error_icon.svg" alt="error icon" />
+          <p class="error__text">กรุณาเลือกตัวเลือก</p>
+        </div>
+        } @if (form.value.ip.isInterestedPerson) {
+        <p class="prefix ml-59 mt-15">
+          กรณีที่ตนเองมีความเกี่ยวข้องกับผู้เสนอโครงการในลักษณะดังต่อไปนี้
+        </p>
+        <div class="ml-30">
+          <app-com-radio
+            [form]="form"
+            [options]="interestedPersonTypeOptions"
+            groupName="ip"
+            [controlName]="'interestedPersonType'"
+            radioStyle="review-1b"
+            [disabled]="form.disabled"
+          ></app-com-radio>
+        </div>
+        @if (showError2) {
+        <div class="error ml-59">
+          <img src="/assets/error_icon.svg" alt="error icon" />
+          <p class="error__text">กรุณาเลือกตัวเลือก</p>
+        </div>
+        } }
+      </div>
+    </div>
+    <!-- End process 1 form -->
+  </div>
+</ng-container>

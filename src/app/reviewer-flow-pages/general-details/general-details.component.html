@@ -1,0 +1,112 @@
+<div class="container">
+  <div class="header">
+    <div class="header__icon">1</div>
+    <h1 class="bold-text ml-13 pdt-3">ข้อมูลพื้นฐาน</h1>
+  </div>
+  <!-- Form -->
+  <div class="details mt-3">
+    <div class="details__row">
+      <label class="bold-text">ชื่อโครงการ</label>
+      <input
+        type="text"
+        class="textbox pdl-3 ml-28"
+        [value]="projectName"
+        [disabled]="true"
+      />
+    </div>
+
+    <div class="details__row">
+      <label class="bold-text">รหัสโครงการ</label>
+      <input
+        type="text"
+        class="textbox ml-14"
+        [value]="projectCode"
+        [disabled]="true"
+      />
+    </div>
+
+    <div class="details__row">
+      <label class="bold-text">ชื่อหัวหน้าโครงการ/องค์กร</label>
+      <input
+        type="text"
+        class="textbox ml-22"
+        [value]="projectLeader"
+        [disabled]="true"
+      />
+    </div>
+
+    <div class="details__row">
+      <label class="bold-text">วันที่จัดการแข่งขัน</label>
+      <input
+        type="text"
+        class="textbox ml-22"
+        [value]="projectStartDate"
+        [disabled]="true"
+      />
+    </div>
+
+    <div class="details__row">
+      <label class="bold-text">สถานที่จัดการแข่งขัน</label>
+      <input
+        type="text"
+        class="textbox ml-17"
+        [value]="projectLocation"
+        [disabled]="true"
+      />
+    </div>
+
+    <div class="details__row">
+      <label class="bold-text">ประเภทงานวิ่ง</label>
+      <div class="checkbox-container ml-30">
+        @for (item of projectTypeCheckBox; track item.id) {
+        <div class="checkbox-container">
+          <app-com-checkbox-view
+            [name]="item.name"
+            [display]="item.display"
+            [value]="item.value"
+            [disabled]="true"
+            [checked]="item.checked"
+          ></app-com-checkbox-view>
+        </div>
+        }
+      </div>
+    </div>
+
+    <div class="details__row">
+      <label class="bold-text">จำนวนผู้เข้าร่วมที่คาดหวัง</label>
+      <input
+        type="text"
+        class="textbox ml-17"
+        [value]="expectedRunner"
+        [disabled]="true"
+      />
+    </div>
+
+    <div class="details__row">
+      <label class="bold-text">กลุ่มเป้าหมาย</label>
+      <input
+        type="text"
+        class="textbox ml-17"
+        [value]="targetGroup"
+        [disabled]="true"
+      />
+    </div>
+
+    <div class="details__row block">
+      <label class="bold-text mb-9"
+        >การประสานงานกับเครือข่ายสมาพันธ์เดิน-วิ่งเพื่อสุขภาพไทยภาค
+      </label>
+      <div class="collab">
+        <app-com-radio-view
+          [options]="hadReceivedFundOptions"
+          radioStyle="review-2a"
+          [disabled]="true"
+          [selectedValue]="false"
+        ></app-com-radio-view>
+        <a href="https://google.com" class="collab__link" target="_blank"
+          >ดาวน์โหลดหนังสือนำส่ง</a
+        >
+      </div>
+    </div>
+  </div>
+</div>

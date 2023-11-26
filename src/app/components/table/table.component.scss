@@ -1,0 +1,123 @@
+@import "../../../styles.scss";
+
+$cell-height: 7.2rem;
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+
+  box-shadow: 0px 1px 2px 0px rgba(16, 24, 40, 0.06);
+
+  table,
+  tr {
+    border: 1px solid #eaecf0;
+  }
+
+  &__row {
+    cursor: default;
+
+    &--clickable {
+      cursor: pointer;
+    }
+  }
+
+  &__header {
+    height: 4.4rem;
+    padding: 1.2rem 2.4rem;
+    font-family: $custom-font;
+    font-weight: 400;
+    font-size: 1.8rem;
+    line-height: 0;
+    text-align: left;
+    color: #667085;
+
+    &--gray {
+      background-color: #f9fafb;
+    }
+  }
+
+  &__cell {
+    height: $cell-height;
+    padding: 1.6rem 2.4rem;
+    text-align: left;
+    font-family: $custom-font;
+    font-size: 1.8rem;
+    line-height: 2rem;
+    font-weight: 400;
+    color: #667085;
+
+    // Parent of download icon position absolute
+    position: relative;
+
+    &--bold {
+      font-weight: 500;
+      color: #101828;
+    }
+
+    &--header-compact {
+      padding: 1rem;
+    }
+
+    &--compact {
+      padding: 1.6rem 0;
+      text-align: center;
+    }
+  }
+}
+
+.empty {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  height: 44.1rem;
+  padding-top: 12rem;
+  text-align: center;
+  border: 1px solid #eaecf0;
+  border-top: none;
+  box-shadow: 0px 1px 2px 0px rgba(16, 24, 40, 0.06);
+
+  &__icon {
+    width: 4.8rem;
+    height: 4.8rem;
+  }
+
+  &__text {
+    margin-top: 1.2rem;
+    font-family: $inter;
+    font-size: 1.8rem;
+    font-weight: 500;
+    line-height: 1.8rem;
+    color: #667085;
+  }
+}
+
+// stripe rows
+.stripe {
+  tbody > tr:nth-child(2n + 1) {
+    background-color: #f9fafb;
+  }
+}
+
+// Utils classes
+.width {
+  &-92 {
+    width: 9.2rem;
+  }
+  &-176 {
+    width: 17.6rem;
+  }
+  &-150 {
+    width: 15rem;
+  }
+  &-200 {
+    width: 20rem;
+  }
+
+  &-215 {
+    width: 21.5rem;
+  }
+}
+
+.margin-top-24 {
+  margin-top: 2.4rem;
+}

@@ -1,0 +1,200 @@
+@import "../../../styles.scss";
+
+.container {
+  display: flex;
+}
+
+.sticky {
+  position: sticky;
+  top: 10rem;
+  align-self: flex-start;
+}
+
+.main {
+  flex: 1;
+
+  &__group {
+    padding: 1rem 0px 1rem 2rem;
+    background-color: #f2edeb;
+
+    font-family: $custom-font-looped;
+    font-size: 1.8rem;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    color: #344054;
+
+    &::after {
+      content: "*";
+      font-family: $custom-font-looped;
+      font-size: 1.8rem;
+      font-style: normal;
+      font-weight: 500;
+      line-height: normal;
+      color: #ec4a0a;
+    }
+  }
+}
+
+.improvement {
+  padding: 2rem 2rem 3rem 5rem;
+  background-color: white;
+  border-bottom: 1px dashed #cdc1be;
+
+  &__text {
+    font-family: $custom-font-looped;
+    font-size: 1.8rem;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    color: #344054;
+
+    &::after {
+      content: "*";
+      font-family: $custom-font-looped;
+      font-size: 1.8rem;
+      font-style: normal;
+      font-weight: 500;
+      line-height: normal;
+      color: #ec4a0a;
+    }
+  }
+
+  &__checkbox {
+    &-container {
+      margin: 1rem 0;
+    }
+
+    &:not(:first-child) {
+      margin-top: 8px;
+    }
+  }
+}
+
+.question {
+  &__box {
+    padding: 1rem 2rem 2rem 2em;
+
+    &:not(:first-child) {
+      border-top: 1px dashed #cdc1be;
+    }
+
+    &--summary {
+      padding: 2rem 2rem 3rem 2em;
+      border-bottom: 1px dashed #cdc1be;
+    }
+  }
+
+  &__text {
+    font-family: $custom-font-looped;
+    font-size: 1.8rem;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    color: #344054;
+  }
+}
+
+.error {
+  display: flex;
+  font-family: $custom-font-looped;
+  font-size: 1.3rem;
+  font-weight: 400;
+  line-height: normal;
+  color: #ec4a0a;
+
+  &__text {
+    margin-left: 4px;
+  }
+}
+
+.header {
+  flex-basis: 28.4rem;
+  display: flex;
+
+  &__icon {
+    height: 3.6rem;
+    flex-basis: 3.6rem;
+    flex-shrink: 0;
+    border-radius: 50%;
+    background-color: #344054;
+
+    font-family: $custom-font;
+    font-size: 1.8rem;
+    font-weight: 700;
+    line-height: 3.6rem;
+    text-align: center;
+    color: #fff;
+  }
+}
+
+.bold-text {
+  font-family: $custom-font;
+  font-weight: 700;
+  font-size: 1.8rem;
+  line-height: normal;
+  color: #344054;
+  flex-shrink: 0;
+}
+
+.sticky {
+  position: sticky;
+  margin-top: 6px;
+  top: 9rem;
+
+  &__header {
+    font-family: $custom-font-looped;
+    font-size: 1.8rem;
+    font-weight: 500;
+    line-height: normal;
+    color: #c4320a;
+  }
+
+  &__number {
+    font-family: $custom-font-looped;
+    font-size: 1.8rem;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    color: #c4320a;
+  }
+
+  &__text {
+    color: #344054;
+    font-family: $custom-font-looped;
+    font-size: 1.8rem;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    margin-top: 4px;
+  }
+}
+
+.mt {
+  &-10 {
+    margin-top: 1rem;
+  }
+
+  &-15 {
+    margin-top: 1.5rem;
+  }
+  &-29 {
+    margin-top: 2.9rem;
+  }
+}
+
+.ml {
+  &-13 {
+    margin-left: 1.3rem;
+  }
+}
+
+.pdt {
+  &-5 {
+    padding-top: 5px;
+  }
+}
+
+.hide {
+  display: none;
+}

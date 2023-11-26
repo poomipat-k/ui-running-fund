@@ -1,0 +1,112 @@
+<ng-container>
+  <div class="container mt-29">
+    <div class="header">
+      <div class="header__icon">2</div>
+      <div class="ml-13 pdt-5">
+        <div>
+          <h1 class="bold-text">ประเด็นการกลั่นกรองโครงการ</h1>
+        </div>
+        <div class="sticky">
+          <h2 class="sticky__header">เกณฑ์การประเมิน</h2>
+
+          <p class="sticky__text">
+            <span class="sticky__number">1 </span>=
+            ไม่เห็นด้วยอย่างยิ่ง/ไม่มีข้อมูล
+          </p>
+          <p class="sticky__text">
+            <span class="sticky__number">2 </span>= ไม่เห็นด้วย
+          </p>
+          <p class="sticky__text">
+            <span class="sticky__number">3 </span>= กลาง ๆ
+          </p>
+          <p class="sticky__text">
+            <span class="sticky__number">4 </span>= เห็นด้วย
+          </p>
+          <p class="sticky__text">
+            <span class="sticky__number">5 </span>= เห็นด้วยอย่างยิ่ง
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="main">
+      @for (group of groupHeaders; track group.id) {
+      <div class="main__group">{{ group.groupName }}</div>
+      <div>
+        @for (c of criteriaList; track $index) { @if (c.criteriaVersion === 1 &&
+        c.groupNumber === group.id) {
+        <div class="question__box" [id]="buildControlName(c)">
+          <p [innerHTML]="buildQuestionText(c)" class="question__text"></p>
+          <app-com-radio
+            [form]="reviewFormControlGroup"
+            [options]="scoreOptions"
+            groupName="scores"
+            [controlName]="buildControlName(c)"
+            radioStyle="review-3a"
+            direction="horizontal"
+            [disabled]="form.disabled"
+          ></app-com-radio>
+          @if (!form.get(buildFormAccessName(c))?.valid &&
+          form.get(buildFormAccessName(c))?.touched ) {
+          <div class="error mt-10">
+            <img src="/assets/error_icon.svg" alt="error icon" />
+            <p class="error__text">กรุณาให้คะแนนในส่วนนี้</p>
+          </div>
+          }
+        </div>
+        } }
+      </div>
+      }
+      <div>
+        <div class="main__group">7. สรุปความเห็น</div>
+        <div class="question__box--summary" id="reviewSummary">
+          <app-com-radio
+            [form]="form"
+            [options]="summaryDropdownOptions"
+            groupName="review"
+            controlName="reviewSummary"
+            radioStyle="review-3b"
+            [onChanged]="onSummaryRadioChanged"
+            [disabled]="form.disabled"
+          ></app-com-radio>
+          @if (!form.get('review.reviewSummary')?.valid &&
+          form.get('review.reviewSummary')?.touched ) {
+          <div class="error mt-10">
+            <img src="/assets/error_icon.svg" alt="error icon" />
+            <p class="error__text">กรุณาให้คะแนนในส่วนนี้</p>
+          </div>
+          }
+        </div>
+      </div>
+      <!-- <button [ngClass]="{hide: form.disabled}" (click)="fillAll()">Fill all</button> -->
+      @if (form.value?.review?.reviewSummary === 'to_be_revised' ) {
+      <div id="improvement" class="improvement">
+        <div class="improvement__text">
+          โครงการควรจะต้องมีการปรับแก้ไขเพิ่มเติมรายละเอียดให้มีความเหมาะสม
+          โดยเฉพาะประเด็นด้านใด
+        </div>
+        <div class="improvement__checkbox-container">
+          @for (item of improvementCheckboxOptions; track item.id) {
+          <div class="improvement__checkbox">
+            <app-com-checkbox
+              [display]="item.display"
+              [form]="reviewFormControlGroup"
+              groupName="improvement"
+              [controlName]="item.controlName"
+              [disabled]="form.disabled"
+            ></app-com-checkbox>
+          </div>
+          }
+        </div>
+        @if (!form.get('review.improvement')?.valid &&
+        form.get('review.improvement')?.touched ) {
+        <div class="error">
+          <img src="/assets/error_icon.svg" alt="error icon" />
+          <p class="error__text">สามารถเลือกได้หลายข้อ</p>
+        </div>
+        }
+      </div>
+      }
+    </div>
+  </div>
+</ng-container>
