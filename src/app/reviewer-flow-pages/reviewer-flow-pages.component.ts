@@ -17,6 +17,7 @@ import { Router } from '@angular/router';
 import { Subscription, concatMap, of } from 'rxjs';
 
 import { environment } from '../../environments/environment';
+import { ErrorPopupComponent } from '../components/error-popup/error-popup.component';
 import { SuccessPopupComponent } from '../components/success-popup/success-popup.component';
 import { ArrowForwardComponent } from '../components/svg/arrow-forward/arrow-forward.component';
 import { DateService } from '../services/date.service';
@@ -50,6 +51,8 @@ import { ReviewerSummaryComponent } from './reviewer-summary/reviewer-summary.co
     ReviewerConfirmationComponent,
     SuccessPopupComponent,
     ReviewSuccessComponent,
+    SuccessPopupComponent,
+    ErrorPopupComponent,
   ],
   templateUrl: './reviewer-flow-pages.component.html',
   styleUrls: ['./reviewer-flow-pages.component.scss'],
@@ -63,6 +66,7 @@ export class ReviewerFlowPagesComponent implements OnInit, OnDestroy {
   @Input() projectCode: string;
 
   protected showSuccessPopup = false;
+  protected showErrorPopup = false;
   protected form: FormGroup;
   protected reviewCriteriaList: ReviewCriteria[] = [];
   protected apiData: ReviewerProjectDetails = new ReviewerProjectDetails();
@@ -147,18 +151,24 @@ export class ReviewerFlowPagesComponent implements OnInit, OnDestroy {
     if (this.form.valid && !this.form.disabled) {
       this.projectService
         .addReview(this.form.value, this.currentUser.id)
-        .subscribe((id) => {
-          if (id) {
-            this.form.disable();
-            this.showSuccessPopup = true;
+        .subscribe({
+          next: (id) => {
+            if (id) {
+              this.form.disable();
+              this.showSuccessPopup = true;
+              setTimeout(() => {
+                this.showSuccessPopup = false;
+                this.pageIndex++;
+              }, 4000);
+            }
+          },
+          error: () => {
+            this.showErrorPopup = true;
             setTimeout(() => {
-              this.showSuccessPopup = false;
-              this.pageIndex++;
+              this.showErrorPopup = false;
             }, 4000);
-          }
+          },
         });
-    } else {
-      console.error('form is not valid', this.form.value);
     }
   }
 
