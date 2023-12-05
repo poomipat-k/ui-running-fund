@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject } from '@angular/core';
+import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import {
   FormControl,
   FormGroup,
@@ -11,16 +11,19 @@ import { Subscription } from 'rxjs';
 import { ThemeService } from '../services/theme.service';
 import { UserService } from '../services/user.service';
 import { BackgroundColor } from '../shared/enums/background-color';
+import { User } from '../shared/models/user';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './login.component.html',
-  styleUrl: './login.component.scss',
+  styleUrls: ['./login.component.scss'],
+  imports: [CommonModule, ReactiveFormsModule],
 })
-export class LoginComponent {
+export class Login2Component implements OnInit, OnDestroy {
   protected loginForm: FormGroup;
+
+  protected reviewers: User[] = [];
 
   private userService: UserService = inject(UserService);
   private router: Router = inject(Router);
@@ -37,7 +40,15 @@ export class LoginComponent {
 
     this.initForm();
 
-    this.subs.push(this.userService.getReviewers().subscribe((result) => {}));
+    this.subs.push(
+      this.userService.getReviewers().subscribe((result) => {
+        if (!result) {
+          console.error('====Cannot get Reviewers');
+        } else {
+          this.reviewers = result;
+        }
+      })
+    );
   }
 
   ngOnDestroy(): void {
@@ -51,13 +62,13 @@ export class LoginComponent {
   }
 
   onSubmit() {
-    // const reviewerId = this.loginForm.value?.reviewer;
-    // if (reviewerId & +reviewerId) {
-    //   const user = this.reviewers.find((r) => r.id === +reviewerId);
-    //   if (user) {
-    //     this.userService.login(user);
-    //     this.router.navigate(['/']);
-    //   }
-    // }
+    const reviewerId = this.loginForm.value?.reviewer;
+    if (reviewerId & +reviewerId) {
+      const user = this.reviewers.find((r) => r.id === +reviewerId);
+      if (user) {
+        this.userService.login(user);
+        this.router.navigate(['/']);
+      }
+    }
   }
 }
