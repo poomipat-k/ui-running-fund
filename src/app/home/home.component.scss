@@ -11,6 +11,14 @@
     &-container {
       display: flex;
       align-items: center;
+
+      // @media only screen and (orientation: portrait) {
+      //   border: 1px solid green;
+      // }
+
+      // @media only screen and (orientation: landscape) {
+      //   border: 1px solid blue;
+      // }
     }
     &-text {
       font-weight: 600;

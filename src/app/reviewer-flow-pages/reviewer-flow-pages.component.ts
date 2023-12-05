@@ -159,14 +159,14 @@ export class ReviewerFlowPagesComponent implements OnInit, OnDestroy {
               setTimeout(() => {
                 this.showSuccessPopup = false;
                 this.pageIndex++;
-              }, 4000);
+              }, 2000);
             }
           },
           error: () => {
             this.showErrorPopup = true;
             setTimeout(() => {
               this.showErrorPopup = false;
-            }, 4000);
+            }, 2000);
           },
         });
     }
