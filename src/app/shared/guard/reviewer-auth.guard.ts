@@ -6,20 +6,23 @@ import { UserService } from '../../services/user.service';
 export const reviewerAuthGuard = (_next: ActivatedRouteSnapshot) => {
   const router = inject(Router);
   const userService = inject(UserService);
-  const loggedIn = !!userService.getCurrentUser()?.id;
-  if (loggedIn) {
-    return of(true);
+  const loggedInUser = userService.getCurrentInMemoryUser();
+  if (loggedInUser?.id) {
+    if (loggedInUser?.userRole === 'reviewer') {
+      return of(true);
+    }
+    return of(false);
   }
-  const userId = userService.getUserTokenIdFromStorage();
-  if (userId == 0) {
-    return router.navigate(['/login']);
-  }
-  return userService.getReviewerById(userId).pipe(
+  return userService.getCurrentUser().pipe(
     tap((user) => {
+      console.log('==user', user);
       if (user.id) {
-        userService.login2(user);
+        userService.setUser(user);
+        if (user.userRole === 'reviewer') {
+          return true;
+        }
       }
-      return !user.id ? router.navigate(['/login']) : true;
+      return router.navigate(['/login']);
     })
   );
 };

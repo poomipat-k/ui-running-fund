@@ -17,19 +17,9 @@ export class UserService {
   private readonly http: HttpClient = inject(HttpClient);
   constructor() {}
 
-  public getReviewers(): Observable<User[]> {
+  public getCurrentUser(): Observable<User> {
     return this.http
-      .get<User[]>(`${this.baseApiUrl}/user/reviewers`)
-      .pipe(catchError(this.handleError));
-  }
-
-  public getReviewerById(userId: number): Observable<User> {
-    return this.http
-      .get<User>(`${this.baseApiUrl}/user/reviewer`, {
-        headers: {
-          Authorization: `Bearer ${userId}`,
-        },
-      })
+      .get<User>(`${this.baseApiUrl}/user/current`)
       .pipe(catchError(this.handleError));
   }
 
@@ -46,7 +36,7 @@ export class UserService {
     return numId || 0;
   }
 
-  public getCurrentUser(): User {
+  public getCurrentInMemoryUser(): User {
     return this.loggedInUser;
   }
 
@@ -57,6 +47,11 @@ export class UserService {
         password,
       })
       .pipe(catchError(this.handleError));
+  }
+
+  public setUser(user: User): void {
+    this.currentUserSubject.next(user);
+    this.loggedInUser = user;
   }
 
   // TODO: refactor later

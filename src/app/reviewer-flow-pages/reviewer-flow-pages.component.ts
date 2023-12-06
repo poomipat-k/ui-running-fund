@@ -149,26 +149,24 @@ export class ReviewerFlowPagesComponent implements OnInit, OnDestroy {
 
   private submitForm() {
     if (this.form.valid && !this.form.disabled) {
-      this.projectService
-        .addReview(this.form.value, this.currentUser.id)
-        .subscribe({
-          next: (id) => {
-            if (id) {
-              this.form.disable();
-              this.showSuccessPopup = true;
-              setTimeout(() => {
-                this.showSuccessPopup = false;
-                this.pageIndex++;
-              }, 2000);
-            }
-          },
-          error: () => {
-            this.showErrorPopup = true;
+      this.projectService.addReview(this.form.value).subscribe({
+        next: (id) => {
+          if (id) {
+            this.form.disable();
+            this.showSuccessPopup = true;
             setTimeout(() => {
-              this.showErrorPopup = false;
+              this.showSuccessPopup = false;
+              this.pageIndex++;
             }, 2000);
-          },
-        });
+          }
+        },
+        error: () => {
+          this.showErrorPopup = true;
+          setTimeout(() => {
+            this.showErrorPopup = false;
+          }, 2000);
+        },
+      });
     }
   }
 
@@ -190,15 +188,14 @@ export class ReviewerFlowPagesComponent implements OnInit, OnDestroy {
         .getReviewCriteria(environment.reviewCriteriaVersion)
         .pipe(
           concatMap((criteriaList) => {
-            const user = this.userService.getCurrentUser();
-            if (!user.id || !criteriaList || criteriaList.length === 0) {
+            const user = this.userService.getCurrentInMemoryUser();
+            if (!criteriaList || criteriaList.length === 0) {
               return of(null);
             }
             this.reviewCriteriaList = criteriaList;
             this.addScoreFormControls(criteriaList);
             this.currentUser = user;
             return this.projectService.getProjectDetailsForReviewer(
-              user.id,
               this.projectCode
             );
           })

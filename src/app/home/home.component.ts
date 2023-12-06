@@ -119,19 +119,12 @@ export class HomeComponent implements OnInit, OnDestroy {
         .getReviewPeriod()
         .pipe(
           concatMap((p) => {
-            const user = this.userService.getCurrentUser();
-            console.log('===user', user);
-            // if (!user?.id) {
-            //   console.error('user not found');
-            //   return of(null);
-            // }
             this.fromDate = this.dateService.dateToStringWithShortMonth(
               p.fromDate
             );
             this.toDate = this.dateService.dateToStringWithShortMonth(p.toDate);
             this.reviewPeriod = p;
             return this.projectService.getReviewDashboard(
-              user?.id,
               this.reviewPeriod?.fromDate,
               this.reviewPeriod?.toDate
             );

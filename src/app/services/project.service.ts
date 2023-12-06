@@ -23,38 +23,23 @@ export class ProjectService {
   }
 
   getReviewDashboard(
-    userId: number,
     fromDate: string,
     toDate: string
   ): Observable<ReviewerDashboardRow[]> {
     return this.http
-      .post<ReviewerDashboardRow[]>(
-        `${this.baseApiUrl}/project/reviewer`,
-        {
-          fromDate,
-          toDate,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${userId}`,
-          },
-        }
-      )
+      .post<ReviewerDashboardRow[]>(`${this.baseApiUrl}/project/reviewer`, {
+        fromDate,
+        toDate,
+      })
       .pipe(catchError(this.handleError));
   }
 
   getProjectDetailsForReviewer(
-    userId: number,
     projectCode: string
   ): Observable<ReviewerProjectDetails> {
     return this.http
       .get<ReviewerProjectDetails>(
-        `${this.baseApiUrl}/project/review/${projectCode}`,
-        {
-          headers: {
-            Authorization: `Bearer ${userId}`,
-          },
-        }
+        `${this.baseApiUrl}/project/review/${projectCode}`
       )
       .pipe(catchError(this.handleError));
   }
@@ -67,13 +52,9 @@ export class ProjectService {
       .pipe(catchError(this.handleError));
   }
 
-  addReview(body: ReviewerProjectDetails, userId: number) {
+  addReview(body: ReviewerProjectDetails) {
     return this.http
-      .post<number>(`${this.baseApiUrl}/project/review`, body, {
-        headers: {
-          Authorization: `Bearer ${userId}`,
-        },
-      })
+      .post<number>(`${this.baseApiUrl}/project/review`, body)
       .pipe(catchError(this.handleError));
   }
 
