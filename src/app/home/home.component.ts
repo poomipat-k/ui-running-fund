@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 
-import { Subscription, concatMap, of } from 'rxjs';
+import { Subscription, concatMap } from 'rxjs';
 import { FilterComponent } from '../components/filter/filter.component';
 import { TableComponent } from '../components/table/table.component';
 import { DateService } from '../services/date.service';
@@ -120,9 +120,11 @@ export class HomeComponent implements OnInit, OnDestroy {
         .pipe(
           concatMap((p) => {
             const user = this.userService.getCurrentUser();
-            if (!user?.id) {
-              return of(null);
-            }
+            console.log('===user', user);
+            // if (!user?.id) {
+            //   console.error('user not found');
+            //   return of(null);
+            // }
             this.fromDate = this.dateService.dateToStringWithShortMonth(
               p.fromDate
             );

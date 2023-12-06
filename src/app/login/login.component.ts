@@ -34,10 +34,7 @@ export class LoginComponent {
 
   ngOnInit(): void {
     this.themeService.changeBackgroundColor(BackgroundColor.white);
-
     this.initForm();
-
-    this.subs.push(this.userService.getReviewers().subscribe((result) => {}));
   }
 
   ngOnDestroy(): void {
@@ -46,18 +43,20 @@ export class LoginComponent {
 
   private initForm(): void {
     this.loginForm = new FormGroup({
-      reviewer: new FormControl(null, [Validators.required]),
+      email: new FormControl(null, [Validators.required]),
+      password: new FormControl(null, [Validators.required]),
     });
   }
 
   onSubmit() {
-    // const reviewerId = this.loginForm.value?.reviewer;
-    // if (reviewerId & +reviewerId) {
-    //   const user = this.reviewers.find((r) => r.id === +reviewerId);
-    //   if (user) {
-    //     this.userService.login(user);
-    //     this.router.navigate(['/']);
-    //   }
-    // }
+    const formData = this.loginForm.value;
+    console.log('====formData', formData);
+    this.subs.push(
+      this.userService
+        .login(formData?.email, formData?.password)
+        .subscribe((result) => {
+          console.log('===result', result);
+        })
+    );
   }
 }

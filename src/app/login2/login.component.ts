@@ -66,7 +66,7 @@ export class Login2Component implements OnInit, OnDestroy {
     if (reviewerId & +reviewerId) {
       const user = this.reviewers.find((r) => r.id === +reviewerId);
       if (user) {
-        this.userService.login(user);
+        this.userService.login2(user);
         this.router.navigate(['/']);
       }
     }

@@ -17,7 +17,7 @@ export const reviewerAuthGuard = (_next: ActivatedRouteSnapshot) => {
   return userService.getReviewerById(userId).pipe(
     tap((user) => {
       if (user.id) {
-        userService.login(user);
+        userService.login2(user);
       }
       return !user.id ? router.navigate(['/login']) : true;
     })

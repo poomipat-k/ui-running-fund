@@ -1,6 +1,6 @@
 @import "../../styles.scss";
 
-.login {
+.container {
   width: 92.6rem;
   height: 56.3rem;
   border-radius: 8px;
@@ -8,29 +8,9 @@
   margin: auto;
   margin-top: 7rem;
   padding: 5rem;
-  &__label {
-    margin-right: 2rem;
-    font-size: 2.4rem;
-  }
+}
 
-  &__dropdown {
-    width: 50rem;
-    margin: auto;
-  }
-
-  &__dropdown-box {
-    height: 5rem;
-    width: 20rem;
-  }
-
-  &__dropdown-item {
-    font-size: 2.4rem;
-    background-color: white;
-  }
-
-  &__button-container {
-    margin: auto;
-    width: 50rem;
-    margin-top: 2rem;
-  }
+.form {
+  margin: auto;
+  text-align: center;
 }

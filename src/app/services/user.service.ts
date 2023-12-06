@@ -50,8 +50,17 @@ export class UserService {
     return this.loggedInUser;
   }
 
+  public login(email: string, password: string) {
+    return this.http
+      .post<User>(`${this.baseApiUrl}/auth/login`, {
+        email,
+        password,
+      })
+      .pipe(catchError(this.handleError));
+  }
+
   // TODO: refactor later
-  public login(user: User): void {
+  public login2(user: User): void {
     if (user) {
       this.loggedInUser = user;
       localStorage.setItem('token', String(user.id));

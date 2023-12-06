@@ -1,27 +1,5 @@
 <div class="login">
   <div class="login__dropdown">
-    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-      <label for="reviewer" class="login__label"
-        >เลือกผู้รีวิว เพื่อเข้าใช้งาน:</label
-      >
-      <select
-        name="reviewer"
-        id="reviewer"
-        class="login__dropdown-box"
-        formControlName="reviewer"
-      >
-        @for (review of reviewers; track review.id) {
-        <option class="login__dropdown-item" [value]="review.id">
-          {{ review.firstName }}
-        </option>
-        }
-      </select>
-
-      <div class="login__button-container">
-        <button type="submit" [disabled]="submitButtonDisabled">
-          เข้าสู่ระบบ
-        </button>
-      </div>
-    </form>
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()"></form>
   </div>
 </div>
