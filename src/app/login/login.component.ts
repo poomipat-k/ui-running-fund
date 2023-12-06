@@ -50,12 +50,13 @@ export class LoginComponent {
 
   onSubmit() {
     const formData = this.loginForm.value;
-    console.log('====formData', formData);
     this.subs.push(
       this.userService
         .login(formData?.email, formData?.password)
         .subscribe((result) => {
-          console.log('===result', result);
+          if (result.success) {
+            this.router.navigate(['/']);
+          }
         })
     );
   }

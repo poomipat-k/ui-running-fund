@@ -15,7 +15,6 @@ export const reviewerAuthGuard = (_next: ActivatedRouteSnapshot) => {
   }
   return userService.getCurrentUser().pipe(
     tap((user) => {
-      console.log('==user', user);
       if (user.id) {
         userService.setUser(user);
         if (user.userRole === 'reviewer') {

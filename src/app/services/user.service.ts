@@ -1,7 +1,8 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
-import { BehaviorSubject, Observable, catchError, throwError } from 'rxjs';
-import { environment } from 'src/environments/environment';
+import { BehaviorSubject, Observable, catchError, tap, throwError } from 'rxjs';
+
+import { environment } from '../../environments/environment';
 import { User } from '../shared/models/user';
 
 @Injectable({
@@ -23,26 +24,16 @@ export class UserService {
       .pipe(catchError(this.handleError));
   }
 
-  public getUserTokenIdFromStorage(): number {
-    let userId = localStorage.getItem('token');
-    if (!userId) {
-      return 0;
-    }
-    userId = JSON.parse(userId);
-    if (!userId) {
-      return 0;
-    }
-    const numId = +userId;
-    return numId || 0;
-  }
-
   public getCurrentInMemoryUser(): User {
     return this.loggedInUser;
   }
 
-  public login(email: string, password: string) {
+  public login(
+    email: string,
+    password: string
+  ): Observable<{ success: boolean }> {
     return this.http
-      .post<User>(`${this.baseApiUrl}/auth/login`, {
+      .post<{ success: boolean }>(`${this.baseApiUrl}/auth/login`, {
         email,
         password,
       })
@@ -54,19 +45,18 @@ export class UserService {
     this.loggedInUser = user;
   }
 
-  // TODO: refactor later
-  public login2(user: User): void {
-    if (user) {
-      this.loggedInUser = user;
-      localStorage.setItem('token', String(user.id));
-      this.currentUserSubject.next(user);
-    }
-  }
-
-  public logout(): void {
-    this.loggedInUser = new User();
-    localStorage.removeItem('token');
-    this.currentUserSubject.next(this.loggedInUser);
+  public logout(): Observable<{ success: boolean }> {
+    return this.http
+      .post<{ success: boolean }>(`${this.baseApiUrl}/auth/logout`, {})
+      .pipe(
+        tap((result) => {
+          if (result.success) {
+            this.loggedInUser = new User();
+            this.currentUserSubject.next(this.loggedInUser);
+          }
+        }),
+        catchError(this.handleError)
+      );
   }
   // End refactor
 
