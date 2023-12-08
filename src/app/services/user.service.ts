@@ -73,8 +73,6 @@ export class UserService {
       );
     }
     // Return an observable with a user-facing error message.
-    return throwError(
-      () => new Error('[User Service]: please try again later.')
-    );
+    return throwError(() => error);
   }
 }
