@@ -3,6 +3,7 @@ import { Injectable, inject } from '@angular/core';
 import { BehaviorSubject, Observable, catchError, tap, throwError } from 'rxjs';
 
 import { environment } from '../../environments/environment';
+import { CommonSuccessResponse } from '../shared/models/common-success-response';
 import { User } from '../shared/models/user';
 
 @Injectable({
@@ -20,7 +21,7 @@ export class UserService {
 
   public getCurrentUser(): Observable<User> {
     return this.http
-      .get<User>(`${this.baseApiUrl}/user/current`)
+      .get<User>(`${this.baseApiUrl}/auth/current`)
       .pipe(catchError(this.handleError));
   }
 
@@ -31,9 +32,9 @@ export class UserService {
   public login(
     email: string,
     password: string
-  ): Observable<{ success: boolean }> {
+  ): Observable<CommonSuccessResponse> {
     return this.http
-      .post<{ success: boolean }>(`${this.baseApiUrl}/auth/login`, {
+      .post<CommonSuccessResponse>(`${this.baseApiUrl}/auth/login`, {
         email,
         password,
       })
@@ -45,9 +46,9 @@ export class UserService {
     this.loggedInUser = user;
   }
 
-  public logout(): Observable<{ success: boolean }> {
+  public logout(): Observable<CommonSuccessResponse> {
     return this.http
-      .post<{ success: boolean }>(`${this.baseApiUrl}/auth/logout`, {})
+      .post<CommonSuccessResponse>(`${this.baseApiUrl}/auth/logout`, {})
       .pipe(
         tap((result) => {
           if (result.success) {
@@ -58,7 +59,12 @@ export class UserService {
         catchError(this.handleError)
       );
   }
-  // End refactor
+
+  public refreshAccessToken(): Observable<CommonSuccessResponse> {
+    return this.http
+      .post<CommonSuccessResponse>(`${this.baseApiUrl}/auth/refresh-token`, {})
+      .pipe(catchError(this.handleError));
+  }
 
   private handleError(error: HttpErrorResponse) {
     if (error.status === 0) {

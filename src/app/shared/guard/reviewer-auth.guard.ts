@@ -7,7 +7,6 @@ export const reviewerAuthGuard = (_next: ActivatedRouteSnapshot) => {
   const router = inject(Router);
   const userService = inject(UserService);
   const loggedInUser = userService.getCurrentInMemoryUser();
-  console.log('===loggedInUser', loggedInUser);
   if (loggedInUser?.id) {
     if (loggedInUser?.userRole === 'reviewer') {
       return of(true);
@@ -16,7 +15,6 @@ export const reviewerAuthGuard = (_next: ActivatedRouteSnapshot) => {
   }
   return userService.getCurrentUser().pipe(
     tap((user) => {
-      console.log('==tap user', user);
       if (user.id) {
         userService.setUser(user);
         if (user.userRole === 'reviewer') {
@@ -26,10 +24,7 @@ export const reviewerAuthGuard = (_next: ActivatedRouteSnapshot) => {
       return router.navigate(['/login']);
     }),
     catchError((err) => {
-      console.warn('[catchError] will redirect to login page in 1 seconds...');
-      setTimeout(() => {
-        router.navigate(['/login']);
-      }, 1000);
+      router.navigate(['/login']);
       return throwError(() => err);
     })
   );
