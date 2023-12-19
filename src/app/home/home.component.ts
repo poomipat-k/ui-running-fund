@@ -52,8 +52,8 @@ export class HomeComponent implements OnInit, OnDestroy {
       name: 'ชื่อโครงการ',
     },
     {
-      name: 'ดาวน์โหลด',
-      class: 'width-92',
+      name: 'ดาวน์โหลดเอกสาร',
+      class: 'width-176',
       type: ColumnTypeEnum.DownloadIcon,
       compact: true,
     },

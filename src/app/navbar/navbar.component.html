@@ -19,7 +19,9 @@
     </div>
 
     <ul class="navbar__user">
-      <li>{{ currentUser.firstName + " " + currentUser.lastName }}</li>
+      <li>
+        {{ currentUser.firstName + " " + currentUser.lastName }}
+      </li>
       <div class="vertical-line"></div>
       <a (click)="onLogout()" class="navbar__logout" draggable="false">
         <li>ออกจากระบบ</li>
