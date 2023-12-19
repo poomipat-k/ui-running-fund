@@ -9,11 +9,10 @@
 
   &__horizontal-line {
     border-top: 1px solid #667085;
-    padding-bottom: 1.6rem;
+    padding-bottom: 2.4rem;
   }
 
   &__container {
-    margin-top: 1.6rem;
     height: 11.2rem;
     display: flex;
     justify-content: space-between;
@@ -23,6 +22,10 @@
     display: flex;
     align-items: center;
     height: 7rem;
+
+    @media only screen and (max-width: $bp1) {
+      height: 5.7rem;
+    }
   }
 
   &__group-right {
@@ -51,10 +54,16 @@
   &__logo {
     &--1 {
       height: 6.5rem;
+      @media only screen and (max-width: $bp1) {
+        height: 5.3rem;
+      }
     }
 
     &--2 {
       height: 7rem;
+      @media only screen and (max-width: $bp1) {
+        height: 5.7rem;
+      }
     }
   }
 
@@ -80,8 +89,12 @@
   font-weight: 600;
 }
 
-.margin-left-14 {
+.margin-left-footer-1 {
   margin-left: 1.4rem;
+
+  @media only screen and (max-width: $bp1) {
+    margin-left: 1.14rem;
+  }
 }
 
 .margin-left-32 {
