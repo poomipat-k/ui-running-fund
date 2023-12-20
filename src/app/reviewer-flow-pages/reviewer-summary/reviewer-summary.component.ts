@@ -24,7 +24,7 @@ export class ReviewerSummaryComponent {
     },
     {
       name: 'คะแนน',
-      class: 'width-176',
+      class: 'col-status',
     },
   ];
 

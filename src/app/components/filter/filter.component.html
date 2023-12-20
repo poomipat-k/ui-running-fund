@@ -1,5 +1,5 @@
 <div class="filter" (click)="toggleFilter()">
-  <p>{{ filterText }}</p>
+  <p class="mgr-8">{{ filterText }}</p>
   <img src="/assets/sliders_icon.svg" alt="row sorting icon" />
   <div [ngClass]="{ filter__dropdown: true, hide: !showOptions }">
     @for (option of filterOptions; track option.id) {

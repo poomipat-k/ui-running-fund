@@ -40,32 +40,33 @@ export class HomeComponent implements OnInit, OnDestroy {
   protected columns: TableColumn[] = [
     {
       name: 'รหัสโครงการ',
-      class: 'width-150',
+      class: 'col-projectCode',
       bold: true,
     },
     {
       name: 'วันที่สร้าง',
       format: 'datetime',
-      class: 'width-215',
+      class: 'col-applyDate',
     },
     {
       name: 'ชื่อโครงการ',
+      class: 'col-projectName',
     },
     {
       name: 'ดาวน์โหลดเอกสาร',
-      class: 'width-176',
+      class: 'col-download',
       type: ColumnTypeEnum.DownloadIcon,
       compact: true,
     },
     {
       name: 'สถานะการกลั่นกรอง',
-      class: 'width-200',
+      class: 'col-status',
       type: ColumnTypeEnum.Badge,
     },
     {
       name: 'วันที่กลั่นกรองเสร็จ',
       format: 'datetime',
-      class: 'width-215',
+      class: 'col-reviewDate',
     },
   ];
 
