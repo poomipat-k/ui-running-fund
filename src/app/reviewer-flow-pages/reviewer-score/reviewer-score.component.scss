@@ -4,12 +4,6 @@
   display: flex;
 }
 
-.sticky {
-  position: sticky;
-  top: 10rem;
-  align-self: flex-start;
-}
-
 .main {
   flex: 1;
 
@@ -111,6 +105,8 @@
 .header {
   flex-basis: 28.4rem;
   display: flex;
+  margin-right: 1.6rem;
+  transform: translateX(-8px);
 
   &__icon {
     height: 3.6rem;
@@ -141,6 +137,7 @@
   position: sticky;
   margin-top: 6px;
   top: 9rem;
+  transform: translateX(-4.9rem);
 
   &__header {
     font-family: $custom-font-looped;
