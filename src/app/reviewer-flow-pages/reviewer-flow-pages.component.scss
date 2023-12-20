@@ -8,29 +8,46 @@
 
   border: 1px solid red;
 
+  padding-top: 2.4rem;
+
   margin-top: 4.7rem;
   margin-right: 5rem;
   margin-left: 5rem;
+
   @media only screen and (min-width: $bp1) {
+    margin-top: 8.8rem;
     margin-left: $navbar-padding;
     margin-right: $navbar-padding;
-    margin-top: 8.8rem;
   }
 
   &--1 {
-    padding-top: 2.4rem;
     padding-right: 6.8rem;
     padding-bottom: 5rem;
     padding-left: 7.2rem;
 
     margin-bottom: 3.7rem;
     @media only screen and (min-width: $bp1) {
-      padding-top: 2.4rem;
       padding-right: 7.7rem;
       padding-bottom: 5rem;
       padding-left: 7.9rem;
 
       margin-bottom: 4.7rem;
+    }
+  }
+
+  &--2 {
+    padding-right: 3.5rem;
+    padding-bottom: 9rem;
+    padding-left: 7.4rem;
+
+    margin-bottom: 1.4rem;
+    @media only screen and (min-width: $bp1) {
+      padding-top: 3.5rem;
+      padding-right: 4.6rem;
+      padding-bottom: 7.3rem;
+      padding-left: 7.9rem;
+
+      margin-bottom: 3.2rem;
     }
   }
 }
