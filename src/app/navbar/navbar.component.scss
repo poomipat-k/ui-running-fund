@@ -14,8 +14,6 @@
     display: flex;
     width: 100%;
     justify-content: space-between;
-    padding-left: $content-padding;
-    padding-right: $content-padding;
     height: 4.8rem;
     font-size: 1.8rem;
     line-height: 2.97rem;
@@ -24,6 +22,14 @@
     color: #ffffff;
     position: fixed;
     overflow: hidden;
+
+    padding-left: $navbar-padding-s;
+    padding-right: $navbar-padding-s;
+
+    @media only screen and (min-width: $bp1) {
+      padding-left: $navbar-padding;
+      padding-right: $navbar-padding;
+    }
   }
 
   &__left-group {

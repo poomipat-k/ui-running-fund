@@ -1,14 +1,17 @@
 $navbar-height: 7.2rem;
-$content-padding: 12.2rem;
+$footer-padding: 12.2rem;
 $footer-height: 20.1rem;
+
+$navbar-padding: 12.2rem;
+$navbar-padding-s: 10.5rem;
 
 .nav-absolute-height {
   padding-top: $navbar-height;
 }
 
-.content-space-width {
-  padding-left: $content-padding;
-  padding-right: $content-padding;
+.footer-padding {
+  padding-left: $footer-padding;
+  padding-right: $footer-padding;
 }
 
 .min-content-hight {

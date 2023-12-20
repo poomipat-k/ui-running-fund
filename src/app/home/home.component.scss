@@ -1,7 +1,17 @@
 @import "../../styles.scss";
+@import "../app.component.scss";
 
 .dashboard {
   font-family: $custom-font;
+
+  padding-left: $navbar-padding-s;
+  padding-right: $navbar-padding-s;
+
+  @media only screen and (min-width: $bp1) {
+    padding-left: $navbar-padding;
+    padding-right: $navbar-padding;
+  }
+
   &__container {
     width: 100%;
     margin-top: 5.9rem;
@@ -11,15 +21,8 @@
     &-container {
       display: flex;
       align-items: center;
-
-      // @media only screen and (orientation: portrait) {
-      //   border: 1px solid green;
-      // }
-
-      // @media only screen and (orientation: landscape) {
-      //   border: 1px solid blue;
-      // }
     }
+
     &-text {
       font-weight: 600;
       font-size: 2rem;
