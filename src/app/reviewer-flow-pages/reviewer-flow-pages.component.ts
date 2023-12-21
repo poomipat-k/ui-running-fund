@@ -105,8 +105,6 @@ export class ReviewerFlowPagesComponent implements OnInit, OnDestroy {
     this.themeService.changeBackgroundColor(BackgroundColor.gray);
     this.initForm();
     this.prepareData();
-
-    this.pageIndex += 3;
   }
 
   ngOnDestroy(): void {
