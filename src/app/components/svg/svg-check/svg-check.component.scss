@@ -1,32 +1,26 @@
 .size {
-  &--12 {
+  &--dashboard {
     width: 1.2rem;
     height: 1.2rem;
   }
 
-  &--48 {
-    width: 4.8rem;
-    height: 4.8rem;
+  &--reviewSuccess {
+    width: 3.26rem;
   }
 
-  &--60 {
-    width: 6rem;
-    height: 6rem;
+  &--reviewSuccessPopup {
+    width: 3.26rem;
   }
 }
 
 .color {
   &--green {
     stroke: #12b76a;
+    fill: #12b76a;
   }
 
   &--white {
     stroke: #fff;
-  }
-}
-
-.stroke-width {
-  &--1 {
-    stroke-width: 1;
+    fill: #fff;
   }
 }

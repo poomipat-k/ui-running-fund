@@ -9,6 +9,6 @@ import { Component, Input } from '@angular/core';
   styleUrl: './svg-check.component.scss',
 })
 export class SvgCheckComponent {
-  @Input() svgClass = 'size--12';
+  @Input() svgClass = 'size--dashboard';
   @Input() pathClass = 'color--green';
 }
