@@ -164,6 +164,23 @@ $cell-height: 7.2rem;
       width: 21rem;
     }
   }
+
+  &-summaryTopic {
+    font-size: 1.6rem;
+    @media only screen and (min-width: $bp1) {
+      font-size: 1.8rem;
+    }
+  }
+
+  &-summaryScore {
+    width: 17.8rem;
+    padding: 1.2rem 1.6rem;
+    font-size: 1.6rem;
+    @media only screen and (min-width: $bp1) {
+      padding: 1.2rem 2.4rem;
+      font-size: 1.8rem;
+    }
+  }
 }
 
 .margin-top-24 {

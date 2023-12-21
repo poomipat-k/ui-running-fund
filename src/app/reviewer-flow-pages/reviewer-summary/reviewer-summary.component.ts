@@ -21,10 +21,11 @@ export class ReviewerSummaryComponent {
   protected columns: TableColumn[] = [
     {
       name: 'หัวข้อ',
+      class: 'col-summaryTopic',
     },
     {
       name: 'คะแนน',
-      class: 'col-status',
+      class: 'col-summaryScore',
     },
   ];
 

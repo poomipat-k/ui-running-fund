@@ -10,6 +10,10 @@
 
     &--2 {
       flex: 1;
+      font-size: 1.6rem;
+      @media only screen and (min-width: $bp1) {
+        font-size: 1.8rem;
+      }
     }
   }
 }

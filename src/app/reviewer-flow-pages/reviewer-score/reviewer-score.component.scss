@@ -8,6 +8,7 @@
   flex: 1;
 
   font-size: 1.6rem;
+  line-height: normal;
   @media only screen and (min-width: $bp1) {
     font-size: 1.8rem;
   }
@@ -25,7 +26,6 @@
     &::after {
       content: "*";
       font-family: $custom-font-looped;
-      // font-size: 1.8rem;
       font-style: normal;
       font-weight: 500;
       line-height: normal;
