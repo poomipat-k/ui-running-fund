@@ -7,12 +7,16 @@
 .main {
   flex: 1;
 
+  font-size: 1.6rem;
+  @media only screen and (min-width: $bp1) {
+    font-size: 1.8rem;
+  }
+
   &__group {
     padding: 1rem 0px 1rem 2rem;
     background-color: #f2edeb;
 
     font-family: $custom-font-looped;
-    font-size: 1.8rem;
     font-style: normal;
     font-weight: 500;
     line-height: normal;
@@ -21,7 +25,7 @@
     &::after {
       content: "*";
       font-family: $custom-font-looped;
-      font-size: 1.8rem;
+      // font-size: 1.8rem;
       font-style: normal;
       font-weight: 500;
       line-height: normal;
@@ -34,10 +38,13 @@
   padding: 2rem 2rem 3rem 5rem;
   background-color: white;
   border-bottom: 1px dashed #cdc1be;
+  font-size: 1.6rem;
+  @media only screen and (min-width: $bp1) {
+    font-size: 1.8rem;
+  }
 
   &__text {
     font-family: $custom-font-looped;
-    font-size: 1.8rem;
     font-style: normal;
     font-weight: 500;
     line-height: normal;
@@ -46,7 +53,6 @@
     &::after {
       content: "*";
       font-family: $custom-font-looped;
-      font-size: 1.8rem;
       font-style: normal;
       font-weight: 500;
       line-height: normal;

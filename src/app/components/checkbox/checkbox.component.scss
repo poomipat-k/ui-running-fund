@@ -62,6 +62,16 @@
   }
 }
 
+.font-size {
+  &-small {
+    font-size: 1.6rem;
+
+    @media only screen and (min-width: $bp1) {
+      font-size: 1.8rem;
+    }
+  }
+}
+
 input[type="checkbox"] {
   -webkit-appearance: none;
   appearance: none;
