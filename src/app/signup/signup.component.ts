@@ -1,12 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, inject } from '@angular/core';
-import {
-  FormControl,
-  FormGroup,
-  ReactiveFormsModule,
-  Validators,
-} from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Subscription, catchError, throwError } from 'rxjs';
 import { ThemeService } from '../services/theme.service';
@@ -14,14 +9,14 @@ import { UserService } from '../services/user.service';
 import { BackgroundColor } from '../shared/enums/background-color';
 
 @Component({
-  selector: 'app-login',
+  selector: 'app-signup',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
-  templateUrl: './login.component.html',
-  styleUrl: './login.component.scss',
+  imports: [CommonModule],
+  templateUrl: './signup.component.html',
+  styleUrl: './signup.component.scss',
 })
-export class LoginComponent {
-  protected loginForm: FormGroup;
+export class SignupComponent {
+  protected signupForm: FormGroup;
 
   private userService: UserService = inject(UserService);
   private router: Router = inject(Router);
@@ -35,6 +30,10 @@ export class LoginComponent {
   protected everSubmitted = false;
   protected apiError = false;
 
+  get submitButtonDisabled(): boolean {
+    return false;
+  }
+
   ngOnInit(): void {
     this.themeService.changeBackgroundColor(BackgroundColor.white);
     this.initForm();
@@ -45,7 +44,7 @@ export class LoginComponent {
   }
 
   private initForm(): void {
-    this.loginForm = new FormGroup({
+    this.signupForm = new FormGroup({
       email: new FormControl(null, [Validators.required, Validators.email]),
       password: new FormControl(null, [
         Validators.required,
@@ -71,10 +70,10 @@ export class LoginComponent {
   }
 
   onSubmit() {
-    this.loginForm.markAllAsTouched();
+    this.signupForm.markAllAsTouched();
     this.everSubmitted = true;
-    const formData = this.loginForm.value;
-    if (this.loginForm.valid) {
+    const formData = this.signupForm.value;
+    if (this.signupForm.valid) {
       this.subs.push(
         this.userService
           .login(formData?.email, formData?.password)

@@ -4,6 +4,7 @@ import { LoginComponent } from './login/login.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { ReviewerFlowPagesComponent } from './reviewer-flow-pages/reviewer-flow-pages.component';
 import { reviewerAuthGuard } from './shared/guard/reviewer-auth.guard';
+import { SignupComponent } from './signup/signup.component';
 
 const routeConfig: Routes = [
   {
@@ -21,6 +22,11 @@ const routeConfig: Routes = [
     path: 'login',
     component: LoginComponent,
     title: 'Login',
+  },
+  {
+    path: 'signup',
+    component: SignupComponent,
+    title: 'Signup',
   },
   {
     path: '**',

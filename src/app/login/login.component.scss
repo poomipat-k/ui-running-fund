@@ -42,6 +42,20 @@
     line-height: normal;
     color: #667085;
   }
+
+  &__password {
+    &-container {
+      position: relative;
+    }
+
+    &-icon {
+      position: absolute;
+      top: 50%;
+      right: 1.6rem;
+      transform: translateY(-50%);
+      cursor: pointer;
+    }
+  }
 }
 
 .main {
@@ -60,6 +74,47 @@
     line-height: normal;
     margin-bottom: 2.4rem;
     text-align: center;
+  }
+}
+
+.form-helper {
+  height: 2.2rem;
+  width: 100%;
+  margin-top: 8px;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  &__error-container {
+    display: flex;
+    align-items: center;
+  }
+
+  &__error-message {
+    margin-left: 8px;
+    color: #d92d20;
+    font-family: $custom-font;
+    font-size: 1.2rem;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 1.8rem;
+  }
+
+  &__forgot-password {
+    justify-self: flex-end;
+    flex: 1;
+    text-align: right;
+  }
+
+  &__form-helper__forgot-password-link {
+    color: #344054;
+    font-family: $custom-font;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    text-decoration-line: underline;
   }
 }
 
@@ -89,6 +144,30 @@
 
   &:active {
     background-color: #ffa167;
+  }
+}
+
+.sign-up {
+  display: flex;
+  justify-content: center;
+
+  &__text {
+    color: #344054;
+    font-family: $custom-font;
+    font-size: 1.6rem;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+  }
+
+  &__link {
+    margin-left: 4px;
+    color: #fb6514;
+    font-family: $custom-font;
+    font-size: 1.6rem;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
   }
 }
 

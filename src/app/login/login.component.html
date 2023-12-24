@@ -14,23 +14,57 @@
             name="email"
             placeholder="กรอกที่อยู่อีเมล"
             class="input__text"
+            (keyup)="onFieldValueChanged()"
           />
         </div>
 
         <div>
           <label class="input__label">รหัสผ่าน*</label>
-          <input
-            name="password"
-            type="password"
-            formControlName="password"
-            [autocomplete]="true"
-            placeholder="กรอกรหัสผ่าน"
-            class="input__text"
-          />
+          <div class="input__password-container">
+            <input
+              name="password"
+              [type]="passwordType"
+              formControlName="password"
+              [autocomplete]="true"
+              placeholder="กรอกรหัสผ่าน"
+              class="input__text"
+              (keyup)="onFieldValueChanged()"
+            />
+            <img
+              [src]="passwordIconUrl"
+              alt="password icon"
+              class="input__password-icon"
+              (click)="onTogglePassword()"
+            />
+          </div>
+        </div>
+
+        <div class="form-helper">
+          @if ((!loginForm.valid || apiError) && loginForm.touched &&
+          everSubmitted) {
+          <div class="form-helper__error-container">
+            <img src="/assets/error_icon_login.svg" alt="error icon" />
+            <p class="form-helper__error-message">
+              เกิดข้อผิดพลาด รบกวนตรวจสอบอีเมลหรือรหัสผ่านอีกครั้ง
+            </p>
+          </div>
+          }
+          <div class="form-helper__forgot-password">
+            <a
+              href="/forgot-password"
+              class="form-helper__form-helper__forgot-password-link"
+              >ลืมรหัสผ่าน</a
+            >
+          </div>
         </div>
 
         <div><button class="button">เข้าสู่ระบบ</button></div>
       </form>
+
+      <div class="sign-up">
+        <p class="sign-up__text">ยังไม่ได้ลงทะเบียน ?</p>
+        <a href="/signup" class="sign-up__link">ลงทะเบียน</a>
+      </div>
     </div>
   </div>
 </div>

@@ -1,0 +1,15 @@
+@import "../../styles.scss";
+
+.container {
+  display: flex;
+  width: 90.9rem;
+  height: 64.8rem;
+  border-radius: 1.6rem;
+  box-shadow: 0px 0px 16px 0px rgba(0, 0, 0, 0.15);
+
+  margin: auto;
+  margin-top: 10rem;
+  margin-bottom: 10rem;
+
+  padding: 5.8rem 11.2rem 5.8rem 12.1rem;
+}
