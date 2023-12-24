@@ -1,16 +1,99 @@
 @import "../../styles.scss";
 
 .container {
+  display: flex;
   width: 92.6rem;
   height: 56.3rem;
-  border-radius: 8px;
-  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+  border-radius: 1.6rem;
+  box-shadow: 0px 0px 16px 0px rgba(0, 0, 0, 0.15);
   margin: auto;
-  margin-top: 7rem;
-  padding: 5rem;
+  margin-top: 11.5rem;
+  margin-bottom: 8.7rem;
 }
 
-.form {
-  margin: auto;
+.banner {
+  &-container {
+    flex-basis: 31.1rem;
+  }
+}
+
+.input {
+  &__label {
+    color: #344054;
+    font-family: $custom-font;
+    font-size: 1.4rem;
+    font-weight: 400;
+    line-height: normal;
+    margin-bottom: 3px;
+    display: block;
+  }
+
+  &__text {
+    outline: none;
+    padding: 1.5rem 1.6rem;
+    width: 100%;
+
+    border-radius: 8px;
+    border: 1px solid #667085;
+
+    font-size: 1.6rem;
+    font-family: $custom-font;
+    font-weight: 400;
+    line-height: normal;
+    color: #667085;
+  }
+}
+
+.main {
+  flex: 1;
+
+  &__card {
+    width: 41.5rem;
+    margin: auto;
+    margin-top: 4.3rem;
+  }
+
+  &__header {
+    font-family: $custom-font;
+    font-size: 3.2rem;
+    font-weight: 700;
+    line-height: normal;
+    margin-bottom: 2.4rem;
+    text-align: center;
+  }
+}
+
+.button {
+  padding: 1.5rem 1.8rem;
+  border-radius: 8px;
+  margin: 2.4rem 0;
+
+  font-family: $custom-font;
+  font-size: 1.8rem;
+  font-weight: 600;
+  line-height: normal;
   text-align: center;
+  color: #344054;
+  width: 100%;
+
+  background-color: #feb273;
+  box-shadow: 0px 2px 8px 0px rgba(126, 36, 16, 0.25);
+
+  border: none;
+  cursor: pointer;
+
+  &:hover {
+    background-color: #ffbe88;
+    color: #424f64;
+  }
+
+  &:active {
+    background-color: #ffa167;
+  }
+}
+
+.mgb {
+  &-24 {
+    margin-bottom: 2.4rem;
+  }
 }

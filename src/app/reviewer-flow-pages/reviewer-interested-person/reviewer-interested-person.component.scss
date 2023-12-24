@@ -41,9 +41,9 @@
 }
 
 .textbox {
+  outline: none;
   border: none;
   border-bottom: 0.5px solid rgba(28, 27, 31, 0.97);
-  outline: none;
 
   font-family: $custom-font-looped;
   font-weight: 400;

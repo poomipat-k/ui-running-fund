@@ -1,18 +1,36 @@
 <div class="container">
-  <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="form">
-    <div>
-      <label class="bold-text">ที่อยู่อีเมล</label>
-      <input type="text" formControlName="email" style="padding: 1rem" />
+  <div class="banner-container">
+    <img src="/assets/login_banner.png" alt="adult running" />
+  </div>
+  <div class="main">
+    <div class="main__card">
+      <h1 class="main__header">เข้าสู่ระบบ</h1>
+      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="form">
+        <div class="mgb-24">
+          <label class="input__label">ที่อยู่อีเมล*</label>
+          <input
+            type="text"
+            formControlName="email"
+            name="email"
+            placeholder="กรอกที่อยู่อีเมล"
+            class="input__text"
+          />
+        </div>
+
+        <div>
+          <label class="input__label">รหัสผ่าน*</label>
+          <input
+            name="password"
+            type="password"
+            formControlName="password"
+            [autocomplete]="true"
+            placeholder="กรอกรหัสผ่าน"
+            class="input__text"
+          />
+        </div>
+
+        <div><button class="button">เข้าสู่ระบบ</button></div>
+      </form>
     </div>
-    <div style="margin-top: 2rem">
-      <label class="bold-text">รหัสผ่าน</label>
-      <input
-        type="password"
-        formControlName="password"
-        style="padding: 1rem"
-        [autocomplete]="true"
-      />
-    </div>
-    <div style="margin-top: 2rem"><button>ล็อกอิน</button></div>
-  </form>
+  </div>
 </div>
