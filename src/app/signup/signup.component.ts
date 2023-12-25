@@ -1,9 +1,13 @@
 import { CommonModule } from '@angular/common';
-import { HttpErrorResponse } from '@angular/common/http';
 import { Component, inject } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
-import { Subscription, catchError, throwError } from 'rxjs';
+import {
+  FormControl,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
+import { Router, RouterModule } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { ThemeService } from '../services/theme.service';
 import { UserService } from '../services/user.service';
 import { BackgroundColor } from '../shared/enums/background-color';
@@ -11,7 +15,7 @@ import { BackgroundColor } from '../shared/enums/background-color';
 @Component({
   selector: 'app-signup',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, ReactiveFormsModule, RouterModule],
   templateUrl: './signup.component.html',
   styleUrl: './signup.component.scss',
 })
@@ -26,13 +30,11 @@ export class SignupComponent {
 
   protected passwordIconUrl = '/assets/eye_open.svg';
   protected passwordType = 'password';
+  protected confirmPasswordIconUrl = '/assets/eye_open.svg';
+  protected confirmPasswordType = 'password';
 
   protected everSubmitted = false;
   protected apiError = false;
-
-  get submitButtonDisabled(): boolean {
-    return false;
-  }
 
   ngOnInit(): void {
     this.themeService.changeBackgroundColor(BackgroundColor.white);
@@ -46,10 +48,20 @@ export class SignupComponent {
   private initForm(): void {
     this.signupForm = new FormGroup({
       email: new FormControl(null, [Validators.required, Validators.email]),
+      firstName: new FormControl(null, [Validators.required]),
+      lastName: new FormControl(null, [Validators.required]),
       password: new FormControl(null, [
         Validators.required,
         Validators.minLength(8),
+        Validators.maxLength(60),
       ]),
+      confirmPassword: new FormControl(null, [
+        Validators.required,
+        Validators.minLength(8),
+        Validators.maxLength(60),
+      ]),
+      termsAndConditions: new FormControl(false, [Validators.requiredTrue]),
+      privacy: new FormControl(false, [Validators.requiredTrue]),
     });
   }
 
@@ -63,33 +75,50 @@ export class SignupComponent {
     }
   }
 
+  onToggleConfirmPassword(): void {
+    if (this.confirmPasswordType === 'password') {
+      this.confirmPasswordType = 'text';
+      this.confirmPasswordIconUrl = '/assets/eye_closed.svg';
+    } else {
+      this.confirmPasswordType = 'password';
+      this.confirmPasswordIconUrl = '/assets/eye_open.svg';
+    }
+  }
+
   onFieldValueChanged() {
     if (this.apiError) {
       this.apiError = false;
     }
   }
 
+  onPopupLinkClicked(event: MouseEvent) {
+    // Prevent toggle checkbox when click to open modal links
+    event.preventDefault();
+  }
+
   onSubmit() {
-    this.signupForm.markAllAsTouched();
-    this.everSubmitted = true;
-    const formData = this.signupForm.value;
-    if (this.signupForm.valid) {
-      this.subs.push(
-        this.userService
-          .login(formData?.email, formData?.password)
-          .pipe(
-            catchError((err: HttpErrorResponse) => {
-              this.apiError = true;
-              return throwError(() => err);
-            })
-          )
-          .subscribe((result) => {
-            if (result.success) {
-              this.apiError = false;
-              this.router.navigate(['/']);
-            }
-          })
-      );
-    }
+    console.log('===submit signup');
+    console.log(this.signupForm);
+    // this.signupForm.markAllAsTouched();
+    // this.everSubmitted = true;
+    // const formData = this.signupForm.value;
+    // if (this.signupForm.valid) {
+    //   this.subs.push(
+    //     this.userService
+    //       .login(formData?.email, formData?.password)
+    //       .pipe(
+    //         catchError((err: HttpErrorResponse) => {
+    //           this.apiError = true;
+    //           return throwError(() => err);
+    //         })
+    //       )
+    //       .subscribe((result) => {
+    //         if (result.success) {
+    //           this.apiError = false;
+    //           this.router.navigate(['/']);
+    //         }
+    //       })
+    //   );
+    // }
   }
 }

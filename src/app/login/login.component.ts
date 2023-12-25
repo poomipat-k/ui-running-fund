@@ -7,7 +7,7 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { Subscription, catchError, throwError } from 'rxjs';
 import { ThemeService } from '../services/theme.service';
 import { UserService } from '../services/user.service';
@@ -16,7 +16,7 @@ import { BackgroundColor } from '../shared/enums/background-color';
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, RouterModule],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss',
 })

@@ -1,1 +1,160 @@
-<div class="container"></div>
+<div class="container">
+  <h1 class="header">ลงทะเบียน</h1>
+
+  <form [formGroup]="signupForm" (ngSubmit)="onSubmit()" class="form">
+    <div class="container__form">
+      <div class="input__box">
+        <label class="input__label">ที่อยู่อีเมล*</label>
+        <input
+          type="text"
+          formControlName="email"
+          name="email"
+          placeholder="กรอกที่อยู่อีเมล"
+          class="input__text"
+        />
+      </div>
+
+      <div class="input__box">
+        <label class="input__label">ชื่อจริง*</label>
+        <input
+          type="text"
+          formControlName="firstName"
+          name="firstName"
+          placeholder="กรอกชื่อจริง"
+          class="input__text"
+        />
+      </div>
+
+      <div class="input__box">
+        <label class="input__label">นามสกุล*</label>
+        <input
+          type="text"
+          formControlName="lastName"
+          name="lastName"
+          placeholder="กรอกนามสกุล"
+          class="input__text"
+        />
+      </div>
+
+      <div class="input__box">
+        <label class="input__label">รหัสผ่าน*</label>
+        <div class="input__password-container">
+          <input
+            name="password"
+            [type]="passwordType"
+            formControlName="password"
+            [autocomplete]="true"
+            placeholder="กรอกรหัสผ่าน"
+            class="input__text"
+          />
+          <img
+            [src]="passwordIconUrl"
+            alt="password icon"
+            class="input__password-icon"
+            (click)="onTogglePassword()"
+          />
+        </div>
+      </div>
+
+      <div class="input__box">
+        <label class="input__label">ยืนยันรหัสผ่าน*</label>
+        <div class="input__password-container">
+          <input
+            name="confirmPassword"
+            [type]="confirmPasswordType"
+            formControlName="confirmPassword"
+            [autocomplete]="true"
+            placeholder="ยืนยันรหัสผ่าน"
+            class="input__text"
+          />
+          <img
+            [src]="confirmPasswordIconUrl"
+            alt="password icon"
+            class="input__password-icon"
+            (click)="onToggleConfirmPassword()"
+          />
+        </div>
+      </div>
+
+      <!-- Checkboxes -->
+      <div class="mgt-24">
+        <label class="checkbox__label">
+          <input
+            type="checkbox"
+            class="checkbox__box"
+            formControlName="termsAndConditions"
+          />
+          <div>
+            <span>ฉันได้อ่านและยอมรับ</span>
+            <span
+              class="checkbox__label--popupLink"
+              (click)="onPopupLinkClicked($event)"
+            >
+              ข้อตกลงและเงื่อนไขการใช้งาน</span
+            >
+          </div>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="14"
+            height="15"
+            viewBox="0 0 14 15"
+            fill="none"
+            class="checkbox__mark"
+          >
+            <path
+              d="M11.6666 4L5.24992 10.4167L2.33325 7.5"
+              stroke="#344054"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="checkbox__path"
+            />
+          </svg>
+        </label>
+
+        <label class="checkbox__label">
+          <input
+            type="checkbox"
+            class="checkbox__box"
+            formControlName="privacy"
+          />
+          <div>
+            <span>ฉันได้อ่านและยอมรับ</span>
+            <span
+              class="checkbox__label--popupLink"
+              (click)="onPopupLinkClicked($event)"
+            >
+              นโยบายคุ้มครองความเป็นส่วนตัว
+            </span>
+          </div>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="14"
+            height="15"
+            viewBox="0 0 14 15"
+            fill="none"
+            class="checkbox__mark"
+          >
+            <path
+              d="M11.6666 4L5.24992 10.4167L2.33325 7.5"
+              stroke="#344054"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="checkbox__path"
+            />
+          </svg>
+        </label>
+      </div>
+    </div>
+    <!-- button -->
+    <div>
+      <button class="button">ลงทะเบียน</button>
+    </div>
+  </form>
+  <!-- link to login page -->
+  <div class="login">
+    <p class="login__text">มีบัญชีอยู่แล้ว ?</p>
+    <a routerLink="/login" class="login__link">เข้าสู่ระบบ</a>
+  </div>
+</div>
