@@ -1,9 +1,11 @@
+@import "../../../styles.scss";
+
 .container {
   width: 50rem;
   height: 50rem;
   overflow-y: scroll;
   position: fixed;
-  z-index: 6;
+  z-index: $modal-z;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
@@ -17,7 +19,7 @@
   width: 100vw;
   height: 100vh;
   background-color: rgba(0, 0, 0, 0.4);
-  z-index: 5;
+  z-index: $modal-backdrop-z;
   position: fixed;
   top: 0;
   left: 0;
