@@ -88,7 +88,7 @@
             <span>ฉันได้อ่านและยอมรับ</span>
             <span
               class="checkbox__label--popupLink"
-              (click)="onPopupLinkClicked($event)"
+              (click)="onTACLinkClicked($event)"
             >
               ข้อตกลงและเงื่อนไขการใช้งาน</span
             >
@@ -122,7 +122,7 @@
             <span>ฉันได้อ่านและยอมรับ</span>
             <span
               class="checkbox__label--popupLink"
-              (click)="onPopupLinkClicked($event)"
+              (click)="onPrivacyLinkClicked($event)"
             >
               นโยบายคุ้มครองความเป็นส่วนตัว
             </span>
@@ -158,3 +158,10 @@
     <a routerLink="/login" class="login__link">เข้าสู่ระบบ</a>
   </div>
 </div>
+
+<app-com-modal #tacModal>
+  <div>Test T&C</div>
+</app-com-modal>
+<app-com-modal #privacyModal>
+  <div>Test Privacy</div>
+</app-com-modal>

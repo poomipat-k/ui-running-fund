@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject } from '@angular/core';
+import { Component, ViewChild, inject } from '@angular/core';
 import {
   FormControl,
   FormGroup,
@@ -8,6 +8,7 @@ import {
 } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { ModalComponent } from '../components/modal/modal.component';
 import { ThemeService } from '../services/theme.service';
 import { UserService } from '../services/user.service';
 import { BackgroundColor } from '../shared/enums/background-color';
@@ -15,11 +16,14 @@ import { BackgroundColor } from '../shared/enums/background-color';
 @Component({
   selector: 'app-signup',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, RouterModule],
+  imports: [CommonModule, ReactiveFormsModule, RouterModule, ModalComponent],
   templateUrl: './signup.component.html',
   styleUrl: './signup.component.scss',
 })
 export class SignupComponent {
+  @ViewChild('tacModal') tacModal: ModalComponent;
+  @ViewChild('privacyModal') privacyModal: ModalComponent;
+
   protected signupForm: FormGroup;
 
   private userService: UserService = inject(UserService);
@@ -91,9 +95,18 @@ export class SignupComponent {
     }
   }
 
-  onPopupLinkClicked(event: MouseEvent) {
+  onTACLinkClicked(event: MouseEvent) {
     // Prevent toggle checkbox when click to open modal links
     event.preventDefault();
+    console.log('===TAC', this.tacModal);
+    this.tacModal.showModal();
+  }
+
+  onPrivacyLinkClicked(event: MouseEvent) {
+    // Prevent toggle checkbox when click to open modal links
+    event.preventDefault();
+    console.log('===Privacy', this.privacyModal);
+    this.privacyModal.showModal();
   }
 
   onSubmit() {
