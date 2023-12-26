@@ -1,4 +1,5 @@
 import { CommonModule } from '@angular/common';
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, ViewChild, inject } from '@angular/core';
 import {
   FormControl,
@@ -7,7 +8,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { Subscription, catchError, throwError } from 'rxjs';
 import { ModalComponent } from '../components/modal/modal.component';
 import { ThemeService } from '../services/theme.service';
 import { UserService } from '../services/user.service';
@@ -24,7 +25,7 @@ export class SignupComponent {
   @ViewChild('tacModal') tacModal: ModalComponent;
   @ViewChild('privacyModal') privacyModal: ModalComponent;
 
-  protected signupForm: FormGroup;
+  protected form: FormGroup;
 
   private userService: UserService = inject(UserService);
   private router: Router = inject(Router);
@@ -37,8 +38,30 @@ export class SignupComponent {
   protected confirmPasswordIconUrl = '/assets/eye_open.svg';
   protected confirmPasswordType = 'password';
 
-  protected everSubmitted = false;
+  protected hadSubmitted = false;
   protected apiError = false;
+
+  get emailControl() {
+    return this.form.get('email');
+  }
+  get firstNameControl() {
+    return this.form.get('firstName');
+  }
+  get lastNameControl() {
+    return this.form.get('lastName');
+  }
+  get passwordControl() {
+    return this.form.get('password');
+  }
+  get confirmPasswordControl() {
+    return this.form.get('confirmPassword');
+  }
+  get termsAndConditionsControl() {
+    return this.form.get('termsAndConditions');
+  }
+  get privacyControl() {
+    return this.form.get('privacy');
+  }
 
   ngOnInit(): void {
     this.themeService.changeBackgroundColor(BackgroundColor.white);
@@ -50,7 +73,7 @@ export class SignupComponent {
   }
 
   private initForm(): void {
-    this.signupForm = new FormGroup({
+    this.form = new FormGroup({
       email: new FormControl(null, [Validators.required, Validators.email]),
       firstName: new FormControl(null, [Validators.required]),
       lastName: new FormControl(null, [Validators.required]),
@@ -98,40 +121,59 @@ export class SignupComponent {
   onTACLinkClicked(event: MouseEvent) {
     // Prevent toggle checkbox when click to open modal links
     event.preventDefault();
-    console.log('===TAC', this.tacModal);
     this.tacModal.showModal();
   }
 
   onPrivacyLinkClicked(event: MouseEvent) {
     // Prevent toggle checkbox when click to open modal links
     event.preventDefault();
-    console.log('===Privacy', this.privacyModal);
     this.privacyModal.showModal();
   }
 
   onSubmit() {
-    console.log('===submit signup');
-    console.log(this.signupForm);
-    // this.signupForm.markAllAsTouched();
-    // this.everSubmitted = true;
-    // const formData = this.signupForm.value;
-    // if (this.signupForm.valid) {
-    //   this.subs.push(
-    //     this.userService
-    //       .login(formData?.email, formData?.password)
-    //       .pipe(
-    //         catchError((err: HttpErrorResponse) => {
-    //           this.apiError = true;
-    //           return throwError(() => err);
-    //         })
-    //       )
-    //       .subscribe((result) => {
-    //         if (result.success) {
-    //           this.apiError = false;
-    //           this.router.navigate(['/']);
-    //         }
-    //       })
-    //   );
-    // }
+    console.log('===this.form', this.form);
+    this.form.markAllAsTouched();
+    this.hadSubmitted = true;
+    const formData = this.form.value;
+    if (this.form.valid) {
+      this.subs.push(
+        this.userService
+          .register(
+            formData?.email,
+            formData?.firstName,
+            formData?.lastName,
+            formData?.password,
+            formData?.termsAndConditions,
+            formData?.privacy
+          )
+          .pipe(
+            catchError((err: HttpErrorResponse) => {
+              console.log('==catchError', err);
+              this.apiError = true;
+              return throwError(() => err);
+            })
+          )
+          .subscribe((result) => {
+            console.log('===register result', result);
+            if (result.success) {
+              this.apiError = false;
+              this.router.navigate(['/']);
+            }
+          })
+      );
+    }
+  }
+
+  protected getUIErrorMessage(errors: any, name?: string): string {
+    if (errors?.email) {
+      return 'ที่อยู่อีเมลไม่ถูกต้อง';
+    }
+    if (errors?.required) {
+      return `กรุณากรอก${name}`;
+    }
+    if (errors?.minlength) {
+      return `รหัสผ่านต้องมีความยาวอย่างน้อย 8 ตัวอักษร`;
+    }
+    return 'ข้อมูลไม่ถูกต้อง';
   }
 }

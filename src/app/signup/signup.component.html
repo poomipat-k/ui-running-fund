@@ -1,7 +1,7 @@
 <div class="container">
   <h1 class="header">ลงทะเบียน</h1>
 
-  <form [formGroup]="signupForm" (ngSubmit)="onSubmit()" class="form">
+  <form [formGroup]="form" (ngSubmit)="onSubmit()" class="form">
     <div class="container__form">
       <div class="input__box">
         <label class="input__label">ที่อยู่อีเมล*</label>
@@ -12,6 +12,14 @@
           placeholder="กรอกที่อยู่อีเมล"
           class="input__text"
         />
+        @if (emailControl?.errors && emailControl?.touched && hadSubmitted) {
+        <div class="error">
+          <img src="/assets/error_icon.svg" alt="error icon" />
+          <p class="error__text">
+            {{ getUIErrorMessage(emailControl?.errors, "ที่อยู่อีเมล") }}
+          </p>
+        </div>
+        }
       </div>
 
       <div class="input__box">
@@ -23,6 +31,16 @@
           placeholder="กรอกชื่อจริง"
           class="input__text"
         />
+
+        @if (firstNameControl?.errors && firstNameControl?.touched &&
+        hadSubmitted) {
+        <div class="error">
+          <img src="/assets/error_icon.svg" alt="error icon" />
+          <p class="error__text">
+            {{ getUIErrorMessage(firstNameControl?.errors, "ชื่อจริง") }}
+          </p>
+        </div>
+        }
       </div>
 
       <div class="input__box">
@@ -34,6 +52,16 @@
           placeholder="กรอกนามสกุล"
           class="input__text"
         />
+
+        @if (lastNameControl?.errors && lastNameControl?.touched &&
+        hadSubmitted) {
+        <div class="error">
+          <img src="/assets/error_icon.svg" alt="error icon" />
+          <p class="error__text">
+            {{ getUIErrorMessage(lastNameControl?.errors, "นามสกุล") }}
+          </p>
+        </div>
+        }
       </div>
 
       <div class="input__box">
@@ -54,6 +82,15 @@
             (click)="onTogglePassword()"
           />
         </div>
+        @if (passwordControl?.errors && passwordControl?.touched &&
+        hadSubmitted) {
+        <div class="error">
+          <img src="/assets/error_icon.svg" alt="error icon" />
+          <p class="error__text">
+            {{ getUIErrorMessage(passwordControl?.errors, "รหัสผ่าน") }}
+          </p>
+        </div>
+        }
       </div>
 
       <div class="input__box">
@@ -74,6 +111,20 @@
             (click)="onToggleConfirmPassword()"
           />
         </div>
+        @if (confirmPasswordControl?.errors && confirmPasswordControl?.touched
+        && hadSubmitted) {
+        <div class="error">
+          <img src="/assets/error_icon.svg" alt="error icon" />
+          <p class="error__text">
+            {{
+              getUIErrorMessage(
+                confirmPasswordControl?.errors,
+                "ยืนยันรหัสผ่าน"
+              )
+            }}
+          </p>
+        </div>
+        }
       </div>
 
       <!-- Checkboxes -->
@@ -111,8 +162,22 @@
             />
           </svg>
         </label>
+        @if (termsAndConditionsControl?.errors &&
+        termsAndConditionsControl?.touched && hadSubmitted) {
+        <div class="error">
+          <img src="/assets/error_icon.svg" alt="error icon" />
+          <p class="error__text">
+            {{
+              getUIErrorMessage(
+                termsAndConditionsControl?.errors,
+                "กรุณายอมรับข้อตกลงและเงื่อนไขการใช้วงาน"
+              )
+            }}
+          </p>
+        </div>
+        }
 
-        <label class="checkbox__label">
+        <label class="checkbox__label mgt-8">
           <input
             type="checkbox"
             class="checkbox__box"
@@ -145,6 +210,20 @@
             />
           </svg>
         </label>
+        @if (privacyControl?.errors && privacyControl?.touched && hadSubmitted)
+        {
+        <div class="error">
+          <img src="/assets/error_icon.svg" alt="error icon" />
+          <p class="error__text">
+            {{
+              getUIErrorMessage(
+                privacyControl?.errors,
+                "กรุณายอมรับนโยบายคุ้มครองความเป็นส่วนตัว"
+              )
+            }}
+          </p>
+        </div>
+        }
       </div>
     </div>
     <!-- button -->

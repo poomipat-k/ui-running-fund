@@ -1,6 +1,10 @@
 @if (displayModal) {
-<div class="container">
+<div class="container" (keyup)="onKeyUp($event)" tabindex="0" #modal>
   <ng-content></ng-content>
 </div>
-<div class="backdrop" (click)="onBackdropClicked()"></div>
+<div
+  class="backdrop"
+  (click)="onBackdropClicked()"
+  (keyup)="onKeyUp($event)"
+></div>
 }

@@ -41,6 +41,26 @@ export class UserService {
       .pipe(catchError(this.handleError));
   }
 
+  public register(
+    email: string,
+    firstName: string,
+    lastName: string,
+    password: string,
+    termsAndConditions: boolean,
+    privacy: boolean
+  ) {
+    return this.http
+      .post<CommonSuccessResponse>(`${this.baseApiUrl}/auth/register`, {
+        email,
+        firstName,
+        lastName,
+        password,
+        termsAndConditions,
+        privacy,
+      })
+      .pipe(catchError(this.handleError));
+  }
+
   public setUser(user: User): void {
     this.currentUserSubject.next(user);
     this.loggedInUser = user;

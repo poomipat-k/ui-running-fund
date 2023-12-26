@@ -1,5 +1,11 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnDestroy } from '@angular/core';
+import {
+  ChangeDetectorRef,
+  Component,
+  ElementRef,
+  OnDestroy,
+  ViewChild,
+} from '@angular/core';
 
 @Component({
   selector: 'app-com-modal',
@@ -9,7 +15,11 @@ import { Component, OnDestroy } from '@angular/core';
   styleUrl: './modal.component.scss',
 })
 export class ModalComponent implements OnDestroy {
+  @ViewChild('modal') modal: ElementRef;
+
   protected displayModal = false;
+
+  constructor(private changeDetectorRef: ChangeDetectorRef) {}
 
   ngOnDestroy(): void {
     this.closeModal();
@@ -17,7 +27,10 @@ export class ModalComponent implements OnDestroy {
 
   showModal() {
     this.displayModal = true;
+    this.changeDetectorRef.detectChanges();
+
     document.body.style.overflow = 'hidden';
+    this.modal.nativeElement.focus();
   }
 
   closeModal() {
@@ -27,5 +40,12 @@ export class ModalComponent implements OnDestroy {
 
   onBackdropClicked() {
     this.closeModal();
+  }
+
+  onKeyUp(event: any) {
+    console.log('===event', event);
+    if (event?.keyCode === 27) {
+      this.closeModal();
+    }
   }
 }
