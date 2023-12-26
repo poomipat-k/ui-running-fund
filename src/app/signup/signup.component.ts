@@ -164,15 +164,26 @@ export class SignupComponent {
     }
   }
 
-  protected getUIErrorMessage(errors: any, name?: string): string {
+  protected getUIErrorMessage(errors: any, name: string): string {
     if (errors?.email) {
       return 'ที่อยู่อีเมลไม่ถูกต้อง';
     }
     if (errors?.required) {
+      if (
+        [
+          'ข้อตกลงและเงื่อนไขการใช้วงาน',
+          'นโยบายคุ้มครองความเป็นส่วนตัว',
+        ].includes(name)
+      ) {
+        return `กรุณายอมรับ${name}`;
+      }
       return `กรุณากรอก${name}`;
     }
     if (errors?.minlength) {
       return `รหัสผ่านต้องมีความยาวอย่างน้อย 8 ตัวอักษร`;
+    }
+    if (errors?.maxlength) {
+      return `รหัสผ่านต้องมีความยาวไม่เกิน 60 ตัวอักษร`;
     }
     return 'ข้อมูลไม่ถูกต้อง';
   }

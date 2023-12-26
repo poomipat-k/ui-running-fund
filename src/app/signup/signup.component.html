@@ -13,7 +13,7 @@
           class="input__text"
         />
         @if (emailControl?.errors && emailControl?.touched && hadSubmitted) {
-        <div class="error">
+        <div class="error error__absolute">
           <img src="/assets/error_icon.svg" alt="error icon" />
           <p class="error__text">
             {{ getUIErrorMessage(emailControl?.errors, "ที่อยู่อีเมล") }}
@@ -34,7 +34,7 @@
 
         @if (firstNameControl?.errors && firstNameControl?.touched &&
         hadSubmitted) {
-        <div class="error">
+        <div class="error error__absolute">
           <img src="/assets/error_icon.svg" alt="error icon" />
           <p class="error__text">
             {{ getUIErrorMessage(firstNameControl?.errors, "ชื่อจริง") }}
@@ -55,7 +55,7 @@
 
         @if (lastNameControl?.errors && lastNameControl?.touched &&
         hadSubmitted) {
-        <div class="error">
+        <div class="error error__absolute">
           <img src="/assets/error_icon.svg" alt="error icon" />
           <p class="error__text">
             {{ getUIErrorMessage(lastNameControl?.errors, "นามสกุล") }}
@@ -84,7 +84,7 @@
         </div>
         @if (passwordControl?.errors && passwordControl?.touched &&
         hadSubmitted) {
-        <div class="error">
+        <div class="error error__absolute">
           <img src="/assets/error_icon.svg" alt="error icon" />
           <p class="error__text">
             {{ getUIErrorMessage(passwordControl?.errors, "รหัสผ่าน") }}
@@ -113,7 +113,7 @@
         </div>
         @if (confirmPasswordControl?.errors && confirmPasswordControl?.touched
         && hadSubmitted) {
-        <div class="error">
+        <div class="error error__absolute">
           <img src="/assets/error_icon.svg" alt="error icon" />
           <p class="error__text">
             {{
@@ -128,7 +128,7 @@
       </div>
 
       <!-- Checkboxes -->
-      <div class="mgt-24">
+      <div class="mgt-32">
         <label class="checkbox__label">
           <input
             type="checkbox"
@@ -170,7 +170,7 @@
             {{
               getUIErrorMessage(
                 termsAndConditionsControl?.errors,
-                "กรุณายอมรับข้อตกลงและเงื่อนไขการใช้วงาน"
+                "ข้อตกลงและเงื่อนไขการใช้วงาน"
               )
             }}
           </p>
@@ -218,7 +218,7 @@
             {{
               getUIErrorMessage(
                 privacyControl?.errors,
-                "กรุณายอมรับนโยบายคุ้มครองความเป็นส่วนตัว"
+                "นโยบายคุ้มครองความเป็นส่วนตัว"
               )
             }}
           </p>

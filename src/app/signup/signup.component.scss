@@ -30,7 +30,7 @@
 .input {
   &__box {
     &:not(:first-child) {
-      margin-top: 2.4rem;
+      margin-top: 3rem;
     }
   }
   &__label {
@@ -189,14 +189,19 @@ input[type="checkbox"] {
   &__text {
     margin-left: 4px;
   }
+
+  &__absolute {
+    position: absolute;
+    margin-top: 4px;
+  }
 }
 
 .mgt {
   &-8 {
     margin-top: 8px;
   }
-  &-24 {
-    margin-top: 2.4rem;
+  &-32 {
+    margin-top: 3.2rem;
   }
 }
 
