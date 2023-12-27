@@ -4,6 +4,7 @@ import { LoginComponent } from './login/login.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { ReviewerFlowPagesComponent } from './reviewer-flow-pages/reviewer-flow-pages.component';
 import { reviewerAuthGuard } from './shared/guard/reviewer-auth.guard';
+import { SignupSuccessComponent } from './signup-success/signup-success.component';
 import { SignupComponent } from './signup/signup.component';
 
 const routeConfig: Routes = [
@@ -27,6 +28,11 @@ const routeConfig: Routes = [
     path: 'signup',
     component: SignupComponent,
     title: 'Signup',
+  },
+  {
+    path: 'signup/success',
+    component: SignupSuccessComponent,
+    title: 'Signup success',
   },
   {
     path: '**',

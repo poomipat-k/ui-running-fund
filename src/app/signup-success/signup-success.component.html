@@ -1,0 +1,24 @@
+<div class="container">
+  <div class="header">
+    <img
+      src="/assets/arrow_back_dark.svg"
+      alt="arrow back"
+      class="header__icon"
+      (click)="onBack()"
+    />
+    <p class="header__text">ขอบคุณสำหรับการลงทะเบียน</p>
+  </div>
+  <div>
+    <img class="email-icon" src="/assets/attach_email.svg" alt="attach email" />
+  </div>
+  <div class="text-container">
+    <p>ขณะนี้ รหัสเข้าใช้งานระบบได้ส่งไปทาง</p>
+    <span class="text-container--red">{{ email }}</span>
+    <p class="text-container--last">
+      กรุณาตรวจสอบ email ดังกล่าว และ<span class="text-container--bold"
+        >กดยืนยันตัวตน ภายใน 1 ชั่วโมง</span
+      >
+    </p>
+  </div>
+  <button class="button" (click)="onOk()">ตกลง</button>
+</div>

@@ -156,7 +156,9 @@ export class SignupComponent {
           .subscribe((result) => {
             // success result is a new user id
             if (result > 0) {
-              this.router.navigate(['/email-sent']);
+              this.router.navigate(['/signup/success'], {
+                queryParams: { email: formData.email },
+              });
             }
           })
       );
