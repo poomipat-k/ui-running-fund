@@ -18,6 +18,7 @@
       </ul>
     </div>
 
+    @if (currentUser.email) {
     <ul class="navbar__user">
       <li>
         {{ currentUser.firstName + " " + currentUser.lastName }}
@@ -27,5 +28,8 @@
         <li>ออกจากระบบ</li>
       </a>
     </ul>
+    } @else {
+    <button class="button" (click)="toLoginPage()">เข้าสู่ระบบ</button>
+    }
   </div>
 </div>

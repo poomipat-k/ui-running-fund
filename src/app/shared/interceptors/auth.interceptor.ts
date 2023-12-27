@@ -48,5 +48,3 @@ const doRefreshToken = (
     })
   );
 };
-
-function logoutRedirect() {}
