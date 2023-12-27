@@ -11,12 +11,21 @@
           name="email"
           placeholder="กรอกที่อยู่อีเมล"
           class="input__text"
+          (keyup)="onFieldValueChanged('email')"
         />
         @if (emailControl?.errors && emailControl?.touched && hadSubmitted) {
         <div class="error error__absolute">
           <img src="/assets/error_icon.svg" alt="error icon" />
           <p class="error__text">
             {{ getUIErrorMessage(emailControl?.errors, "ที่อยู่อีเมล") }}
+          </p>
+        </div>
+        } @else if (emailControl?.touched && hadSubmitted && apiErrors['email']
+        && apiErrors['email'].error) {
+        <div class="error error__absolute">
+          <img src="/assets/error_icon.svg" alt="error icon" />
+          <p class="error__text">
+            {{ apiErrors["email"].message }}
           </p>
         </div>
         }
@@ -123,6 +132,12 @@
               )
             }}
           </p>
+        </div>
+        } @else if (form.errors?.['confirmPasswordNotMatch'] &&
+        confirmPasswordControl?.touched && hadSubmitted) {
+        <div class="error error__absolute">
+          <img src="/assets/error_icon.svg" alt="error icon" />
+          <p class="error__text">รหัสผ่านที่ยืนยันไม่ถูกต้อง</p>
         </div>
         }
       </div>

@@ -50,7 +50,7 @@ export class UserService {
     privacy: boolean
   ) {
     return this.http
-      .post<CommonSuccessResponse>(`${this.baseApiUrl}/auth/register`, {
+      .post<number>(`${this.baseApiUrl}/auth/register`, {
         email,
         firstName,
         lastName,

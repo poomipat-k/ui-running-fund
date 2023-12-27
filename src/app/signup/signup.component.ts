@@ -13,6 +13,8 @@ import { ModalComponent } from '../components/modal/modal.component';
 import { ThemeService } from '../services/theme.service';
 import { UserService } from '../services/user.service';
 import { BackgroundColor } from '../shared/enums/background-color';
+import { APIError } from '../shared/models/api-error';
+import { confirmPasswordMatchValidator } from '../shared/validators/confirmPasswordMatch';
 
 @Component({
   selector: 'app-signup',
@@ -39,7 +41,7 @@ export class SignupComponent {
   protected confirmPasswordType = 'password';
 
   protected hadSubmitted = false;
-  protected apiError = false;
+  protected apiErrors: { [key: string]: APIError } = {};
 
   get emailControl() {
     return this.form.get('email');
@@ -73,23 +75,26 @@ export class SignupComponent {
   }
 
   private initForm(): void {
-    this.form = new FormGroup({
-      email: new FormControl(null, [Validators.required, Validators.email]),
-      firstName: new FormControl(null, [Validators.required]),
-      lastName: new FormControl(null, [Validators.required]),
-      password: new FormControl(null, [
-        Validators.required,
-        Validators.minLength(8),
-        Validators.maxLength(60),
-      ]),
-      confirmPassword: new FormControl(null, [
-        Validators.required,
-        Validators.minLength(8),
-        Validators.maxLength(60),
-      ]),
-      termsAndConditions: new FormControl(false, [Validators.requiredTrue]),
-      privacy: new FormControl(false, [Validators.requiredTrue]),
-    });
+    this.form = new FormGroup(
+      {
+        email: new FormControl(null, [Validators.required, Validators.email]),
+        firstName: new FormControl(null, [Validators.required]),
+        lastName: new FormControl(null, [Validators.required]),
+        password: new FormControl(null, [
+          Validators.required,
+          Validators.minLength(8),
+          Validators.maxLength(60),
+        ]),
+        confirmPassword: new FormControl(null, [
+          Validators.required,
+          Validators.minLength(8),
+          Validators.maxLength(60),
+        ]),
+        termsAndConditions: new FormControl(false, [Validators.requiredTrue]),
+        privacy: new FormControl(false, [Validators.requiredTrue]),
+      },
+      confirmPasswordMatchValidator('password', 'confirmPassword')
+    );
   }
 
   onTogglePassword(): void {
@@ -112,12 +117,6 @@ export class SignupComponent {
     }
   }
 
-  onFieldValueChanged() {
-    if (this.apiError) {
-      this.apiError = false;
-    }
-  }
-
   onTACLinkClicked(event: MouseEvent) {
     // Prevent toggle checkbox when click to open modal links
     event.preventDefault();
@@ -131,7 +130,6 @@ export class SignupComponent {
   }
 
   onSubmit() {
-    console.log('===this.form', this.form);
     this.form.markAllAsTouched();
     this.hadSubmitted = true;
     const formData = this.form.value;
@@ -148,19 +146,26 @@ export class SignupComponent {
           )
           .pipe(
             catchError((err: HttpErrorResponse) => {
-              console.log('==catchError', err);
-              this.apiError = true;
+              const fieldName = err?.error?.name;
+              if (fieldName) {
+                this.apiErrors[fieldName] = err?.error;
+              }
               return throwError(() => err);
             })
           )
           .subscribe((result) => {
-            console.log('===register result', result);
-            if (result.success) {
-              this.apiError = false;
-              this.router.navigate(['/']);
+            // success result is a new user id
+            if (result > 0) {
+              this.router.navigate(['/email-sent']);
             }
           })
       );
+    }
+  }
+
+  protected onFieldValueChanged(fieldName: string) {
+    if (this.apiErrors[fieldName]) {
+      delete this.apiErrors[fieldName];
     }
   }
 
