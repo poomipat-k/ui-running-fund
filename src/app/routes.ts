@@ -36,7 +36,7 @@ const routeConfig: Routes = [
     title: 'Signup success',
   },
   {
-    path: 'signup/activate',
+    path: 'signup/activate/:activateCode',
     component: EmailActivateSuccessComponent,
     title: 'Activate Email',
   },

@@ -61,6 +61,14 @@ export class UserService {
       .pipe(catchError(this.handleError));
   }
 
+  public activateUser(activateCode: string) {
+    return this.http
+      .post<number>(`${this.baseApiUrl}/user/activate-email`, {
+        activateCode,
+      })
+      .pipe(catchError(this.handleError));
+  }
+
   public setUser(user: User): void {
     this.currentUserSubject.next(user);
     this.loggedInUser = user;
