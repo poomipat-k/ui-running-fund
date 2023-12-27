@@ -10,5 +10,5 @@ import { Component, Input } from '@angular/core';
 })
 export class SvgCheckComponent {
   @Input() svgClass = 'size--dashboard';
-  @Input() pathClass = 'color--green';
+  @Input() pathClass = 'color--green'; // color--green || color--white
 }
