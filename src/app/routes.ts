@@ -1,5 +1,6 @@
 import { Routes } from '@angular/router';
 import { EmailActivateSuccessComponent } from './email-activate-success/email-activate-success.component';
+import { ForgotPasswordEmailSentComponent } from './forgot-password-email-sent/forgot-password-email-sent.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
@@ -45,6 +46,11 @@ const routeConfig: Routes = [
     path: 'password/forgot',
     component: ForgotPasswordComponent,
     title: 'Forgot Password',
+  },
+  {
+    path: 'password/forgot/sent',
+    component: ForgotPasswordEmailSentComponent,
+    title: 'Reset password email sent',
   },
   {
     path: '**',
