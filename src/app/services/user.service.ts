@@ -61,6 +61,14 @@ export class UserService {
       .pipe(catchError(this.handleError));
   }
 
+  public sendForgotPasswordEmail(email: string) {
+    return this.http
+      .post<number>(`${this.baseApiUrl}/user/password/forgot`, {
+        email,
+      })
+      .pipe(catchError(this.handleError));
+  }
+
   public activateUser(activateCode: string) {
     return this.http
       .post<number>(`${this.baseApiUrl}/user/activate-email`, {

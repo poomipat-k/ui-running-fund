@@ -1,5 +1,6 @@
 import { Routes } from '@angular/router';
 import { EmailActivateSuccessComponent } from './email-activate-success/email-activate-success.component';
+import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
@@ -39,6 +40,11 @@ const routeConfig: Routes = [
     path: 'signup/activate/:activateCode',
     component: EmailActivateSuccessComponent,
     title: 'Activate Email',
+  },
+  {
+    path: 'password/forgot',
+    component: ForgotPasswordComponent,
+    title: 'Forgot Password',
   },
   {
     path: '**',

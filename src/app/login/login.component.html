@@ -5,7 +5,7 @@
   <div class="main">
     <div class="main__card">
       <h1 class="main__header">เข้าสู่ระบบ</h1>
-      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="form">
+      <form [formGroup]="form" (ngSubmit)="onSubmit()" class="form">
         <div class="mgb-24">
           <label class="input__label">ที่อยู่อีเมล*</label>
           <input
@@ -40,8 +40,7 @@
         </div>
 
         <div class="form-helper">
-          @if ((!loginForm.valid || apiError) && loginForm.touched &&
-          everSubmitted) {
+          @if ((!form.valid || apiError) && form.touched && everSubmitted) {
           <div class="form-helper__error-container">
             <img src="/assets/error_icon_login.svg" alt="error icon" />
             <p class="form-helper__error-message">

@@ -1,36 +1,32 @@
 import { CommonModule } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, inject } from '@angular/core';
+import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import {
   FormControl,
   FormGroup,
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { Router, RouterModule } from '@angular/router';
+import { Router } from '@angular/router';
 import { Subscription, catchError, throwError } from 'rxjs';
 import { ThemeService } from '../services/theme.service';
 import { UserService } from '../services/user.service';
 import { BackgroundColor } from '../shared/enums/background-color';
 
 @Component({
-  selector: 'app-login',
+  selector: 'app-forgot-password',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, RouterModule],
-  templateUrl: './login.component.html',
-  styleUrl: './login.component.scss',
+  imports: [CommonModule, ReactiveFormsModule],
+  templateUrl: './forgot-password.component.html',
+  styleUrl: './forgot-password.component.scss',
 })
-export class LoginComponent {
+export class ForgotPasswordComponent implements OnInit, OnDestroy {
   protected form: FormGroup;
-
+  private readonly themeService: ThemeService = inject(ThemeService);
   private userService: UserService = inject(UserService);
   private router: Router = inject(Router);
-  private readonly themeService: ThemeService = inject(ThemeService);
 
   private readonly subs: Subscription[] = [];
-
-  protected passwordIconUrl = '/assets/eye_open.svg';
-  protected passwordType = 'password';
 
   protected everSubmitted = false;
   protected apiError = false;
@@ -42,26 +38,6 @@ export class LoginComponent {
 
   ngOnDestroy(): void {
     this.subs.forEach((s) => s.unsubscribe());
-  }
-
-  private initForm(): void {
-    this.form = new FormGroup({
-      email: new FormControl(null, [Validators.required, Validators.email]),
-      password: new FormControl(null, [
-        Validators.required,
-        Validators.minLength(8),
-      ]),
-    });
-  }
-
-  onTogglePassword(): void {
-    if (this.passwordType === 'password') {
-      this.passwordType = 'text';
-      this.passwordIconUrl = '/assets/eye_closed.svg';
-    } else {
-      this.passwordType = 'password';
-      this.passwordIconUrl = '/assets/eye_open.svg';
-    }
   }
 
   onFieldValueChanged() {
@@ -77,7 +53,7 @@ export class LoginComponent {
     if (this.form.valid) {
       this.subs.push(
         this.userService
-          .login(formData?.email, formData?.password)
+          .sendForgotPasswordEmail(formData?.email)
           .pipe(
             catchError((err: HttpErrorResponse) => {
               this.apiError = true;
@@ -85,12 +61,18 @@ export class LoginComponent {
             })
           )
           .subscribe((result) => {
-            if (result.success) {
+            if (result > 0) {
               this.apiError = false;
-              this.router.navigate(['/']);
+              this.router.navigate(['/password/reset-email/sent']);
             }
           })
       );
     }
+  }
+
+  private initForm(): void {
+    this.form = new FormGroup({
+      email: new FormControl(null, [Validators.required, Validators.email]),
+    });
   }
 }
