@@ -50,6 +50,7 @@ export class LoginComponent {
       password: new FormControl(null, [
         Validators.required,
         Validators.minLength(8),
+        Validators.maxLength(60),
       ]),
     });
   }

@@ -69,6 +69,20 @@ export class UserService {
       .pipe(catchError(this.handleError));
   }
 
+  public resetPassword(
+    password: string,
+    confirmPassword: string,
+    resetPasswordCode: string
+  ) {
+    return this.http
+      .post<number>(`${this.baseApiUrl}/user/password/reset`, {
+        password,
+        confirmPassword,
+        resetPasswordCode,
+      })
+      .pipe(catchError(this.handleError));
+  }
+
   public activateUser(activateCode: string) {
     return this.http
       .post<number>(`${this.baseApiUrl}/user/activate-email`, {

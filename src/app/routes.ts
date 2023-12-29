@@ -5,6 +5,8 @@ import { ForgotPasswordComponent } from './forgot-password/forgot-password.compo
 import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { ResetPasswordSuccessComponent } from './reset-password-success/reset-password-success.component';
+import { ResetPasswordComponent } from './reset-password/reset-password.component';
 import { ReviewerFlowPagesComponent } from './reviewer-flow-pages/reviewer-flow-pages.component';
 import { reviewerAuthGuard } from './shared/guard/reviewer-auth.guard';
 import { SignupSuccessComponent } from './signup-success/signup-success.component';
@@ -51,6 +53,16 @@ const routeConfig: Routes = [
     path: 'password/forgot/sent',
     component: ForgotPasswordEmailSentComponent,
     title: 'Reset password email sent',
+  },
+  {
+    path: 'password/reset/success',
+    component: ResetPasswordSuccessComponent,
+    title: 'Reset password successfully',
+  },
+  {
+    path: 'password/reset/:resetPasswordCode',
+    component: ResetPasswordComponent,
+    title: 'Reset password',
   },
   {
     path: '**',
