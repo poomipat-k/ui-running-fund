@@ -21,7 +21,7 @@ export const reviewerAuthGuard = (_next: ActivatedRouteSnapshot) => {
           return true;
         }
       }
-      return router.navigate(['/login']);
+      return router.createUrlTree(['login']);
     }),
     catchError((err) => {
       router.navigate(['/login']);
