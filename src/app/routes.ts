@@ -8,6 +8,7 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
 import { ResetPasswordSuccessComponent } from './reset-password-success/reset-password-success.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
 import { ReviewerFlowPagesComponent } from './reviewer-flow-pages/reviewer-flow-pages.component';
+import { authGuard } from './shared/guard/auth.guard';
 import { reviewerAuthGuard } from './shared/guard/reviewer-auth.guard';
 import { SignupSuccessComponent } from './signup-success/signup-success.component';
 import { SignupComponent } from './signup/signup.component';
@@ -16,8 +17,8 @@ const routeConfig: Routes = [
   {
     path: '',
     component: HomeComponent,
-    title: 'Home page',
-    canActivate: [reviewerAuthGuard],
+    title: 'Dashboard',
+    canActivate: [authGuard],
   },
   {
     path: 'project/review/:projectCode',

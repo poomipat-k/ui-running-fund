@@ -36,7 +36,7 @@ const doRefreshToken = (
   router: Router
 ) => {
   return userService.refreshAccessToken().pipe(
-    switchMap((res) => {
+    switchMap((_) => {
       return next(req);
     }),
     catchError((error) => {

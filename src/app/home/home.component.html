@@ -1,24 +1,7 @@
-<div class="dashboard dashboard__container">
-  <div class="dashboard__header-container">
-    <h1 class="dashboard__header-text">โครงการที่ขอทุนสนับสนุน</h1>
-    <span class="dashboard__header-period"
-      >({{ fromDate }} - {{ toDate }})</span
-    >
-  </div>
-  <div class="dashboard__toolbar">
-    <p class="dashboard__toolbar-count">ทั้งหมด {{ data.length }} โครงการ</p>
-    <app-com-filter
-      [filterOptions]="filterOptions"
-      (selectedFilter)="onSortFilterChanged($event)"
-    ></app-com-filter>
-  </div>
-  <div>
-    <app-com-table
-      [columns]="columns"
-      [data]="data"
-      emptyText="ไม่มีโครงการให้กลั่นกรอง ณ ขณะนี้"
-      [rowClickable]="true"
-      (rowClicked)="onTableRowClicked($event)"
-    ></app-com-table>
-  </div>
-</div>
+@switch (user.userRole) { @case ('reviewer') {
+<app-dashboard-reviewer></app-dashboard-reviewer>
+} @case ('applicant') {
+<app-dashboard-applicant></app-dashboard-applicant>
+} @default {
+<p>No permission</p>
+} }
