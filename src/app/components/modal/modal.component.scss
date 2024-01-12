@@ -1,8 +1,8 @@
 @import "../../../styles.scss";
 
 .container {
-  width: 50rem;
-  height: 50rem;
+  width: 29.8rem;
+  height: 27.7rem;
   overflow-y: scroll;
   position: fixed;
   z-index: $modal-z;
@@ -11,8 +11,8 @@
   transform: translate(-50%, -50%);
   background-color: #fff;
 
-  border-radius: 16px;
-  padding: 1.6rem;
+  border-radius: 8px;
+  padding: 1rem 1rem 2rem 1rem;
 
   &:focus-visible {
     outline: none;

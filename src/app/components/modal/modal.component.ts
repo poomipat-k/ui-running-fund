@@ -3,6 +3,7 @@ import {
   ChangeDetectorRef,
   Component,
   ElementRef,
+  Input,
   OnDestroy,
   ViewChild,
 } from '@angular/core';
@@ -16,6 +17,7 @@ import {
 })
 export class ModalComponent implements OnDestroy {
   @ViewChild('modal') modal: ElementRef;
+  @Input() customContainer = {};
 
   protected displayModal = false;
 
@@ -43,7 +45,6 @@ export class ModalComponent implements OnDestroy {
   }
 
   onKeyUp(event: any) {
-    console.log('===event', event);
     if (event?.keyCode === 27) {
       this.closeModal();
     }
