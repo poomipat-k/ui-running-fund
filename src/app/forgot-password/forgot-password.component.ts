@@ -102,6 +102,7 @@ export class ForgotPasswordComponent implements OnInit, OnDestroy {
 
   onRefreshCaptcha() {
     this.generateCaptcha();
+    this.resetSliderBar();
   }
 
   onCloseCaptcha() {
