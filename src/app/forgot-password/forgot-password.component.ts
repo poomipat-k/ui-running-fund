@@ -26,6 +26,9 @@ import { CaptchaPuzzle } from '../shared/models/captcha-puzzle';
 export class ForgotPasswordComponent implements OnInit, OnDestroy {
   @ViewChild('captchaModal') captchaModal: ModalComponent;
 
+  protected readonly STARTING_X_POSITION = 5;
+  protected readonly MAX_X_POSITION = 243;
+
   protected form: FormGroup;
 
   private readonly themeService: ThemeService = inject(ThemeService);
@@ -41,18 +44,13 @@ export class ForgotPasswordComponent implements OnInit, OnDestroy {
   protected captchaPuzzle: CaptchaPuzzle = new CaptchaPuzzle();
 
   protected puzzleYPosition = '0px';
-  protected currentXValue = 10;
+  protected currentXValue = this.STARTING_X_POSITION;
 
   sliderValue = 0;
 
   ngOnInit(): void {
     this.themeService.changeBackgroundColor(BackgroundColor.white);
     this.initForm();
-  }
-
-  // TODO: delete this
-  ngAfterViewInit(): void {
-    // this.captchaModal.showModal();
   }
 
   ngOnDestroy(): void {
@@ -66,10 +64,15 @@ export class ForgotPasswordComponent implements OnInit, OnDestroy {
 
   onSliderChanged(e: any) {
     // Drop the thumb
-    console.log('===onSliderChanged e', e.target?.valueAsNumber);
+    const value = e.target?.valueAsNumber;
+    console.log('===onSliderChanged value', value);
+    if (!value) {
+      return;
+    }
+    this.onSubmit(this.captchaPuzzle.captchaId, value);
   }
 
-  onFieldValueChanged() {
+  onEmailValueChanged() {
     if (this.apiError) {
       this.apiError = false;
     }
@@ -79,7 +82,6 @@ export class ForgotPasswordComponent implements OnInit, OnDestroy {
     console.log('===[on Next]');
     this.form.markAllAsTouched();
     this.everSubmitted = true;
-    const formData = this.form.value;
     if (this.form.valid) {
       console.log('===form is valid');
       this.generateCaptcha();
@@ -89,6 +91,7 @@ export class ForgotPasswordComponent implements OnInit, OnDestroy {
   }
 
   private generateCaptcha() {
+    this.resetSliderBar();
     this.subs.push(
       this.captchaService.generateCaptcha().subscribe((captchaPuzzle) => {
         if (captchaPuzzle) {
@@ -102,7 +105,6 @@ export class ForgotPasswordComponent implements OnInit, OnDestroy {
 
   onRefreshCaptcha() {
     this.generateCaptcha();
-    this.resetSliderBar();
   }
 
   onCloseCaptcha() {
@@ -111,27 +113,41 @@ export class ForgotPasswordComponent implements OnInit, OnDestroy {
 
   resetSliderBar() {
     console.log('===resetSliderBar');
-    this.currentXValue = 10;
+    this.currentXValue = this.STARTING_X_POSITION;
   }
 
-  onSubmit() {
+  onSubmit(captchaId: string, captchaValue: number) {
     this.form.markAllAsTouched();
     this.everSubmitted = true;
     const formData = this.form.value;
     if (this.form.valid) {
+      console.log('===[onSubmit] form valid');
       // Validate captcha
       // Submit data to send a reset password email
       this.subs.push(
         this.userService
-          .sendForgotPasswordEmail(formData?.email)
+          .sendForgotPasswordEmail(formData?.email, captchaId, captchaValue)
           .pipe(
             catchError((err: HttpErrorResponse) => {
-              this.apiError = true;
+              console.log('====[onSubmit] catch err:', err);
+              this.generateCaptcha();
+
+              if (
+                err?.error?.name !== 'captchaValue' &&
+                err?.error?.name !== 'captchaId'
+              ) {
+                this.apiError = true;
+              }
               return throwError(() => err);
             })
           )
           .subscribe((result) => {
+            console.log('===forgot password result', result);
             if (result > 0) {
+              console.log(
+                '===Successfully send a reset password email to ',
+                formData.email
+              );
               this.apiError = false;
               this.router.navigate(['/password/forgot/sent']);
             }

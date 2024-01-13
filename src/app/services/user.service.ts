@@ -61,10 +61,16 @@ export class UserService {
       .pipe(catchError(this.handleError));
   }
 
-  public sendForgotPasswordEmail(email: string) {
+  public sendForgotPasswordEmail(
+    email: string,
+    captchaId: string,
+    captchaValue: number
+  ) {
     return this.http
       .post<number>(`${this.baseApiUrl}/user/password/forgot`, {
         email,
+        captchaId,
+        captchaValue,
       })
       .pipe(catchError(this.handleError));
   }
