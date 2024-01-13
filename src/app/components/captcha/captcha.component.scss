@@ -33,11 +33,12 @@
   &__image {
     &-box {
       position: relative;
-      height: 14.9rem;
+      height: 15rem;
     }
 
     &-background {
       position: absolute;
+      width: 100%;
     }
 
     &-puzzle {

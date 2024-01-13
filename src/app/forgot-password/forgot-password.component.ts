@@ -69,6 +69,7 @@ export class ForgotPasswordComponent implements OnInit, OnDestroy {
     if (!captchaData) {
       return;
     }
+    console.log('===captchaData', captchaData);
     this.onSubmit(captchaData.captchaId, captchaData.captchaValue);
   }
 
