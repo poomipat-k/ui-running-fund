@@ -41,6 +41,9 @@ export class ForgotPasswordComponent implements OnInit, OnDestroy {
   protected captchaPuzzle: CaptchaPuzzle = new CaptchaPuzzle();
 
   protected puzzleYPosition = '0px';
+  protected currentXValue = 10;
+
+  sliderValue = 0;
 
   ngOnInit(): void {
     this.themeService.changeBackgroundColor(BackgroundColor.white);
@@ -54,6 +57,16 @@ export class ForgotPasswordComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.subs.forEach((s) => s.unsubscribe());
+  }
+
+  onSliderInput(e: any) {
+    // While holding slider thumb
+    this.currentXValue = e.target?.valueAsNumber;
+  }
+
+  onSliderChanged(e: any) {
+    // Drop the thumb
+    console.log('===onSliderChanged e', e.target?.valueAsNumber);
   }
 
   onFieldValueChanged() {
@@ -93,6 +106,11 @@ export class ForgotPasswordComponent implements OnInit, OnDestroy {
 
   onCloseCaptcha() {
     this.captchaModal.closeModal();
+  }
+
+  resetSliderBar() {
+    console.log('===resetSliderBar');
+    this.currentXValue = 10;
   }
 
   onSubmit() {

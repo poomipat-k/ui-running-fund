@@ -3,8 +3,10 @@ import {
   ChangeDetectorRef,
   Component,
   ElementRef,
+  EventEmitter,
   Input,
   OnDestroy,
+  Output,
   ViewChild,
 } from '@angular/core';
 
@@ -18,6 +20,7 @@ import {
 export class ModalComponent implements OnDestroy {
   @ViewChild('modal') modal: ElementRef;
   @Input() customContainer = {};
+  @Output() modalCloseEvent = new EventEmitter();
 
   protected displayModal = false;
 
@@ -38,6 +41,7 @@ export class ModalComponent implements OnDestroy {
   closeModal() {
     this.displayModal = false;
     document.body.style.overflow = '';
+    this.modalCloseEvent.emit();
   }
 
   onBackdropClicked() {
@@ -45,6 +49,7 @@ export class ModalComponent implements OnDestroy {
   }
 
   onKeyUp(event: any) {
+    // when esc key pressed
     if (event?.keyCode === 27) {
       this.closeModal();
     }
