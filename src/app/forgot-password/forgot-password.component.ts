@@ -67,11 +67,15 @@ export class ForgotPasswordComponent implements OnInit, OnDestroy {
     }
   }
 
+  onCaptchaModalClosed() {
+    this.subs.forEach((s) => s.unsubscribe());
+    this.isLoading = false;
+  }
+
   onCaptchaSubmitEmit(captchaData: CaptchaSubmitEmit) {
     if (!captchaData) {
       return;
     }
-    console.log('===captchaData', captchaData);
     this.onSubmit(captchaData.captchaId, captchaData.captchaValue);
   }
 
@@ -81,29 +85,31 @@ export class ForgotPasswordComponent implements OnInit, OnDestroy {
     const formData = this.form.value;
     if (this.form.valid) {
       this.isLoading = true;
-      const sub = this.userService
-        .sendForgotPasswordEmail(formData?.email, captchaId, captchaValue)
-        .pipe(
-          catchError((err: HttpErrorResponse) => {
-            this.captchaComponent.refreshCaptcha();
-            if (
-              err?.error?.name !== 'captchaValue' &&
-              err?.error?.name !== 'captchaId'
-            ) {
-              this.apiError = true;
-            }
+
+      this.subs.push(
+        this.userService
+          .sendForgotPasswordEmail(formData?.email, captchaId, captchaValue)
+          .pipe(
+            catchError((err: HttpErrorResponse) => {
+              this.captchaComponent.refreshCaptcha();
+              if (
+                err?.error?.name !== 'captchaValue' &&
+                err?.error?.name !== 'captchaId'
+              ) {
+                this.apiError = true;
+              }
+              this.isLoading = false;
+              return throwError(() => err);
+            })
+          )
+          .subscribe((result) => {
             this.isLoading = false;
-            return throwError(() => err);
+            if (result > 0) {
+              this.apiError = false;
+              this.router.navigate(['/password/forgot/sent']);
+            }
           })
-        )
-        .subscribe((result) => {
-          this.isLoading = false;
-          if (result > 0) {
-            this.apiError = false;
-            this.router.navigate(['/password/forgot/sent']);
-          }
-        });
-      this.subs.push(sub);
+      );
     }
   }
 

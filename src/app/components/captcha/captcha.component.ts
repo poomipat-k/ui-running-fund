@@ -28,6 +28,7 @@ export class CaptchaComponent implements OnDestroy {
   @Input() disabled = false;
 
   @Output() captchaSubmitEmit = new EventEmitter<CaptchaSubmitEmit>();
+  @Output() captchaModalCloseEvent = new EventEmitter();
 
   protected readonly MIN_X_POSITION = 5;
   protected readonly MAX_X_POSITION = 243;
@@ -48,6 +49,14 @@ export class CaptchaComponent implements OnDestroy {
 
   resetSliderBar() {
     this.currentXValue = this.MIN_X_POSITION;
+  }
+
+  onCaptchaModalClosed() {
+    this.resetSliderBar();
+    this.captchaModalCloseEvent.emit();
+
+    this.subs.forEach((s) => s.unsubscribe());
+    this.internalDisabled = false;
   }
 
   refreshCaptcha() {
