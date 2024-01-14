@@ -31,7 +31,7 @@ export class CaptchaComponent implements OnDestroy {
   @Output() captchaModalCloseEvent = new EventEmitter();
 
   protected readonly MIN_X_POSITION = 5;
-  protected readonly MAX_X_POSITION = 243;
+  protected readonly MAX_X_POSITION = 245;
 
   protected captchaPuzzle: CaptchaPuzzle = new CaptchaPuzzle();
 
