@@ -3,7 +3,11 @@
     <div class="captcha__menu">
       <p class="captcha__menu-text">ยืนยันตัวตนเพื่อดำเนินการต่อ</p>
       <div>
-        <button class="captcha__menu-refresh" (click)="refreshCaptcha()">
+        <button
+          class="captcha__menu-refresh"
+          (click)="refreshCaptcha()"
+          [disabled]="disabled || internalDisabled"
+        >
           <img src="/assets/replay_icon.svg" alt="replay icon" />
         </button>
         <button class="captcha__menu-close" (click)="onCloseCaptcha()">

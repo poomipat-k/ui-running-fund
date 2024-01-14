@@ -19,6 +19,10 @@
       background-color: #fff;
       border: none;
       outline: none;
+
+      &:disabled {
+        cursor: not-allowed;
+      }
     }
 
     &-close {
