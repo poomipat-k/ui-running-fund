@@ -36,7 +36,11 @@
         [value]="currentXValue"
         (change)="onSliderChanged($event)"
         (input)="onSliderInput($event)"
-        class="slider"
+        [ngClass]="{
+          slider: true,
+          'slider--lock': disabled || internalDisabled
+        }"
+        [disabled]="disabled || internalDisabled"
       />
       <p class="slider__text" draggable="false">
         เลื่อนปุ่มสีส้มหรือตัวต่อให้ทับช่องว่าง

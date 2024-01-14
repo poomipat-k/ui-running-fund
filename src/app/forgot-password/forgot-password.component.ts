@@ -39,6 +39,8 @@ export class ForgotPasswordComponent implements OnInit, OnDestroy {
 
   private readonly subs: Subscription[] = [];
 
+  protected isLoading = false;
+
   protected everSubmitted = false;
   protected apiError = false;
 
@@ -78,29 +80,30 @@ export class ForgotPasswordComponent implements OnInit, OnDestroy {
     this.everSubmitted = true;
     const formData = this.form.value;
     if (this.form.valid) {
-      this.subs.push(
-        this.userService
-          .sendForgotPasswordEmail(formData?.email, captchaId, captchaValue)
-          .pipe(
-            catchError((err: HttpErrorResponse) => {
-              this.captchaComponent.refreshCaptcha();
-
-              if (
-                err?.error?.name !== 'captchaValue' &&
-                err?.error?.name !== 'captchaId'
-              ) {
-                this.apiError = true;
-              }
-              return throwError(() => err);
-            })
-          )
-          .subscribe((result) => {
-            if (result > 0) {
-              this.apiError = false;
-              this.router.navigate(['/password/forgot/sent']);
+      this.isLoading = true;
+      const sub = this.userService
+        .sendForgotPasswordEmail(formData?.email, captchaId, captchaValue)
+        .pipe(
+          catchError((err: HttpErrorResponse) => {
+            this.captchaComponent.refreshCaptcha();
+            if (
+              err?.error?.name !== 'captchaValue' &&
+              err?.error?.name !== 'captchaId'
+            ) {
+              this.apiError = true;
             }
+            this.isLoading = false;
+            return throwError(() => err);
           })
-      );
+        )
+        .subscribe((result) => {
+          this.isLoading = false;
+          if (result > 0) {
+            this.apiError = false;
+            this.router.navigate(['/password/forgot/sent']);
+          }
+        });
+      this.subs.push(sub);
     }
   }
 

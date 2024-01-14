@@ -1,13 +1,15 @@
 import { CommonModule } from '@angular/common';
+import { HttpErrorResponse } from '@angular/common/http';
 import {
   Component,
   EventEmitter,
+  Input,
   OnDestroy,
   Output,
   ViewChild,
   inject,
 } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { Subscription, catchError, throwError } from 'rxjs';
 import { CaptchaService } from '../../services/captcha.service';
 import { CaptchaPuzzle } from '../../shared/models/captcha-puzzle';
 import { CaptchaSubmitEmit } from '../../shared/models/captcha-submit-event';
@@ -23,6 +25,8 @@ import { ModalComponent } from '../modal/modal.component';
 export class CaptchaComponent implements OnDestroy {
   @ViewChild('captchaModal') captchaModal: ModalComponent;
 
+  @Input() disabled = false;
+
   @Output() captchaSubmitEmit = new EventEmitter<CaptchaSubmitEmit>();
 
   protected readonly MIN_X_POSITION = 5;
@@ -32,6 +36,7 @@ export class CaptchaComponent implements OnDestroy {
 
   protected puzzleYPosition = '0px';
   protected currentXValue = this.MIN_X_POSITION;
+  protected internalDisabled = false;
 
   private captchaService: CaptchaService = inject(CaptchaService);
 
@@ -50,7 +55,12 @@ export class CaptchaComponent implements OnDestroy {
   }
 
   openCaptchaModal() {
+    // Clean previous state
+    this.captchaPuzzle = new CaptchaPuzzle();
+    this.puzzleYPosition = '0px';
+
     this.generateCaptcha();
+    this.captchaModal.showModal();
   }
 
   onCloseCaptcha() {
@@ -77,14 +87,23 @@ export class CaptchaComponent implements OnDestroy {
 
   private generateCaptcha() {
     this.resetSliderBar();
+    this.internalDisabled = true;
     this.subs.push(
-      this.captchaService.generateCaptcha().subscribe((captchaPuzzle) => {
-        if (captchaPuzzle) {
-          this.captchaPuzzle = captchaPuzzle;
-          this.puzzleYPosition = captchaPuzzle.yPosition + 'px';
-          this.captchaModal.showModal();
-        }
-      })
+      this.captchaService
+        .generateCaptcha()
+        .pipe(
+          catchError((err: HttpErrorResponse) => {
+            this.internalDisabled = false;
+            return throwError(() => err);
+          })
+        )
+        .subscribe((captchaPuzzle) => {
+          if (captchaPuzzle) {
+            this.captchaPuzzle = captchaPuzzle;
+            this.puzzleYPosition = captchaPuzzle.yPosition + 'px';
+          }
+          this.internalDisabled = false;
+        })
     );
   }
 }
