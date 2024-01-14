@@ -27,8 +27,16 @@
         [src]="captchaPuzzle.puzzle"
         alt="captcha puzzle piece"
         class="captcha__image-puzzle"
-        [ngStyle]="{ top: puzzleYPosition, left: currentXValue + 'px' }"
+        [ngStyle]="{ left: currentXValue + 'px' }"
         draggable="false"
+        [@animationPos]="{
+          value: animationPos,
+          params: {
+            fromY: fromPos,
+            toY: toPos,
+            time: animationDuration,
+          }
+        }"
       />
     </div>
 

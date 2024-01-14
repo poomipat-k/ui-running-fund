@@ -1,3 +1,10 @@
+import {
+  animate,
+  state,
+  style,
+  transition,
+  trigger,
+} from '@angular/animations';
 import { CommonModule } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
 import {
@@ -21,11 +28,33 @@ import { ModalComponent } from '../modal/modal.component';
   imports: [CommonModule, ModalComponent],
   templateUrl: './captcha.component.html',
   styleUrl: './captcha.component.scss',
+  animations: [
+    trigger('animationPos', [
+      state(
+        'from',
+        style({
+          top: '{{fromY}}',
+        }),
+        { params: { fromY: '0px' } } // parameter passed in the template
+      ),
+      state(
+        'to',
+        style({
+          top: '{{toY}}',
+        }),
+        { params: { toY: '0px' } } // parameter passed in the template
+      ),
+
+      transition('from => to', [animate('{{time}}')]),
+      transition('to => from', [animate('{{time}}')]),
+    ]),
+  ],
 })
 export class CaptchaComponent implements OnDestroy {
   @ViewChild('captchaModal') captchaModal: ModalComponent;
 
   @Input() disabled = false;
+  @Input() animationDuration = '300ms';
 
   @Output() captchaSubmitEmit = new EventEmitter<CaptchaSubmitEmit>();
   @Output() captchaModalCloseEvent = new EventEmitter();
@@ -38,6 +67,10 @@ export class CaptchaComponent implements OnDestroy {
   protected puzzleYPosition = '0px';
   protected currentXValue = this.MIN_X_POSITION;
   protected internalDisabled = false;
+
+  protected animationPos = 'from';
+  protected fromPos = '0px';
+  protected toPos = '0px';
 
   private captchaService: CaptchaService = inject(CaptchaService);
 
@@ -108,6 +141,15 @@ export class CaptchaComponent implements OnDestroy {
         )
         .subscribe((captchaPuzzle) => {
           if (captchaPuzzle) {
+            if (this.animationPos === 'from') {
+              this.fromPos = `${this.captchaPuzzle.yPosition || 0}px`;
+              this.toPos = `${captchaPuzzle.yPosition || 0}px`;
+              this.animationPos = 'to';
+            } else if (this.animationPos === 'to') {
+              this.fromPos = `${captchaPuzzle.yPosition || 0}px`;
+              this.toPos = `${this.captchaPuzzle.yPosition || 0}px`;
+              this.animationPos = 'from';
+            }
             this.captchaPuzzle = captchaPuzzle;
             this.puzzleYPosition = captchaPuzzle.yPosition + 'px';
           }
