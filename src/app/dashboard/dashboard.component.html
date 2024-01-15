@@ -1,0 +1,7 @@
+@switch (user.userRole) { @case ('reviewer') {
+<app-dashboard-reviewer></app-dashboard-reviewer>
+} @case ('applicant') {
+<app-dashboard-applicant></app-dashboard-applicant>
+} @default {
+<p>No permission</p>
+} }

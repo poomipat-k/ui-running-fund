@@ -1,4 +1,5 @@
 import { Routes } from '@angular/router';
+import { DashboardComponent } from './dashboard/dashboard.component';
 import { EmailActivateSuccessComponent } from './email-activate-success/email-activate-success.component';
 import { ForgotPasswordEmailSentComponent } from './forgot-password-email-sent/forgot-password-email-sent.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
@@ -15,8 +16,14 @@ import { SignupComponent } from './signup/signup.component';
 
 const routeConfig: Routes = [
   {
-    path: 'dashboard',
+    path: '',
     component: HomeComponent,
+    title: 'Login',
+  },
+
+  {
+    path: 'dashboard',
+    component: DashboardComponent,
     title: 'Dashboard',
     canActivate: [authGuard],
   },
