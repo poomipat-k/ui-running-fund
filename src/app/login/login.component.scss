@@ -19,7 +19,7 @@
 
 .input {
   &__label {
-    color: #344054;
+    color: $gray700;
     font-family: $custom-font;
     font-size: 1.4rem;
     font-weight: 400;
@@ -108,7 +108,7 @@
   }
 
   &__form-helper__forgot-password-link {
-    color: #344054;
+    color: $gray700;
     font-family: $custom-font;
     font-size: 12px;
     font-style: normal;
@@ -128,7 +128,7 @@
   font-weight: 600;
   line-height: normal;
   text-align: center;
-  color: #344054;
+  color: $gray700;
   width: 100%;
 
   background-color: #feb273;
@@ -152,7 +152,7 @@
   justify-content: center;
 
   &__text {
-    color: #344054;
+    color: $gray700;
     font-family: $custom-font;
     font-size: 1.6rem;
     font-style: normal;

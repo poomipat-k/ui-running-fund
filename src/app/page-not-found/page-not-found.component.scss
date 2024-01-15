@@ -18,7 +18,7 @@
 
   &--not-found {
     margin-top: 4px;
-    color: #344054;
+    color: $gray700;
     text-align: center;
     font-size: 3.6rem;
     font-style: normal;
@@ -27,7 +27,7 @@
   }
 
   &--details {
-    color: #344054;
+    color: $gray700;
     text-align: center;
     font-family: $custom-font;
     font-size: 2.4rem;
@@ -74,7 +74,7 @@
     margin-left: 1rem;
     border: none;
     background-color: #feb273;
-    color: #344054;
+    color: $gray700;
 
     &:hover {
       background-color: #ffbe88;
@@ -93,7 +93,7 @@
 
     &-link {
       text-decoration: none;
-      color: #344054;
+      color: $gray700;
     }
   }
 }

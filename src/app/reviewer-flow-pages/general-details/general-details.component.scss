@@ -15,7 +15,7 @@
     width: 3.6rem;
     height: 3.6rem;
     border-radius: 50%;
-    background-color: #344054;
+    background-color: $gray700;
 
     font-family: $custom-font;
     font-size: 1.8rem;
@@ -31,7 +31,7 @@
   font-weight: 700;
   font-size: 2rem;
   line-height: normal;
-  color: #344054;
+  color: $gray700;
 }
 
 .details {
@@ -60,7 +60,7 @@
   font-weight: 400;
   font-size: 2rem;
   line-height: normal;
-  color: #344054;
+  color: $gray700;
   height: 3.3rem;
   flex: 1;
 
@@ -84,7 +84,7 @@
   height: 3.3rem;
 
   &__link {
-    color: #344054;
+    color: $gray700;
     font-family: $custom-font-looped;
     font-size: 2rem;
     font-style: normal;

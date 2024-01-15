@@ -1,4 +1,5 @@
 import { Routes } from '@angular/router';
+import { ApplicantFlowPagesComponent } from './applicant-flow-pages/applicant-flow-pages.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { EmailActivateSuccessComponent } from './email-activate-success/email-activate-success.component';
 import { ForgotPasswordEmailSentComponent } from './forgot-password-email-sent/forgot-password-email-sent.component';
@@ -20,7 +21,12 @@ const routeConfig: Routes = [
     component: HomeComponent,
     title: 'Login',
   },
-
+  {
+    path: 'proposal/create',
+    component: ApplicantFlowPagesComponent,
+    title: 'Create a proposal',
+    canActivate: [authGuard],
+  },
   {
     path: 'dashboard',
     component: DashboardComponent,
