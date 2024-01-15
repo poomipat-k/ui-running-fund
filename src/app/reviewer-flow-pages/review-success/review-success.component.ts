@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { SvgCheckComponent } from 'src/app/components/svg/svg-check/svg-check.component';
+import { SvgCheckComponent } from '../../components/svg/svg-check/svg-check.component';
 
 @Component({
   selector: 'app-review-success',

@@ -3,19 +3,17 @@
 
 .navbar {
   display: flex;
-  background-color: #344054;
+  background-color: $gray700;
   height: $navbar-height;
   align-items: center;
   width: 100%;
   position: fixed;
-  z-index: 20;
+  z-index: $navbar-z;
 
   &__body {
     display: flex;
     width: 100%;
     justify-content: space-between;
-    padding-left: $content-padding;
-    padding-right: $content-padding;
     height: 4.8rem;
     font-size: 1.8rem;
     line-height: 2.97rem;
@@ -24,6 +22,14 @@
     color: #ffffff;
     position: fixed;
     overflow: hidden;
+
+    padding-left: $navbar-padding-s;
+    padding-right: $navbar-padding-s;
+
+    @media only screen and (min-width: $bp1) {
+      padding-left: $navbar-padding;
+      padding-right: $navbar-padding;
+    }
   }
 
   &__left-group {
@@ -52,6 +58,7 @@
     padding: 0;
     margin: 0;
     align-items: center;
+    font-weight: 600;
   }
 
   &__logout {
@@ -59,15 +66,42 @@
   }
 }
 
+.button {
+  padding: 1.5rem 1.8rem;
+  border-radius: 8px;
+
+  font-family: $custom-font;
+  font-size: 1.8rem;
+  font-weight: 600;
+  line-height: 1.8rem;
+  text-align: center;
+  color: #424f64;
+
+  background-color: #feb273;
+  box-shadow: 0px 2px 8px 0px rgba(126, 36, 16, 0.25);
+
+  border: none;
+  cursor: pointer;
+
+  &:hover {
+    background-color: #ffbe88;
+    color: #424f64;
+  }
+
+  &:active {
+    background-color: #ffa167;
+  }
+}
+
 a:link,
 a:visited {
+  font-weight: 600;
   color: #ffffff;
   text-decoration: none;
 }
 
 a:hover {
   color: #feb273;
-  font-weight: 600;
 }
 
 a:active {

@@ -101,11 +101,13 @@
           [options]="hadReceivedFundOptions"
           radioStyle="review-2a"
           [disabled]="true"
-          [selectedValue]="false"
+          [selectedValue]="hadReceivedFundValue"
         ></app-com-radio-view>
+        @if (hadReceivedFundValue) {
         <a href="https://google.com" class="collab__link" target="_blank"
           >ดาวน์โหลดหนังสือนำส่ง</a
         >
+        }
       </div>
     </div>
   </div>

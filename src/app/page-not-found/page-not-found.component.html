@@ -1,1 +1,19 @@
-<p>page-not-found works!</p>
+<div class="container">
+  <h1 class="text--404">404</h1>
+  <h2 class="text--not-found">ไม่พบหน้าที่ต้องการ</h2>
+  <p class="text--details">
+    เราไม่พบหน้าที่คุณกำลังมองหา โปรดตรวจสอบ URL หรือกลับไปที่หน้าหลัก
+  </p>
+  <div class="button__container">
+    <button class="button button--prev">
+      <img
+        src="/assets/arrow_back_dark.svg"
+        alt="arrow back"
+        class="button--prev-icon"
+      />
+      <a [routerLink]="['/dashboard']" class="button--prev-link"
+        >กลับไปที่หน้าหลัก</a
+      >
+    </button>
+  </div>
+</div>

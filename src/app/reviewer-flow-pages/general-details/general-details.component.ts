@@ -20,6 +20,7 @@ import { RadioOption } from '../../shared/models/radio-option';
 export class GeneralDetailsComponent {
   @Input() projectName = '';
   @Input() projectCode = '';
+  @Input() hadReceivedFundValue = false;
 
   protected projectLeader = 'นายขอทุน สนับสนุน';
   protected projectLocation = 'กาดหลวง เชียงใหม่';

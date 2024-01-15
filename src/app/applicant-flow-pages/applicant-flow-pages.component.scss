@@ -1,0 +1,16 @@
+@import "../../styles.scss";
+
+.mainContainer {
+  padding: 6rem 12.2rem 3.9rem 12.2rem;
+}
+
+.header {
+  &__mainText {
+    color: $gray700;
+    font-family: $custom-font;
+    font-size: 2.4rem;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+  }
+}

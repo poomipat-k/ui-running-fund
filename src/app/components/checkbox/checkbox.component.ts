@@ -20,4 +20,5 @@ export class CheckboxComponent {
   @Input() value: any;
   @Input() name: string;
   @Input() checked = false;
+  @Input() fontSize: string; // small
 }

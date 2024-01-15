@@ -1,12 +1,12 @@
 <div
   [ngClass]="{
     container: true,
-    'pdb-50': pageIndex === 1,
-    'pdb-100': pageIndex === 2,
-    'pdb-80': pageIndex === 3,
-    'pdb-116': pageIndex === 4,
-    'pdb-222': pageIndex === 5,
-    'pdb-242': pageIndex === 6
+    'container--1': pageIndex === 1,
+    'container--2': pageIndex === 2,
+    'container--3': pageIndex === 3,
+    'container--4': pageIndex === 4,
+    'container--5': pageIndex === 5,
+    'container--6': pageIndex === 6
   }"
 >
   <div>
@@ -42,9 +42,11 @@
       [projectName]="apiData.projectName"
     ></app-review-reviewer-interested-person
     >} @case (2) {
+    <!-- Todo: use hadReceivedFundValue value from applicant data from db -->
     <app-review-general-details
       [projectName]="apiData.projectName"
       [projectCode]="apiData.projectCode"
+      [hadReceivedFundValue]="true"
     ></app-review-general-details
     >} @case (3) {
     <app-reviewer-score
@@ -83,7 +85,7 @@
       'mt-16': pageIndex === 3,
       'mt-18': pageIndex === 4,
       'mt-33': pageIndex === 5,
-      'mt--31': pageIndex === 6
+      'mt-31': pageIndex === 6
     }"
   >
     @if (pageIndex === 1) {
@@ -92,7 +94,7 @@
     <button class="button button--cancel" (click)="prevPage()">
       <img
         src="/assets/arrow_back.svg"
-        alt="arror back"
+        alt="arrow back"
         class="button--cancel-icon"
       />
       <div>ย้อนกลับ</div>
@@ -118,6 +120,7 @@
     </button>
     }
   </div>
+
   @if (showSuccessPopup) {
   <div [ngClass]="{ popup: true, 'popup--show': showSuccessPopup }">
     <app-com-success-popup displayText="รีวิวเรียบร้อย"></app-com-success-popup>

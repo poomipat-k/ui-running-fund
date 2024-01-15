@@ -22,14 +22,18 @@ $cell-height: 7.2rem;
   }
 
   &__header {
-    height: 4.4rem;
     padding: 1.2rem 2.4rem;
     font-family: $custom-font;
     font-weight: 400;
-    font-size: 1.8rem;
-    line-height: 0;
+    font-size: 1.6rem;
+    line-height: 1.8rem;
     text-align: left;
     color: #667085;
+    height: 7rem;
+
+    @media only screen and (min-width: $bp1) {
+      height: 4.4rem;
+    }
 
     &--gray {
       background-color: #f9fafb;
@@ -38,16 +42,22 @@ $cell-height: 7.2rem;
 
   &__cell {
     height: $cell-height;
-    padding: 1.6rem 2.4rem;
     text-align: left;
     font-family: $custom-font;
-    font-size: 1.8rem;
+    font-size: 1.6rem;
     line-height: 2rem;
     font-weight: 400;
     color: #667085;
 
     // Parent of download icon position absolute
     position: relative;
+
+    padding: 1.6rem;
+
+    @media only screen and (min-width: $bp1) {
+      font-size: 1.8rem;
+      padding: 1.6rem 2.4rem;
+    }
 
     &--bold {
       font-weight: 500;
@@ -56,6 +66,11 @@ $cell-height: 7.2rem;
 
     &--header-compact {
       padding: 1rem;
+      text-align: center;
+      line-height: 2.2rem;
+      @media only screen and (min-width: $bp1) {
+        line-height: 1.8rem;
+      }
     }
 
     &--compact {
@@ -99,25 +114,79 @@ $cell-height: 7.2rem;
 }
 
 // Utils classes
-.width {
-  &-92 {
-    width: 9.2rem;
-  }
-  &-176 {
-    width: 17.6rem;
-  }
-  &-150 {
-    width: 15rem;
-  }
-  &-200 {
-    width: 20rem;
+.col {
+  &-projectCode {
+    width: 12rem;
+    padding: 1.2rem 1.6rem;
+    @media only screen and (min-width: $bp1) {
+      padding: 1.2rem 2.4rem;
+      width: 14rem;
+    }
   }
 
-  &-215 {
-    width: 21.5rem;
+  &-applyDate {
+    width: 17.6rem;
+    padding: 1.2rem 1.6rem;
+    @media only screen and (min-width: $bp1) {
+      padding: 1.2rem 2.4rem;
+      width: 21rem;
+    }
+  }
+
+  &-projectName {
+    padding: 1.2rem 1.6rem;
+    @media only screen and (min-width: $bp1) {
+      padding: 1.2rem 2.4rem;
+    }
+  }
+
+  &-download {
+    width: 9.9rem;
+    // Small screen
+    @media only screen and (min-width: $bp1) {
+      width: 14.3rem;
+    }
+  }
+
+  &-status {
+    width: 17.8rem;
+    padding: 1.2rem 1.6rem;
+    @media only screen and (min-width: $bp1) {
+      padding: 1.2rem 2.4rem;
+    }
+  }
+
+  &-reviewDate {
+    width: 17.6rem;
+    padding: 1.2rem 1.6rem;
+    @media only screen and (min-width: $bp1) {
+      padding: 1.2rem 2.4rem;
+      width: 21rem;
+    }
+  }
+
+  &-summaryTopic {
+    font-size: 1.6rem;
+    @media only screen and (min-width: $bp1) {
+      font-size: 1.8rem;
+    }
+  }
+
+  &-summaryScore {
+    width: 17.8rem;
+    padding: 1.2rem 1.6rem;
+    font-size: 1.6rem;
+    @media only screen and (min-width: $bp1) {
+      padding: 1.2rem 2.4rem;
+      font-size: 1.8rem;
+    }
   }
 }
 
 .margin-top-24 {
   margin-top: 2.4rem;
+}
+
+.text-center {
+  text-align: center;
 }

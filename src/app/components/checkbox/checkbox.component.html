@@ -2,7 +2,11 @@
 <div [formGroup]="form">
   @if (groupName) {
   <label
-    [ngClass]="{ checkbox__label: true, 'cursor-not-allow': disabled }"
+    [ngClass]="{
+      checkbox__label: true,
+      'font-size-small': fontSize === 'small',
+      'cursor-not-allow': disabled
+    }"
     [formGroupName]="groupName"
   >
     <input
@@ -30,7 +34,13 @@
     </svg>
   </label>
   } @else {
-  <label [ngClass]="{ checkbox__label: true, 'cursor-not-allow': disabled }">
+  <label
+    [ngClass]="{
+      checkbox__label: true,
+      'font-size-small': fontSize === 'small',
+      'cursor-not-allow': disabled
+    }"
+  >
     <input
       type="checkbox"
       [value]="value"
@@ -60,7 +70,13 @@
 </div>
 
 } @else {
-<label [ngClass]="{ checkbox__label: true, 'cursor-not-allow': disabled }">
+<label
+  [ngClass]="{
+    checkbox__label: true,
+    'font-size-small': fontSize === 'small',
+    'cursor-not-allow': disabled
+  }"
+>
   <input
     type="checkbox"
     [name]="name"

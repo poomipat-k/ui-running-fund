@@ -5,15 +5,13 @@
   width: 100%;
   height: $footer-height;
   padding-top: 1.6rem;
-  margin-top: 1.4rem;
 
   &__horizontal-line {
     border-top: 1px solid #667085;
-    padding-bottom: 1.6rem;
+    padding-bottom: 2.4rem;
   }
 
   &__container {
-    margin-top: 1.6rem;
     height: 11.2rem;
     display: flex;
     justify-content: space-between;
@@ -22,7 +20,11 @@
   &__group-left {
     display: flex;
     align-items: center;
-    height: 7rem;
+    height: 5.7rem;
+
+    @media only screen and (min-width: $bp1) {
+      height: 7rem;
+    }
   }
 
   &__group-right {
@@ -37,24 +39,32 @@
       font-size: 2rem;
       line-height: 3.3rem;
       font-weight: 600;
-      color: #344054;
+      color: $gray700;
     }
 
     &--details {
       font-weight: 400;
       font-size: 1.5rem;
       line-height: 2.475rem;
-      color: #344054;
+      color: $gray700;
     }
   }
 
   &__logo {
     &--1 {
-      height: 6.5rem;
+      height: 5.3rem;
+
+      @media only screen and (min-width: $bp1) {
+        height: 6.5rem;
+      }
     }
 
     &--2 {
-      height: 7rem;
+      height: 5.7rem;
+
+      @media only screen and (min-width: $bp1) {
+        height: 7rem;
+      }
     }
   }
 
@@ -63,7 +73,7 @@
     font-weight: 600;
     font-size: 2rem;
     line-height: 3.3rem;
-    color: #344054;
+    color: $gray700;
     margin-bottom: 4px;
   }
 
@@ -80,8 +90,12 @@
   font-weight: 600;
 }
 
-.margin-left-14 {
-  margin-left: 1.4rem;
+.margin-left-footer-1 {
+  margin-left: 1.14rem;
+
+  @media only screen and (min-width: $bp1) {
+    margin-left: 1.4rem;
+  }
 }
 
 .margin-left-32 {

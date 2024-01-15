@@ -41,7 +41,7 @@
     font-style: normal;
     font-weight: 400;
     line-height: normal;
-    color: #344054;
+    color: $gray700;
 
     cursor: pointer;
     -webkit-user-select: none;
@@ -71,6 +71,11 @@
     &--review-3b {
       display: flex;
       padding-left: 2.8rem;
+
+      font-size: 1.6rem;
+      @media only screen and (min-width: $bp1) {
+        font-size: 1.8rem;
+      }
     }
   }
 

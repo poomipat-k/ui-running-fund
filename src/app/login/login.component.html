@@ -1,27 +1,69 @@
-<div class="login">
-  <div class="login__dropdown">
-    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-      <label for="reviewer" class="login__label"
-        >เลือกผู้รีวิว เพื่อเข้าใช้งาน:</label
-      >
-      <select
-        name="reviewer"
-        id="reviewer"
-        class="login__dropdown-box"
-        formControlName="reviewer"
-      >
-        @for (review of reviewers; track review.id) {
-        <option class="login__dropdown-item" [value]="review.id">
-          {{ review.firstName }}
-        </option>
-        }
-      </select>
+<div class="container">
+  <div class="banner-container">
+    <img src="/assets/login_banner.png" alt="adult running" />
+  </div>
+  <div class="main">
+    <div class="main__card">
+      <h1 class="main__header">เข้าสู่ระบบ</h1>
+      <form [formGroup]="form" (ngSubmit)="onSubmit()" class="form">
+        <div class="mgb-24">
+          <label class="input__label">ที่อยู่อีเมล*</label>
+          <input
+            type="text"
+            formControlName="email"
+            name="email"
+            placeholder="กรอกที่อยู่อีเมล"
+            class="input__text"
+            (keyup)="onFieldValueChanged()"
+          />
+        </div>
 
-      <div class="login__button-container">
-        <button type="submit" [disabled]="submitButtonDisabled">
-          เข้าสู่ระบบ
-        </button>
+        <div>
+          <label class="input__label">รหัสผ่าน*</label>
+          <div class="input__password-container">
+            <input
+              name="password"
+              [type]="passwordType"
+              formControlName="password"
+              [autocomplete]="true"
+              placeholder="กรอกรหัสผ่าน"
+              class="input__text"
+              (keyup)="onFieldValueChanged()"
+            />
+            <img
+              [src]="passwordIconUrl"
+              alt="password icon"
+              class="input__password-icon"
+              (click)="onTogglePassword()"
+            />
+          </div>
+        </div>
+
+        <div class="form-helper">
+          @if ((!form.valid || apiError) && form.touched && everSubmitted) {
+          <div class="form-helper__error-container">
+            <img src="/assets/error_icon_login.svg" alt="error icon" />
+            <p class="form-helper__error-message">
+              เกิดข้อผิดพลาด รบกวนตรวจสอบอีเมลหรือรหัสผ่านอีกครั้ง
+            </p>
+          </div>
+          }
+          <div class="form-helper__forgot-password">
+            <a
+              routerLink="/password/forgot"
+              class="form-helper__form-helper__forgot-password-link"
+              >ลืมรหัสผ่าน</a
+            >
+          </div>
+        </div>
+
+        <div><button class="button">เข้าสู่ระบบ</button></div>
+      </form>
+
+      <div class="sign-up">
+        <p class="sign-up__text">ยังไม่ได้ลงทะเบียน ?</p>
+        <a routerLink="/signup" class="sign-up__link">ลงทะเบียน</a>
       </div>
-    </form>
+    </div>
   </div>
 </div>

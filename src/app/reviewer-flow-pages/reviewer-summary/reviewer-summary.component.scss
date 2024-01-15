@@ -10,6 +10,10 @@
 
     &--2 {
       flex: 1;
+      font-size: 1.6rem;
+      @media only screen and (min-width: $bp1) {
+        font-size: 1.8rem;
+      }
     }
   }
 }
@@ -20,7 +24,7 @@
   font-style: normal;
   font-weight: 500;
   line-height: 3.6rem;
-  color: #344054;
+  color: $gray700;
 }
 
 .icon {
@@ -28,7 +32,7 @@
   width: 3.6rem;
   flex-shrink: 0;
   border-radius: 50%;
-  background-color: #344054;
+  background-color: $gray700;
 
   font-family: $custom-font;
   font-size: 1.8rem;
@@ -54,7 +58,7 @@
   font-style: normal;
   font-weight: 400;
   line-height: normal;
-  color: #344054;
+  color: $gray700;
 
   &:disabled {
     cursor: not-allowed;

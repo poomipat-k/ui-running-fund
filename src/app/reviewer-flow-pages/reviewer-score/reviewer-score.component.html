@@ -78,7 +78,9 @@
           }
         </div>
       </div>
-      <!-- <button [ngClass]="{hide: form.disabled}" (click)="fillAll()">Fill all</button> -->
+      <button [ngClass]="{ hide: form.disabled }" (click)="fillAll()">
+        Fill all
+      </button>
       @if (form.value?.review?.reviewSummary === 'to_be_revised' ) {
       <div id="improvement" class="improvement">
         <div class="improvement__text">
@@ -94,6 +96,7 @@
               groupName="improvement"
               [controlName]="item.controlName"
               [disabled]="form.disabled"
+              fontSize="small"
             ></app-com-checkbox>
           </div>
           }

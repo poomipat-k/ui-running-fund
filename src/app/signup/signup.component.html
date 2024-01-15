@@ -1,0 +1,300 @@
+<div class="container">
+  <h1 class="header">ลงทะเบียน</h1>
+
+  <form [formGroup]="form" (ngSubmit)="onSubmit()" class="form">
+    <div class="container__form">
+      <div class="input__box">
+        <label class="input__label">ที่อยู่อีเมล*</label>
+        <input
+          type="text"
+          formControlName="email"
+          name="email"
+          placeholder="กรอกที่อยู่อีเมล"
+          class="input__text"
+          (keyup)="onFieldValueChanged('email')"
+        />
+        @if (emailControl?.errors && emailControl?.touched && hadSubmitted) {
+        <div class="error error__absolute">
+          <img src="/assets/error_icon.svg" alt="error icon" />
+          <p class="error__text">
+            {{ getUIErrorMessage(emailControl?.errors, "ที่อยู่อีเมล") }}
+          </p>
+        </div>
+        } @else if (emailControl?.touched && hadSubmitted && apiErrors['email']
+        && apiErrors['email'].error) {
+        <div class="error error__absolute">
+          <img src="/assets/error_icon.svg" alt="error icon" />
+          <p class="error__text">
+            {{ apiErrors["email"].message }}
+          </p>
+        </div>
+        }
+      </div>
+
+      <div class="input__box">
+        <label class="input__label">ชื่อจริง*</label>
+        <input
+          type="text"
+          formControlName="firstName"
+          name="firstName"
+          placeholder="กรอกชื่อจริง"
+          class="input__text"
+        />
+
+        @if (firstNameControl?.errors && firstNameControl?.touched &&
+        hadSubmitted) {
+        <div class="error error__absolute">
+          <img src="/assets/error_icon.svg" alt="error icon" />
+          <p class="error__text">
+            {{ getUIErrorMessage(firstNameControl?.errors, "ชื่อจริง") }}
+          </p>
+        </div>
+        }
+      </div>
+
+      <div class="input__box">
+        <label class="input__label">นามสกุล*</label>
+        <input
+          type="text"
+          formControlName="lastName"
+          name="lastName"
+          placeholder="กรอกนามสกุล"
+          class="input__text"
+        />
+
+        @if (lastNameControl?.errors && lastNameControl?.touched &&
+        hadSubmitted) {
+        <div class="error error__absolute">
+          <img src="/assets/error_icon.svg" alt="error icon" />
+          <p class="error__text">
+            {{ getUIErrorMessage(lastNameControl?.errors, "นามสกุล") }}
+          </p>
+        </div>
+        }
+      </div>
+
+      <div class="input__box">
+        <label class="input__label">รหัสผ่าน*</label>
+        <div class="input__password-container">
+          <input
+            name="password"
+            [type]="passwordType"
+            formControlName="password"
+            [autocomplete]="true"
+            placeholder="กรอกรหัสผ่าน"
+            class="input__text"
+          />
+          <img
+            [src]="passwordIconUrl"
+            alt="password icon"
+            class="input__password-icon"
+            (click)="onTogglePassword()"
+          />
+        </div>
+        @if (passwordControl?.errors && passwordControl?.touched &&
+        hadSubmitted) {
+        <div class="error error__absolute">
+          <img src="/assets/error_icon.svg" alt="error icon" />
+          <p class="error__text">
+            {{ getUIErrorMessage(passwordControl?.errors, "รหัสผ่าน") }}
+          </p>
+        </div>
+        }
+      </div>
+
+      <div class="input__box">
+        <label class="input__label">ยืนยันรหัสผ่าน*</label>
+        <div class="input__password-container">
+          <input
+            name="confirmPassword"
+            [type]="confirmPasswordType"
+            formControlName="confirmPassword"
+            [autocomplete]="true"
+            placeholder="ยืนยันรหัสผ่าน"
+            class="input__text"
+          />
+          <img
+            [src]="confirmPasswordIconUrl"
+            alt="password icon"
+            class="input__password-icon"
+            (click)="onToggleConfirmPassword()"
+          />
+        </div>
+        @if (confirmPasswordControl?.errors && confirmPasswordControl?.touched
+        && hadSubmitted) {
+        <div class="error error__absolute">
+          <img src="/assets/error_icon.svg" alt="error icon" />
+          <p class="error__text">
+            {{
+              getUIErrorMessage(
+                confirmPasswordControl?.errors,
+                "ยืนยันรหัสผ่าน"
+              )
+            }}
+          </p>
+        </div>
+        } @else if (form.errors?.['confirmPasswordNotMatch'] &&
+        confirmPasswordControl?.touched && hadSubmitted) {
+        <div class="error error__absolute">
+          <img src="/assets/error_icon.svg" alt="error icon" />
+          <p class="error__text">รหัสผ่านที่ยืนยันไม่ถูกต้อง</p>
+        </div>
+        }
+      </div>
+
+      <!-- Checkboxes -->
+      <div class="mgt-32">
+        <label class="checkbox__label">
+          <input
+            type="checkbox"
+            class="checkbox__box"
+            formControlName="termsAndConditions"
+          />
+          <div>
+            <span>ฉันได้อ่านและยอมรับ</span>
+            <span
+              class="checkbox__label--popupLink"
+              (click)="onTACLinkClicked($event)"
+            >
+              ข้อตกลงและเงื่อนไขการใช้งาน</span
+            >
+          </div>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="14"
+            height="15"
+            viewBox="0 0 14 15"
+            fill="none"
+            class="checkbox__mark"
+          >
+            <path
+              d="M11.6666 4L5.24992 10.4167L2.33325 7.5"
+              stroke="#344054"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="checkbox__path"
+            />
+          </svg>
+        </label>
+        @if (termsAndConditionsControl?.errors &&
+        termsAndConditionsControl?.touched && hadSubmitted) {
+        <div class="error">
+          <img src="/assets/error_icon.svg" alt="error icon" />
+          <p class="error__text">
+            {{
+              getUIErrorMessage(
+                termsAndConditionsControl?.errors,
+                "ข้อตกลงและเงื่อนไขการใช้วงาน"
+              )
+            }}
+          </p>
+        </div>
+        }
+
+        <label class="checkbox__label mgt-8">
+          <input
+            type="checkbox"
+            class="checkbox__box"
+            formControlName="privacy"
+          />
+          <div>
+            <span>ฉันได้อ่านและยอมรับ</span>
+            <span
+              class="checkbox__label--popupLink"
+              (click)="onPrivacyLinkClicked($event)"
+            >
+              นโยบายคุ้มครองความเป็นส่วนตัว
+            </span>
+          </div>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="14"
+            height="15"
+            viewBox="0 0 14 15"
+            fill="none"
+            class="checkbox__mark"
+          >
+            <path
+              d="M11.6666 4L5.24992 10.4167L2.33325 7.5"
+              stroke="#344054"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="checkbox__path"
+            />
+          </svg>
+        </label>
+        @if (privacyControl?.errors && privacyControl?.touched && hadSubmitted)
+        {
+        <div class="error">
+          <img src="/assets/error_icon.svg" alt="error icon" />
+          <p class="error__text">
+            {{
+              getUIErrorMessage(
+                privacyControl?.errors,
+                "นโยบายคุ้มครองความเป็นส่วนตัว"
+              )
+            }}
+          </p>
+        </div>
+        }
+      </div>
+    </div>
+    <!-- button -->
+    <div>
+      <button class="button">ลงทะเบียน</button>
+    </div>
+  </form>
+  <!-- link to login page -->
+  <div class="login">
+    <p class="login__text">มีบัญชีอยู่แล้ว ?</p>
+    <a routerLink="/login" class="login__link">เข้าสู่ระบบ</a>
+  </div>
+</div>
+
+<app-com-modal #tacModal>
+  <div>
+    <h1 style="text-align: center">Test T&C</h1>
+  </div>
+</app-com-modal>
+<app-com-modal #privacyModal>
+  <div>
+    <h1 style="text-align: center">Test Privacy</h1>
+    <p style="font-size: 20px">
+      Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aperiam, dicta
+      ut. Dolores totam dicta maxime dolorum nobis quisquam ducimus, eveniet eos
+      sint tempora nemo asperiores ipsam dignissimos dolorem odio suscipit.
+    </p>
+    <p style="font-size: 20px">
+      Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aperiam, dicta
+      ut. Dolores totam dicta maxime dolorum nobis quisquam ducimus, eveniet eos
+      sint tempora nemo asperiores ipsam dignissimos dolorem odio suscipit.
+    </p>
+    <p style="font-size: 20px">
+      Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aperiam, dicta
+      ut. Dolores totam dicta maxime dolorum nobis quisquam ducimus, eveniet eos
+      sint tempora nemo asperiores ipsam dignissimos dolorem odio suscipit.
+    </p>
+    <p style="font-size: 20px">
+      Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aperiam, dicta
+      ut. Dolores totam dicta maxime dolorum nobis quisquam ducimus, eveniet eos
+      sint tempora nemo asperiores ipsam dignissimos dolorem odio suscipit.
+    </p>
+    <p style="font-size: 20px">
+      Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aperiam, dicta
+      ut. Dolores totam dicta maxime dolorum nobis quisquam ducimus, eveniet eos
+      sint tempora nemo asperiores ipsam dignissimos dolorem odio suscipit.
+    </p>
+    <p style="font-size: 20px">
+      Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aperiam, dicta
+      ut. Dolores totam dicta maxime dolorum nobis quisquam ducimus, eveniet eos
+      sint tempora nemo asperiores ipsam dignissimos dolorem odio suscipit.
+    </p>
+    <p style="font-size: 20px">
+      Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aperiam, dicta
+      ut. Dolores totam dicta maxime dolorum nobis quisquam ducimus, eveniet eos
+      sint tempora nemo asperiores ipsam dignissimos dolorem odio suscipit.
+    </p>
+  </div>
+</app-com-modal>

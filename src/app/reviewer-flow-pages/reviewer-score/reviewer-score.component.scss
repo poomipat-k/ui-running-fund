@@ -4,30 +4,28 @@
   display: flex;
 }
 
-.sticky {
-  position: sticky;
-  top: 10rem;
-  align-self: flex-start;
-}
-
 .main {
   flex: 1;
+
+  font-size: 1.6rem;
+  line-height: normal;
+  @media only screen and (min-width: $bp1) {
+    font-size: 1.8rem;
+  }
 
   &__group {
     padding: 1rem 0px 1rem 2rem;
     background-color: #f2edeb;
 
     font-family: $custom-font-looped;
-    font-size: 1.8rem;
     font-style: normal;
     font-weight: 500;
     line-height: normal;
-    color: #344054;
+    color: $gray700;
 
     &::after {
       content: "*";
       font-family: $custom-font-looped;
-      font-size: 1.8rem;
       font-style: normal;
       font-weight: 500;
       line-height: normal;
@@ -40,19 +38,21 @@
   padding: 2rem 2rem 3rem 5rem;
   background-color: white;
   border-bottom: 1px dashed #cdc1be;
+  font-size: 1.6rem;
+  @media only screen and (min-width: $bp1) {
+    font-size: 1.8rem;
+  }
 
   &__text {
     font-family: $custom-font-looped;
-    font-size: 1.8rem;
     font-style: normal;
     font-weight: 500;
     line-height: normal;
-    color: #344054;
+    color: $gray700;
 
     &::after {
       content: "*";
       font-family: $custom-font-looped;
-      font-size: 1.8rem;
       font-style: normal;
       font-weight: 500;
       line-height: normal;
@@ -91,7 +91,7 @@
     font-style: normal;
     font-weight: 400;
     line-height: normal;
-    color: #344054;
+    color: $gray700;
   }
 }
 
@@ -111,13 +111,15 @@
 .header {
   flex-basis: 28.4rem;
   display: flex;
+  margin-right: 1.6rem;
+  transform: translateX(-8px);
 
   &__icon {
     height: 3.6rem;
     flex-basis: 3.6rem;
     flex-shrink: 0;
     border-radius: 50%;
-    background-color: #344054;
+    background-color: $gray700;
 
     font-family: $custom-font;
     font-size: 1.8rem;
@@ -133,7 +135,7 @@
   font-weight: 700;
   font-size: 1.8rem;
   line-height: normal;
-  color: #344054;
+  color: $gray700;
   flex-shrink: 0;
 }
 
@@ -141,6 +143,7 @@
   position: sticky;
   margin-top: 6px;
   top: 9rem;
+  transform: translateX(-4.9rem);
 
   &__header {
     font-family: $custom-font-looped;
@@ -160,7 +163,7 @@
   }
 
   &__text {
-    color: #344054;
+    color: $gray700;
     font-family: $custom-font-looped;
     font-size: 1.8rem;
     font-style: normal;

@@ -16,7 +16,7 @@
 
   &__dropdown {
     position: absolute;
-    z-index: 10;
+    z-index: $dropdown-z;
     top: 2.4rem;
     right: 0;
 
@@ -51,4 +51,10 @@
 
 .hide {
   display: none;
+}
+
+.mgr {
+  &-8 {
+    margin-right: 8px;
+  }
 }

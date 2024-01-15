@@ -1,29 +1,27 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnDestroy, OnInit, inject } from '@angular/core';
+import { HttpErrorResponse } from '@angular/common/http';
+import { Component, inject } from '@angular/core';
 import {
   FormControl,
   FormGroup,
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { Router } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { Router, RouterModule } from '@angular/router';
+import { Subscription, catchError, throwError } from 'rxjs';
 import { ThemeService } from '../services/theme.service';
 import { UserService } from '../services/user.service';
 import { BackgroundColor } from '../shared/enums/background-color';
-import { User } from '../shared/models/user';
 
 @Component({
   selector: 'app-login',
   standalone: true,
+  imports: [CommonModule, ReactiveFormsModule, RouterModule],
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss'],
-  imports: [CommonModule, ReactiveFormsModule],
+  styleUrl: './login.component.scss',
 })
-export class LoginComponent implements OnInit, OnDestroy {
-  protected loginForm: FormGroup;
-
-  protected reviewers: User[] = [];
+export class LoginComponent {
+  protected form: FormGroup;
 
   private userService: UserService = inject(UserService);
   private router: Router = inject(Router);
@@ -31,24 +29,15 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   private readonly subs: Subscription[] = [];
 
-  get submitButtonDisabled(): boolean {
-    return false;
-  }
+  protected passwordIconUrl = '/assets/eye_open.svg';
+  protected passwordType = 'password';
+
+  protected everSubmitted = false;
+  protected apiError = false;
 
   ngOnInit(): void {
     this.themeService.changeBackgroundColor(BackgroundColor.white);
-
     this.initForm();
-
-    this.subs.push(
-      this.userService.getReviewers().subscribe((result) => {
-        if (!result) {
-          console.error('====Cannot get Reviewers');
-        } else {
-          this.reviewers = result;
-        }
-      })
-    );
   }
 
   ngOnDestroy(): void {
@@ -56,19 +45,53 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   private initForm(): void {
-    this.loginForm = new FormGroup({
-      reviewer: new FormControl(null, [Validators.required]),
+    this.form = new FormGroup({
+      email: new FormControl(null, [Validators.required, Validators.email]),
+      password: new FormControl(null, [
+        Validators.required,
+        Validators.minLength(8),
+        Validators.maxLength(60),
+      ]),
     });
   }
 
+  onTogglePassword(): void {
+    if (this.passwordType === 'password') {
+      this.passwordType = 'text';
+      this.passwordIconUrl = '/assets/eye_closed.svg';
+    } else {
+      this.passwordType = 'password';
+      this.passwordIconUrl = '/assets/eye_open.svg';
+    }
+  }
+
+  onFieldValueChanged() {
+    if (this.apiError) {
+      this.apiError = false;
+    }
+  }
+
   onSubmit() {
-    const reviewerId = this.loginForm.value?.reviewer;
-    if (reviewerId & +reviewerId) {
-      const user = this.reviewers.find((r) => r.id === +reviewerId);
-      if (user) {
-        this.userService.login(user);
-        this.router.navigate(['/']);
-      }
+    this.form.markAllAsTouched();
+    this.everSubmitted = true;
+    const formData = this.form.value;
+    if (this.form.valid) {
+      this.subs.push(
+        this.userService
+          .login(formData?.email, formData?.password)
+          .pipe(
+            catchError((err: HttpErrorResponse) => {
+              this.apiError = true;
+              return throwError(() => err);
+            })
+          )
+          .subscribe((result) => {
+            if (result.success) {
+              this.apiError = false;
+              this.router.navigate(['/dashboard']);
+            }
+          })
+      );
     }
   }
 }

@@ -1,0 +1,55 @@
+@import "../../styles.scss";
+@import "../app.component.scss";
+
+.dashboard {
+  font-family: $custom-font;
+
+  padding-left: $navbar-padding-s;
+  padding-right: $navbar-padding-s;
+
+  @media only screen and (min-width: $bp1) {
+    padding-left: $navbar-padding;
+    padding-right: $navbar-padding;
+  }
+
+  &__container {
+    width: 100%;
+    margin-top: 5.9rem;
+  }
+
+  &__header {
+    &-container {
+      display: flex;
+      align-items: center;
+    }
+
+    &-text {
+      font-weight: 600;
+      font-size: 2rem;
+      line-height: 2.8rem;
+      color: $gray700;
+      margin-right: 4px;
+    }
+
+    &-period {
+      font-weight: 400;
+      font-size: 1.8rem;
+      line-height: 2.8rem;
+      color: #667085;
+    }
+  }
+
+  &__toolbar {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 8px;
+
+    &-count {
+      font-family: $custom-font;
+      font-weight: 400;
+      font-size: 1.6rem;
+      line-height: 2rem;
+      color: #667085;
+    }
+  }
+}
