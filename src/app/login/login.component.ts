@@ -88,7 +88,7 @@ export class LoginComponent {
           .subscribe((result) => {
             if (result.success) {
               this.apiError = false;
-              this.router.navigate(['/']);
+              this.router.navigate(['/dashboard']);
             }
           })
       );

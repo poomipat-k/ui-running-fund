@@ -175,11 +175,11 @@ export class ReviewerFlowPagesComponent implements OnInit, OnDestroy {
       this.pageIndex--;
       return;
     }
-    this.routerService.navigate(['/']);
+    this.routerService.navigate(['/dashboard']);
   }
 
   protected redirectToHomePage(): void {
-    this.routerService.navigate(['/']);
+    this.routerService.navigate(['/dashboard']);
   }
 
   private prepareData() {

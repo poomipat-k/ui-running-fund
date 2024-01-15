@@ -15,7 +15,7 @@ import { SignupComponent } from './signup/signup.component';
 
 const routeConfig: Routes = [
   {
-    path: '',
+    path: 'dashboard',
     component: HomeComponent,
     title: 'Dashboard',
     canActivate: [authGuard],
