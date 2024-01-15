@@ -105,7 +105,7 @@ export class CaptchaComponent implements OnDestroy {
     this.captchaModal.showModal();
   }
 
-  onCloseCaptcha() {
+  closeCaptchaModal() {
     this.captchaModal.closeModal();
   }
 

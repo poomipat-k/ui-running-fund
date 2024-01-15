@@ -62,7 +62,7 @@ export class ForgotPasswordComponent implements OnInit, OnDestroy {
   onNext() {
     this.form.markAllAsTouched();
     this.everSubmitted = true;
-    if (this.form.valid) {
+    if (this.form.valid && !this.apiError) {
       this.captchaComponent.openCaptchaModal();
     }
   }
@@ -91,12 +91,14 @@ export class ForgotPasswordComponent implements OnInit, OnDestroy {
           .sendForgotPasswordEmail(formData?.email, captchaId, captchaValue)
           .pipe(
             catchError((err: HttpErrorResponse) => {
-              this.captchaComponent.refreshCaptcha();
               if (
                 err?.error?.name !== 'captchaValue' &&
                 err?.error?.name !== 'captchaId'
               ) {
                 this.apiError = true;
+                this.captchaComponent.closeCaptchaModal();
+              } else {
+                this.captchaComponent.refreshCaptcha();
               }
               this.isLoading = false;
               return throwError(() => err);
