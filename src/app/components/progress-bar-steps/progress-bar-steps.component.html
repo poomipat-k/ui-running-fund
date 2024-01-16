@@ -13,7 +13,19 @@
         active: currentStep - startStep >= $index
       }"
     >
+      @if ($index >= maxStep - 1) {
       {{ $index + 1 }}
+      } @else if (currentStep - startStep > $index) {
+      <div>
+        <app-com-svg-check
+          pathClass="color--white"
+          svgClass="size--progress-bar"
+        ></app-com-svg-check>
+      </div>
+
+      } @else {
+      {{ $index + 1 }}
+      }
     </div>
     @for (textLine of item; track $index) {
     <p class="step__detail">{{ textLine }}</p>

@@ -6,7 +6,11 @@
     <app-com-progress-bar-steps
       [steps]="progressBarSteps"
       [currentStep]="currentStep"
+      [maxStep]="progressBarSteps.length"
     ></app-com-progress-bar-steps>
+  </div>
+  <div>
+    <app-applicant-collaborate></app-applicant-collaborate>
   </div>
   <div style="display: flex">
     <button style="padding: 2rem" (click)="reduceStep()">Back</button>
