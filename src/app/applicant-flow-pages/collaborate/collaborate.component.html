@@ -1,1 +1,24 @@
-<p>collaborate works!</p>
+<div class="container">
+  <h2 class="header">
+    การประสานงานกับเครือข่ายสมาพันธ์เดิน-วิ่งเพื่อสุขภาพไทยภาค
+  </h2>
+  <div class="main mgt-31">
+    <h3 class="main__name">
+      โครงการมีการประสานงานกับเครือข่ายสมาพันธ์เดิน-วิ่งเพื่อสุขภาพไทยภาค
+      และมีหนังสือนำส่ง
+    </h3>
+    <div class="main__radioBox">
+      <app-com-radio
+        [form]="form"
+        groupName="collaboration"
+        controlName="collaborated"
+        [options]="radioOptions"
+        radioStyle="review-3b"
+      ></app-com-radio>
+    </div>
+    <div class="main__uploadBox">
+      <app-com-upload-button></app-com-upload-button>
+      <p>แนบหนังสือนำส่ง (PDF, JPG ขนาดไม่เกิน 1 GB)</p>
+    </div>
+  </div>
+</div>

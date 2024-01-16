@@ -9,9 +9,13 @@
       [maxStep]="progressBarSteps.length"
     ></app-com-progress-bar-steps>
   </div>
-  <div>
-    <app-applicant-collaborate></app-applicant-collaborate>
-  </div>
+
+  <form [formGroup]="form">
+    @switch (currentStep) { @case (0) {
+    <app-applicant-collaborate [form]="form"></app-applicant-collaborate>
+    } }
+  </form>
+
   <div style="display: flex">
     <button style="padding: 2rem" (click)="reduceStep()">Back</button>
     <button style="padding: 2rem; margin-left: 2rem" (click)="addStep()">
@@ -19,3 +23,12 @@
     </button>
   </div>
 </div>
+
+<!-- <ng-template>
+  <div style="display: flex">
+    <button style="padding: 2rem" (click)="reduceStep()">Back</button>
+    <button style="padding: 2rem; margin-left: 2rem" (click)="addStep()">
+      Next
+    </button>
+  </div>
+</ng-template> -->

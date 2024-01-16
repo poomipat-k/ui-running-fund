@@ -1,0 +1,57 @@
+@import "../../../styles.scss";
+
+.button {
+  padding: 1.2rem 1.6rem 1.2rem 1.4rem;
+  border-radius: 6px;
+  border: 1px solid #667085;
+  outline: none;
+  background-color: #fff;
+  cursor: pointer;
+  color: $gray700;
+  font-family: $custom-font;
+
+  &:hover {
+    color: #fb6514;
+    border: 1px solid #fb6514;
+
+    & .clipPath {
+      fill: #fb6514;
+    }
+  }
+
+  &:active {
+    color: #9c2a10;
+    border: 1px solid #9c2a10;
+
+    & .clipPath {
+      fill: #9c2a10;
+    }
+  }
+
+  &:disabled {
+    color: #667085;
+    border: 1px solid #667085;
+    background-color: #e5e5e5;
+    cursor: not-allowed;
+
+    & .clipPath {
+      fill: #667085;
+    }
+  }
+
+  &__content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+
+    &--text {
+      text-align: center;
+      font-size: 1.6rem;
+      font-style: normal;
+      font-weight: 500;
+      line-height: 2.6rem;
+      height: 2.6rem;
+    }
+  }
+}
