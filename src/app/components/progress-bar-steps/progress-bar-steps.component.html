@@ -1,1 +1,23 @@
-<p>progress-bar-steps works!</p>
+<div class="container">
+  @for (item of steps; track $index) {
+  <div
+    [ngClass]="{
+      'step-box': true,
+      'progress-bar-active': currentStep - startStep >= $index
+    }"
+  >
+    <div
+      [ngClass]="{
+        step: true,
+        'mgb-9': true,
+        active: currentStep - startStep >= $index
+      }"
+    >
+      {{ $index + 1 }}
+    </div>
+    @for (textLine of item; track $index) {
+    <p class="step__detail">{{ textLine }}</p>
+    }
+  </div>
+  }
+</div>

@@ -8,4 +8,24 @@ import { ProgressBarStepsComponent } from '../components/progress-bar-steps/prog
   templateUrl: './applicant-flow-pages.component.html',
   styleUrl: './applicant-flow-pages.component.scss',
 })
-export class ApplicantFlowPagesComponent {}
+export class ApplicantFlowPagesComponent {
+  protected progressBarSteps = [
+    ['ข้อมูลพื้นฐานโครงการ'],
+    ['ข้อมูลการติดต่อ'],
+    ['ข้อมูลข้อเสนอโครงการ', 'และแผนบริหารจัดการ'],
+    ['ประสบการณ์', 'ดำเนินการโครงการ'],
+    ['ความต้องการ', 'ขอรับการสนับสนุน'],
+    ['เอกสารแนบเพิ่มเติม', '(ถ้ามี)'],
+    ['ยืนยัน'],
+  ];
+
+  protected currentStep = 0;
+
+  addStep() {
+    this.currentStep += 1;
+  }
+
+  reduceStep() {
+    this.currentStep -= 1;
+  }
+}

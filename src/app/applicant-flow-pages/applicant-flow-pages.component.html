@@ -2,4 +2,16 @@
   <h1 class="header__mainText">
     แบบฟอร์มข้อเสนอโครงการสนับสนุนทุนอุปถัมภ์งานเดิน-วิ่งเพื่อสุขภาพ
   </h1>
+  <div class="mgt-29">
+    <app-com-progress-bar-steps
+      [steps]="progressBarSteps"
+      [currentStep]="currentStep"
+    ></app-com-progress-bar-steps>
+  </div>
+  <div style="display: flex">
+    <button style="padding: 2rem" (click)="reduceStep()">Back</button>
+    <button style="padding: 2rem; margin-left: 2rem" (click)="addStep()">
+      Next
+    </button>
+  </div>
 </div>
