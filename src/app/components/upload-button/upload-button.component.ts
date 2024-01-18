@@ -18,7 +18,8 @@ export class UploadButtonComponent {
   onFileSelected(event: Event) {
     const element = event.target as HTMLInputElement;
     let fileList: FileList | null = element.files;
-    if (fileList) {
+
+    if (fileList && fileList?.length > 0) {
       const names: string[] = [];
       for (let i = 0; i < fileList.length; i++) {
         if (fileList.item(i) && fileList.item(i)?.name?.length) {

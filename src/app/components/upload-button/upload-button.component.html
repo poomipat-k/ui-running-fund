@@ -4,6 +4,7 @@
   (change)="onFileSelected($event)"
   multiple
   accept="image/*, .pdf, .doc, .docx "
+  [disabled]="disabled"
   #fileUpload
 />
 
@@ -46,7 +47,7 @@
     @for (fn of fileNames; track $index) {
     <p style="font-size: 2rem">{{ fn }}</p>
     } @empty {
-    <p>No file uploaded yet.</p>
+    <p>กดเพื่ออัพโหลดไฟล์</p>
     }
   </div>
 </div>

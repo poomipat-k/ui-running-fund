@@ -10,16 +10,30 @@
     <div class="main__radioBox">
       <app-com-radio
         [form]="form"
-        groupName="collaboration"
         controlName="collaborated"
         [options]="radioOptions"
         radioStyle="review-3b"
       ></app-com-radio>
+      @if (showCollaborationError) {
+      <div class="error mgl-28">
+        <img src="/assets/error_icon.svg" alt="error icon" />
+        <p class="error__text">กรุณาเลือกตัวเลือก</p>
+      </div>
+      }
     </div>
     <div class="main__uploadBox">
       <app-com-upload-button
         (filesChanged)="onFilesChanged($event)"
+        [disabled]="uploadButtonDisabled"
       ></app-com-upload-button>
+
+      @if (showCollaborationError) {
+      <div class="error mgl-28">
+        <img src="/assets/error_icon.svg" alt="error icon" />
+        <p class="error__text">กรุณาเลือกตัวเลือก</p>
+      </div>
+      }
+
       <p class="main__uploadLabel">
         แนบหนังสือนำส่ง (PDF, JPG ขนาดไม่เกิน 25 MB)
       </p>

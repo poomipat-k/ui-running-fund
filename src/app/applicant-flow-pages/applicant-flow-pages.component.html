@@ -13,6 +13,7 @@
   <form [formGroup]="form">
     @switch (currentStep) { @case (0) {
     <app-applicant-collaborate
+      #collaborateComponent
       [form]="form"
       (filesChanged)="handleFilesChanged($event)"
     ></app-applicant-collaborate>
@@ -23,7 +24,7 @@
 
   <div style="display: flex">
     <button style="padding: 2rem" (click)="reduceStep()">Back</button>
-    <button style="padding: 2rem; margin-left: 2rem" (click)="addStep()">
+    <button style="padding: 2rem; margin-left: 2rem" (click)="nextPage()">
       Next
     </button>
     <button style="padding: 2rem; margin-left: 2rem" (click)="submitForm()">

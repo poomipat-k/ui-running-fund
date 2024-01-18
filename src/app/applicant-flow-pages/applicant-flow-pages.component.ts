@@ -1,4 +1,4 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit, ViewChild, inject } from '@angular/core';
 import {
   FormControl,
   FormGroup,
@@ -25,6 +25,8 @@ import { GeneralDetailsComponent } from './general-details/general-details.compo
   styleUrl: './applicant-flow-pages.component.scss',
 })
 export class ApplicantFlowPagesComponent implements OnInit {
+  @ViewChild('collaborateComponent') collaborateComponent: CollaborateComponent;
+
   private readonly themeService: ThemeService = inject(ThemeService);
   private readonly projectService: ProjectService = inject(ProjectService);
 
@@ -50,10 +52,29 @@ export class ApplicantFlowPagesComponent implements OnInit {
 
   private initForm() {
     this.form = new FormGroup({
-      collaboration: new FormGroup({
-        collaborated: new FormControl(null, Validators.required),
-      }),
+      collaborated: new FormControl(null, Validators.required),
     });
+  }
+
+  protected nextPage(): void {
+    console.log('===nextPage');
+    if (this.currentStep === this.progressBarSteps.length) {
+      this.submitForm();
+      return;
+    }
+
+    if (this.currentStep === 0 && this.collaborateComponent.validToGoNext()) {
+      this.currentStep++;
+    }
+    if (this.currentStep === 1 && this.collaborateComponent.validToGoNext()) {
+      this.currentStep++;
+    } else if (this.currentStep === 2) {
+      this.currentStep++;
+    } else if (this.currentStep === 3) {
+      this.currentStep++;
+    } else if (this.currentStep === 4) {
+      this.currentStep++;
+    }
   }
 
   handleFilesChanged(files: FileList) {
@@ -70,11 +91,6 @@ export class ApplicantFlowPagesComponent implements OnInit {
     this.projectService.addProject(formData).subscribe((result) => {
       console.log('===result', result);
     });
-  }
-
-  addStep() {
-    this.currentStep += 1;
-    console.log('===this.form', this.form);
   }
 
   reduceStep() {
