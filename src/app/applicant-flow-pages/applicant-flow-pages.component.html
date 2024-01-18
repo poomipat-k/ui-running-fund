@@ -19,6 +19,7 @@
       [uploadButtonTouched]="collaborationUploadButtonTouched"
       [fileNames]="collaborationFileNames"
       (filesChanged)="handleFilesChanged($event)"
+      (clearSelectedFiles)="clearSelectedFiles()"
     ></app-applicant-collaborate>
     } @case (1) {
     <app-applicant-general-details></app-applicant-general-details>

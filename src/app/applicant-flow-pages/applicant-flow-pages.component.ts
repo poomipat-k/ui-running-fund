@@ -27,6 +27,22 @@ import { GeneralDetailsComponent } from './general-details/general-details.compo
 export class ApplicantFlowPagesComponent implements OnInit {
   @ViewChild('collaborateComponent') collaborateComponent: CollaborateComponent;
 
+  get collaborationFileNames(): string[] {
+    const names: string[] = [];
+    if (this.collaborationFiles) {
+      for (let i = 0; i < this.collaborationFiles.length; i++) {
+        if (
+          this.collaborationFiles.item(i) &&
+          this.collaborationFiles.item(i)?.name?.length
+        ) {
+          names.push(this.collaborationFiles.item(i)!.name);
+        }
+      }
+      return names;
+    }
+    return [];
+  }
+
   private readonly themeService: ThemeService = inject(ThemeService);
   private readonly projectService: ProjectService = inject(ProjectService);
 
@@ -45,7 +61,7 @@ export class ApplicantFlowPagesComponent implements OnInit {
     ['ยืนยัน'],
   ];
   protected currentStep = 0;
-  protected collaborationFileNames: string[] = [];
+  // protected collaborationFileNames: string[] = [];
 
   ngOnInit(): void {
     this.themeService.changeBackgroundColor(BackgroundColor.gray);
@@ -85,14 +101,10 @@ export class ApplicantFlowPagesComponent implements OnInit {
 
   handleFilesChanged(files: FileList) {
     this.collaborationFiles = files;
+  }
 
-    const names: string[] = [];
-    for (let i = 0; i < files.length; i++) {
-      if (files.item(i) && files.item(i)?.name?.length) {
-        names.push(files.item(i)!.name);
-      }
-    }
-    this.collaborationFileNames = names;
+  clearSelectedFiles() {
+    this.collaborationFiles = null;
   }
 
   submitForm() {

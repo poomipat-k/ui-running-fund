@@ -23,7 +23,9 @@ export class CollaborateComponent implements OnInit, OnDestroy {
   @Input() selectedFilesCount = 0;
   @Input() uploadButtonTouched = false;
   @Input() fileNames: string[] = [];
+
   @Output() filesChanged = new EventEmitter<FileList>();
+  @Output() clearSelectedFiles = new EventEmitter();
 
   // Getters
   get uploadButtonDisabled(): boolean {
@@ -61,14 +63,8 @@ export class CollaborateComponent implements OnInit, OnDestroy {
   }
 
   onCollaborateChanged() {
-    console.log(
-      '===[onCollaborateChanged]',
-      this.form.get('collaborated')?.value
-    );
-    console.log('==this.form', this.form.get('collaborated'));
     if (this.form.get('collaborated')?.value === false) {
-      console.log('==clear');
-      this.clearSelectedFiles();
+      this.clearSelectedFiles.emit();
     }
   }
 
@@ -79,7 +75,6 @@ export class CollaborateComponent implements OnInit, OnDestroy {
     }
 
     if (this.errorWrongFilesUpload) {
-      console.log('===Error file upload');
       return false;
     }
     return true;
@@ -97,17 +92,9 @@ export class CollaborateComponent implements OnInit, OnDestroy {
   }
 
   onFilesChanged(files: FileList) {
-    console.log('==[COLLAB] files', files);
     if (files) {
       this.filesChanged.emit(files);
       this.selectedFilesCount = files.length;
-      console.log('==files len', files.length);
     }
-  }
-
-  clearSelectedFiles() {
-    const newFl = new FileList();
-    console.log('==newFL', newFl);
-    this.filesChanged.emit(newFl);
   }
 }
