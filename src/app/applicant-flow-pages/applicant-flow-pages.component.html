@@ -12,7 +12,10 @@
 
   <form [formGroup]="form">
     @switch (currentStep) { @case (0) {
-    <app-applicant-collaborate [form]="form"></app-applicant-collaborate>
+    <app-applicant-collaborate
+      [form]="form"
+      (filesChanged)="handleFilesChanged($event)"
+    ></app-applicant-collaborate>
     } }
   </form>
 
@@ -21,14 +24,8 @@
     <button style="padding: 2rem; margin-left: 2rem" (click)="addStep()">
       Next
     </button>
-  </div>
-</div>
-
-<!-- <ng-template>
-  <div style="display: flex">
-    <button style="padding: 2rem" (click)="reduceStep()">Back</button>
-    <button style="padding: 2rem; margin-left: 2rem" (click)="addStep()">
-      Next
+    <button style="padding: 2rem; margin-left: 2rem" (click)="submitForm()">
+      Submit
     </button>
   </div>
-</ng-template> -->
+</div>

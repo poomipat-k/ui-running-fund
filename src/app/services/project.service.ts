@@ -17,6 +17,12 @@ export class ProjectService {
 
   constructor() {}
 
+  addProject(formData: FormData) {
+    return this.http
+      .post<any>(`${this.baseApiUrl}/project`, formData)
+      .pipe(catchError(this.handleError));
+  }
+
   getReviewPeriod(): Observable<ReviewPeriod> {
     return this.http
       .get<ReviewPeriod>(`${this.baseApiUrl}/project/review-period`)

@@ -48,6 +48,16 @@
     padding-left: 5.2rem;
     align-items: flex-start;
   }
+
+  &__uploadLabel {
+    color: $gray700;
+    text-align: center;
+    font-family: $custom-font-looped;
+    font-size: 1.4rem;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+  }
 }
 
 .mgt {

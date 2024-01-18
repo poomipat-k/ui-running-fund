@@ -17,8 +17,12 @@
       ></app-com-radio>
     </div>
     <div class="main__uploadBox">
-      <app-com-upload-button></app-com-upload-button>
-      <p>แนบหนังสือนำส่ง (PDF, JPG ขนาดไม่เกิน 1 GB)</p>
+      <app-com-upload-button
+        (filesChanged)="onFilesChanged($event)"
+      ></app-com-upload-button>
+      <p class="main__uploadLabel">
+        แนบหนังสือนำส่ง (PDF, JPG ขนาดไม่เกิน 1 GB)
+      </p>
     </div>
   </div>
 </div>
