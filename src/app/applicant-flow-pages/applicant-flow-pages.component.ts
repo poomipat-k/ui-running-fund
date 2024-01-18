@@ -26,23 +26,8 @@ import { GeneralDetailsComponent } from './general-details/general-details.compo
 })
 export class ApplicantFlowPagesComponent implements OnInit {
   @ViewChild('collaborateComponent') collaborateComponent: CollaborateComponent;
-  @ViewChild('generalDetails') generalDetailsComponent: GeneralDetailsComponent;
-
-  get collaborationFileNames(): string[] {
-    const names: string[] = [];
-    if (this.collaborationFiles) {
-      for (let i = 0; i < this.collaborationFiles.length; i++) {
-        if (
-          this.collaborationFiles.item(i) &&
-          this.collaborationFiles.item(i)?.name?.length
-        ) {
-          names.push(this.collaborationFiles.item(i)!.name);
-        }
-      }
-      return names;
-    }
-    return [];
-  }
+  @ViewChild('generalDetailsComponent')
+  generalDetailsComponent: GeneralDetailsComponent;
 
   private readonly themeService: ThemeService = inject(ThemeService);
   private readonly projectService: ProjectService = inject(ProjectService);
@@ -62,6 +47,22 @@ export class ApplicantFlowPagesComponent implements OnInit {
     ['ยืนยัน'],
   ];
   protected currentStep = 0;
+
+  get collaborationFileNames(): string[] {
+    const names: string[] = [];
+    if (this.collaborationFiles) {
+      for (let i = 0; i < this.collaborationFiles.length; i++) {
+        if (
+          this.collaborationFiles.item(i) &&
+          this.collaborationFiles.item(i)?.name?.length
+        ) {
+          names.push(this.collaborationFiles.item(i)!.name);
+        }
+      }
+      return names;
+    }
+    return [];
+  }
 
   ngOnInit(): void {
     this.themeService.changeBackgroundColor(BackgroundColor.gray);

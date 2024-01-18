@@ -23,7 +23,8 @@
     ></app-applicant-collaborate>
     } @case (1) {
     <app-applicant-general-details
-      #generalDetails
+      [form]="form"
+      #generalDetailsComponent
     ></app-applicant-general-details>
     } }
   </form>

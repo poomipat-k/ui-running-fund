@@ -1,0 +1,22 @@
+@import "../../../styles.scss";
+
+.input {
+  padding: 1rem 1.4rem;
+
+  color: #667085;
+  font-family: $custom-font-looped;
+  font-size: 1.6rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 2.4rem;
+
+  border-radius: 8px;
+  border: 1px solid #d0d5dd;
+  background: #fff;
+  box-shadow: 0px 1px 2px 0px rgba(16, 24, 40, 0.05);
+  width: 100%;
+
+  &:focus-visible {
+    outline: 1px solid #667085;
+  }
+}
