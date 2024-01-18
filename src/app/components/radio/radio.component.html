@@ -4,8 +4,10 @@
     <div
       [ngClass]="{
         horizontal: direction === 'horizontal',
+        vertical: direction !== 'horizontal',
         horizontal__3a: radioStyle === 'review-3a'
       }"
+      [ngStyle]="{ gap: flexGap }"
     >
       @for (option of options; track option.id) {
       <div
@@ -35,9 +37,10 @@
   <div
     [ngClass]="{
       horizontal: direction === 'horizontal',
+      vertical: direction !== 'horizontal',
       horizontal__3a: radioStyle === 'review-3a',
     }"
-    style="margin-top: 14px"
+    [ngStyle]="{ gap: flexGap }"
   >
     @for (option of options; track option.id) {
     <div
