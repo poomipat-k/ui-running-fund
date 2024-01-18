@@ -1,4 +1,46 @@
+@import "../../../styles.scss";
+
 .container {
   padding: 6.1rem 5.7rem 8rem 5.7rem;
   margin: 4.5rem 3.5rem 12.7rem 3.8rem;
+  background-color: #fff;
+}
+
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  padding-bottom: 3rem;
+
+  &__header {
+    color: $gray700;
+    font-family: $custom-font-looped;
+    font-size: 1.6rem;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+
+    padding: 1rem 2rem;
+    background-color: #f2edeb;
+
+    &::after {
+      content: "*";
+      color: #c4320a;
+    }
+  }
+}
+
+.header {
+  color: $gray700;
+  font-family: $custom-font;
+  font-size: 2rem;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+
+  margin-bottom: 3.2rem;
+
+  &--orange {
+    color: #fb6514;
+  }
 }

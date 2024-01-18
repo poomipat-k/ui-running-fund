@@ -26,6 +26,7 @@ import { GeneralDetailsComponent } from './general-details/general-details.compo
 })
 export class ApplicantFlowPagesComponent implements OnInit {
   @ViewChild('collaborateComponent') collaborateComponent: CollaborateComponent;
+  @ViewChild('generalDetails') generalDetailsComponent: GeneralDetailsComponent;
 
   get collaborationFileNames(): string[] {
     const names: string[] = [];
@@ -61,7 +62,6 @@ export class ApplicantFlowPagesComponent implements OnInit {
     ['ยืนยัน'],
   ];
   protected currentStep = 0;
-  // protected collaborationFileNames: string[] = [];
 
   ngOnInit(): void {
     this.themeService.changeBackgroundColor(BackgroundColor.gray);
@@ -72,7 +72,12 @@ export class ApplicantFlowPagesComponent implements OnInit {
   private initForm() {
     this.form = new FormGroup({
       collaborated: new FormControl(null, Validators.required),
+      general: new FormGroup({
+        projectName: new FormControl(null, Validators.required),
+      }),
     });
+
+    this.currentStep = 1;
   }
 
   protected nextPage(): void {
@@ -87,7 +92,7 @@ export class ApplicantFlowPagesComponent implements OnInit {
       this.currentStep++;
     } else if (
       this.currentStep === 1 &&
-      this.collaborateComponent.validToGoNext()
+      this.generalDetailsComponent.validToGoNext()
     ) {
       this.currentStep++;
     } else if (this.currentStep === 2) {
