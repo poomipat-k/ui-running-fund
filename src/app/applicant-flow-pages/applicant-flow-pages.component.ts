@@ -10,6 +10,7 @@ import { ProjectService } from '../services/project.service';
 import { ThemeService } from '../services/theme.service';
 import { BackgroundColor } from '../shared/enums/background-color';
 import { CollaborateComponent } from './collaborate/collaborate.component';
+import { GeneralDetailsComponent } from './general-details/general-details.component';
 
 @Component({
   selector: 'app-applicant-flow-pages',
@@ -18,6 +19,7 @@ import { CollaborateComponent } from './collaborate/collaborate.component';
     ProgressBarStepsComponent,
     CollaborateComponent,
     ReactiveFormsModule,
+    GeneralDetailsComponent,
   ],
   templateUrl: './applicant-flow-pages.component.html',
   styleUrl: './applicant-flow-pages.component.scss',

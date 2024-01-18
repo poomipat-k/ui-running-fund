@@ -8,12 +8,6 @@
 />
 
 <div class="file-upload">
-  @for (fn of fileNames; track $index) {
-  <p style="font-size: 2rem">{{ fn }}</p>
-  } @empty {
-  <div>No file uploaded yet.</div>
-  }
-  <p></p>
   <button class="button" [disabled]="disabled" (click)="fileUpload.click()">
     <div class="button__content">
       <!-- Start clip svg -->
@@ -48,4 +42,11 @@
       <div class="button__content--text">เลือกไฟล์</div>
     </div>
   </button>
+  <div style="margin-top: 1rem; font-size: 1.4rem">
+    @for (fn of fileNames; track $index) {
+    <p style="font-size: 2rem">{{ fn }}</p>
+    } @empty {
+    <p>No file uploaded yet.</p>
+    }
+  </div>
 </div>
