@@ -28,6 +28,34 @@
       color: #c4320a;
     }
   }
+
+  &-content {
+    padding-left: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.4rem;
+  }
+}
+
+.inputBox {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  min-height: 4.4rem;
+
+  &--4 {
+    width: 47.8rem;
+  }
+}
+
+.label {
+  color: $gray700;
+  font-family: $custom-font-looped;
+  font-size: 1.6rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
 }
 
 .header {
@@ -42,5 +70,11 @@
 
   &--orange {
     color: #fb6514;
+  }
+}
+
+.width {
+  &-129 {
+    width: 12.9rem;
   }
 }

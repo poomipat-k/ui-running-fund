@@ -30,7 +30,28 @@
 
   <div class="section">
     <h3 class="section__header">1.4 เส้นทางที่ใช้สำหรับจัดกิจกรรม</h3>
-    <div class="section-content">1.4 Content</div>
+    <div class="section-content">
+      <div class="inputBox inputBox--4">
+        <label for="startPoint" class="label">จุด Start</label>
+        <app-com-input-text
+          placeholder="จุด Start"
+          width="32rem"
+          controlName="startPoint"
+          [form]="generalFormGroup"
+        ></app-com-input-text>
+      </div>
+      <div class="inputBox inputBox--4">
+        <label for="endPoint" class="label width-129"
+          >จุด Finish (ถ้าเป็นจุดเดียวกัน ให้ระบุ “จุดเดิม”)</label
+        >
+        <app-com-input-text
+          placeholder="จุด Finish"
+          width="32rem"
+          controlName="endPoint"
+          [form]="generalFormGroup"
+        ></app-com-input-text>
+      </div>
+    </div>
   </div>
 
   <div class="section">
