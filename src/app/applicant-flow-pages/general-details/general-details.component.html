@@ -41,13 +41,13 @@
         ></app-com-input-text>
       </div>
       <div class="inputBox inputBox--4">
-        <label for="endPoint" class="label width-129"
+        <label for="finishPoint" class="label width-129"
           >จุด Finish (ถ้าเป็นจุดเดียวกัน ให้ระบุ “จุดเดิม”)</label
         >
         <app-com-input-text
           placeholder="จุด Finish"
           width="32rem"
-          controlName="endPoint"
+          controlName="finishPoint"
           [form]="generalFormGroup"
         ></app-com-input-text>
       </div>
@@ -66,7 +66,13 @@
     <h3 class="section__header">
       1.6 จำนวนผู้เข้าร่วมที่คาดหวัง (เลือกตอบเพียง 1ข้อ)
     </h3>
-    <div class="section-content">1.6 Content</div>
+    <div class="section-content">
+      <app-com-radio
+        [form]="generalFormGroup"
+        [options]="expectedParticipantsOptions"
+        controlName="expectedParticipants"
+      ></app-com-radio>
+    </div>
   </div>
 
   <div class="section">

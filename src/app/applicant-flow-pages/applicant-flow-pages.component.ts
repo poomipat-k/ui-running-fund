@@ -76,7 +76,8 @@ export class ApplicantFlowPagesComponent implements OnInit {
       general: new FormGroup({
         projectName: new FormControl(null, Validators.required),
         startPoint: new FormControl(null, Validators.required),
-        endPoint: new FormControl(null, Validators.required),
+        finishPoint: new FormControl(null, Validators.required),
+        expectedParticipants: new FormControl(null, Validators.required),
       }),
     });
 
