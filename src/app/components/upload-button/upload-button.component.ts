@@ -20,14 +20,6 @@ export class UploadButtonComponent {
     let fileList: FileList | null = element.files;
 
     if (fileList && fileList?.length > 0) {
-      const names: string[] = [];
-      for (let i = 0; i < fileList.length; i++) {
-        if (fileList.item(i) && fileList.item(i)?.name?.length) {
-          names.push(fileList.item(i)!.name);
-        }
-      }
-      this.fileNames = names;
-
       this.filesChanged.emit(fileList);
     }
   }

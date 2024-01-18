@@ -13,6 +13,8 @@
         controlName="collaborated"
         [options]="radioOptions"
         radioStyle="review-3b"
+        [onChanged]="onCollaborateChanged"
+        fontSize="16px"
       ></app-com-radio>
       @if (showCollaborationError) {
       <div class="error mgl-28">
@@ -27,12 +29,20 @@
         [disabled]="uploadButtonDisabled"
       ></app-com-upload-button>
 
-      @if (showCollaborationError) {
+      @if (errorWrongFilesUpload && uploadButtonTouched) {
       <div class="error mgl-28">
         <img src="/assets/error_icon.svg" alt="error icon" />
-        <p class="error__text">กรุณาเลือกตัวเลือก</p>
+        <p class="error__text">กรุณาอัพโหลดหนังสือนำส่ง</p>
       </div>
       }
+
+      <div style="margin-top: 1rem; font-size: 1.4rem">
+        @for (fn of fileNames; track $index) {
+        <p style="font-size: 2rem">{{ fn }}</p>
+        } @empty {
+        <p>กดเพื่ออัพโหลดไฟล์</p>
+        }
+      </div>
 
       <p class="main__uploadLabel">
         แนบหนังสือนำส่ง (PDF, JPG ขนาดไม่เกิน 25 MB)

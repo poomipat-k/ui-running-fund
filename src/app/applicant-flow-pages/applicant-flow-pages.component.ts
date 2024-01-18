@@ -30,7 +30,9 @@ export class ApplicantFlowPagesComponent implements OnInit {
   private readonly themeService: ThemeService = inject(ThemeService);
   private readonly projectService: ProjectService = inject(ProjectService);
 
-  protected collaborationFiles: FileList;
+  protected collaborationFiles: FileList | null;
+
+  protected collaborationUploadButtonTouched = false;
 
   protected form: FormGroup;
   protected progressBarSteps = [
@@ -43,6 +45,7 @@ export class ApplicantFlowPagesComponent implements OnInit {
     ['ยืนยัน'],
   ];
   protected currentStep = 0;
+  protected collaborationFileNames: string[] = [];
 
   ngOnInit(): void {
     this.themeService.changeBackgroundColor(BackgroundColor.gray);
@@ -57,7 +60,8 @@ export class ApplicantFlowPagesComponent implements OnInit {
   }
 
   protected nextPage(): void {
-    console.log('===nextPage');
+    console.log('===nextPage', this.form);
+    this.collaborationUploadButtonTouched = true;
     if (this.currentStep === this.progressBarSteps.length) {
       this.submitForm();
       return;
@@ -65,8 +69,10 @@ export class ApplicantFlowPagesComponent implements OnInit {
 
     if (this.currentStep === 0 && this.collaborateComponent.validToGoNext()) {
       this.currentStep++;
-    }
-    if (this.currentStep === 1 && this.collaborateComponent.validToGoNext()) {
+    } else if (
+      this.currentStep === 1 &&
+      this.collaborateComponent.validToGoNext()
+    ) {
       this.currentStep++;
     } else if (this.currentStep === 2) {
       this.currentStep++;
@@ -79,13 +85,23 @@ export class ApplicantFlowPagesComponent implements OnInit {
 
   handleFilesChanged(files: FileList) {
     this.collaborationFiles = files;
+
+    const names: string[] = [];
+    for (let i = 0; i < files.length; i++) {
+      if (files.item(i) && files.item(i)?.name?.length) {
+        names.push(files.item(i)!.name);
+      }
+    }
+    this.collaborationFileNames = names;
   }
 
   submitForm() {
     console.log('===SUBMIT this.form', this.form);
     const formData = new FormData();
-    for (let i = 0; i < this.collaborationFiles.length; i++) {
-      formData.append('files', this.collaborationFiles[i]);
+    if (this.collaborationFiles) {
+      for (let i = 0; i < this.collaborationFiles.length; i++) {
+        formData.append('files', this.collaborationFiles[i]);
+      }
     }
     formData.append('form', JSON.stringify(this.form.value));
     this.projectService.addProject(formData).subscribe((result) => {

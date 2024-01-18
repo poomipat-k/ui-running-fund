@@ -19,6 +19,7 @@ export class RadioComponent implements OnInit {
   @Input() radioStyle = 'review-1a';
   @Input() direction = 'vertical';
   @Input() disabled = false;
+  @Input() fontSize = '18px';
 
   get labelClasses(): string[] {
     const classes = ['radio__container'];

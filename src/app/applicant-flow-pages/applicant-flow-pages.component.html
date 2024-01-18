@@ -15,6 +15,9 @@
     <app-applicant-collaborate
       #collaborateComponent
       [form]="form"
+      [selectedFilesCount]="collaborationFiles?.length || 0"
+      [uploadButtonTouched]="collaborationUploadButtonTouched"
+      [fileNames]="collaborationFileNames"
       (filesChanged)="handleFilesChanged($event)"
     ></app-applicant-collaborate>
     } @case (1) {
