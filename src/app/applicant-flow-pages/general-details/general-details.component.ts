@@ -85,6 +85,24 @@ export class GeneralDetailsComponent {
     },
   ];
 
+  readonly testDropdownOptions: RadioOption[] = [
+    {
+      id: 1,
+      value: 'abc',
+      display: 'abc',
+    },
+    {
+      id: 2,
+      value: 'bcd',
+      display: 'bcd',
+    },
+    {
+      id: 3,
+      value: 'cde',
+      display: 'cde',
+    },
+  ];
+
   constructor() {
     this.onHasOrganizerChanged = this.onHasOrganizerChanged.bind(this);
   }

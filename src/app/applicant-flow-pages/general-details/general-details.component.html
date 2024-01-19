@@ -27,7 +27,11 @@
     <div class="section">
       <h3 class="section__header">1.2 วันที่จัดการแข่งขัน</h3>
       <div class="section-content">
-        <app-com-select-dropdown></app-com-select-dropdown>
+        <app-com-select-dropdown
+          [items]="testDropdownOptions"
+          [form]="generalFormGroup"
+          controlName="name"
+        ></app-com-select-dropdown>
       </div>
     </div>
 

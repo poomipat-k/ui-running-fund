@@ -1,7 +1,14 @@
-.container {
+@import "../../../styles.scss";
+
+.dropdown-component {
+  // border: 1px solid green;
+  position: relative;
+}
+
+.input-container {
   position: relative;
   // border: 1px solid red;
-  width: 30rem;
+  width: 100%;
 }
 
 .input {
@@ -18,5 +25,49 @@
     top: 50%;
     right: 1.4rem;
     transform: translateY(-50%);
+    cursor: pointer;
+    transition: transform 300ms;
+
+    &--flip {
+      transform: translateY(-50%) rotate(180deg);
+    }
   }
+}
+
+.radio-container {
+  position: absolute;
+  background-color: #fff;
+  display: none;
+  z-index: 5;
+}
+
+.radio {
+  position: absolute;
+  opacity: 0;
+
+  &__label {
+    display: block;
+    height: 4.4rem;
+    border: 1px solid #d0d5dd;
+    padding: 1rem 1.4rem;
+    cursor: pointer;
+
+    &:first-child {
+      border-top-right-radius: 8px;
+      border-top-left-radius: 8px;
+    }
+
+    &:last-child {
+      border-bottom-left-radius: 8px;
+      border-bottom-right-radius: 8px;
+    }
+
+    &:not(:first-child) {
+      border-top: 0;
+    }
+  }
+}
+
+.show {
+  display: block;
 }

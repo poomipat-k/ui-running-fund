@@ -1,11 +1,34 @@
-<div class="container">
-  <input
-    type="text"
-    [readOnly]="!showDropdown"
-    class="input"
-    [placeholder]="placeholder"
-  />
-  <div class="input__icon">
-    <app-com-svg-arrow-dropdown></app-com-svg-arrow-dropdown>
+<div class="dropdown-component" [formGroup]="form" [style]="{ width: width }">
+  <div class="input-container" (click)="onClick()">
+    <input
+      type="text"
+      [readOnly]="!showDropdown"
+      class="input"
+      [placeholder]="placeholder"
+      [value]="searchText"
+      (keyup)="onSearchChanged($event)"
+    />
+    <img
+      [ngClass]="{ input__icon: true, 'input__icon--flip': showDropdown }"
+      src="/assets/chevron_down.svg"
+      alt="down arrow"
+    />
+  </div>
+  <!-- Dropdown Options -->
+  <div
+    [ngClass]="{ 'radio-container': true, show: showDropdown }"
+    [style]="{ width: width }"
+  >
+    @for (item of filteredOptions; track item.id) {
+    <label class="radio__label" [style]="{ 'font-size': dropdownFontSize }">
+      <input
+        type="radio"
+        class="radio"
+        [formControlName]="controlName"
+        [value]="item.value"
+      />
+      {{ item.display }}
+    </label>
+    }
   </div>
 </div>
