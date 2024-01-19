@@ -13,4 +13,5 @@ export class InputTextComponent {
   @Input() controlName: string;
   @Input() placeholder = '';
   @Input() width = '100%';
+  @Input() margin = '0';
 }

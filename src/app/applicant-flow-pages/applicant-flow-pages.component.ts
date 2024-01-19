@@ -78,6 +78,7 @@ export class ApplicantFlowPagesComponent implements OnInit {
         startPoint: new FormControl(null, Validators.required),
         finishPoint: new FormControl(null, Validators.required),
         expectedParticipants: new FormControl(null, Validators.required),
+        hasOrganizer: new FormControl(null, Validators.required),
       }),
     });
 

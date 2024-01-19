@@ -3,83 +3,109 @@
     <span class="header--orange">ส่วนที่ 1</span> ข้อมูลพื้นฐานโครงการ
   </h2>
 
-  <div class="section">
-    <h3 class="section__header">1.1 ชื่อโครงการ/งานวิ่ง</h3>
-    <div class="section-content">
-      <app-com-input-text
-        placeholder="ชื่อโครงการ"
-        width="67rem"
-        controlName="projectName"
-        [form]="generalFormGroup"
-      ></app-com-input-text>
-    </div>
-  </div>
-
-  <div class="section">
-    <h3 class="section__header">1.2 วันที่จัดการแข่งขัน</h3>
-    <div class="section-content">1.2 Content</div>
-  </div>
-
-  <div class="section">
-    <h3 class="section__header">
-      1.3 สถานที่จัดการแข่งขัน (สถานที่จัดส่วนอำนวยการต่าง ๆ
-      ควรเป็นสถานที่สำคัญในชุมชน เช่น โรงเรียน วัด)
-    </h3>
-    <div class="section-content">1.3 Content</div>
-  </div>
-
-  <div class="section">
-    <h3 class="section__header">1.4 เส้นทางที่ใช้สำหรับจัดกิจกรรม</h3>
-    <div class="section-content">
-      <div class="inputBox inputBox--4">
-        <label for="startPoint" class="label">จุด Start</label>
+  <div class="section-container">
+    <div class="section">
+      <h3 class="section__header">1.1 ชื่อโครงการ/งานวิ่ง</h3>
+      <div class="section-content">
         <app-com-input-text
-          placeholder="จุด Start"
-          width="32rem"
-          controlName="startPoint"
+          placeholder="ชื่อโครงการ"
+          width="67rem"
+          controlName="projectName"
           [form]="generalFormGroup"
         ></app-com-input-text>
+        @if (!form.get('general.projectName')?.valid &&
+        form.get('general.projectName')?.touched) {
+        <div class="error mgl-28">
+          <img src="/assets/error_icon.svg" alt="error icon" />
+          <p class="error__text">กรุณากรอกชื่อโครงการ</p>
+        </div>
+        }
       </div>
-      <div class="inputBox inputBox--4">
-        <label for="finishPoint" class="label width-129"
-          >จุด Finish (ถ้าเป็นจุดเดียวกัน ให้ระบุ “จุดเดิม”)</label
-        >
-        <app-com-input-text
-          placeholder="จุด Finish"
-          width="32rem"
-          controlName="finishPoint"
+    </div>
+
+    <div class="section">
+      <h3 class="section__header">1.2 วันที่จัดการแข่งขัน</h3>
+      <div class="section-content">1.2 Content</div>
+    </div>
+
+    <div class="section">
+      <h3 class="section__header">
+        1.3 สถานที่จัดการแข่งขัน (สถานที่จัดส่วนอำนวยการต่าง ๆ
+        ควรเป็นสถานที่สำคัญในชุมชน เช่น โรงเรียน วัด)
+      </h3>
+      <div class="section-content">1.3 Content</div>
+    </div>
+
+    <div class="section">
+      <h3 class="section__header">1.4 เส้นทางที่ใช้สำหรับจัดกิจกรรม</h3>
+      <div class="section-content">
+        <div class="inputBox inputBox--4">
+          <label for="startPoint" class="label">จุด Start</label>
+          <app-com-input-text
+            placeholder="จุด Start"
+            width="32rem"
+            controlName="startPoint"
+            [form]="generalFormGroup"
+          ></app-com-input-text>
+        </div>
+        <div class="inputBox inputBox--4">
+          <label for="finishPoint" class="label width-129"
+            >จุด Finish (ถ้าเป็นจุดเดียวกัน ให้ระบุ “จุดเดิม”)</label
+          >
+          <app-com-input-text
+            placeholder="จุด Finish"
+            width="32rem"
+            controlName="finishPoint"
+            [form]="generalFormGroup"
+          ></app-com-input-text>
+        </div>
+      </div>
+    </div>
+
+    <div class="section section--wider-gap">
+      <h3 class="section__header">
+        1.5 ประเภทงานวิ่งและอัตราค่าสมัคร (ตอบได้มากกว่า 1 ข้อ
+        โปรดเลือกทุกระยะทางทีโครงการของท่านจัดการแข่งขัน)
+      </h3>
+      <div class="section-content">1.5 Content</div>
+    </div>
+
+    <div class="section section--wider-gap">
+      <h3 class="section__header">
+        1.6 จำนวนผู้เข้าร่วมที่คาดหวัง (เลือกตอบเพียง 1ข้อ)
+      </h3>
+      <div class="section-content">
+        <app-com-radio
           [form]="generalFormGroup"
-        ></app-com-input-text>
+          [options]="expectedParticipantsOptions"
+          controlName="expectedParticipants"
+          flexGap="1rem"
+        ></app-com-radio>
       </div>
     </div>
-  </div>
 
-  <div class="section">
-    <h3 class="section__header">
-      1.5 ประเภทงานวิ่งและอัตราค่าสมัคร (ตอบได้มากกว่า 1 ข้อ
-      โปรดเลือกทุกระยะทางทีโครงการของท่านจัดการแข่งขัน)
-    </h3>
-    <div class="section-content">1.5 Content</div>
-  </div>
-
-  <div class="section">
-    <h3 class="section__header">
-      1.6 จำนวนผู้เข้าร่วมที่คาดหวัง (เลือกตอบเพียง 1ข้อ)
-    </h3>
-    <div class="section-content">
-      <app-com-radio
-        [form]="generalFormGroup"
-        [options]="expectedParticipantsOptions"
-        controlName="expectedParticipants"
-        flexGap="1rem"
-      ></app-com-radio>
+    <div class="section section--wider-gap">
+      <h3 class="section__header">
+        1.7 การจัดงานครั้งนี้ใช้บริษัทจัดงานหรือไม่ (เลือกตอบเพียง 1 ข้อ)
+      </h3>
+      <div class="section-content">
+        <app-com-radio
+          [form]="generalFormGroup"
+          [options]="hasOrganizerOptions"
+          controlName="hasOrganizer"
+          flexGap="1rem"
+          [onChanged]="onHasOrganizerChanged"
+        ></app-com-radio>
+        @if (form.value.general.hasOrganizer) {
+        <app-com-input-text
+          [form]="generalFormGroup"
+          placeholder="ชื่อบริษัทจัดงาน"
+          controlName="organizerName"
+          width="43.3rem"
+          margin="0 0 0 2rem"
+        ></app-com-input-text>
+        }
+      </div>
     </div>
-  </div>
-
-  <div class="section">
-    <h3 class="section__header">
-      1.7 การจัดงานครั้งนี้ใช้บริษัทจัดงานหรือไม่ (เลือกตอบเพียง 1 ข้อ)
-    </h3>
-    <div class="section-content">1.7 Content</div>
   </div>
 </div>

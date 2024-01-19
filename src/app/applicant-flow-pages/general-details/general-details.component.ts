@@ -1,5 +1,10 @@
 import { Component, Input } from '@angular/core';
-import { FormGroup, ReactiveFormsModule } from '@angular/forms';
+import {
+  FormControl,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { InputTextComponent } from '../../components/input-text/input-text.component';
 import { RadioComponent } from '../../components/radio/radio.component';
 import { RadioOption } from '../../shared/models/radio-option';
@@ -18,7 +23,7 @@ export class GeneralDetailsComponent {
     return this.form.get('general') as FormGroup;
   }
 
-  protected expectedParticipantsOptions: RadioOption[] = [
+  readonly expectedParticipantsOptions: RadioOption[] = [
     {
       id: 1,
       value: 1,
@@ -51,17 +56,53 @@ export class GeneralDetailsComponent {
     },
     {
       id: 7,
-      value: 6,
+      value: 7,
       display: '5,500 คน หรือมากกว่า',
     },
   ];
 
-  public validToGoNext(): boolean {
+  readonly hasOrganizerOptions: RadioOption[] = [
+    {
+      id: 1,
+      value: false,
+      display: 'ไม่ใช้ (ผู้เสนอโครงการจัดงานเอง)',
+    },
+    {
+      id: 2,
+      value: true,
+      display: 'ใช้ โปรดระบุชื่อบริษัทจัดงาน (Organizer)',
+    },
+  ];
+
+  constructor() {
+    this.onHasOrganizerChanged = this.onHasOrganizerChanged.bind(this);
+  }
+
+  isLeapYear(year: number): boolean {
+    return new Date(year, 1, 29).getDate() === 29;
+  }
+
+  validToGoNext(): boolean {
     if (!this.isFormValid()) {
       this.markFieldsTouched();
       return false;
     }
     return true;
+  }
+
+  onHasOrganizerChanged(): void {
+    const groupControl = this.form.get('general') as FormGroup;
+    console.log('==groupControl', groupControl);
+    if (this.form.value?.general?.hasOrganizer) {
+      console.log('===add control');
+      groupControl.addControl(
+        'organizerName',
+        new FormControl(null, Validators.required)
+      );
+      return;
+    }
+    console.log('==removeControl');
+    groupControl.removeControl('organizerName');
   }
 
   private isFormValid(): boolean {
