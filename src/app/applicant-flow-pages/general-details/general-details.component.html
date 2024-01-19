@@ -15,7 +15,7 @@
         ></app-com-input-text>
         @if (!form.get('general.projectName')?.valid &&
         form.get('general.projectName')?.touched) {
-        <div class="error mgl-28">
+        <div class="error">
           <img src="/assets/error_icon.svg" alt="error icon" />
           <p class="error__text">กรุณากรอกชื่อโครงการ</p>
         </div>
@@ -48,6 +48,13 @@
             [form]="generalFormGroup"
           ></app-com-input-text>
         </div>
+        @if (!form.get('general.startPoint')?.valid &&
+        form.get('general.startPoint')?.touched) {
+        <div class="error mgl-158">
+          <img src="/assets/error_icon.svg" alt="error icon" />
+          <p class="error__text">กรุณากรอกจุด Start</p>
+        </div>
+        }
         <div class="inputBox inputBox--4">
           <label for="finishPoint" class="label width-129"
             >จุด Finish (ถ้าเป็นจุดเดียวกัน ให้ระบุ “จุดเดิม”)</label
@@ -59,6 +66,13 @@
             [form]="generalFormGroup"
           ></app-com-input-text>
         </div>
+        @if (!form.get('general.finishPoint')?.valid &&
+        form.get('general.finishPoint')?.touched) {
+        <div class="error mgl-158">
+          <img src="/assets/error_icon.svg" alt="error icon" />
+          <p class="error__text">กรุณากรอกจุด Finish</p>
+        </div>
+        }
       </div>
     </div>
 
@@ -81,6 +95,13 @@
           controlName="expectedParticipants"
           flexGap="1rem"
         ></app-com-radio>
+        @if (!form.get('general.expectedParticipants')?.valid &&
+        form.get('general.expectedParticipants')?.touched) {
+        <div class="error">
+          <img src="/assets/error_icon.svg" alt="error icon" />
+          <p class="error__text">กรุณาเลือกจำนวนผู้เข้าร่วมที่คาดหวัง</p>
+        </div>
+        }
       </div>
     </div>
 
@@ -96,7 +117,13 @@
           flexGap="1rem"
           [onChanged]="onHasOrganizerChanged"
         ></app-com-radio>
-        @if (form.value.general.hasOrganizer) {
+        @if (!form.get('general.hasOrganizer')?.valid &&
+        form.get('general.hasOrganizer')?.touched) {
+        <div class="error">
+          <img src="/assets/error_icon.svg" alt="error icon" />
+          <p class="error__text">กรุณาเลือกคำตอบ</p>
+        </div>
+        } @if (form.value.general.hasOrganizer) {
         <app-com-input-text
           [form]="generalFormGroup"
           placeholder="ชื่อบริษัทจัดงาน"
@@ -104,7 +131,13 @@
           width="43.3rem"
           margin="0 0 0 2rem"
         ></app-com-input-text>
-        }
+        @if (!form.get('general.organizerName')?.valid &&
+        form.get('general.organizerName')?.touched) {
+        <div class="error mgl-20">
+          <img src="/assets/error_icon.svg" alt="error icon" />
+          <p class="error__text">กรุณากรอกชื่อบริษัทจัดงาน</p>
+        </div>
+        } }
       </div>
     </div>
   </div>
