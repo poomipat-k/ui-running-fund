@@ -1,1 +1,11 @@
-<p>select-dropdown works!</p>
+<div class="container">
+  <input
+    type="text"
+    [readOnly]="!showDropdown"
+    class="input"
+    [placeholder]="placeholder"
+  />
+  <div class="input__icon">
+    <app-com-svg-arrow-dropdown></app-com-svg-arrow-dropdown>
+  </div>
+</div>

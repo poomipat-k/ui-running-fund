@@ -1,0 +1,22 @@
+.container {
+  position: relative;
+  // border: 1px solid red;
+  width: 30rem;
+}
+
+.input {
+  border-radius: 8px;
+  border: 1px solid #d0d5dd;
+  background: #fff;
+  padding: 1rem 1.4rem;
+  width: 100%;
+  box-shadow: 0px 1px 2px 0px rgba(16, 24, 40, 0.05);
+  cursor: pointer;
+
+  &__icon {
+    position: absolute;
+    top: 50%;
+    right: 1.4rem;
+    transform: translateY(-50%);
+  }
+}
