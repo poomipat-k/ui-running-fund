@@ -8,13 +8,14 @@
       <h3 class="section__header">1.1 ชื่อโครงการ/งานวิ่ง</h3>
       <div class="section-content">
         <app-com-input-text
+          id="projectName"
           placeholder="ชื่อโครงการ"
           width="67rem"
           controlName="projectName"
           [form]="generalFormGroup"
         ></app-com-input-text>
         @if (!form.get('general.projectName')?.valid &&
-        form.get('general.projectName')?.touched) {
+        form.get('general.projectName')?.touched && formTouched) {
         <div class="error">
           <img src="/assets/error_icon.svg" alt="error icon" />
           <p class="error__text">กรุณากรอกชื่อโครงการ</p>
@@ -25,7 +26,9 @@
 
     <div class="section">
       <h3 class="section__header">1.2 วันที่จัดการแข่งขัน</h3>
-      <div class="section-content">1.2 Content</div>
+      <div class="section-content">
+        <app-com-select-dropdown></app-com-select-dropdown>
+      </div>
     </div>
 
     <div class="section">
@@ -42,6 +45,7 @@
         <div class="inputBox inputBox--4">
           <label for="startPoint" class="label">จุด Start</label>
           <app-com-input-text
+            id="startPoint"
             placeholder="จุด Start"
             width="32rem"
             controlName="startPoint"
@@ -49,7 +53,7 @@
           ></app-com-input-text>
         </div>
         @if (!form.get('general.startPoint')?.valid &&
-        form.get('general.startPoint')?.touched) {
+        form.get('general.startPoint')?.touched && formTouched) {
         <div class="error mgl-158">
           <img src="/assets/error_icon.svg" alt="error icon" />
           <p class="error__text">กรุณากรอกจุด Start</p>
@@ -60,6 +64,7 @@
             >จุด Finish (ถ้าเป็นจุดเดียวกัน ให้ระบุ “จุดเดิม”)</label
           >
           <app-com-input-text
+            id="finishPoint"
             placeholder="จุด Finish"
             width="32rem"
             controlName="finishPoint"
@@ -67,7 +72,7 @@
           ></app-com-input-text>
         </div>
         @if (!form.get('general.finishPoint')?.valid &&
-        form.get('general.finishPoint')?.touched) {
+        form.get('general.finishPoint')?.touched && formTouched) {
         <div class="error mgl-158">
           <img src="/assets/error_icon.svg" alt="error icon" />
           <p class="error__text">กรุณากรอกจุด Finish</p>
@@ -90,13 +95,14 @@
       </h3>
       <div class="section-content">
         <app-com-radio
+          id="expectedParticipants"
           [form]="generalFormGroup"
           [options]="expectedParticipantsOptions"
           controlName="expectedParticipants"
           flexGap="1rem"
         ></app-com-radio>
         @if (!form.get('general.expectedParticipants')?.valid &&
-        form.get('general.expectedParticipants')?.touched) {
+        form.get('general.expectedParticipants')?.touched && formTouched) {
         <div class="error">
           <img src="/assets/error_icon.svg" alt="error icon" />
           <p class="error__text">กรุณาเลือกจำนวนผู้เข้าร่วมที่คาดหวัง</p>
@@ -111,6 +117,7 @@
       </h3>
       <div class="section-content">
         <app-com-radio
+          id="hasOrganizer"
           [form]="generalFormGroup"
           [options]="hasOrganizerOptions"
           controlName="hasOrganizer"
@@ -118,13 +125,14 @@
           [onChanged]="onHasOrganizerChanged"
         ></app-com-radio>
         @if (!form.get('general.hasOrganizer')?.valid &&
-        form.get('general.hasOrganizer')?.touched) {
+        form.get('general.hasOrganizer')?.touched && formTouched) {
         <div class="error">
           <img src="/assets/error_icon.svg" alt="error icon" />
           <p class="error__text">กรุณาเลือกคำตอบ</p>
         </div>
         } @if (form.value.general.hasOrganizer) {
         <app-com-input-text
+          id="organizerName"
           [form]="generalFormGroup"
           placeholder="ชื่อบริษัทจัดงาน"
           controlName="organizerName"
@@ -132,7 +140,7 @@
           margin="0 0 0 2rem"
         ></app-com-input-text>
         @if (!form.get('general.organizerName')?.valid &&
-        form.get('general.organizerName')?.touched) {
+        form.get('general.organizerName')?.touched && formTouched) {
         <div class="error mgl-20">
           <img src="/assets/error_icon.svg" alt="error icon" />
           <p class="error__text">กรุณากรอกชื่อบริษัทจัดงาน</p>

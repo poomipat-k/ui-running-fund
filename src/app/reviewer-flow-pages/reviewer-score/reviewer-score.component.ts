@@ -28,6 +28,7 @@ export class ReviewerScoreComponent implements OnInit {
   @Input() criteriaList: ReviewCriteria[] = [];
 
   private readonly scroller: ViewportScroller = inject(ViewportScroller);
+  protected readonly sanitizer: DomSanitizer = inject(DomSanitizer);
 
   protected scoreOptions: RadioOption[] = [
     {
@@ -218,8 +219,6 @@ export class ReviewerScoreComponent implements OnInit {
     }
     return scoreGroup?.valid ?? false;
   }
-
-  protected readonly sanitizer: DomSanitizer = inject(DomSanitizer);
 
   protected buildQuestionText(criteria: ReviewCriteria): string {
     return `${criteria.groupNumber}.${criteria.inGroupNumber} ${criteria.displayText}`;

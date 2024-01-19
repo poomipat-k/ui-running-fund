@@ -1,4 +1,5 @@
-import { Component, Input } from '@angular/core';
+import { ViewportScroller } from '@angular/common';
+import { Component, Input, inject } from '@angular/core';
 import {
   FormControl,
   FormGroup,
@@ -7,17 +8,27 @@ import {
 } from '@angular/forms';
 import { InputTextComponent } from '../../components/input-text/input-text.component';
 import { RadioComponent } from '../../components/radio/radio.component';
+import { SelectDropdownComponent } from '../../components/select-dropdown/select-dropdown.component';
 import { RadioOption } from '../../shared/models/radio-option';
 
 @Component({
   selector: 'app-applicant-general-details',
   standalone: true,
-  imports: [InputTextComponent, ReactiveFormsModule, RadioComponent],
+  imports: [
+    InputTextComponent,
+    ReactiveFormsModule,
+    RadioComponent,
+    SelectDropdownComponent,
+  ],
   templateUrl: './general-details.component.html',
   styleUrl: './general-details.component.scss',
 })
 export class GeneralDetailsComponent {
   @Input() form: FormGroup;
+  @Input() enableScroll = false;
+
+  protected formTouched = false;
+  private readonly scroller: ViewportScroller = inject(ViewportScroller);
 
   get generalFormGroup() {
     return this.form.get('general') as FormGroup;
@@ -83,6 +94,9 @@ export class GeneralDetailsComponent {
   }
 
   validToGoNext(): boolean {
+    if (!this.formTouched) {
+      this.formTouched = true;
+    }
     if (!this.isFormValid()) {
       this.markFieldsTouched();
       return false;
@@ -92,16 +106,13 @@ export class GeneralDetailsComponent {
 
   onHasOrganizerChanged(): void {
     const groupControl = this.form.get('general') as FormGroup;
-    console.log('==groupControl', groupControl);
     if (this.form.value?.general?.hasOrganizer) {
-      console.log('===add control');
       groupControl.addControl(
         'organizerName',
         new FormControl(null, Validators.required)
       );
       return;
     }
-    console.log('==removeControl');
     groupControl.removeControl('organizerName');
   }
 
@@ -114,5 +125,26 @@ export class GeneralDetailsComponent {
     if (groupControl) {
       groupControl.markAllAsTouched();
     }
+
+    const errorId = this.getFirstErrorId();
+    if (errorId && this.enableScroll) {
+      this.scrollToId(errorId);
+    }
+  }
+
+  private getFirstErrorId(): string {
+    const group = this.form.get('general') as FormGroup;
+    const keys = Object.keys(group.controls);
+    for (const k of keys) {
+      if (!group.controls[k].valid) {
+        return k;
+      }
+    }
+    return '';
+  }
+
+  private scrollToId(id: string) {
+    this.scroller.setOffset([0, 100]);
+    this.scroller.scrollToAnchor(id);
   }
 }
