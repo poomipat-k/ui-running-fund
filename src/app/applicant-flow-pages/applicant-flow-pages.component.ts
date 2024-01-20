@@ -1,10 +1,11 @@
-import { Component, OnInit, ViewChild, inject } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild, inject } from '@angular/core';
 import {
   FormControl,
   FormGroup,
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
+import { Subscription } from 'rxjs';
 import { ProgressBarStepsComponent } from '../components/progress-bar-steps/progress-bar-steps.component';
 import { ProjectService } from '../services/project.service';
 import { ThemeService } from '../services/theme.service';
@@ -24,13 +25,15 @@ import { GeneralDetailsComponent } from './general-details/general-details.compo
   templateUrl: './applicant-flow-pages.component.html',
   styleUrl: './applicant-flow-pages.component.scss',
 })
-export class ApplicantFlowPagesComponent implements OnInit {
+export class ApplicantFlowPagesComponent implements OnInit, OnDestroy {
   @ViewChild('collaborateComponent') collaborateComponent: CollaborateComponent;
   @ViewChild('generalDetailsComponent')
   generalDetailsComponent: GeneralDetailsComponent;
 
   private readonly themeService: ThemeService = inject(ThemeService);
   private readonly projectService: ProjectService = inject(ProjectService);
+
+  private readonly subs: Subscription[];
 
   protected collaborationFiles: FileList | null;
 
@@ -70,6 +73,10 @@ export class ApplicantFlowPagesComponent implements OnInit {
     this.initForm();
   }
 
+  ngOnDestroy(): void {
+    this.subs.forEach((s) => s.unsubscribe());
+  }
+
   private initForm() {
     this.form = new FormGroup({
       collaborated: new FormControl(null, Validators.required),
@@ -83,10 +90,7 @@ export class ApplicantFlowPagesComponent implements OnInit {
         eventDate: new FormGroup({
           year: new FormControl(null, Validators.required),
           month: new FormControl(null, Validators.required),
-          day: new FormControl(
-            { value: null, disabled: false },
-            Validators.required
-          ),
+          day: new FormControl(null, Validators.required),
         }),
       }),
     });
@@ -135,9 +139,11 @@ export class ApplicantFlowPagesComponent implements OnInit {
       }
     }
     formData.append('form', JSON.stringify(this.form.value));
-    this.projectService.addProject(formData).subscribe((result) => {
-      console.log('===result', result);
-    });
+    this.subs.push(
+      this.projectService.addProject(formData).subscribe((result) => {
+        console.log('===result', result);
+      })
+    );
   }
 
   reduceStep() {

@@ -36,6 +36,7 @@
               placeholder="ปี"
               width="10.5rem"
               controlName="year"
+              [onChange]="onYearOrMonthChanged"
             ></app-com-select-dropdown>
 
             <app-com-select-dropdown
@@ -44,14 +45,17 @@
               placeholder="เดือน"
               width="15.3rem"
               controlName="month"
+              [onChange]="onYearOrMonthChanged"
             ></app-com-select-dropdown>
 
             <app-com-select-dropdown
               [form]="eventDateFormGroup"
               [items]="daysInMonthOptions"
               placeholder="วันที่"
-              width="8rem"
+              width="10rem"
               controlName="day"
+              [disabled]="dayDropdownDisabled"
+              emptyMessage="กรุณาเลือกปีและวัน"
             ></app-com-select-dropdown>
           </div>
         </div>

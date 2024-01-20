@@ -4,7 +4,12 @@
       #selectDropdownButton
       type="text"
       [readOnly]="!showDropdown"
-      [ngClass]="{ input: true, 'input--searching': showDropdown }"
+      [disabled]="disabled"
+      [ngClass]="{
+        input: true,
+        'input--searching': showDropdown,
+        disabled: disabled
+      }"
       [placeholder]="placeholder"
       [value]="inputValue"
       (keyup)="onSearchChanged($event)"
@@ -12,10 +17,14 @@
 
     <img
       #inputIcon
-      [ngClass]="{ input__icon: true, 'input__icon--flip': showDropdown }"
+      [ngClass]="{
+        input__icon: true,
+        'input__icon--flip': showDropdown,
+        disabled: disabled
+      }"
       src="/assets/chevron_down.svg"
       alt="down arrow"
-      (click)="onInputIconClick($event)"
+      (click)="onInputIconClick()"
     />
   </div>
   <!-- Dropdown Options -->

@@ -10,6 +10,7 @@ import {
   inject,
 } from '@angular/core';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-com-select-dropdown',
@@ -29,7 +30,10 @@ export class SelectDropdownComponent implements OnInit, OnDestroy {
   @Input() dropdownFontSize = '16px';
   @Input() width = '28.6rem';
   @Input() emptyMessage = 'ไม่พบข้อมูล';
+  @Input() disabled = false;
   @Input() onChange: () => void;
+
+  private readonly subs: Subscription[] = [];
 
   private listenerFn = () => {};
 
@@ -65,18 +69,14 @@ export class SelectDropdownComponent implements OnInit, OnDestroy {
         this.hideDropdown();
       }
     });
+
+    this.onValueChanges();
   }
 
   ngOnDestroy(): void {
     this.listenerFn();
+    this.subs.forEach((s) => s.unsubscribe());
   }
-
-  // filteredOptions(): any[] {
-  //   console.log('===filteredOptions');
-  //   return this.items.filter((item) =>
-  //     item.display.toString()?.includes(this.searchText)
-  //   );
-  // }
 
   onSearchChanged(event: any) {
     this.searchText = event.target.value;
@@ -92,7 +92,10 @@ export class SelectDropdownComponent implements OnInit, OnDestroy {
     }
   }
 
-  onInputIconClick(e: Event) {
+  onInputIconClick() {
+    if (this.disabled) {
+      return;
+    }
     if (this.showDropdown) {
       this.hideDropdown();
     } else {
@@ -102,6 +105,24 @@ export class SelectDropdownComponent implements OnInit, OnDestroy {
 
   onDropdownClicked() {
     this.hideDropdown();
+  }
+
+  // internal subscription to show latest selected display
+  private onValueChanges(): void {
+    const control = this.form.get(this.controlName);
+    if (control) {
+      this.subs.push(
+        control.valueChanges.subscribe((value) => {
+          if (value) {
+            this.selectedDisplay = this.items.find(
+              (item) => item.value === value
+            )?.display;
+          } else {
+            this.selectedDisplay = '';
+          }
+        })
+      );
+    }
   }
 
   onRadioValueChange() {

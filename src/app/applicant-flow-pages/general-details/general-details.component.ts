@@ -39,6 +39,8 @@ export class GeneralDetailsComponent implements OnInit {
 
   private thirtyOneDays: RadioOption[] = [];
 
+  protected dayDropdownDisabled = true;
+
   get generalFormGroup() {
     return this.form.get('general') as FormGroup;
   }
@@ -119,6 +121,7 @@ export class GeneralDetailsComponent implements OnInit {
 
   constructor() {
     this.onHasOrganizerChanged = this.onHasOrganizerChanged.bind(this);
+    this.onYearOrMonthChanged = this.onYearOrMonthChanged.bind(this);
     this.monthOptions = months;
     this.febNormal = days28;
     this.febLeap = days29;
@@ -134,7 +137,23 @@ export class GeneralDetailsComponent implements OnInit {
     return new Date(year, 1, 29).getDate() === 29;
   }
 
-  isValidDate(year: number, month: number, day: number): boolean {
+  onYearOrMonthChanged() {
+    const year = this.form.value.general.eventDate.year;
+    const month = this.form.value.general.eventDate.month;
+    const day = this.form.value.general.eventDate.day;
+    if (!year || !month) {
+      this.dayDropdownDisabled = true;
+      return;
+    }
+    this.dayDropdownDisabled = false;
+    if (!this.isValidDate(year, month, day)) {
+      this.eventDateFormGroup.patchValue({
+        day: null,
+      });
+    }
+  }
+
+  private isValidDate(year: number, month: number, day: number): boolean {
     if (!year || !month || !day) {
       return false;
     }
