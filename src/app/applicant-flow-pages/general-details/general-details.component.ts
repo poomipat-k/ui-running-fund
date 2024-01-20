@@ -101,6 +101,36 @@ export class GeneralDetailsComponent {
       value: 'cde',
       display: 'cde',
     },
+    {
+      id: 4,
+      value: 'cde2',
+      display: 'cde2',
+    },
+    {
+      id: 5,
+      value: 'cde3',
+      display: 'cde3',
+    },
+    {
+      id: 6,
+      value: 'cde4',
+      display: 'cde4',
+    },
+    {
+      id: 7,
+      value: 'cde5',
+      display: 'cde5',
+    },
+    {
+      id: 8,
+      value: 'cde6',
+      display: 'cde6',
+    },
+    {
+      id: 9,
+      value: 'cde7',
+      display: 'cde7',
+    },
   ];
 
   constructor() {

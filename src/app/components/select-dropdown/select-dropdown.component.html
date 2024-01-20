@@ -1,26 +1,36 @@
 <div class="dropdown-component" [formGroup]="form" [style]="{ width: width }">
-  <div class="input-container" (click)="onClick()">
+  <div class="input-container" (click)="onInputClick()">
     <input
+      #selectDropdownButton
       type="text"
       [readOnly]="!showDropdown"
-      class="input"
+      [ngClass]="{ input: true, 'input--searching': showDropdown }"
       [placeholder]="placeholder"
-      [value]="searchText"
+      [value]="inputValue"
       (keyup)="onSearchChanged($event)"
     />
+
     <img
+      #inputIcon
       [ngClass]="{ input__icon: true, 'input__icon--flip': showDropdown }"
       src="/assets/chevron_down.svg"
       alt="down arrow"
     />
+    <!-- (click)="onInputIconClick()" -->
   </div>
   <!-- Dropdown Options -->
+  @if (showDropdown) {
   <div
     [ngClass]="{ 'radio-container': true, show: showDropdown }"
     [style]="{ width: width }"
+    (change)="onRadioValueChange()"
   >
     @for (item of filteredOptions; track item.id) {
-    <label class="radio__label" [style]="{ 'font-size': dropdownFontSize }">
+    <label
+      class="radio__label"
+      [style]="{ 'font-size': dropdownFontSize }"
+      (click)="onDropdownClicked()"
+    >
       <input
         type="radio"
         class="radio"
@@ -31,4 +41,5 @@
     </label>
     }
   </div>
+  }
 </div>
