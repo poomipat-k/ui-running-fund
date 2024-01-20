@@ -126,10 +126,6 @@ export class SelectDropdownComponent implements OnInit, OnDestroy {
   }
 
   onRadioValueChange() {
-    const value = this.form.value[this.controlName];
-    this.selectedDisplay = this.items.find(
-      (item) => item.value === value
-    )?.display;
     // onChange from @Input()
     if (this.onChange) {
       this.onChange();

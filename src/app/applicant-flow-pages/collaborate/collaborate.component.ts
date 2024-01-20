@@ -1,11 +1,4 @@
-import {
-  Component,
-  EventEmitter,
-  Input,
-  OnDestroy,
-  OnInit,
-  Output,
-} from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { RadioComponent } from '../../components/radio/radio.component';
 import { UploadButtonComponent } from '../../components/upload-button/upload-button.component';
@@ -18,7 +11,7 @@ import { RadioOption } from '../../shared/models/radio-option';
   templateUrl: './collaborate.component.html',
   styleUrl: './collaborate.component.scss',
 })
-export class CollaborateComponent implements OnInit, OnDestroy {
+export class CollaborateComponent implements OnInit {
   @Input() form: FormGroup;
   @Input() selectedFilesCount = 0;
   @Input() uploadButtonTouched = false;
@@ -57,10 +50,6 @@ export class CollaborateComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {}
-
-  ngOnDestroy(): void {
-    console.log('===[Collaborate] destroyed');
-  }
 
   onCollaborateChanged() {
     if (this.form.get('collaborated')?.value === false) {
