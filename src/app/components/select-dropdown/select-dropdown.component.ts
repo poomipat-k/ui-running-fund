@@ -113,7 +113,7 @@ export class SelectDropdownComponent implements OnInit, OnDestroy {
     if (control) {
       this.subs.push(
         control.valueChanges.subscribe((value) => {
-          if (value) {
+          if (value || value === 0) {
             this.selectedDisplay = this.items.find(
               (item) => item.value === value
             )?.display;

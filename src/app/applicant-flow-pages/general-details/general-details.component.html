@@ -52,11 +52,59 @@
               [form]="eventDateFormGroup"
               [items]="daysInMonthOptions"
               placeholder="วันที่"
-              width="10rem"
+              width="9rem"
               controlName="day"
               [disabled]="dayDropdownDisabled"
               emptyMessage="กรุณาเลือกปีและวัน"
             ></app-com-select-dropdown>
+          </div>
+        </div>
+
+        <div class="eventDate__time-container">
+          <div class="eventDate__line">
+            <p class="eventDate__line-label">เวลา</p>
+            <div class="eventDate__line--group">
+              <div class="eventDate__with-colon">
+                <app-com-select-dropdown
+                  [form]="eventDateFormGroup"
+                  [items]="hourOptions"
+                  placeholder="ชั่วโมง"
+                  width="9rem"
+                  controlName="fromHour"
+                ></app-com-select-dropdown>
+                <div class="eventDate__colon">:</div>
+                <app-com-select-dropdown
+                  [form]="eventDateFormGroup"
+                  [items]="minuteOptions"
+                  placeholder="นาที"
+                  width="9rem"
+                  controlName="fromMinute"
+                ></app-com-select-dropdown>
+              </div>
+            </div>
+          </div>
+
+          <div class="eventDate__line">
+            <p class="eventDate__line-label">ถึงเวลา</p>
+            <div class="eventDate__line--group">
+              <div class="eventDate__with-colon">
+                <app-com-select-dropdown
+                  [form]="eventDateFormGroup"
+                  [items]="hourOptions"
+                  placeholder="ชั่วโมง"
+                  width="9rem"
+                  controlName="toHour"
+                ></app-com-select-dropdown>
+                <div class="eventDate__colon">:</div>
+                <app-com-select-dropdown
+                  [form]="eventDateFormGroup"
+                  [items]="minuteOptions"
+                  placeholder="นาที"
+                  width="9rem"
+                  controlName="toMinute"
+                ></app-com-select-dropdown>
+              </div>
+            </div>
           </div>
         </div>
       </div>

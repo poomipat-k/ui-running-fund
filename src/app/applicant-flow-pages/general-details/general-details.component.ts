@@ -11,7 +11,15 @@ import { RadioComponent } from '../../components/radio/radio.component';
 import { SelectDropdownComponent } from '../../components/select-dropdown/select-dropdown.component';
 import { DateService } from '../../services/date.service';
 import { RadioOption } from '../../shared/models/radio-option';
-import { days28, days29, days30, days31, months } from './date-objects';
+import {
+  days28,
+  days29,
+  days30,
+  days31,
+  hours,
+  minutes,
+  months,
+} from './date-objects';
 
 @Component({
   selector: 'app-applicant-general-details',
@@ -36,6 +44,8 @@ export class GeneralDetailsComponent implements OnInit {
   private febLeap: RadioOption[] = [];
   private febNormal: RadioOption[] = [];
   private thirtyDays: RadioOption[] = [];
+  protected hourOptions: RadioOption[] = [];
+  protected minuteOptions: RadioOption[] = [];
 
   private thirtyOneDays: RadioOption[] = [];
 
@@ -127,6 +137,8 @@ export class GeneralDetailsComponent implements OnInit {
     this.febLeap = days29;
     this.thirtyDays = days30;
     this.thirtyOneDays = days31;
+    this.hourOptions = hours;
+    this.minuteOptions = minutes;
   }
 
   ngOnInit(): void {

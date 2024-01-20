@@ -91,6 +91,10 @@ export class ApplicantFlowPagesComponent implements OnInit, OnDestroy {
           year: new FormControl(null, Validators.required),
           month: new FormControl(null, Validators.required),
           day: new FormControl(null, Validators.required),
+          fromHour: new FormControl(null, Validators.required),
+          fromMinute: new FormControl(null, Validators.required),
+          toHour: new FormControl(null, Validators.required),
+          toMinute: new FormControl(null, Validators.required),
         }),
       }),
     });
