@@ -11,6 +11,7 @@ import { RadioComponent } from '../../components/radio/radio.component';
 import { SelectDropdownComponent } from '../../components/select-dropdown/select-dropdown.component';
 import { DateService } from '../../services/date.service';
 import { RadioOption } from '../../shared/models/radio-option';
+import { days28, days29, days30, days31, months } from './date-objects';
 
 @Component({
   selector: 'app-applicant-general-details',
@@ -32,6 +33,11 @@ export class GeneralDetailsComponent implements OnInit {
   private readonly scroller: ViewportScroller = inject(ViewportScroller);
   private readonly dateService: DateService = inject(DateService);
   private readonly thirtyDaysMonths = [4, 6, 9, 11];
+  private febLeap: RadioOption[] = [];
+  private febNormal: RadioOption[] = [];
+  private thirtyDays: RadioOption[] = [];
+
+  private thirtyOneDays: RadioOption[] = [];
 
   get generalFormGroup() {
     return this.form.get('general') as FormGroup;
@@ -48,32 +54,12 @@ export class GeneralDetailsComponent implements OnInit {
       return [];
     }
     if (this.thirtyDaysMonths.includes(month)) {
-      const days = [...Array(30 + 1).keys()];
-      days.shift();
-      return days.map((d) => ({
-        id: d,
-        value: d,
-        display: d,
-      }));
+      return this.thirtyDays;
     }
     if (month !== 2) {
-      const days = [...Array(31 + 1).keys()];
-      days.shift();
-      return days.map((d) => ({
-        id: d,
-        value: d,
-        display: d,
-      }));
+      return this.thirtyOneDays;
     }
-    const days = this.isLeapYear(year)
-      ? [...Array(29 + 1).keys()]
-      : [...Array(28 + 1).keys()];
-    days.shift();
-    return days.map((d) => ({
-      id: d,
-      value: d,
-      display: d,
-    }));
+    return this.isLeapYear(year) ? this.febLeap : this.febNormal;
   }
 
   readonly expectedParticipantsOptions: RadioOption[] = [
@@ -129,71 +115,15 @@ export class GeneralDetailsComponent implements OnInit {
 
   protected yearOptions: RadioOption[] = [];
 
-  protected readonly monthOptions: RadioOption[] = [
-    {
-      id: 1,
-      value: 1,
-      display: 'มกราคม',
-    },
-    {
-      id: 2,
-      value: 2,
-      display: 'กุมภาพันธ์',
-    },
-    {
-      id: 3,
-      value: 3,
-      display: 'มีนาคม',
-    },
-    {
-      id: 4,
-      value: 4,
-      display: 'เมษายน',
-    },
-    {
-      id: 5,
-      value: 5,
-      display: 'พฤษภาคม',
-    },
-    {
-      id: 6,
-      value: 6,
-      display: 'มิถุนายน',
-    },
-    {
-      id: 7,
-      value: 7,
-      display: 'กรกฎาคม',
-    },
-    {
-      id: 8,
-      value: 8,
-      display: 'สิงหาคม',
-    },
-    {
-      id: 9,
-      value: 9,
-      display: 'กันยายน',
-    },
-    {
-      id: 10,
-      value: 10,
-      display: 'ตุลาคม',
-    },
-    {
-      id: 11,
-      value: 11,
-      display: 'พฤศจิกายน',
-    },
-    {
-      id: 12,
-      value: 12,
-      display: 'ธันวาคม',
-    },
-  ];
+  protected monthOptions: RadioOption[] = [];
 
   constructor() {
     this.onHasOrganizerChanged = this.onHasOrganizerChanged.bind(this);
+    this.monthOptions = months;
+    this.febNormal = days28;
+    this.febLeap = days29;
+    this.thirtyDays = days30;
+    this.thirtyOneDays = days31;
   }
 
   ngOnInit(): void {
@@ -202,6 +132,16 @@ export class GeneralDetailsComponent implements OnInit {
 
   isLeapYear(year: number): boolean {
     return new Date(year, 1, 29).getDate() === 29;
+  }
+
+  isValidDate(year: number, month: number, day: number): boolean {
+    if (!year || !month || !day) {
+      return false;
+    }
+    if (month > 12 || day > 31) {
+      return false;
+    }
+    return new Date(year, month - 1, day).getDate() === day;
   }
 
   validToGoNext(): boolean {

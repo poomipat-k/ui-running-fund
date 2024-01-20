@@ -39,11 +39,11 @@ export class SelectDropdownComponent implements OnInit, OnDestroy {
   protected searchText = '';
   protected selectedDisplay = '';
 
-  // get filteredOptions(): any[] {
-  //   return this.items.filter((item) =>
-  //     item.display.toString()?.includes(this.searchText)
-  //   );
-  // }
+  get filteredOptions(): any[] {
+    return this.items.filter((item) =>
+      item.display.toString()?.includes(this.searchText)
+    );
+  }
 
   get inputValue() {
     if (!this.showDropdown) {
@@ -71,12 +71,12 @@ export class SelectDropdownComponent implements OnInit, OnDestroy {
     this.listenerFn();
   }
 
-  filteredOptions(): any[] {
-    console.log('===filteredOptions');
-    return this.items.filter((item) =>
-      item.display.toString()?.includes(this.searchText)
-    );
-  }
+  // filteredOptions(): any[] {
+  //   console.log('===filteredOptions');
+  //   return this.items.filter((item) =>
+  //     item.display.toString()?.includes(this.searchText)
+  //   );
+  // }
 
   onSearchChanged(event: any) {
     this.searchText = event.target.value;

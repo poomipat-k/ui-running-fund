@@ -28,7 +28,7 @@
     [style]="{ width: width }"
     (change)="onRadioValueChange()"
   >
-    @for (item of filteredOptions(); track item.id) {
+    @for (item of filteredOptions; track item.id) {
     <label
       class="radio__label"
       [style]="{ 'font-size': dropdownFontSize }"
