@@ -27,17 +27,26 @@
     <div class="section">
       <h3 class="section__header">1.2 วันที่จัดการแข่งขัน</h3>
       <div class="section-content">
-        <app-com-select-dropdown
-          [items]="testDropdownOptions"
-          [form]="generalFormGroup"
-          controlName="name"
-        ></app-com-select-dropdown>
+        <div class="eventDate__line">
+          <p class="eventDate__line-label">วันที่</p>
+          <div class="eventDate__line--group">
+            <app-com-select-dropdown
+              [form]="eventDateFormGroup"
+              [items]="yearOptions"
+              placeholder="ปี"
+              width="10.5rem"
+              controlName="year"
+            ></app-com-select-dropdown>
 
-        <app-com-select-dropdown
-          [items]="testDropdownOptions"
-          [form]="generalFormGroup"
-          controlName="name2"
-        ></app-com-select-dropdown>
+            <app-com-select-dropdown
+              [form]="eventDateFormGroup"
+              [items]="monthOptions"
+              placeholder="เดือน"
+              width="15.3rem"
+              controlName="month"
+            ></app-com-select-dropdown>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -52,7 +61,7 @@
     <div class="section">
       <h3 class="section__header">1.4 เส้นทางที่ใช้สำหรับจัดกิจกรรม</h3>
       <div class="section-content">
-        <div class="inputBox inputBox--4">
+        <div class="route">
           <label for="startPoint" class="label">จุด Start</label>
           <app-com-input-text
             id="startPoint"
@@ -69,7 +78,7 @@
           <p class="error__text">กรุณากรอกจุด Start</p>
         </div>
         }
-        <div class="inputBox inputBox--4">
+        <div class="route">
           <label for="finishPoint" class="label width-129"
             >จุด Finish (ถ้าเป็นจุดเดียวกัน ให้ระบุ “จุดเดิม”)</label
           >

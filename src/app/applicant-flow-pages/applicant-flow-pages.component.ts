@@ -80,7 +80,11 @@ export class ApplicantFlowPagesComponent implements OnInit {
         expectedParticipants: new FormControl(null, Validators.required),
         hasOrganizer: new FormControl(null, Validators.required),
         name: new FormControl(null),
-        name2: new FormControl(null),
+        eventDate: new FormGroup({
+          year: new FormControl(null, Validators.required),
+          month: new FormControl(null, Validators.required),
+          day: new FormControl(null, Validators.required),
+        }),
       }),
     });
 

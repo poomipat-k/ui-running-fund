@@ -29,6 +29,7 @@ export class SelectDropdownComponent implements OnInit, OnDestroy {
   @Input() dropdownFontSize = '16px';
   @Input() width = '28.6rem';
   @Input() emptyMessage = 'ไม่พบข้อมูล';
+  @Input() onChange: () => void;
 
   private listenerFn = () => {};
 
@@ -39,7 +40,9 @@ export class SelectDropdownComponent implements OnInit, OnDestroy {
   protected selectedDisplay = '';
 
   get filteredOptions(): any[] {
-    return this.items.filter((item) => item.display.includes(this.searchText));
+    return this.items.filter((item) =>
+      item.display.toString()?.includes(this.searchText)
+    );
   }
 
   get inputValue() {
@@ -93,6 +96,10 @@ export class SelectDropdownComponent implements OnInit, OnDestroy {
 
   onRadioValueChange() {
     this.selectedDisplay = this.form.value[this.controlName];
+    // onChange from @Input()
+    if (this.onChange) {
+      this.onChange();
+    }
   }
 
   private hideDropdown() {

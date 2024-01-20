@@ -48,16 +48,34 @@
   }
 }
 
-.inputBox {
+.eventDate {
+  &__line {
+    display: flex;
+    align-items: center;
+    gap: 2.4rem;
+
+    &-label {
+      color: $gray700;
+      font-family: $custom-font-looped;
+      font-size: 1.6rem;
+      font-style: normal;
+      font-weight: 400;
+      line-height: normal;
+    }
+
+    &--group {
+      display: flex;
+      gap: 1rem;
+    }
+  }
+}
+
+.route {
   display: flex;
   justify-content: space-between;
   align-items: center;
-
   min-height: 4.4rem;
-
-  &--4 {
-    width: 47.8rem;
-  }
+  width: 47.8rem;
 }
 
 .label {

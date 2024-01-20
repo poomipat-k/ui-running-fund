@@ -1,5 +1,5 @@
 import { ViewportScroller } from '@angular/common';
-import { Component, Input, inject } from '@angular/core';
+import { Component, Input, OnInit, inject } from '@angular/core';
 import {
   FormControl,
   FormGroup,
@@ -9,6 +9,7 @@ import {
 import { InputTextComponent } from '../../components/input-text/input-text.component';
 import { RadioComponent } from '../../components/radio/radio.component';
 import { SelectDropdownComponent } from '../../components/select-dropdown/select-dropdown.component';
+import { DateService } from '../../services/date.service';
 import { RadioOption } from '../../shared/models/radio-option';
 
 @Component({
@@ -23,51 +24,56 @@ import { RadioOption } from '../../shared/models/radio-option';
   templateUrl: './general-details.component.html',
   styleUrl: './general-details.component.scss',
 })
-export class GeneralDetailsComponent {
+export class GeneralDetailsComponent implements OnInit {
   @Input() form: FormGroup;
   @Input() enableScroll = false;
 
   protected formTouched = false;
   private readonly scroller: ViewportScroller = inject(ViewportScroller);
+  private readonly dateService: DateService = inject(DateService);
 
   get generalFormGroup() {
     return this.form.get('general') as FormGroup;
   }
 
+  get eventDateFormGroup() {
+    return this.form.get('general.eventDate') as FormGroup;
+  }
+
   readonly expectedParticipantsOptions: RadioOption[] = [
     {
       id: 1,
-      value: 1,
+      value: '<500',
       display: 'ต่ำกว่า 500 คน',
     },
     {
       id: 2,
-      value: 2,
+      value: '500-1499',
       display: '500 - 1,499 คน',
     },
     {
       id: 3,
-      value: 3,
+      value: '1500-2499',
       display: '1,500 - 2,499 คน',
     },
     {
       id: 4,
-      value: 4,
+      value: '2500-3499',
       display: '2,500 - 3,499 คน',
     },
     {
       id: 5,
-      value: 5,
+      value: '3500-4499',
       display: '3,500 - 4,499 คน',
     },
     {
       id: 6,
-      value: 6,
+      value: '4500-5499',
       display: '4,500 - 5,499 คน',
     },
     {
       id: 7,
-      value: 7,
+      value: '>=5500',
       display: '5,500 คน หรือมากกว่า',
     },
   ];
@@ -85,56 +91,77 @@ export class GeneralDetailsComponent {
     },
   ];
 
-  readonly testDropdownOptions: RadioOption[] = [
+  protected yearOptions: RadioOption[] = [];
+
+  protected readonly monthOptions: RadioOption[] = [
     {
       id: 1,
-      value: 'abc',
-      display: 'abc',
+      value: 1,
+      display: 'มกราคม',
     },
     {
       id: 2,
-      value: 'bcd',
-      display: 'bcd',
+      value: 2,
+      display: 'กุมภาพันธ์',
     },
     {
       id: 3,
-      value: 'cde',
-      display: 'cde',
+      value: 3,
+      display: 'มีนาคม',
     },
     {
       id: 4,
-      value: 'cde2',
-      display: 'cde2',
+      value: 4,
+      display: 'เมษายน',
     },
     {
       id: 5,
-      value: 'cde3',
-      display: 'cde3',
+      value: 5,
+      display: 'พฤษภาคม',
     },
     {
       id: 6,
-      value: 'cde4',
-      display: 'cde4',
+      value: 6,
+      display: 'มิถุนายน',
     },
     {
       id: 7,
-      value: 'cde5',
-      display: 'cde5',
+      value: 7,
+      display: 'กรกฎาคม',
     },
     {
       id: 8,
-      value: 'cde6',
-      display: 'cde6',
+      value: 8,
+      display: 'สิงหาคม',
     },
     {
       id: 9,
-      value: 'cde7',
-      display: 'cde7',
+      value: 9,
+      display: 'กันยายน',
+    },
+    {
+      id: 10,
+      value: 10,
+      display: 'ตุลาคม',
+    },
+    {
+      id: 11,
+      value: 11,
+      display: 'พฤศจิกายน',
+    },
+    {
+      id: 12,
+      value: 12,
+      display: 'ธันวาคม',
     },
   ];
 
   constructor() {
     this.onHasOrganizerChanged = this.onHasOrganizerChanged.bind(this);
+  }
+
+  ngOnInit(): void {
+    this.getYearsOptions();
   }
 
   isLeapYear(year: number): boolean {
@@ -162,6 +189,19 @@ export class GeneralDetailsComponent {
       return;
     }
     groupControl.removeControl('organizerName');
+  }
+
+  private getYearsOptions() {
+    const currentYear = this.dateService.getCurrentYear();
+    const years = [];
+    for (let y = currentYear; y < currentYear + 10; y++) {
+      years.push({
+        id: y,
+        value: y,
+        display: y,
+      });
+    }
+    this.yearOptions = years;
   }
 
   private isFormValid(): boolean {
