@@ -1,5 +1,5 @@
 <div class="dropdown-component" [formGroup]="form" [style]="{ width: width }">
-  <div class="input-container" (click)="onInputClick()">
+  <div class="input-container" (click)="onInputClick($event)">
     <input
       #selectDropdownButton
       type="text"

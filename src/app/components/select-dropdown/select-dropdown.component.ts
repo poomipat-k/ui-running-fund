@@ -75,14 +75,17 @@ export class SelectDropdownComponent implements OnInit, OnDestroy {
     this.searchText = event.target.value;
   }
 
-  onInputClick() {
-    if (!this.showDropdown) {
+  onInputClick(e: Event) {
+    // Check if the event target is really input element not the input icon
+    if (
+      !this.showDropdown &&
+      e.target === this.selectDropdownButton.nativeElement
+    ) {
       this.showDropdown = true;
     }
   }
 
   onInputIconClick(e: Event) {
-    e.stopPropagation();
     if (this.showDropdown) {
       this.hideDropdown();
     } else {
@@ -95,7 +98,10 @@ export class SelectDropdownComponent implements OnInit, OnDestroy {
   }
 
   onRadioValueChange() {
-    this.selectedDisplay = this.form.value[this.controlName];
+    const value = this.form.value[this.controlName];
+    this.selectedDisplay = this.items.find(
+      (item) => item.value === value
+    )?.display;
     // onChange from @Input()
     if (this.onChange) {
       this.onChange();
