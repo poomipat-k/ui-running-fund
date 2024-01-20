@@ -15,13 +15,16 @@
       [ngClass]="{ input__icon: true, 'input__icon--flip': showDropdown }"
       src="/assets/chevron_down.svg"
       alt="down arrow"
+      (click)="onInputIconClick($event)"
     />
-    <!-- (click)="onInputIconClick()" -->
   </div>
   <!-- Dropdown Options -->
-  @if (showDropdown) {
+  <!-- Don't use @If to hide options because radio functional will be broken -->
   <div
-    [ngClass]="{ 'radio-container': true, show: showDropdown }"
+    [ngClass]="{
+      'radio-container': true,
+      'radio-container--show': showDropdown
+    }"
     [style]="{ width: width }"
     (change)="onRadioValueChange()"
   >
@@ -39,7 +42,8 @@
       />
       {{ item.display }}
     </label>
+    } @empty {
+    <p class="radio-container--empty">{{ emptyMessage }}</p>
     }
   </div>
-  }
 </div>

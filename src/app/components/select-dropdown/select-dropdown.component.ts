@@ -28,6 +28,7 @@ export class SelectDropdownComponent implements OnInit, OnDestroy {
   @Input() placeholder = 'เลือกการค้นหา';
   @Input() dropdownFontSize = '16px';
   @Input() width = '28.6rem';
+  @Input() emptyMessage = 'ไม่พบข้อมูล';
 
   private listenerFn = () => {};
 
@@ -54,24 +55,11 @@ export class SelectDropdownComponent implements OnInit, OnDestroy {
     Which is an unsubscribe function to be used when component destroyed to unsubscribe registered event.
     */
     this.listenerFn = this.renderer.listen('window', 'click', (e: Event) => {
-      console.log(e.target);
       if (
         e.target !== this.selectDropdownButton.nativeElement &&
         e.target !== this.inputIcon.nativeElement
       ) {
-        // e.target !== this.inputIcon.nativeElement
-
-        console.log('===Other');
         this.hideDropdown();
-      } else if (e.target === this.inputIcon.nativeElement) {
-        console.log('====Icon');
-        if (this.showDropdown) {
-          this.hideDropdown();
-        } else {
-          this.showDropdown = true;
-        }
-      } else {
-        console.log('==Input');
       }
     });
   }
@@ -90,14 +78,14 @@ export class SelectDropdownComponent implements OnInit, OnDestroy {
     }
   }
 
-  // onInputIconClick() {
-  //   console.log('==onInputIconClick');
-  //   if (this.showDropdown) {
-  //     this.hideDropdown();
-  //   } else {
-  //     this.showDropdown = true;
-  //   }
-  // }
+  onInputIconClick(e: Event) {
+    e.stopPropagation();
+    if (this.showDropdown) {
+      this.hideDropdown();
+    } else {
+      this.showDropdown = true;
+    }
+  }
 
   onDropdownClicked() {
     this.hideDropdown();
@@ -105,7 +93,6 @@ export class SelectDropdownComponent implements OnInit, OnDestroy {
 
   onRadioValueChange() {
     this.selectedDisplay = this.form.value[this.controlName];
-    console.log('===DISPLAY:', this.selectedDisplay);
   }
 
   private hideDropdown() {
