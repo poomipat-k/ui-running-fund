@@ -31,6 +31,7 @@ export class GeneralDetailsComponent implements OnInit {
   protected formTouched = false;
   private readonly scroller: ViewportScroller = inject(ViewportScroller);
   private readonly dateService: DateService = inject(DateService);
+  private readonly thirtyDaysMonths = [4, 6, 9, 11];
 
   get generalFormGroup() {
     return this.form.get('general') as FormGroup;
@@ -38,6 +39,41 @@ export class GeneralDetailsComponent implements OnInit {
 
   get eventDateFormGroup() {
     return this.form.get('general.eventDate') as FormGroup;
+  }
+
+  get daysInMonthOptions() {
+    const year = this.form.value.general.eventDate.year;
+    const month = this.form.value.general.eventDate.month;
+    if (!year || !month) {
+      return [];
+    }
+    if (this.thirtyDaysMonths.includes(month)) {
+      const days = [...Array(30 + 1).keys()];
+      days.shift();
+      return days.map((d) => ({
+        id: d,
+        value: d,
+        display: d,
+      }));
+    }
+    if (month !== 2) {
+      const days = [...Array(31 + 1).keys()];
+      days.shift();
+      return days.map((d) => ({
+        id: d,
+        value: d,
+        display: d,
+      }));
+    }
+    const days = this.isLeapYear(year)
+      ? [...Array(29 + 1).keys()]
+      : [...Array(28 + 1).keys()];
+    days.shift();
+    return days.map((d) => ({
+      id: d,
+      value: d,
+      display: d,
+    }));
   }
 
   readonly expectedParticipantsOptions: RadioOption[] = [
