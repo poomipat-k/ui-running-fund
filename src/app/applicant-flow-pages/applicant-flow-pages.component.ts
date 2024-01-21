@@ -81,12 +81,8 @@ export class ApplicantFlowPagesComponent implements OnInit, OnDestroy {
     this.form = new FormGroup({
       collaborated: new FormControl(null, Validators.required),
       general: new FormGroup({
+        // Order as UI layout to scroll to error correctly
         projectName: new FormControl(null, Validators.required),
-        startPoint: new FormControl(null, Validators.required),
-        finishPoint: new FormControl(null, Validators.required),
-        expectedParticipants: new FormControl(null, Validators.required),
-        hasOrganizer: new FormControl(null, Validators.required),
-        name: new FormControl(null),
         eventDate: new FormGroup({
           year: new FormControl(null, Validators.required),
           month: new FormControl(null, Validators.required),
@@ -96,6 +92,10 @@ export class ApplicantFlowPagesComponent implements OnInit, OnDestroy {
           toHour: new FormControl(null, Validators.required),
           toMinute: new FormControl(null, Validators.required),
         }),
+        startPoint: new FormControl(null, Validators.required),
+        finishPoint: new FormControl(null, Validators.required),
+        expectedParticipants: new FormControl(null, Validators.required),
+        hasOrganizer: new FormControl(null, Validators.required),
       }),
     });
 

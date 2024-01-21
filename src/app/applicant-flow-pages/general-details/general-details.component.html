@@ -30,33 +30,63 @@
         <div class="eventDate__line">
           <p class="eventDate__line-label">วันที่</p>
           <div class="eventDate__line--group">
-            <app-com-select-dropdown
-              [form]="eventDateFormGroup"
-              [items]="yearOptions"
-              placeholder="ปี"
-              width="10.5rem"
-              controlName="year"
-              [onChange]="onYearOrMonthChanged"
-            ></app-com-select-dropdown>
+            <div>
+              <app-com-select-dropdown
+                id="year"
+                [form]="eventDateFormGroup"
+                [items]="yearOptions"
+                placeholder="ปี"
+                width="10.5rem"
+                controlName="year"
+                [onChange]="onYearOrMonthChanged"
+              ></app-com-select-dropdown>
+              @if (!form.get('general.eventDate.year')?.valid &&
+              form.get('general.eventDate.year')?.touched && formTouched) {
+              <div class="error mgt-4">
+                <img src="/assets/error_icon.svg" alt="error icon" />
+                <p class="error__text">กรุณาเลือกปี</p>
+              </div>
+              }
+            </div>
 
-            <app-com-select-dropdown
-              [form]="eventDateFormGroup"
-              [items]="monthOptions"
-              placeholder="เดือน"
-              width="15.3rem"
-              controlName="month"
-              [onChange]="onYearOrMonthChanged"
-            ></app-com-select-dropdown>
+            <div>
+              <app-com-select-dropdown
+                id="month"
+                [form]="eventDateFormGroup"
+                [items]="monthOptions"
+                placeholder="เดือน"
+                width="15.3rem"
+                controlName="month"
+                [onChange]="onYearOrMonthChanged"
+              ></app-com-select-dropdown>
+              @if (!form.get('general.eventDate.month')?.valid &&
+              form.get('general.eventDate.month')?.touched && formTouched) {
+              <div class="error mgt-4">
+                <img src="/assets/error_icon.svg" alt="error icon" />
+                <p class="error__text">กรุณาเลือกเดือน</p>
+              </div>
+              }
+            </div>
 
-            <app-com-select-dropdown
-              [form]="eventDateFormGroup"
-              [items]="daysInMonthOptions"
-              placeholder="วันที่"
-              width="9rem"
-              controlName="day"
-              [disabled]="dayDropdownDisabled"
-              emptyMessage="กรุณาเลือกปีและวัน"
-            ></app-com-select-dropdown>
+            <div>
+              <app-com-select-dropdown
+                id="day"
+                [form]="eventDateFormGroup"
+                [items]="daysInMonthOptions"
+                placeholder="วันที่"
+                width="9rem"
+                controlName="day"
+                [disabled]="dayDropdownDisabled"
+                emptyMessage="กรุณาเลือกปีและวัน"
+              ></app-com-select-dropdown>
+              @if (!form.get('general.eventDate.day')?.valid &&
+              form.get('general.eventDate.day')?.touched && formTouched) {
+              <div class="error mgt-4">
+                <img src="/assets/error_icon.svg" alt="error icon" />
+                <p class="error__text">กรุณาเลือกวันที่</p>
+              </div>
+              }
+            </div>
           </div>
         </div>
 
@@ -65,21 +95,43 @@
             <p class="eventDate__line-label">เวลา</p>
             <div class="eventDate__line--group">
               <div class="eventDate__with-colon">
-                <app-com-select-dropdown
-                  [form]="eventDateFormGroup"
-                  [items]="hourOptions"
-                  placeholder="ชั่วโมง"
-                  width="9rem"
-                  controlName="fromHour"
-                ></app-com-select-dropdown>
+                <div>
+                  <app-com-select-dropdown
+                    id="fromHour"
+                    [form]="eventDateFormGroup"
+                    [items]="hourOptions"
+                    placeholder="ชั่วโมง"
+                    width="9rem"
+                    controlName="fromHour"
+                  ></app-com-select-dropdown>
+                  @if (!form.get('general.eventDate.fromHour')?.valid &&
+                  form.get('general.eventDate.fromHour')?.touched &&
+                  formTouched) {
+                  <div class="error mgt-4">
+                    <img src="/assets/error_icon.svg" alt="error icon" />
+                    <p class="error__text">กรุณาเลือกชั่วโมง</p>
+                  </div>
+                  }
+                </div>
                 <div class="eventDate__colon">:</div>
-                <app-com-select-dropdown
-                  [form]="eventDateFormGroup"
-                  [items]="minuteOptions"
-                  placeholder="นาที"
-                  width="9rem"
-                  controlName="fromMinute"
-                ></app-com-select-dropdown>
+                <div>
+                  <app-com-select-dropdown
+                    id="fromMinute"
+                    [form]="eventDateFormGroup"
+                    [items]="minuteOptions"
+                    placeholder="นาที"
+                    width="9rem"
+                    controlName="fromMinute"
+                  ></app-com-select-dropdown>
+                  @if (!form.get('general.eventDate.fromMinute')?.valid &&
+                  form.get('general.eventDate.fromMinute')?.touched &&
+                  formTouched) {
+                  <div class="error mgt-4">
+                    <img src="/assets/error_icon.svg" alt="error icon" />
+                    <p class="error__text">กรุณาเลือกนาที</p>
+                  </div>
+                  }
+                </div>
               </div>
             </div>
           </div>
@@ -88,21 +140,43 @@
             <p class="eventDate__line-label">ถึงเวลา</p>
             <div class="eventDate__line--group">
               <div class="eventDate__with-colon">
-                <app-com-select-dropdown
-                  [form]="eventDateFormGroup"
-                  [items]="hourOptions"
-                  placeholder="ชั่วโมง"
-                  width="9rem"
-                  controlName="toHour"
-                ></app-com-select-dropdown>
+                <div>
+                  <app-com-select-dropdown
+                    id="toHour"
+                    [form]="eventDateFormGroup"
+                    [items]="hourOptions"
+                    placeholder="ชั่วโมง"
+                    width="9rem"
+                    controlName="toHour"
+                  ></app-com-select-dropdown>
+                  @if (!form.get('general.eventDate.toHour')?.valid &&
+                  form.get('general.eventDate.toHour')?.touched && formTouched)
+                  {
+                  <div class="error mgt-4">
+                    <img src="/assets/error_icon.svg" alt="error icon" />
+                    <p class="error__text">กรุณาเลือกชั่วโมง</p>
+                  </div>
+                  }
+                </div>
                 <div class="eventDate__colon">:</div>
-                <app-com-select-dropdown
-                  [form]="eventDateFormGroup"
-                  [items]="minuteOptions"
-                  placeholder="นาที"
-                  width="9rem"
-                  controlName="toMinute"
-                ></app-com-select-dropdown>
+                <div>
+                  <app-com-select-dropdown
+                    id="toMinute"
+                    [form]="eventDateFormGroup"
+                    [items]="minuteOptions"
+                    placeholder="นาที"
+                    width="9rem"
+                    controlName="toMinute"
+                  ></app-com-select-dropdown>
+                  @if (!form.get('general.eventDate.toMinute')?.valid &&
+                  form.get('general.eventDate.toMinute')?.touched &&
+                  formTouched) {
+                  <div class="error mgt-4">
+                    <img src="/assets/error_icon.svg" alt="error icon" />
+                    <p class="error__text">กรุณาเลือกนาที</p>
+                  </div>
+                  }
+                </div>
               </div>
             </div>
           </div>

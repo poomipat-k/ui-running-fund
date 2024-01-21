@@ -221,17 +221,20 @@ export class GeneralDetailsComponent implements OnInit {
       groupControl.markAllAsTouched();
     }
 
-    const errorId = this.getFirstErrorId();
+    const generalFormGroup = this.form.get('general') as FormGroup;
+    const errorId = this.getFirstErrorId(generalFormGroup);
     if (errorId && this.enableScroll) {
       this.scrollToId(errorId);
     }
   }
 
-  private getFirstErrorId(): string {
-    const group = this.form.get('general') as FormGroup;
-    const keys = Object.keys(group.controls);
+  private getFirstErrorId(rootGroup: FormGroup): string {
+    const keys = Object.keys(rootGroup.controls);
     for (const k of keys) {
-      if (!group.controls[k].valid) {
+      if ((rootGroup.controls[k] as FormGroup)?.controls) {
+        return this.getFirstErrorId(rootGroup.controls[k] as FormGroup);
+      }
+      if (!rootGroup.controls[k].valid) {
         return k;
       }
     }
