@@ -53,6 +53,8 @@ export class GeneralDetailsComponent implements OnInit, OnDestroy {
   private thirtyOneDays: RadioOption[] = [];
   protected dayDropdownDisabled = true;
   protected provinceOptions: RadioOption[] = [];
+  protected districtOptions: RadioOption[] = [];
+  protected subdistrictOptions: RadioOption[] = [];
 
   get generalFormGroup() {
     return this.form.get('general') as FormGroup;
@@ -141,6 +143,14 @@ export class GeneralDetailsComponent implements OnInit, OnDestroy {
   constructor() {
     this.onHasOrganizerChanged = this.onHasOrganizerChanged.bind(this);
     this.onYearOrMonthChanged = this.onYearOrMonthChanged.bind(this);
+    this.onProvinceChanged = this.onProvinceChanged.bind(this);
+    this.onDistrictChanged = this.onDistrictChanged.bind(this);
+  }
+
+  ngOnInit(): void {
+    this.getYearsOptions();
+    this.getProvinces();
+
     this.monthOptions = months;
     this.febNormal = days28;
     this.febLeap = days29;
@@ -150,13 +160,18 @@ export class GeneralDetailsComponent implements OnInit, OnDestroy {
     this.minuteOptions = minutes;
   }
 
-  ngOnInit(): void {
-    this.getYearsOptions();
-    this.getProvinces();
-  }
-
   ngOnDestroy(): void {
     this.subs.forEach((s) => s.unsubscribe());
+  }
+
+  onProvinceChanged() {
+    const provinceId = this.form.value.general.address.province;
+    this.getDistrictsByProvinceId(provinceId);
+  }
+
+  onDistrictChanged() {
+    const districtId = this.form.value.general.address.district;
+    this.getSubdistrictsByDistrictId(districtId);
   }
 
   onYearOrMonthChanged() {
@@ -175,14 +190,45 @@ export class GeneralDetailsComponent implements OnInit, OnDestroy {
     }
   }
 
+  private getDistrictsByProvinceId(provinceId: number) {
+    this.subs.push(
+      this.addressService
+        .getDistrictsByProvinceId(provinceId)
+        .subscribe((result) => {
+          if (result) {
+            this.districtOptions = result.map((d) => ({
+              id: d.id,
+              value: d.id,
+              display: d.name,
+            }));
+          }
+        })
+    );
+  }
+
+  private getSubdistrictsByDistrictId(districtId: number) {
+    this.subs.push(
+      this.addressService
+        .getSubdistrictsByDistrictId(districtId)
+        .subscribe((result) => {
+          if (result) {
+            this.subdistrictOptions = result.map((d) => ({
+              id: d.id,
+              value: d.id,
+              display: d.name,
+            }));
+          }
+        })
+    );
+  }
+
   private getProvinces() {
     this.subs.push(
       this.addressService.getProvinces().subscribe((result) => {
-        console.log('===result', result);
         if (result) {
           this.provinceOptions = result.map((p) => ({
             id: p.id,
-            value: p.name,
+            value: p.id,
             display: p.name,
           }));
         }

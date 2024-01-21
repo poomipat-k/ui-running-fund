@@ -3,6 +3,7 @@ import { Injectable, inject } from '@angular/core';
 import { catchError, throwError } from 'rxjs';
 
 import { environment } from '../../environments/environment';
+import { District } from '../shared/models/district';
 import { Province } from '../shared/models/province';
 
 @Injectable({
@@ -17,6 +18,18 @@ export class AddressService {
   getProvinces() {
     return this.http
       .get<Province[]>(`${this.baseApiUrl}/address/provinces`)
+      .pipe(catchError(this.handleError));
+  }
+
+  getDistrictsByProvinceId(provinceId: number) {
+    return this.http
+      .get<District[]>(`${this.baseApiUrl}/address/districts/${provinceId}`)
+      .pipe(catchError(this.handleError));
+  }
+
+  getSubdistrictsByDistrictId(districtId: number) {
+    return this.http
+      .get<District[]>(`${this.baseApiUrl}/address/subdistricts/${districtId}`)
       .pipe(catchError(this.handleError));
   }
 

@@ -221,12 +221,58 @@
               placeholder="จังหวัด"
               width="32rem"
               controlName="province"
+              [onChange]="onProvinceChanged"
             ></app-com-select-dropdown>
             @if (!form.get('general.address.province')?.valid &&
             form.get('general.address.province')?.touched && formTouched) {
             <div class="error mgt-10">
               <img src="/assets/error_icon.svg" alt="error icon" />
               <p class="error__text">กรุณาเลือกจังหวัด</p>
+            </div>
+            }
+          </div>
+        </div>
+
+        <div class="address__line">
+          <label class="address__label">อำเภอ/เขต</label>
+          <div>
+            <app-com-select-dropdown
+              id="district"
+              [form]="addressFormGroup"
+              [items]="districtOptions"
+              placeholder="อำเภอ/เขต"
+              width="32rem"
+              controlName="district"
+              [onChange]="onDistrictChanged"
+              [disabled]="!form.value.general.address.province"
+            ></app-com-select-dropdown>
+            @if (!form.get('general.address.district')?.valid &&
+            form.get('general.address.district')?.touched && formTouched) {
+            <div class="error mgt-10">
+              <img src="/assets/error_icon.svg" alt="error icon" />
+              <p class="error__text">กรุณาเลือกอำเภอ/เขต</p>
+            </div>
+            }
+          </div>
+        </div>
+
+        <div class="address__line">
+          <label class="address__label">ตำบล/แขวง</label>
+          <div>
+            <app-com-select-dropdown
+              id="subdistrict"
+              [form]="addressFormGroup"
+              [items]="subdistrictOptions"
+              placeholder="ตำบล/แขวง"
+              width="32rem"
+              controlName="subdistrict"
+              [disabled]="!form.value.general.address.district"
+            ></app-com-select-dropdown>
+            @if (!form.get('general.address.subdistrict')?.valid &&
+            form.get('general.address.subdistrict')?.touched && formTouched) {
+            <div class="error mgt-10">
+              <img src="/assets/error_icon.svg" alt="error icon" />
+              <p class="error__text">กรุณาเลือกตำบล/แขวง</p>
             </div>
             }
           </div>
