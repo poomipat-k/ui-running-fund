@@ -165,12 +165,15 @@ export class GeneralDetailsComponent implements OnInit, OnDestroy {
   }
 
   onProvinceChanged() {
-    const provinceId = this.form.value.general.address.province;
+    this.addressFormGroup.patchValue({ districtId: null, subdistrictId: null });
+    const provinceId = this.form.value.general.address.provinceId;
     this.getDistrictsByProvinceId(provinceId);
   }
 
   onDistrictChanged() {
-    const districtId = this.form.value.general.address.district;
+    // Clear subdistrict
+    this.addressFormGroup.patchValue({ subdistrictId: null });
+    const districtId = this.form.value.general.address.districtId;
     this.getSubdistrictsByDistrictId(districtId);
   }
 

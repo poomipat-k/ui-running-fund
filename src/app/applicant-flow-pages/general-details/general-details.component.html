@@ -215,16 +215,16 @@
           <label class="address__label">จังหวัด</label>
           <div>
             <app-com-select-dropdown
-              id="province"
+              id="provinceId"
               [form]="addressFormGroup"
               [items]="provinceOptions"
               placeholder="จังหวัด"
               width="32rem"
-              controlName="province"
+              controlName="provinceId"
               [onChange]="onProvinceChanged"
             ></app-com-select-dropdown>
-            @if (!form.get('general.address.province')?.valid &&
-            form.get('general.address.province')?.touched && formTouched) {
+            @if (!form.get('general.address.provinceId')?.valid &&
+            form.get('general.address.provinceId')?.touched && formTouched) {
             <div class="error mgt-10">
               <img src="/assets/error_icon.svg" alt="error icon" />
               <p class="error__text">กรุณาเลือกจังหวัด</p>
@@ -237,17 +237,17 @@
           <label class="address__label">อำเภอ/เขต</label>
           <div>
             <app-com-select-dropdown
-              id="district"
+              id="districtId"
               [form]="addressFormGroup"
               [items]="districtOptions"
               placeholder="อำเภอ/เขต"
               width="32rem"
-              controlName="district"
+              controlName="districtId"
               [onChange]="onDistrictChanged"
-              [disabled]="!form.value.general.address.province"
+              [disabled]="!form.value.general.address.provinceId"
             ></app-com-select-dropdown>
-            @if (!form.get('general.address.district')?.valid &&
-            form.get('general.address.district')?.touched && formTouched) {
+            @if (!form.get('general.address.districtId')?.valid &&
+            form.get('general.address.districtId')?.touched && formTouched) {
             <div class="error mgt-10">
               <img src="/assets/error_icon.svg" alt="error icon" />
               <p class="error__text">กรุณาเลือกอำเภอ/เขต</p>
@@ -260,16 +260,16 @@
           <label class="address__label">ตำบล/แขวง</label>
           <div>
             <app-com-select-dropdown
-              id="subdistrict"
+              id="subdistrictId"
               [form]="addressFormGroup"
               [items]="subdistrictOptions"
               placeholder="ตำบล/แขวง"
               width="32rem"
-              controlName="subdistrict"
-              [disabled]="!form.value.general.address.district"
+              controlName="subdistrictId"
+              [disabled]="!form.value.general.address.districtId"
             ></app-com-select-dropdown>
-            @if (!form.get('general.address.subdistrict')?.valid &&
-            form.get('general.address.subdistrict')?.touched && formTouched) {
+            @if (!form.get('general.address.subdistrictId')?.valid &&
+            form.get('general.address.subdistrictId')?.touched && formTouched) {
             <div class="error mgt-10">
               <img src="/assets/error_icon.svg" alt="error icon" />
               <p class="error__text">กรุณาเลือกตำบล/แขวง</p>

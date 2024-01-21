@@ -94,9 +94,9 @@ export class ApplicantFlowPagesComponent implements OnInit, OnDestroy {
         }),
         address: new FormGroup({
           address: new FormControl(null, Validators.required),
-          province: new FormControl(null, Validators.required),
-          district: new FormControl(null, Validators.required),
-          subdistrict: new FormControl(null, Validators.required),
+          provinceId: new FormControl(null, Validators.required),
+          districtId: new FormControl(null, Validators.required),
+          subdistrictId: new FormControl(null, Validators.required),
         }),
         startPoint: new FormControl(null, Validators.required),
         finishPoint: new FormControl(null, Validators.required),
