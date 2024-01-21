@@ -7,20 +7,22 @@
     <div class="section">
       <h3 class="section__header">1.1 ชื่อโครงการ/งานวิ่ง</h3>
       <div class="section-content">
-        <app-com-input-text
-          id="projectName"
-          placeholder="ชื่อโครงการ"
-          width="67rem"
-          controlName="projectName"
-          [form]="generalFormGroup"
-        ></app-com-input-text>
-        @if (!form.get('general.projectName')?.valid &&
-        form.get('general.projectName')?.touched && formTouched) {
-        <div class="error">
-          <img src="/assets/error_icon.svg" alt="error icon" />
-          <p class="error__text">กรุณากรอกชื่อโครงการ</p>
+        <div>
+          <app-com-input-text
+            id="projectName"
+            placeholder="ชื่อโครงการ"
+            width="67rem"
+            controlName="projectName"
+            [form]="generalFormGroup"
+          ></app-com-input-text>
+          @if (!form.get('general.projectName')?.valid &&
+          form.get('general.projectName')?.touched && formTouched) {
+          <div class="error mgt-10">
+            <img src="/assets/error_icon.svg" alt="error icon" />
+            <p class="error__text">กรุณากรอกชื่อโครงการ</p>
+          </div>
+          }
         </div>
-        }
       </div>
     </div>
 
@@ -42,7 +44,7 @@
               ></app-com-select-dropdown>
               @if (!form.get('general.eventDate.year')?.valid &&
               form.get('general.eventDate.year')?.touched && formTouched) {
-              <div class="error mgt-4">
+              <div class="error mgt-10">
                 <img src="/assets/error_icon.svg" alt="error icon" />
                 <p class="error__text">กรุณาเลือกปี</p>
               </div>
@@ -61,7 +63,7 @@
               ></app-com-select-dropdown>
               @if (!form.get('general.eventDate.month')?.valid &&
               form.get('general.eventDate.month')?.touched && formTouched) {
-              <div class="error mgt-4">
+              <div class="error mgt-10">
                 <img src="/assets/error_icon.svg" alt="error icon" />
                 <p class="error__text">กรุณาเลือกเดือน</p>
               </div>
@@ -81,7 +83,7 @@
               ></app-com-select-dropdown>
               @if (!form.get('general.eventDate.day')?.valid &&
               form.get('general.eventDate.day')?.touched && formTouched) {
-              <div class="error mgt-4">
+              <div class="error mgt-10">
                 <img src="/assets/error_icon.svg" alt="error icon" />
                 <p class="error__text">กรุณาเลือกวันที่</p>
               </div>
@@ -107,7 +109,7 @@
                   @if (!form.get('general.eventDate.fromHour')?.valid &&
                   form.get('general.eventDate.fromHour')?.touched &&
                   formTouched) {
-                  <div class="error mgt-4">
+                  <div class="error mgt-10">
                     <img src="/assets/error_icon.svg" alt="error icon" />
                     <p class="error__text">กรุณาเลือกชั่วโมง</p>
                   </div>
@@ -126,7 +128,7 @@
                   @if (!form.get('general.eventDate.fromMinute')?.valid &&
                   form.get('general.eventDate.fromMinute')?.touched &&
                   formTouched) {
-                  <div class="error mgt-4">
+                  <div class="error mgt-10">
                     <img src="/assets/error_icon.svg" alt="error icon" />
                     <p class="error__text">กรุณาเลือกนาที</p>
                   </div>
@@ -152,7 +154,7 @@
                   @if (!form.get('general.eventDate.toHour')?.valid &&
                   form.get('general.eventDate.toHour')?.touched && formTouched)
                   {
-                  <div class="error mgt-4">
+                  <div class="error mgt-10">
                     <img src="/assets/error_icon.svg" alt="error icon" />
                     <p class="error__text">กรุณาเลือกชั่วโมง</p>
                   </div>
@@ -171,7 +173,7 @@
                   @if (!form.get('general.eventDate.toMinute')?.valid &&
                   form.get('general.eventDate.toMinute')?.touched &&
                   formTouched) {
-                  <div class="error mgt-4">
+                  <div class="error mgt-10">
                     <img src="/assets/error_icon.svg" alt="error icon" />
                     <p class="error__text">กรุณาเลือกนาที</p>
                   </div>
@@ -189,48 +191,94 @@
         1.3 สถานที่จัดการแข่งขัน (สถานที่จัดส่วนอำนวยการต่าง ๆ
         ควรเป็นสถานที่สำคัญในชุมชน เช่น โรงเรียน วัด)
       </h3>
-      <div class="section-content">1.3 Content</div>
+      <div class="section-content">
+        <div class="address__line">
+          <label class="address__label">ชื่อสถานที่</label>
+          <div>
+            <app-com-input-text
+              id="address"
+              placeholder="สถานที่"
+              width="32rem"
+              controlName="address"
+              [form]="addressFormGroup"
+            ></app-com-input-text>
+            @if (!form.get('general.address.address')?.valid &&
+            form.get('general.address.address')?.touched && formTouched) {
+            <div class="error mgt-10">
+              <img src="/assets/error_icon.svg" alt="error icon" />
+              <p class="error__text">กรุณากรอกสถานที่</p>
+            </div>
+            }
+          </div>
+        </div>
+        <div class="address__line">
+          <label class="address__label">จังหวัด</label>
+          <div>
+            <app-com-select-dropdown
+              id="province"
+              [form]="addressFormGroup"
+              [items]="provinceOptions"
+              placeholder="จังหวัด"
+              width="32rem"
+              controlName="province"
+            ></app-com-select-dropdown>
+            @if (!form.get('general.address.province')?.valid &&
+            form.get('general.address.province')?.touched && formTouched) {
+            <div class="error mgt-10">
+              <img src="/assets/error_icon.svg" alt="error icon" />
+              <p class="error__text">กรุณาเลือกจังหวัด</p>
+            </div>
+            }
+          </div>
+        </div>
+      </div>
     </div>
 
     <div class="section">
       <h3 class="section__header">1.4 เส้นทางที่ใช้สำหรับจัดกิจกรรม</h3>
       <div class="section-content">
         <div class="route">
-          <label for="startPoint" class="label">จุด Start</label>
-          <app-com-input-text
-            id="startPoint"
-            placeholder="จุด Start"
-            width="32rem"
-            controlName="startPoint"
-            [form]="generalFormGroup"
-          ></app-com-input-text>
+          <label for="startPoint" class="route__label route__start-label"
+            >จุด Start</label
+          >
+          <div>
+            <app-com-input-text
+              id="startPoint"
+              placeholder="จุด Start"
+              width="32rem"
+              controlName="startPoint"
+              [form]="generalFormGroup"
+            ></app-com-input-text>
+            @if (!form.get('general.startPoint')?.valid &&
+            form.get('general.startPoint')?.touched && formTouched) {
+            <div class="error mgt-10">
+              <img src="/assets/error_icon.svg" alt="error icon" />
+              <p class="error__text">กรุณากรอกจุด Start</p>
+            </div>
+            }
+          </div>
         </div>
-        @if (!form.get('general.startPoint')?.valid &&
-        form.get('general.startPoint')?.touched && formTouched) {
-        <div class="error mgl-158">
-          <img src="/assets/error_icon.svg" alt="error icon" />
-          <p class="error__text">กรุณากรอกจุด Start</p>
-        </div>
-        }
         <div class="route">
-          <label for="finishPoint" class="label width-129"
+          <label for="finishPoint" class="route__label width-129"
             >จุด Finish (ถ้าเป็นจุดเดียวกัน ให้ระบุ “จุดเดิม”)</label
           >
-          <app-com-input-text
-            id="finishPoint"
-            placeholder="จุด Finish"
-            width="32rem"
-            controlName="finishPoint"
-            [form]="generalFormGroup"
-          ></app-com-input-text>
+          <div>
+            <app-com-input-text
+              id="finishPoint"
+              placeholder="จุด Finish"
+              width="32rem"
+              controlName="finishPoint"
+              [form]="generalFormGroup"
+            ></app-com-input-text>
+            @if (!form.get('general.finishPoint')?.valid &&
+            form.get('general.finishPoint')?.touched && formTouched) {
+            <div class="error">
+              <img src="/assets/error_icon.svg" alt="error icon" />
+              <p class="error__text">กรุณากรอกจุด Finish</p>
+            </div>
+            }
+          </div>
         </div>
-        @if (!form.get('general.finishPoint')?.valid &&
-        form.get('general.finishPoint')?.touched && formTouched) {
-        <div class="error mgl-158">
-          <img src="/assets/error_icon.svg" alt="error icon" />
-          <p class="error__text">กรุณากรอกจุด Finish</p>
-        </div>
-        }
       </div>
     </div>
 

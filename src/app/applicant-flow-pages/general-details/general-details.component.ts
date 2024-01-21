@@ -1,14 +1,16 @@
 import { ViewportScroller } from '@angular/common';
-import { Component, Input, OnInit, inject } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit, inject } from '@angular/core';
 import {
   FormControl,
   FormGroup,
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
+import { Subscription } from 'rxjs';
 import { InputTextComponent } from '../../components/input-text/input-text.component';
 import { RadioComponent } from '../../components/radio/radio.component';
 import { SelectDropdownComponent } from '../../components/select-dropdown/select-dropdown.component';
+import { AddressService } from '../../services/address.service';
 import { DateService } from '../../services/date.service';
 import { RadioOption } from '../../shared/models/radio-option';
 import {
@@ -33,23 +35,24 @@ import {
   templateUrl: './general-details.component.html',
   styleUrl: './general-details.component.scss',
 })
-export class GeneralDetailsComponent implements OnInit {
+export class GeneralDetailsComponent implements OnInit, OnDestroy {
   @Input() form: FormGroup;
   @Input() enableScroll = false;
 
   protected formTouched = false;
   private readonly scroller: ViewportScroller = inject(ViewportScroller);
   private readonly dateService: DateService = inject(DateService);
+  private readonly addressService: AddressService = inject(AddressService);
+
   private readonly thirtyDaysMonths = [4, 6, 9, 11];
   private febLeap: RadioOption[] = [];
   private febNormal: RadioOption[] = [];
   private thirtyDays: RadioOption[] = [];
   protected hourOptions: RadioOption[] = [];
   protected minuteOptions: RadioOption[] = [];
-
   private thirtyOneDays: RadioOption[] = [];
-
   protected dayDropdownDisabled = true;
+  protected provinceOptions: RadioOption[] = [];
 
   get generalFormGroup() {
     return this.form.get('general') as FormGroup;
@@ -57,6 +60,10 @@ export class GeneralDetailsComponent implements OnInit {
 
   get eventDateFormGroup() {
     return this.form.get('general.eventDate') as FormGroup;
+  }
+
+  get addressFormGroup() {
+    return this.form.get('general.address') as FormGroup;
   }
 
   get daysInMonthOptions() {
@@ -129,6 +136,8 @@ export class GeneralDetailsComponent implements OnInit {
 
   protected monthOptions: RadioOption[] = [];
 
+  private readonly subs: Subscription[] = [];
+
   constructor() {
     this.onHasOrganizerChanged = this.onHasOrganizerChanged.bind(this);
     this.onYearOrMonthChanged = this.onYearOrMonthChanged.bind(this);
@@ -143,10 +152,11 @@ export class GeneralDetailsComponent implements OnInit {
 
   ngOnInit(): void {
     this.getYearsOptions();
+    this.getProvinces();
   }
 
-  isLeapYear(year: number): boolean {
-    return new Date(year, 1, 29).getDate() === 29;
+  ngOnDestroy(): void {
+    this.subs.forEach((s) => s.unsubscribe());
   }
 
   onYearOrMonthChanged() {
@@ -163,6 +173,21 @@ export class GeneralDetailsComponent implements OnInit {
         day: null,
       });
     }
+  }
+
+  private getProvinces() {
+    this.subs.push(
+      this.addressService.getProvinces().subscribe((result) => {
+        console.log('===result', result);
+        if (result) {
+          this.provinceOptions = result.map((p) => ({
+            id: p.id,
+            value: p.name,
+            display: p.name,
+          }));
+        }
+      })
+    );
   }
 
   private isValidDate(year: number, month: number, day: number): boolean {
@@ -223,6 +248,7 @@ export class GeneralDetailsComponent implements OnInit {
 
     const generalFormGroup = this.form.get('general') as FormGroup;
     const errorId = this.getFirstErrorId(generalFormGroup);
+    console.log('===errorId', errorId);
     if (errorId && this.enableScroll) {
       this.scrollToId(errorId);
     }
@@ -232,13 +258,20 @@ export class GeneralDetailsComponent implements OnInit {
     const keys = Object.keys(rootGroup.controls);
     for (const k of keys) {
       if ((rootGroup.controls[k] as FormGroup)?.controls) {
-        return this.getFirstErrorId(rootGroup.controls[k] as FormGroup);
+        const val = this.getFirstErrorId(rootGroup.controls[k] as FormGroup);
+        if (val) {
+          return val;
+        }
       }
       if (!rootGroup.controls[k].valid) {
         return k;
       }
     }
     return '';
+  }
+
+  private isLeapYear(year: number): boolean {
+    return new Date(year, 1, 29).getDate() === 29;
   }
 
   private scrollToId(id: string) {

@@ -33,7 +33,7 @@ export class ApplicantFlowPagesComponent implements OnInit, OnDestroy {
   private readonly themeService: ThemeService = inject(ThemeService);
   private readonly projectService: ProjectService = inject(ProjectService);
 
-  private readonly subs: Subscription[];
+  private readonly subs: Subscription[] = [];
 
   protected collaborationFiles: FileList | null;
 
@@ -91,6 +91,10 @@ export class ApplicantFlowPagesComponent implements OnInit, OnDestroy {
           fromMinute: new FormControl(null, Validators.required),
           toHour: new FormControl(null, Validators.required),
           toMinute: new FormControl(null, Validators.required),
+        }),
+        address: new FormGroup({
+          address: new FormControl(null, Validators.required),
+          province: new FormControl(null, Validators.required),
         }),
         startPoint: new FormControl(null, Validators.required),
         finishPoint: new FormControl(null, Validators.required),
