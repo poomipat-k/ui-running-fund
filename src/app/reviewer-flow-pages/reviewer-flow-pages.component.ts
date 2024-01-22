@@ -116,6 +116,7 @@ export class ReviewerFlowPagesComponent implements OnInit, OnDestroy {
       projectHistoryId: new FormControl(null, Validators.required),
       ip: new FormGroup({
         isInterestedPerson: new FormControl(null, Validators.required),
+        // interestedPersonType: new FormControl(null, Validators.required) will be added when isInterestedPerson value is true
       }),
       review: new FormGroup({
         reviewSummary: new FormControl(null, Validators.required),

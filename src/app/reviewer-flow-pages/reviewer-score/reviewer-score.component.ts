@@ -122,7 +122,13 @@ export class ReviewerScoreComponent implements OnInit {
     return this.form.get('review') as FormGroup;
   }
 
-  constructor() {}
+  get scoresFormGroup(): FormGroup {
+    return this.form.get('review.scores') as FormGroup;
+  }
+
+  constructor() {
+    this.onSummaryRadioChanged = this.onSummaryRadioChanged.bind(this);
+  }
 
   ngOnInit(): void {
     this.groupHeaders = criteriaGroup;

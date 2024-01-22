@@ -1,67 +1,30 @@
-<ng-container [formGroup]="form">
-  @if (groupName) {
-  <ng-container [formGroupName]="groupName">
-    <div
-      [ngClass]="{
-        horizontal: direction === 'horizontal',
-        vertical: direction !== 'horizontal',
-        horizontal__3a: radioStyle === 'review-3a'
-      }"
-      [ngStyle]="{ gap: flexGap }"
-    >
-      @for (option of options; track option.id) {
-      <div
-        [ngClass]="{
-          'radio__item--horizontal': direction === 'horizontal',
-          'radio__item-1a': radioStyle === 'review-1a',
-          'radio__item-3b': radioStyle === 'review-3b'
-        }"
-      >
-        <label [ngClass]="labelClasses" [style]="{ 'font-size': fontSize }">
-          {{ option.display }}
-          <input
-            type="radio"
-            [value]="option.value"
-            [formControlName]="controlName"
-            (change)="_onChanged()"
-            class="radio"
-            [ngClass]="{ radio: true, 'radio--disabled': disabled }"
-          />
-          <span class="radio__checkmark"></span>
-        </label>
-      </div>
-      }
-    </div>
-  </ng-container>
-  } @else {
-  <div
-    [ngClass]="{
+<div
+  [formGroup]="form"
+  [ngClass]="{
       horizontal: direction === 'horizontal',
       vertical: direction !== 'horizontal',
       horizontal__3a: radioStyle === 'review-3a',
     }"
-    [ngStyle]="{ gap: flexGap }"
+  [ngStyle]="{ gap: flexGap }"
+>
+  @for (option of options; track option.id) {
+  <div
+    [ngClass]="{
+      'radio__item--horizontal': direction === 'horizontal',
+      'radio__item-3b': radioStyle === 'review-3b'
+    }"
   >
-    @for (option of options; track option.id) {
-    <div
-      [ngClass]="{
-        'radio__item--horizontal': direction === 'horizontal',
-        'radio__item-3b': radioStyle === 'review-3b'
-      }"
-    >
-      <label [ngClass]="labelClasses" [style]="{ 'font-size': fontSize }">
-        {{ option.display }}
-        <input
-          type="radio"
-          [value]="option.value"
-          [formControlName]="controlName"
-          (change)="_onChanged()"
-          [ngClass]="{ radio: true, 'radio--disabled': disabled }"
-        />
-        <span class="radio__checkmark"></span>
-      </label>
-    </div>
-    }
+    <label [ngClass]="labelClasses" [style]="{ 'font-size': fontSize }">
+      {{ option.display }}
+      <input
+        type="radio"
+        [value]="option.value"
+        [formControlName]="controlName"
+        (change)="_onChanged()"
+        [ngClass]="{ radio: true, 'radio--disabled': disabled }"
+      />
+      <span class="radio__checkmark"></span>
+    </label>
   </div>
   }
-</ng-container>
+</div>
