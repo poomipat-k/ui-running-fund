@@ -1,5 +1,6 @@
 @if (form) {
 <div [formGroup]="form">
+  <!-- Do not supply group name, pass form as the target formGroup instead -->
   @if (groupName) {
   <label
     [ngClass]="{
@@ -34,12 +35,14 @@
     </svg>
   </label>
   } @else {
+  <!-- Should use this block most of the time (without groupName supplied)-->
   <label
     [ngClass]="{
       checkbox__label: true,
       'font-size-small': fontSize === 'small',
       'cursor-not-allow': disabled
     }"
+    [ngStyle]="{ gap: gap }"
   >
     <input
       type="checkbox"

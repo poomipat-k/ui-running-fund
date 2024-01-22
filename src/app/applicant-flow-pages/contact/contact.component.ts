@@ -1,13 +1,13 @@
 import { ViewportScroller } from '@angular/common';
 import { Component, Input, OnDestroy, inject } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { CheckboxViewComponent } from '../../components/checkbox-view/checkbox-view.component';
+import { CheckboxComponent } from '../../components/checkbox/checkbox.component';
 import { InputTextComponent } from '../../components/input-text/input-text.component';
 
 @Component({
   selector: 'app-applicant-contact',
   standalone: true,
-  imports: [InputTextComponent, CheckboxViewComponent],
+  imports: [InputTextComponent, CheckboxComponent],
   templateUrl: './contact.component.html',
   styleUrl: './contact.component.scss',
 })

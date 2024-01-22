@@ -52,7 +52,7 @@ export class ApplicantFlowPagesComponent implements OnInit, OnDestroy {
     ['เอกสารแนบเพิ่มเติม', '(ถ้ามี)'],
     ['ยืนยัน'],
   ];
-  protected currentStep = 0;
+  protected currentStep = 2;
 
   get collaborationFileNames(): string[] {
     const names: string[] = [];
@@ -116,6 +116,7 @@ export class ApplicantFlowPagesComponent implements OnInit, OnDestroy {
           eventPosition: new FormControl(null, Validators.required),
         }),
         projectManager: new FormGroup({
+          sameAsProjectHead: new FormControl(false),
           prefix: new FormControl(null, Validators.required),
           firstName: new FormControl(null, Validators.required),
           lastName: new FormControl(null, Validators.required),

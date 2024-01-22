@@ -128,13 +128,14 @@
       <div class="section-content">
         <div class="projectManager__line">
           <div class="projectManager__item">
-            <app-com-checkbox-view
+            <app-com-checkbox
+              [form]="projectHeadGroup"
+              controlName="sameAsProjectHead"
               display="เป็นผู้เดียวกับหัวหน้าโครงการ (ข้าม)"
-              [checked]="true"
-              value="xxxxyyyy"
+              fontSize="small"
               gap="8px"
-              fontSize="1.6rem"
-            ></app-com-checkbox-view>
+            >
+            </app-com-checkbox>
           </div>
         </div>
         <div class="projectManager__line">
