@@ -126,6 +126,10 @@ export class ReviewerScoreComponent implements OnInit {
     return this.form.get('review.scores') as FormGroup;
   }
 
+  get improvementFormGroup(): FormGroup {
+    return this.form.get('review.improvement') as FormGroup;
+  }
+
   constructor() {
     this.onSummaryRadioChanged = this.onSummaryRadioChanged.bind(this);
   }
