@@ -421,12 +421,14 @@
         <div class="projectCoordinator__line-important">
           <label class="label width-177">ที่อยู่ (ที่ติดต่อได้สะดวก)</label>
           <div class="flex-1">
-            <app-com-input-text
-              id="projectCoordinator.address"
-              placeholder="ระบุที่อยู่ที่ติดต่อได้สะดวก"
-              [form]="projectCoordinatorGroup"
-              controlName="address"
-            ></app-com-input-text>
+            <div [formGroup]="projectCoordinatorGroup">
+              <textarea
+                id="projectCoordinator.address"
+                formControlName="address"
+                class="textarea"
+                placeholder="ระบุที่อยู่ที่ติดต่อได้สะดวก"
+              ></textarea>
+            </div>
 
             @if (!form.get('contact.projectCoordinator.address')?.valid &&
             form.get('contact.projectCoordinator.address')?.touched &&

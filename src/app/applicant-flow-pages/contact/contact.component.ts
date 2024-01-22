@@ -1,6 +1,6 @@
 import { CommonModule, ViewportScroller } from '@angular/common';
 import { Component, Input, inject } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { CheckboxComponent } from '../../components/checkbox/checkbox.component';
 import { InputTextComponent } from '../../components/input-text/input-text.component';
 import { RadioComponent } from '../../components/radio/radio.component';
@@ -14,6 +14,7 @@ import { RadioOption } from '../../shared/models/radio-option';
     InputTextComponent,
     CheckboxComponent,
     RadioComponent,
+    ReactiveFormsModule,
   ],
   templateUrl: './contact.component.html',
   styleUrl: './contact.component.scss',
