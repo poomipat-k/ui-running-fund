@@ -27,12 +27,33 @@ export class ContactComponent {
     return this.form.get('contact.projectManager') as FormGroup;
   }
 
-  get isSameAsProjectHead(): boolean {
+  get projectCoordinatorGroup(): FormGroup {
+    return this.form.get('contact.projectCoordinator') as FormGroup;
+  }
+
+  get projectManagerSameAsProjectHead(): boolean {
     return this.form.value.contact.projectManager.sameAsProjectHead;
   }
 
-  validToGoNext(): boolean {
-    if (this.isSameAsProjectHead) {
+  get projectCoordinatorSameAsProjectHead(): boolean {
+    return this.form.value.contact.projectCoordinator.sameAsProjectHead;
+  }
+
+  get projectCoordinatorSameAsProjectManager(): boolean {
+    return this.form.value.contact.projectCoordinator.sameAsProjectManager;
+  }
+
+  constructor() {
+    this.onProjectManagerSameAsProjectHeadChanged =
+      this.onProjectManagerSameAsProjectHeadChanged.bind(this);
+    this.onProjectCoordinatorSameAsProjectHeadChanged =
+      this.onProjectCoordinatorSameAsProjectHeadChanged.bind(this);
+    this.onProjectCoordinatorSameAsProjectManagerChanged =
+      this.onProjectCoordinatorSameAsProjectManagerChanged.bind(this);
+  }
+
+  public validToGoNext(): boolean {
+    if (this.projectManagerSameAsProjectHead) {
       this.patchProjectManager();
     }
 
@@ -46,8 +67,69 @@ export class ContactComponent {
     return true;
   }
 
+  protected onProjectManagerSameAsProjectHeadChanged() {
+    if (!this.projectCoordinatorSameAsProjectHead) {
+      this.resetProjectManager();
+    }
+  }
+
+  protected onProjectCoordinatorSameAsProjectHeadChanged() {
+    console.log('==same Head');
+    if (!this.projectCoordinatorSameAsProjectHead) {
+      this.resetProjectCoordinator();
+    } else {
+      this.projectCoordinatorGroup.patchValue({
+        sameAsProjectManager: false,
+      });
+    }
+  }
+
+  protected onProjectCoordinatorSameAsProjectManagerChanged() {
+    console.log('==same Manager');
+    if (!this.projectCoordinatorSameAsProjectManager) {
+      this.resetProjectCoordinator();
+    } else {
+      this.projectCoordinatorGroup.patchValue({
+        sameAsProjectHead: false,
+      });
+    }
+  }
+
+  private resetProjectManager() {
+    this.projectManagerGroup.patchValue({
+      prefix: null,
+      firstName: null,
+      lastName: null,
+      organizationPosition: null,
+      eventPosition: null,
+    });
+    this.projectManagerGroup.markAsPristine();
+    this.projectManagerGroup.markAsUntouched();
+  }
+
+  private resetProjectCoordinator() {
+    const group = this.projectCoordinatorGroup;
+    this.projectCoordinatorGroup.patchValue({
+      prefix: null,
+      firstName: null,
+      lastName: null,
+      organizationPosition: null,
+      eventPosition: null,
+    });
+    const fields = [
+      'prefix',
+      'firstName',
+      'lastName',
+      'organizationPosition',
+      'eventPosition',
+    ];
+    fields.forEach((field) => {
+      group.get(field)?.markAsPristine();
+      group.get(field)?.markAsUntouched();
+    });
+  }
+
   private patchProjectManager() {
-    console.log('===patchProjectManager');
     const { prefix, firstName, lastName, organizationPosition, eventPosition } =
       this.projectHeadGroup.value;
     this.projectManagerGroup.patchValue({

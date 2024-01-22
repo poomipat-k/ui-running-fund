@@ -4,7 +4,7 @@
   </h2>
 
   <div class="section-container">
-    <!-- Section -->
+    <!-- 2.1 Start -->
     <div class="section">
       <h3 class="section__header">2.1 หัวหน้าโครงการ</h3>
       <div class="section-content">
@@ -122,7 +122,7 @@
         </div>
       </div>
     </div>
-    <!-- 2.1 Section END -->
+    <!-- 2.2 Start -->
     <div class="section">
       <h3 class="section__header">2.2 ผู้รับผิดชอบโครงการ</h3>
       <div class="section-content">
@@ -134,6 +134,7 @@
               display="เป็นผู้เดียวกับหัวหน้าโครงการ (ข้าม)"
               gap="8px"
               fontSize="16px"
+              [onChanged]="onProjectManagerSameAsProjectHeadChanged"
             >
             </app-com-checkbox>
           </div>
@@ -141,7 +142,7 @@
         <div
           [ngClass]="{
             section__hidable: true,
-            'section__hidable--hide': isSameAsProjectHead
+            'section__hidable--hide': projectManagerSameAsProjectHead
           }"
         >
           <div class="projectManager__line">
@@ -260,6 +261,229 @@
         </div>
       </div>
     </div>
-    <!-- 2.2 END -->
+    <!-- 2.3 START -->
+    <div class="section">
+      <h3 class="section__header">2.3 ผู้ประสานงาน</h3>
+      <div class="section-content">
+        <div class="projectCoordinator__line">
+          <div class="projectCoordinator__item">
+            <app-com-checkbox
+              [form]="projectCoordinatorGroup"
+              controlName="sameAsProjectHead"
+              display="เป็นผู้เดียวกับหัวหน้าโครงการ (ข้าม)"
+              gap="8px"
+              fontSize="16px"
+              [onChanged]="onProjectCoordinatorSameAsProjectHeadChanged"
+            >
+            </app-com-checkbox>
+          </div>
+
+          <div class="projectCoordinator__item">
+            <app-com-checkbox
+              [form]="projectCoordinatorGroup"
+              controlName="sameAsProjectManager"
+              display="เป็นผู้เดียวกันกับผู้รับผิดชอบโครงการ (ข้าม)"
+              gap="8px"
+              fontSize="16px"
+              [onChanged]="onProjectCoordinatorSameAsProjectManagerChanged"
+            >
+            </app-com-checkbox>
+          </div>
+        </div>
+        <!-- Collapse -->
+        <div
+          [ngClass]="{
+            section__hidable: true,
+            'section__hidable--hide':
+              projectCoordinatorSameAsProjectHead ||
+              projectCoordinatorSameAsProjectManager
+          }"
+        >
+          <div class="projectCoordinator__line">
+            <div class="projectCoordinator__item">
+              <label class="label">คำนำหน้า</label>
+              <div>
+                <app-com-input-text
+                  id="projectCoordinator.prefix"
+                  placeholder="คำนำหน้า"
+                  [form]="projectCoordinatorGroup"
+                  controlName="prefix"
+                  width="17.6rem"
+                ></app-com-input-text>
+
+                @if (!form.get('contact.projectCoordinator.prefix')?.valid &&
+                form.get('contact.projectCoordinator.prefix')?.touched &&
+                formTouched) {
+                <div class="error mgt-10">
+                  <img src="/assets/error_icon.svg" alt="error icon" />
+                  <p class="error__text">กรุณากรอกคำนำหน้า</p>
+                </div>
+                }
+              </div>
+            </div>
+
+            <div class="projectCoordinator__item">
+              <label class="label">ชื่อ</label>
+              <div>
+                <app-com-input-text
+                  id="projectCoordinator.firstName"
+                  placeholder="ชื่อ"
+                  [form]="projectCoordinatorGroup"
+                  controlName="firstName"
+                  width="26rem"
+                ></app-com-input-text>
+
+                @if (!form.get('contact.projectCoordinator.firstName')?.valid &&
+                form.get('contact.projectCoordinator.firstName')?.touched &&
+                formTouched) {
+                <div class="error mgt-10">
+                  <img src="/assets/error_icon.svg" alt="error icon" />
+                  <p class="error__text">กรุณากรอกชื่อ</p>
+                </div>
+                }
+              </div>
+            </div>
+
+            <div class="projectCoordinator__item">
+              <label class="label">นามสกุล</label>
+              <div>
+                <app-com-input-text
+                  id="projectCoordinator.lastName"
+                  placeholder="นามสกุล"
+                  [form]="projectCoordinatorGroup"
+                  controlName="lastName"
+                  width="26rem"
+                ></app-com-input-text>
+
+                @if (!form.get('contact.projectCoordinator.lastName')?.valid &&
+                form.get('contact.projectCoordinator.lastName')?.touched &&
+                formTouched) {
+                <div class="error mgt-10">
+                  <img src="/assets/error_icon.svg" alt="error icon" />
+                  <p class="error__text">กรุณากรอกนามสกุล</p>
+                </div>
+                }
+              </div>
+            </div>
+          </div>
+          <div class="projectCoordinator__line">
+            <div class="projectCoordinator__item">
+              <label class="label">ตำแหน่งในหน่วยงาน/องค์กร</label>
+              <div>
+                <app-com-input-text
+                  id="projectCoordinator.organizationPosition"
+                  placeholder="ตำแหน่งในหน่วยงาน/องค์กร"
+                  [form]="projectCoordinatorGroup"
+                  controlName="organizationPosition"
+                  width="29.9rem"
+                ></app-com-input-text>
+                @if(!form.get('contact.projectCoordinator.organizationPosition')?.valid
+                &&
+                form.get('contact.projectCoordinator.organizationPosition')?.touched
+                && formTouched) {
+                <div class="error mgt-10">
+                  <img src="/assets/error_icon.svg" alt="error icon" />
+                  <p class="error__text">กรุณากรอกตำแหน่งในหน่วยงาน/องค์กร</p>
+                </div>
+                }
+              </div>
+            </div>
+          </div>
+          <div class="projectCoordinator__line">
+            <div class="projectCoordinator__item">
+              <label class="label">ตำแหน่งในการจัดงานครั้งนี้</label>
+              <div>
+                <app-com-input-text
+                  id="projectCoordinator.eventPosition"
+                  placeholder="ตำแหน่งในการจัดงานครั้งนี้"
+                  [form]="projectCoordinatorGroup"
+                  controlName="eventPosition"
+                  width="29.9rem"
+                ></app-com-input-text>
+
+                @if(!form.get('contact.projectCoordinator.eventPosition')?.valid
+                && form.get('contact.projectCoordinator.eventPosition')?.touched
+                && formTouched) {
+                <div class="error mgt-10">
+                  <img src="/assets/error_icon.svg" alt="error icon" />
+                  <p class="error__text">กรุณากรอกตำแหน่งในการจัดงานครั้งนี้</p>
+                </div>
+                }
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Collapse End -->
+      </div>
+      <div class="section-content">
+        <p class="importantText">*ข้อมูลจำเป็น*</p>
+
+        <div class="projectCoordinator__line-important">
+          <label class="label width-177">ที่อยู่ (ที่ติดต่อได้สะดวก)</label>
+          <div class="flex-1">
+            <app-com-input-text
+              id="projectCoordinator.address"
+              placeholder="ระบุที่อยู่ที่ติดต่อได้สะดวก"
+              [form]="projectCoordinatorGroup"
+              controlName="address"
+            ></app-com-input-text>
+
+            @if (!form.get('contact.projectCoordinator.address')?.valid &&
+            form.get('contact.projectCoordinator.address')?.touched &&
+            formTouched) {
+            <div class="error mgt-10">
+              <img src="/assets/error_icon.svg" alt="error icon" />
+              <p class="error__text">กรูณาระบุที่อยู่ที่ติดต่อได้สะดวก</p>
+            </div>
+            }
+          </div>
+        </div>
+
+        <div class="projectCoordinator__line-important">
+          <label class="label width-177">อีเมล</label>
+          <div>
+            <app-com-input-text
+              id="projectCoordinator.email"
+              placeholder="ระบุอีเมล"
+              [form]="projectCoordinatorGroup"
+              controlName="email"
+              width="47.5rem"
+            ></app-com-input-text>
+
+            @if (!form.get('contact.projectCoordinator.email')?.valid &&
+            form.get('contact.projectCoordinator.email')?.touched &&
+            formTouched) {
+            <div class="error mgt-10">
+              <img src="/assets/error_icon.svg" alt="error icon" />
+              <p class="error__text">กรุณาระบุอีเมล</p>
+            </div>
+            }
+          </div>
+        </div>
+
+        <div class="projectCoordinator__line-important">
+          <label class="label width-177">หมายเลขโทรศัพท์</label>
+          <div>
+            <app-com-input-text
+              id="projectCoordinator.phoneNumber"
+              placeholder="ระบุหมายเลขโทรศัพท์ (ระบุเฉพาะตัวเลข ไม่มีเครื่องหมาย -)"
+              [form]="projectCoordinatorGroup"
+              controlName="phoneNumber"
+              width="47.5rem"
+            ></app-com-input-text>
+
+            @if (!form.get('contact.projectCoordinator.phoneNumber')?.valid &&
+            form.get('contact.projectCoordinator.phoneNumber')?.touched &&
+            formTouched) {
+            <div class="error mgt-10">
+              <img src="/assets/error_icon.svg" alt="error icon" />
+              <p class="error__text">กรุณาระบุหมายเลขโทรศัพท์</p>
+            </div>
+            }
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- 2.3 END -->
   </div>
 </div>

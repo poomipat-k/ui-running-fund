@@ -70,7 +70,7 @@
     opacity: 1;
     transition: opacity 300ms ease-out, max-height 300ms ease-out;
     border: 1px solid red;
-    max-height: 18.5rem; // Need to be a little higher than actual for smooth animation
+    max-height: 26rem; // Need to be a little higher than actual for smooth animation
 
     &--hide {
       opacity: 0;
@@ -79,6 +79,15 @@
       transition: opacity 300ms ease-out, max-height 300ms ease-out;
     }
   }
+}
+
+.importantText {
+  color: #ec4a0a;
+  font-family: $custom-font-looped;
+  font-size: 1.6rem;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
 }
 
 .projectHead {
@@ -102,6 +111,23 @@
   &__item {
     display: flex;
     gap: 8px;
+  }
+}
+
+.projectCoordinator {
+  &__line {
+    display: flex;
+    gap: 1.4rem;
+  }
+
+  &__item {
+    display: flex;
+    gap: 8px;
+  }
+
+  &__line-important {
+    display: flex;
+    gap: 0;
   }
 }
 
@@ -131,5 +157,17 @@ label {
 .mgt {
   &-10 {
     margin-top: 10px;
+  }
+}
+
+.width {
+  &-177 {
+    width: 17.7rem;
+  }
+}
+
+.flex {
+  &-1 {
+    flex: 1;
   }
 }

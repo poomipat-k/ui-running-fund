@@ -123,6 +123,18 @@ export class ApplicantFlowPagesComponent implements OnInit, OnDestroy {
           organizationPosition: new FormControl(null, Validators.required),
           eventPosition: new FormControl(null, Validators.required),
         }),
+        projectCoordinator: new FormGroup({
+          sameAsProjectHead: new FormControl(false),
+          sameAsProjectManager: new FormControl(false),
+          prefix: new FormControl(null, Validators.required),
+          firstName: new FormControl(null, Validators.required),
+          lastName: new FormControl(null, Validators.required),
+          organizationPosition: new FormControl(null, Validators.required),
+          eventPosition: new FormControl(null, Validators.required),
+          address: new FormControl(null, Validators.required),
+          email: new FormControl(null, Validators.required),
+          phoneNumber: new FormControl(null, Validators.required),
+        }),
       }),
     });
   }

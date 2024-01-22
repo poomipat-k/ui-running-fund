@@ -14,6 +14,7 @@
       [ngClass]="{ checkbox__box: true, 'cursor-not-allow': disabled }"
       [checked]="checked"
       [formControlName]="controlName"
+      (change)="_onChanged()"
     />{{ display }}
     <svg
       xmlns="http://www.w3.org/2000/svg"
