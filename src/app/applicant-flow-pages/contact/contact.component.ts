@@ -1,6 +1,6 @@
 import { CommonModule, ViewportScroller } from '@angular/common';
 import { Component, Input, inject } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { FormControl, FormGroup } from '@angular/forms';
 import { CheckboxComponent } from '../../components/checkbox/checkbox.component';
 import { InputTextComponent } from '../../components/input-text/input-text.component';
 
@@ -18,6 +18,16 @@ export class ContactComponent {
   protected formTouched = false;
 
   private readonly scroller: ViewportScroller = inject(ViewportScroller);
+
+  get projectCoordinatorEmailControl(): FormControl {
+    return this.form.get('contact.projectCoordinator.email') as FormControl;
+  }
+
+  get projectCoordinatorPhoneNumberControl(): FormControl {
+    return this.form.get(
+      'contact.projectCoordinator.phoneNumber'
+    ) as FormControl;
+  }
 
   get projectHeadGroup(): FormGroup {
     return this.form.get('contact.projectHead') as FormGroup;

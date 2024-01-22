@@ -450,12 +450,16 @@
               width="47.5rem"
             ></app-com-input-text>
 
-            @if (!form.get('contact.projectCoordinator.email')?.valid &&
-            form.get('contact.projectCoordinator.email')?.touched &&
-            formTouched) {
+            @if (!projectCoordinatorEmailControl.valid &&
+            projectCoordinatorEmailControl.touched && formTouched) {
             <div class="error mgt-10">
               <img src="/assets/error_icon.svg" alt="error icon" />
+              @if (projectCoordinatorEmailControl.errors &&
+              projectCoordinatorEmailControl.errors['required']) {
               <p class="error__text">กรุณาระบุอีเมล</p>
+              } @else {
+              <p class="error__text">โปรดตรวจสอบอีเมลให้ถูกต้อง</p>
+              }
             </div>
             }
           </div>
@@ -472,12 +476,18 @@
               width="47.5rem"
             ></app-com-input-text>
 
-            @if (!form.get('contact.projectCoordinator.phoneNumber')?.valid &&
-            form.get('contact.projectCoordinator.phoneNumber')?.touched &&
-            formTouched) {
+            @if (!projectCoordinatorPhoneNumberControl.valid &&
+            projectCoordinatorPhoneNumberControl.touched && formTouched) {
             <div class="error mgt-10">
               <img src="/assets/error_icon.svg" alt="error icon" />
+              @if (projectCoordinatorPhoneNumberControl.errors &&
+              projectCoordinatorPhoneNumberControl.errors['required']) {
               <p class="error__text">กรุณาระบุหมายเลขโทรศัพท์</p>
+
+              }@else {
+              <p class="error__text">โปรดตรวจสอบหมายเลขโทรศัพท์ให้ถูกต้อง</p>
+
+              }
             </div>
             }
           </div>
