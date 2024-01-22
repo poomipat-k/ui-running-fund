@@ -27,6 +27,12 @@
       [enableScroll]="true"
       #generalDetailsComponent
     ></app-applicant-general-details>
+    } @case (2) {
+    <app-applicant-contact
+      #contactComponent
+      [form]="form"
+      [enableScroll]="true"
+    ></app-applicant-contact>
     } }
   </form>
 

@@ -1,0 +1,259 @@
+<div class="container">
+  <h2 class="header">
+    <span class="header--orange">ส่วนที่ 2</span> ข้อมูลการติดต่อ
+  </h2>
+
+  <div class="section-container">
+    <!-- Section -->
+    <div class="section">
+      <h3 class="section__header">2.1 หัวหน้าโครงการ</h3>
+      <div class="section-content">
+        <div class="projectHead__line">
+          <div class="projectHead__item">
+            <label class="label">คำนำหน้า</label>
+            <div>
+              <app-com-input-text
+                id="projectHead.prefix"
+                placeholder="คำนำหน้า"
+                [form]="projectHeadGroup"
+                controlName="prefix"
+                width="17.6rem"
+              ></app-com-input-text>
+
+              @if (!form.get('contact.projectHead.prefix')?.valid &&
+              form.get('contact.projectHead.prefix')?.touched && formTouched) {
+              <div class="error mgt-10">
+                <img src="/assets/error_icon.svg" alt="error icon" />
+                <p class="error__text">กรุณากรอกคำนำหน้า</p>
+              </div>
+              }
+            </div>
+          </div>
+
+          <div class="projectHead__item">
+            <label class="label">ชื่อ</label>
+            <div>
+              <app-com-input-text
+                id="projectHead.firstName"
+                placeholder="ชื่อ"
+                [form]="projectHeadGroup"
+                controlName="firstName"
+                width="26rem"
+              ></app-com-input-text>
+
+              @if (!form.get('contact.projectHead.firstName')?.valid &&
+              form.get('contact.projectHead.firstName')?.touched && formTouched)
+              {
+              <div class="error mgt-10">
+                <img src="/assets/error_icon.svg" alt="error icon" />
+                <p class="error__text">กรุณากรอกชื่อ</p>
+              </div>
+              }
+            </div>
+          </div>
+
+          <div class="projectHead__item">
+            <label class="label">นามสกุล</label>
+            <div>
+              <app-com-input-text
+                id="projectHead.lastName"
+                placeholder="นามสกุล"
+                [form]="projectHeadGroup"
+                controlName="lastName"
+                width="26rem"
+              ></app-com-input-text>
+
+              @if (!form.get('contact.projectHead.lastName')?.valid &&
+              form.get('contact.projectHead.lastName')?.touched && formTouched)
+              {
+              <div class="error mgt-10">
+                <img src="/assets/error_icon.svg" alt="error icon" />
+                <p class="error__text">กรุณากรอกนามสกุล</p>
+              </div>
+              }
+            </div>
+          </div>
+        </div>
+        <div class="projectHead__line">
+          <div class="projectHead__item">
+            <label class="label">ตำแหน่งในหน่วยงาน/องค์กร</label>
+            <div>
+              <app-com-input-text
+                id="projectHead.organizationPosition"
+                placeholder="ตำแหน่งในหน่วยงาน/องค์กร"
+                [form]="projectHeadGroup"
+                controlName="organizationPosition"
+                width="29.9rem"
+              ></app-com-input-text>
+
+              @if (!form.get('contact.projectHead.organizationPosition')?.valid
+              && form.get('contact.projectHead.organizationPosition')?.touched
+              && formTouched) {
+              <div class="error mgt-10">
+                <img src="/assets/error_icon.svg" alt="error icon" />
+                <p class="error__text">กรุณากรอกตำแหน่งในหน่วยงาน/องค์กร</p>
+              </div>
+              }
+            </div>
+          </div>
+        </div>
+        <div class="projectHead__line">
+          <div class="projectHead__item">
+            <label class="label">ตำแหน่งในการจัดงานครั้งนี้</label>
+            <div>
+              <app-com-input-text
+                id="projectHead.eventPosition"
+                placeholder="ตำแหน่งในการจัดงานครั้งนี้"
+                [form]="projectHeadGroup"
+                controlName="eventPosition"
+                width="29.9rem"
+              ></app-com-input-text>
+
+              @if (!form.get('contact.projectHead.eventPosition')?.valid &&
+              form.get('contact.projectHead.eventPosition')?.touched &&
+              formTouched) {
+              <div class="error mgt-10">
+                <img src="/assets/error_icon.svg" alt="error icon" />
+                <p class="error__text">กรุณากรอกตำแหน่งในการจัดงานครั้งนี้</p>
+              </div>
+              }
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- 2.1 Section END -->
+    <div class="section">
+      <h3 class="section__header">2.2 ผู้รับผิดชอบโครงการ</h3>
+      <div class="section-content">
+        <div class="projectManager__line">
+          <div class="projectManager__item">
+            <app-com-checkbox-view
+              display="เป็นผู้เดียวกับหัวหน้าโครงการ (ข้าม)"
+              [checked]="true"
+              value="xxxxyyyy"
+              gap="8px"
+              fontSize="1.6rem"
+            ></app-com-checkbox-view>
+          </div>
+        </div>
+        <div class="projectManager__line">
+          <div class="projectManager__item">
+            <label class="label">คำนำหน้า</label>
+            <div>
+              <app-com-input-text
+                id="projectManager.prefix"
+                placeholder="คำนำหน้า"
+                [form]="projectManagerGroup"
+                controlName="prefix"
+                width="17.6rem"
+              ></app-com-input-text>
+
+              @if (!form.get('contact.projectManager.prefix')?.valid &&
+              form.get('contact.projectManager.prefix')?.touched && formTouched)
+              {
+              <div class="error mgt-10">
+                <img src="/assets/error_icon.svg" alt="error icon" />
+                <p class="error__text">กรุณากรอกคำนำหน้า</p>
+              </div>
+              }
+            </div>
+          </div>
+
+          <div class="projectManager__item">
+            <label class="label">ชื่อ</label>
+            <div>
+              <app-com-input-text
+                id="projectManager.firstName"
+                placeholder="ชื่อ"
+                [form]="projectManagerGroup"
+                controlName="firstName"
+                width="26rem"
+              ></app-com-input-text>
+
+              @if (!form.get('contact.projectManager.firstName')?.valid &&
+              form.get('contact.projectManager.firstName')?.touched &&
+              formTouched) {
+              <div class="error mgt-10">
+                <img src="/assets/error_icon.svg" alt="error icon" />
+                <p class="error__text">กรุณากรอกชื่อ</p>
+              </div>
+              }
+            </div>
+          </div>
+
+          <div class="projectManager__item">
+            <label class="label">นามสกุล</label>
+            <div>
+              <app-com-input-text
+                id="projectManager.lastName"
+                placeholder="นามสกุล"
+                [form]="projectManagerGroup"
+                controlName="lastName"
+                width="26rem"
+              ></app-com-input-text>
+
+              @if (!form.get('contact.projectManager.lastName')?.valid &&
+              form.get('contact.projectManager.lastName')?.touched &&
+              formTouched) {
+              <div class="error mgt-10">
+                <img src="/assets/error_icon.svg" alt="error icon" />
+                <p class="error__text">กรุณากรอกนามสกุล</p>
+              </div>
+              }
+            </div>
+          </div>
+        </div>
+        <div class="projectManager__line">
+          <div class="projectManager__item">
+            <label class="label">ตำแหน่งในหน่วยงาน/องค์กร</label>
+            <div>
+              <app-com-input-text
+                id="projectManager.organizationPosition"
+                placeholder="ตำแหน่งในหน่วยงาน/องค์กร"
+                [form]="projectManagerGroup"
+                controlName="organizationPosition"
+                width="29.9rem"
+              ></app-com-input-text>
+
+              @if
+              (!form.get('contact.projectManager.organizationPosition')?.valid
+              &&
+              form.get('contact.projectManager.organizationPosition')?.touched
+              && formTouched) {
+              <div class="error mgt-10">
+                <img src="/assets/error_icon.svg" alt="error icon" />
+                <p class="error__text">กรุณากรอกตำแหน่งในหน่วยงาน/องค์กร</p>
+              </div>
+              }
+            </div>
+          </div>
+        </div>
+        <div class="projectManager__line">
+          <div class="projectManager__item">
+            <label class="label">ตำแหน่งในการจัดงานครั้งนี้</label>
+            <div>
+              <app-com-input-text
+                id="projectManager.eventPosition"
+                placeholder="ตำแหน่งในการจัดงานครั้งนี้"
+                [form]="projectManagerGroup"
+                controlName="eventPosition"
+                width="29.9rem"
+              ></app-com-input-text>
+
+              @if (!form.get('contact.projectManager.eventPosition')?.valid &&
+              form.get('contact.projectManager.eventPosition')?.touched &&
+              formTouched) {
+              <div class="error mgt-10">
+                <img src="/assets/error_icon.svg" alt="error icon" />
+                <p class="error__text">กรุณากรอกตำแหน่งในการจัดงานครั้งนี้</p>
+              </div>
+              }
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- 2.2 END -->
+  </div>
+</div>

@@ -7,6 +7,21 @@
   border-radius: 2rem;
 }
 
+.header {
+  color: $gray700;
+  font-family: $custom-font;
+  font-size: 2rem;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+
+  margin-bottom: 3.2rem;
+
+  &--orange {
+    color: #fb6514;
+  }
+}
+
 .section-container {
   display: flex;
   flex-direction: column;
@@ -139,21 +154,6 @@
 
   &__text {
     margin-left: 4px;
-  }
-}
-
-.header {
-  color: $gray700;
-  font-family: $custom-font;
-  font-size: 2rem;
-  font-style: normal;
-  font-weight: 600;
-  line-height: normal;
-
-  margin-bottom: 3.2rem;
-
-  &--orange {
-    color: #fb6514;
   }
 }
 

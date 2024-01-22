@@ -11,6 +11,7 @@ import { ProjectService } from '../services/project.service';
 import { ThemeService } from '../services/theme.service';
 import { BackgroundColor } from '../shared/enums/background-color';
 import { CollaborateComponent } from './collaborate/collaborate.component';
+import { ContactComponent } from './contact/contact.component';
 import { GeneralDetailsComponent } from './general-details/general-details.component';
 
 @Component({
@@ -21,6 +22,7 @@ import { GeneralDetailsComponent } from './general-details/general-details.compo
     CollaborateComponent,
     ReactiveFormsModule,
     GeneralDetailsComponent,
+    ContactComponent,
   ],
   templateUrl: './applicant-flow-pages.component.html',
   styleUrl: './applicant-flow-pages.component.scss',
@@ -29,6 +31,7 @@ export class ApplicantFlowPagesComponent implements OnInit, OnDestroy {
   @ViewChild('collaborateComponent') collaborateComponent: CollaborateComponent;
   @ViewChild('generalDetailsComponent')
   generalDetailsComponent: GeneralDetailsComponent;
+  @ViewChild('contactComponent') contactComponent: ContactComponent;
 
   private readonly themeService: ThemeService = inject(ThemeService);
   private readonly projectService: ProjectService = inject(ProjectService);
@@ -71,6 +74,7 @@ export class ApplicantFlowPagesComponent implements OnInit, OnDestroy {
     this.themeService.changeBackgroundColor(BackgroundColor.gray);
 
     this.initForm();
+    this.currentStep = 2;
   }
 
   ngOnDestroy(): void {
@@ -103,9 +107,23 @@ export class ApplicantFlowPagesComponent implements OnInit, OnDestroy {
         expectedParticipants: new FormControl(null, Validators.required),
         hasOrganizer: new FormControl(null, Validators.required),
       }),
+      contact: new FormGroup({
+        projectHead: new FormGroup({
+          prefix: new FormControl(null, Validators.required),
+          firstName: new FormControl(null, Validators.required),
+          lastName: new FormControl(null, Validators.required),
+          organizationPosition: new FormControl(null, Validators.required),
+          eventPosition: new FormControl(null, Validators.required),
+        }),
+        projectManager: new FormGroup({
+          prefix: new FormControl(null, Validators.required),
+          firstName: new FormControl(null, Validators.required),
+          lastName: new FormControl(null, Validators.required),
+          organizationPosition: new FormControl(null, Validators.required),
+          eventPosition: new FormControl(null, Validators.required),
+        }),
+      }),
     });
-
-    this.currentStep = 1;
   }
 
   protected nextPage(): void {
@@ -123,7 +141,10 @@ export class ApplicantFlowPagesComponent implements OnInit, OnDestroy {
       this.generalDetailsComponent.validToGoNext()
     ) {
       this.currentStep++;
-    } else if (this.currentStep === 2) {
+    } else if (
+      this.currentStep === 2 &&
+      this.contactComponent.validToGoNext()
+    ) {
       this.currentStep++;
     } else if (this.currentStep === 3) {
       this.currentStep++;

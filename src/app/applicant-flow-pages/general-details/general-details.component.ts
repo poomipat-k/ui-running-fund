@@ -1,11 +1,6 @@
 import { ViewportScroller } from '@angular/common';
 import { Component, Input, OnDestroy, OnInit, inject } from '@angular/core';
-import {
-  FormControl,
-  FormGroup,
-  ReactiveFormsModule,
-  Validators,
-} from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { InputTextComponent } from '../../components/input-text/input-text.component';
 import { RadioComponent } from '../../components/radio/radio.component';
@@ -26,12 +21,7 @@ import {
 @Component({
   selector: 'app-applicant-general-details',
   standalone: true,
-  imports: [
-    InputTextComponent,
-    ReactiveFormsModule,
-    RadioComponent,
-    SelectDropdownComponent,
-  ],
+  imports: [InputTextComponent, RadioComponent, SelectDropdownComponent],
   templateUrl: './general-details.component.html',
   styleUrl: './general-details.component.scss',
 })
