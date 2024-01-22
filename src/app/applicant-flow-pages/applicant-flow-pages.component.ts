@@ -74,7 +74,7 @@ export class ApplicantFlowPagesComponent implements OnInit, OnDestroy {
     this.themeService.changeBackgroundColor(BackgroundColor.gray);
 
     this.initForm();
-    // this.currentStep = 0;
+    this.currentStep = 2;
   }
 
   ngOnDestroy(): void {
@@ -128,29 +128,36 @@ export class ApplicantFlowPagesComponent implements OnInit, OnDestroy {
   }
 
   protected nextPage(): void {
-    console.log('===nextPage', this.form);
     this.collaborationUploadButtonTouched = true;
     if (this.currentStep === this.progressBarSteps.length) {
       this.submitForm();
+      console.log('===nextPage', this.form);
       return;
     }
 
     if (this.currentStep === 0 && this.collaborateComponent.validToGoNext()) {
+      console.log('===nextPage', this.form);
       this.currentStep++;
     } else if (
       this.currentStep === 1 &&
       this.generalDetailsComponent.validToGoNext()
     ) {
+      console.log('===nextPage', this.form);
       this.currentStep++;
     } else if (
       this.currentStep === 2 &&
       this.contactComponent.validToGoNext()
     ) {
+      console.log('===nextPage', this.form);
       this.currentStep++;
     } else if (this.currentStep === 3) {
+      console.log('===nextPage', this.form);
       this.currentStep++;
     } else if (this.currentStep === 4) {
+      console.log('===nextPage', this.form);
       this.currentStep++;
+    } else {
+      console.log('==error form', this.form);
     }
   }
 

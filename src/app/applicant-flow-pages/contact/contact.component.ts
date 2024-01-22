@@ -1,4 +1,4 @@
-import { ViewportScroller } from '@angular/common';
+import { CommonModule, ViewportScroller } from '@angular/common';
 import { Component, Input, inject } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { CheckboxComponent } from '../../components/checkbox/checkbox.component';
@@ -7,7 +7,7 @@ import { InputTextComponent } from '../../components/input-text/input-text.compo
 @Component({
   selector: 'app-applicant-contact',
   standalone: true,
-  imports: [InputTextComponent, CheckboxComponent],
+  imports: [CommonModule, InputTextComponent, CheckboxComponent],
   templateUrl: './contact.component.html',
   styleUrl: './contact.component.scss',
 })
@@ -27,7 +27,15 @@ export class ContactComponent {
     return this.form.get('contact.projectManager') as FormGroup;
   }
 
+  get isSameAsProjectHead(): boolean {
+    return this.form.value.contact.projectManager.sameAsProjectHead;
+  }
+
   validToGoNext(): boolean {
+    if (this.isSameAsProjectHead) {
+      this.patchProjectManager();
+    }
+
     if (!this.formTouched) {
       this.formTouched = true;
     }
@@ -36,6 +44,19 @@ export class ContactComponent {
       return false;
     }
     return true;
+  }
+
+  private patchProjectManager() {
+    console.log('===patchProjectManager');
+    const { prefix, firstName, lastName, organizationPosition, eventPosition } =
+      this.projectHeadGroup.value;
+    this.projectManagerGroup.patchValue({
+      prefix,
+      firstName,
+      lastName,
+      organizationPosition,
+      eventPosition,
+    });
   }
 
   private isFormValid(): boolean {

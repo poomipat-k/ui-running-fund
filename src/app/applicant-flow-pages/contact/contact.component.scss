@@ -61,6 +61,24 @@
     flex-direction: column;
     gap: 1.4rem;
   }
+
+  &__hidable {
+    padding-left: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.4rem;
+    opacity: 1;
+    transition: opacity 300ms ease-out, max-height 300ms ease-out;
+    border: 1px solid red;
+    max-height: 18.5rem; // Need to be a little higher than actual for smooth animation
+
+    &--hide {
+      opacity: 0;
+      max-height: 0;
+
+      transition: opacity 300ms ease-out, max-height 300ms ease-out;
+    }
+  }
 }
 
 .projectHead {
