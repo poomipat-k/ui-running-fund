@@ -19,7 +19,7 @@ export class RadioComponent implements OnInit {
   @Input() direction = 'vertical';
   @Input() disabled = false;
   @Input() fontSize = '18px';
-  @Input() flexGap = '0px';
+  @Input() gap = '0px';
 
   get labelClasses(): string[] {
     const classes = ['radio__container'];

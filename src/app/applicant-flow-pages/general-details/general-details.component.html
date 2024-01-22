@@ -346,7 +346,7 @@
           [form]="generalFormGroup"
           [options]="expectedParticipantsOptions"
           controlName="expectedParticipants"
-          flexGap="1rem"
+          gap="1rem"
         ></app-com-radio>
         @if (!form.get('general.expectedParticipants')?.valid &&
         form.get('general.expectedParticipants')?.touched && formTouched) {
@@ -368,7 +368,7 @@
           [form]="generalFormGroup"
           [options]="hasOrganizerOptions"
           controlName="hasOrganizer"
-          flexGap="1rem"
+          gap="1rem"
           [onChanged]="onHasOrganizerChanged"
         ></app-com-radio>
         @if (!form.get('general.hasOrganizer')?.valid &&

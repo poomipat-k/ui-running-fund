@@ -139,6 +139,10 @@ export class ApplicantFlowPagesComponent implements OnInit, OnDestroy {
             Validators.pattern('[0-9]{9,}'),
           ]),
         }),
+        organization: new FormGroup({
+          type: new FormControl(null, Validators.required),
+          name: new FormControl(null, Validators.required),
+        }),
       }),
     });
   }

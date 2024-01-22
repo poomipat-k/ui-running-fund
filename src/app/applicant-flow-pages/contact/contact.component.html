@@ -494,6 +494,46 @@
         </div>
       </div>
     </div>
-    <!-- 2.3 END -->
+    <!-- 2.4 Start -->
+    <div class="section">
+      <h3 class="section__header">
+        2.4 โปรดเลือกประเภทพร้อมทั้งระบุชื่อหน่วยงาน/องค์กรของท่าน
+      </h3>
+      <div class="section-content">
+        <div>
+          <app-com-radio
+            id="organization.type"
+            [form]="organizationGroup"
+            [options]="orgTypeOptions"
+            controlName="type"
+            fontSize="16px"
+            gap="8px"
+          ></app-com-radio>
+          @if (!form.get('contact.organization.type')?.valid &&
+          form.get('contact.organization.type')?.touched && formTouched) {
+          <div class="error mgt-10">
+            <img src="/assets/error_icon.svg" alt="error icon" />
+            <p class="error__text">กรุณาเลือกประเภทหน่วยงาน/องค์กร</p>
+          </div>
+          }
+        </div>
+        <div>
+          <app-com-input-text
+            id="organization.name"
+            placeholder="โปรดระบุชื่อหน่วยงาน/องค์กร"
+            [form]="organizationGroup"
+            controlName="name"
+            width="69.4rem"
+          ></app-com-input-text>
+          @if (!form.get('contact.organization.name')?.valid &&
+          form.get('contact.organization.name')?.touched && formTouched) {
+          <div class="error mgt-10">
+            <img src="/assets/error_icon.svg" alt="error icon" />
+            <p class="error__text">กรุณาระบุชื่อหน่วยงาน/องค์กร</p>
+          </div>
+          }
+        </div>
+      </div>
+    </div>
   </div>
 </div>

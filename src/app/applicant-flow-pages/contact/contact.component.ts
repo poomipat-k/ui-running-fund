@@ -3,11 +3,18 @@ import { Component, Input, inject } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { CheckboxComponent } from '../../components/checkbox/checkbox.component';
 import { InputTextComponent } from '../../components/input-text/input-text.component';
+import { RadioComponent } from '../../components/radio/radio.component';
+import { RadioOption } from '../../shared/models/radio-option';
 
 @Component({
   selector: 'app-applicant-contact',
   standalone: true,
-  imports: [CommonModule, InputTextComponent, CheckboxComponent],
+  imports: [
+    CommonModule,
+    InputTextComponent,
+    CheckboxComponent,
+    RadioComponent,
+  ],
   templateUrl: './contact.component.html',
   styleUrl: './contact.component.scss',
 })
@@ -41,6 +48,10 @@ export class ContactComponent {
     return this.form.get('contact.projectCoordinator') as FormGroup;
   }
 
+  get organizationGroup(): FormGroup {
+    return this.form.get('contact.organization') as FormGroup;
+  }
+
   get projectManagerSameAsProjectHead(): boolean {
     return this.form.value.contact.projectManager.sameAsProjectHead;
   }
@@ -52,6 +63,24 @@ export class ContactComponent {
   get projectCoordinatorSameAsProjectManager(): boolean {
     return this.form.value.contact.projectCoordinator.sameAsProjectManager;
   }
+
+  protected orgTypeOptions: RadioOption[] = [
+    {
+      id: 1,
+      value: 'government',
+      display: 'ภาครัฐ',
+    },
+    {
+      id: 2,
+      value: 'private_sector',
+      display: 'ภาคเอกชน',
+    },
+    {
+      id: 3,
+      value: 'civil_society',
+      display: 'ภาคประชาสังคม (เช่น มูลนิธิ ชมรม)',
+    },
+  ];
 
   constructor() {
     this.onProjectManagerSameAsProjectHeadChanged =
