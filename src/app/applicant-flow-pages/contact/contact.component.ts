@@ -57,6 +57,12 @@ export class ContactComponent {
       this.patchProjectManager();
     }
 
+    if (this.projectCoordinatorSameAsProjectHead) {
+      this.patchProjectCoordinator(this.projectHeadGroup);
+    } else if (this.projectCoordinatorSameAsProjectManager) {
+      this.patchProjectCoordinator(this.projectManagerGroup);
+    }
+
     if (!this.formTouched) {
       this.formTouched = true;
     }
@@ -65,6 +71,18 @@ export class ContactComponent {
       return false;
     }
     return true;
+  }
+
+  private patchProjectCoordinator(copyFrom: FormGroup) {
+    const { prefix, firstName, lastName, organizationPosition, eventPosition } =
+      copyFrom.value;
+    this.projectCoordinatorGroup.patchValue({
+      prefix,
+      firstName,
+      lastName,
+      organizationPosition,
+      eventPosition,
+    });
   }
 
   protected onProjectManagerSameAsProjectHeadChanged() {

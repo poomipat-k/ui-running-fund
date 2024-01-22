@@ -132,8 +132,12 @@ export class ApplicantFlowPagesComponent implements OnInit, OnDestroy {
           organizationPosition: new FormControl(null, Validators.required),
           eventPosition: new FormControl(null, Validators.required),
           address: new FormControl(null, Validators.required),
-          email: new FormControl(null, Validators.required),
-          phoneNumber: new FormControl(null, Validators.required),
+          email: new FormControl(null, [Validators.required, Validators.email]),
+          phoneNumber: new FormControl(null, [
+            Validators.required,
+            // Allow only number len >= 9
+            Validators.pattern('[0-9]{9,}'),
+          ]),
         }),
       }),
     });
