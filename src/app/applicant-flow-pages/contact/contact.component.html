@@ -129,11 +129,11 @@
         <div class="projectManager__line">
           <div class="projectManager__item">
             <app-com-checkbox
-              [form]="projectHeadGroup"
+              [form]="projectManagerGroup"
               controlName="sameAsProjectHead"
               display="เป็นผู้เดียวกับหัวหน้าโครงการ (ข้าม)"
-              fontSize="small"
               gap="8px"
+              fontSize="16px"
             >
             </app-com-checkbox>
           </div>
@@ -216,9 +216,7 @@
                 controlName="organizationPosition"
                 width="29.9rem"
               ></app-com-input-text>
-
-              @if
-              (!form.get('contact.projectManager.organizationPosition')?.valid
+              @if(!form.get('contact.projectManager.organizationPosition')?.valid
               &&
               form.get('contact.projectManager.organizationPosition')?.touched
               && formTouched) {

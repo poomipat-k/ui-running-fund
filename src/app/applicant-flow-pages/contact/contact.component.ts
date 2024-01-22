@@ -1,5 +1,5 @@
 import { ViewportScroller } from '@angular/common';
-import { Component, Input, OnDestroy, inject } from '@angular/core';
+import { Component, Input, inject } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { CheckboxComponent } from '../../components/checkbox/checkbox.component';
 import { InputTextComponent } from '../../components/input-text/input-text.component';
@@ -11,7 +11,7 @@ import { InputTextComponent } from '../../components/input-text/input-text.compo
   templateUrl: './contact.component.html',
   styleUrl: './contact.component.scss',
 })
-export class ContactComponent implements OnDestroy {
+export class ContactComponent {
   @Input() form: FormGroup;
   @Input() enableScroll = false;
 
@@ -27,10 +27,6 @@ export class ContactComponent implements OnDestroy {
     return this.form.get('contact.projectManager') as FormGroup;
   }
 
-  ngOnDestroy(): void {
-    console.log('==contact destroyed');
-  }
-
   validToGoNext(): boolean {
     if (!this.formTouched) {
       this.formTouched = true;
@@ -43,7 +39,7 @@ export class ContactComponent implements OnDestroy {
   }
 
   private isFormValid(): boolean {
-    return this.form.get('general')?.valid ?? false;
+    return this.form.get('contact')?.valid ?? false;
   }
 
   private markFieldsTouched() {

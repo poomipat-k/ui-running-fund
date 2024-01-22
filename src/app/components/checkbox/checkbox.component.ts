@@ -21,6 +21,6 @@ export class CheckboxComponent {
   @Input() name: string;
   @Input() checked = false;
   // Other config
-  @Input() fontSize: string; // small
+  @Input() fontSize = '2rem'; // small
   @Input() gap = '1.4rem';
 }

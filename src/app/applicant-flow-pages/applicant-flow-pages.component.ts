@@ -52,7 +52,7 @@ export class ApplicantFlowPagesComponent implements OnInit, OnDestroy {
     ['เอกสารแนบเพิ่มเติม', '(ถ้ามี)'],
     ['ยืนยัน'],
   ];
-  protected currentStep = 2;
+  protected currentStep = 0;
 
   get collaborationFileNames(): string[] {
     const names: string[] = [];
@@ -74,7 +74,7 @@ export class ApplicantFlowPagesComponent implements OnInit, OnDestroy {
     this.themeService.changeBackgroundColor(BackgroundColor.gray);
 
     this.initForm();
-    this.currentStep = 2;
+    // this.currentStep = 0;
   }
 
   ngOnDestroy(): void {
