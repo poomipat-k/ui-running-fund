@@ -195,8 +195,8 @@
               [onChanged]="onSelfMeasurementValueChanged"
             >
             </app-com-checkbox>
-            @if (!form.get('details.route.measurement')?.valid &&
-            form.get('details.route.measurement')?.touched && formTouched) {
+            @if (!measurementFormGroup.valid && measurementFormGroup.touched &&
+            formTouched) {
             <div class="error mgt-10">
               <img src="/assets/error_icon.svg" alt="error icon" />
               <p class="error__text">สามารถเลือกได้หลายข้อ</p>
@@ -204,7 +204,7 @@
             }
           </div>
           @if (isSelfMeasured) {
-          <div>
+          <div class="pdl-30">
             <app-com-input-text
               id="route.tool"
               placeholder="โปรดระบุเครื่องมือ"
@@ -220,6 +220,41 @@
               <p class="error__text">โปรดระบุเครื่องมือ</p>
             </div>
             }
+          </div>
+          }
+        </div>
+      </div>
+
+      <!-- 3.4 Start -->
+      <div class="measurement-section">
+        <div class="measurement-section__header">
+          <h4>
+            3.3.3 การจัดการจราจร
+            <span class="measurement-section__header--light"
+              >(เลือกทุกข้อที่มีการดำเนินการ)</span
+            >
+          </h4>
+        </div>
+        <div class="measurement-section__form">
+          @for (item of trafficManagementOptions; track item.id) {
+          <div
+            id="route.trafficManagement"
+            class="measurement-section__form--checkbox"
+          >
+            <app-com-checkbox
+              [form]="trafficManagementFormGroup"
+              [controlName]="item.controlName"
+              [display]="item.display"
+              gap="8px"
+              fontSize="16px"
+            >
+            </app-com-checkbox>
+          </div>
+          } @if (!trafficManagementFormGroup.valid &&
+          trafficManagementFormGroup.touched && formTouched) {
+          <div class="error mgt-10">
+            <img src="/assets/error_icon.svg" alt="error icon" />
+            <p class="error__text">สามารถเลือกได้หลายข้อ</p>
           </div>
           }
         </div>

@@ -159,14 +159,23 @@ export class ApplicantFlowPagesComponent implements OnInit, OnDestroy {
         route: new FormGroup({
           measurement: new FormGroup(
             {
-              athleticsAssociation: new FormControl(null),
-              calibratedBicycle: new FormControl(null),
-              selfMeasurement: new FormControl(null),
+              athleticsAssociation: new FormControl(false),
+              calibratedBicycle: new FormControl(false),
+              selfMeasurement: new FormControl(false),
             },
             requiredCheckBoxToBeCheckedValidator()
           ),
           // conditional measurement tools field
           // tool: new FormControl(null, Validators.required)
+          trafficManagement: new FormGroup(
+            {
+              hasSupporter: new FormControl(false),
+              roadClosure: new FormControl(false),
+              signs: new FormControl(false),
+              lighting: new FormControl(false),
+            },
+            requiredCheckBoxToBeCheckedValidator()
+          ),
         }),
       }),
     });

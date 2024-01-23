@@ -9,6 +9,7 @@ import {
 import { CheckboxComponent } from '../../components/checkbox/checkbox.component';
 import { InputTextComponent } from '../../components/input-text/input-text.component';
 import { RadioComponent } from '../../components/radio/radio.component';
+import { CheckboxOption } from '../../shared/models/checkbox-option';
 
 @Component({
   selector: 'app-applicant-plan-and-details',
@@ -46,11 +47,42 @@ export class PlanAndDetailsComponent {
     return this.form.get('details.route.measurement') as FormGroup;
   }
 
+  get trafficManagementFormGroup(): FormGroup {
+    return this.form.get('details.route.trafficManagement') as FormGroup;
+  }
+
   get isSelfMeasured(): boolean {
     return (
       this.form.value?.details?.route?.measurement?.selfMeasurement ?? false
     );
   }
+
+  protected trafficManagementOptions: CheckboxOption[] = [
+    {
+      id: 1,
+      display: 'มีผู้ช่วยดูแลความปลอดภัย เช่น ตำรวจ อาสาสมัครในพื้นที่',
+      controlName: 'hasSupporter',
+      value: '',
+    },
+    {
+      id: 2,
+      display: 'ขออนุญาตหน่วยงานปิดถนน หรือแบ่งช่องทางการจราจร',
+      controlName: 'roadClosure',
+      value: '',
+    },
+    {
+      id: 3,
+      display: 'ตั้งป้ายสัญลักษณ์ เช่น ป้ายบอกระยะทาง ป้ายจุดบริการน้ำดื่ม',
+      controlName: 'signs',
+      value: '',
+    },
+    {
+      id: 4,
+      display: 'มีการจัดแสงไฟในเส้นทางวิ่ง ในช่วงเส้นทางมืด',
+      controlName: 'lighting',
+      value: '',
+    },
+  ];
 
   constructor() {
     this.onSelfMeasurementValueChanged =
