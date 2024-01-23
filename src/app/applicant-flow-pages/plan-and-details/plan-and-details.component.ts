@@ -77,11 +77,15 @@ export class PlanAndDetailsComponent {
   }
 
   get offlineAvailableFormGroup(): FormGroup {
-    return this.form.get('details.marketing.offline') as FormGroup;
+    return this.form.get('details.marketing.offline.available') as FormGroup;
   }
 
   get onlineHowToFormGroup(): FormGroup {
     return this.form.get('details.marketing.online.howTo') as FormGroup;
+  }
+
+  get offlineFormGroup(): FormGroup {
+    return this.form.get('details.marketing.offline') as FormGroup;
   }
 
   get isSelfMeasured(): boolean {
@@ -124,6 +128,12 @@ export class PlanAndDetailsComponent {
   get hasOnlineOther(): boolean {
     return (
       this.form.value?.details?.marketing?.online?.available?.other ?? false
+    );
+  }
+
+  get hasOfflineAddition(): boolean {
+    return (
+      this.form.value?.details?.marketing?.offline?.available?.other ?? false
     );
   }
 
@@ -263,6 +273,31 @@ export class PlanAndDetailsComponent {
     },
   ];
 
+  protected offlineAvailableOptions: CheckboxOption[] = [
+    {
+      id: 1,
+      controlName: 'booth',
+      display: 'การตั้งบูธประชาสัมพันธ์/ รับสมัคร',
+    },
+    {
+      id: 2,
+      controlName: 'billboard',
+      display: 'กระจายสื่อในพื้นที่ เช่น ป้าย ไวนิล รถประชาสัมพันธ์',
+    },
+    {
+      id: 3,
+      controlName: 'local',
+      display:
+        'ประชาสัมพันธ์ผ่านบุคคลในพื้นที่ เช่น กำนัน ผู้ใหญ่บ้าน อสม. ชมรมวิ่ง',
+    },
+    {
+      id: 4,
+      controlName: 'other',
+      display: 'ช่องทางออฟไลน์อื่น ๆ ระบุ',
+      onChanged: this.onOfflineAdditionChanged.bind(this),
+    },
+  ];
+
   constructor() {
     this.onJudgementTypeChanged = this.onJudgementTypeChanged.bind(this);
     this.onHasFacebookChanged = this.onHasFacebookChanged.bind(this);
@@ -280,6 +315,15 @@ export class PlanAndDetailsComponent {
       return false;
     }
     return true;
+  }
+
+  onOfflineAdditionChanged() {
+    if (this.hasOfflineAddition) {
+      const newControl = new FormControl(null, Validators.required);
+      this.offlineFormGroup.addControl('addition', newControl);
+      return;
+    }
+    this.offlineFormGroup.removeControl('addition');
   }
 
   onHasOnlineOtherChanged() {

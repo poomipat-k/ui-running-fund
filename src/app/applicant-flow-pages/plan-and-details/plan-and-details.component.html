@@ -163,7 +163,7 @@
         </div>
         <div class="measurement-section__form" id="route.measurement">
           @for (item of measurementOptions; track item.id) {
-          <div class="measurement-section__form--checkbox">
+          <div class="pdl-4">
             @if (item.onChanged) {
             <app-com-checkbox
               [form]="measurementFormGroup"
@@ -223,10 +223,7 @@
         </div>
         <div class="measurement-section__form">
           @for (item of trafficManagementOptions; track item.id) {
-          <div
-            id="route.trafficManagement"
-            class="measurement-section__form--checkbox"
-          >
+          <div id="route.trafficManagement" class="pdl-4">
             <app-com-checkbox
               [form]="trafficManagementFormGroup"
               [controlName]="item.controlName"
@@ -304,7 +301,7 @@
       <div class="section-content">
         <div class="safety">
           @for (item of safetyOptions; track item.id) {
-          <div id="safety.ready" class="measurement-section__form--checkbox">
+          <div id="safety.ready" class="pdl-4">
             @if (item.onChanged) {
             <app-com-checkbox
               [form]="safetyReadyFormGroup"
@@ -366,10 +363,7 @@
       <div class="section-content">
         <div class="support">
           @for (item of supportOrganizationOptions; track item.id) {
-          <div
-            id="support.organization"
-            class="measurement-section__form--checkbox"
-          >
+          <div id="support.organization" class="pdl-4">
             @if (item.onChanged) {
             <app-com-checkbox
               [form]="supportOrganizationFormGroup"
@@ -431,7 +425,7 @@
       <div class="sub-block">
         <h4 class="section__sub-header pdl-20">3.7.1 สื่อสารช่องทางออนไลน์</h4>
         <div class="section-content" id="marketing.online.available">
-          <div class="online">
+          <div class="online pdl-4">
             <app-com-checkbox
               [form]="onlineAvailableFormGroup"
               controlName="facebook"
@@ -461,7 +455,7 @@
             }
           </div>
 
-          <div class="online">
+          <div class="online pdl-4">
             <app-com-checkbox
               [form]="onlineAvailableFormGroup"
               controlName="website"
@@ -491,7 +485,7 @@
             }
           </div>
 
-          <div class="online">
+          <div class="online pdl-4">
             <app-com-checkbox
               [form]="onlineAvailableFormGroup"
               controlName="onlinePage"
@@ -521,7 +515,7 @@
             }
           </div>
 
-          <div class="online">
+          <div class="online pdl-4">
             <app-com-checkbox
               [form]="onlineAvailableFormGroup"
               controlName="other"
@@ -550,7 +544,6 @@
             </div>
             }
           </div>
-          <!-- Error  -->
           @if (!onlineAvailableFormGroup.valid &&
           onlineAvailableFormGroup.touched && formTouched) {
           <div class="error">
@@ -568,7 +561,59 @@
             >(สื่อแบบดั้งเดิม ไม่ได้ใช้อินเทอร์เน็ต)</span
           >
         </h4>
-        <div class="section-content" id="marketing.online.available"></div>
+        <div class="section-content" id="marketing.offline.available">
+          <div class="offline">
+            @for (item of offlineAvailableOptions; track item.id) {
+            <div id="marketing.offline.available" class="pdl-4">
+              @if (item.onChanged) {
+              <app-com-checkbox
+                [form]="offlineAvailableFormGroup"
+                [controlName]="item.controlName"
+                [innerHTML]="item.display"
+                gap="8px"
+                fontSize="16px"
+                [onChanged]="item.onChanged"
+              >
+              </app-com-checkbox>
+              } @else {
+              <app-com-checkbox
+                [form]="offlineAvailableFormGroup"
+                [controlName]="item.controlName"
+                [innerHTML]="item.display"
+                gap="8px"
+                fontSize="16px"
+              >
+              </app-com-checkbox>
+              }
+            </div>
+            } @if(!offlineAvailableFormGroup.valid &&
+            offlineAvailableFormGroup.touched && formTouched) {
+            <div class="error pdl-28">
+              <img src="/assets/error_icon.svg" alt="error icon" />
+              <p class="error__text">สามารถเลือกได้หลายข้อ</p>
+            </div>
+            }
+          </div>
+          @if (hasOfflineAddition) {
+          <div class="pdl-30">
+            <app-com-input-text
+              id="marketing.offline.addition"
+              placeholder="โปรดระบุ"
+              [form]="offlineFormGroup"
+              controlName="addition"
+              width="47.4rem"
+            ></app-com-input-text>
+
+            @if (!offlineFormGroup.get('addition')?.valid &&
+            offlineFormGroup.get('addition')?.touched && formTouched) {
+            <div class="error mgt-10">
+              <img src="/assets/error_icon.svg" alt="error icon" />
+              <p class="error__text">โปรดระบุ</p>
+            </div>
+            }
+          </div>
+          }
+        </div>
       </div>
     </div>
   </div>
