@@ -245,7 +245,53 @@
           }
         </div>
       </div>
-      <!-- 3.4 Start -->
     </div>
+    <!-- 3.4 Start -->
+    <div class="section">
+      <h3 class="section__header section__header--no-asterisk">
+        3.4 ระบบตัดสินของการแข่งขันเป็นรูปแบบใด
+        <span class="section__header--remark">(เลือกตอบเพียง 1 ข้อ)</span>
+      </h3>
+      <div class="section-content">
+        <div>
+          <app-com-radio
+            id="judge.type"
+            [form]="judgeFormGroup"
+            [options]="judgeTypeOptions"
+            controlName="type"
+            fontSize="16px"
+            gap="8px"
+            [onChanged]="onJudgementTypeChanged"
+          ></app-com-radio>
+          @if (!judgeFormGroup.get('type')?.valid &&
+          judgeFormGroup.get('type')?.touched && formTouched) {
+          <div class="error pdl-28">
+            <img src="/assets/error_icon.svg" alt="error icon" />
+            <p class="error__text">กรุณาเลือกระบบตัดสินของการแข่งขัน</p>
+          </div>
+          }
+        </div>
+        @if (isOtherJudgementType) {
+        <div class="pdl-30">
+          <app-com-input-text
+            id="judge.otherType"
+            placeholder="โปรดระบุรายละเอียด"
+            [form]="judgeFormGroup"
+            controlName="otherType"
+            width="50.5rem"
+          ></app-com-input-text>
+
+          @if (!judgeFormGroup.get('otherType')?.valid &&
+          judgeFormGroup.get('otherType')?.touched && formTouched) {
+          <div class="error mgt-10">
+            <img src="/assets/error_icon.svg" alt="error icon" />
+            <p class="error__text">โปรดระบุรายละเอียด</p>
+          </div>
+          }
+        </div>
+        }
+      </div>
+    </div>
+    <!-- END -->
   </div>
 </div>

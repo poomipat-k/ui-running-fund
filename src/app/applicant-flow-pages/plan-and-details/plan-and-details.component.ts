@@ -10,6 +10,7 @@ import { CheckboxComponent } from '../../components/checkbox/checkbox.component'
 import { InputTextComponent } from '../../components/input-text/input-text.component';
 import { RadioComponent } from '../../components/radio/radio.component';
 import { CheckboxOption } from '../../shared/models/checkbox-option';
+import { RadioOption } from '../../shared/models/radio-option';
 
 @Component({
   selector: 'app-applicant-plan-and-details',
@@ -51,10 +52,18 @@ export class PlanAndDetailsComponent {
     return this.form.get('details.route.trafficManagement') as FormGroup;
   }
 
+  get judgeFormGroup(): FormGroup {
+    return this.form.get('details.judge') as FormGroup;
+  }
+
   get isSelfMeasured(): boolean {
     return (
       this.form.value?.details?.route?.measurement?.selfMeasurement ?? false
     );
+  }
+
+  get isOtherJudgementType(): boolean {
+    return this.form.value?.details?.judge?.type === 'other';
   }
 
   protected measurementOptions: CheckboxOption[] = [
@@ -99,9 +108,27 @@ export class PlanAndDetailsComponent {
     },
   ];
 
+  protected judgeTypeOptions: RadioOption[] = [
+    {
+      id: 1,
+      value: 'manual',
+      display: 'ระบบ Manual ใช้กรรมการตัดสิน',
+    },
+    {
+      id: 2,
+      value: 'auto',
+      display:
+        'ระบบ Auto (Chip time) ใช้เครื่องประมวลผลร่วมกับกรรมการตัดสินชี้ขาด',
+    },
+    {
+      id: 3,
+      value: 'other',
+      display: 'อื่น ๆ เช่น กรณีใช้การตัดสินทั้ง 2 ระบบ โปรดระบุรายละเอียด',
+    },
+  ];
+
   constructor() {
-    // this.onSelfMeasurementValueChanged =
-    //   this.onSelfMeasurementValueChanged.bind(this);
+    this.onJudgementTypeChanged = this.onJudgementTypeChanged.bind(this);
   }
 
   public validToGoNext(): boolean {
@@ -117,14 +144,21 @@ export class PlanAndDetailsComponent {
 
   onSelfMeasurementValueChanged() {
     const group = this.form.get('details.route') as FormGroup;
-    console.log('===group', group);
-    console.log('==selfMeasured', this.isSelfMeasured);
     if (this.isSelfMeasured) {
       const toolControl = new FormControl(null, Validators.required);
       group.addControl('tool', toolControl);
       return;
     }
     group.removeControl('tool');
+  }
+
+  onJudgementTypeChanged() {
+    if (this.isOtherJudgementType) {
+      const otherJudgeType = new FormControl(null, Validators.required);
+      this.judgeFormGroup.addControl('otherType', otherJudgeType);
+      return;
+    }
+    this.judgeFormGroup.removeControl('otherType');
   }
 
   private markFieldsTouched() {
@@ -141,6 +175,7 @@ export class PlanAndDetailsComponent {
     }
   }
 
+  // DFS to get formControl error first then check formGroup
   private getFirstErrorIdWithPrefix(
     rootGroup: FormGroup,
     prefix: string
