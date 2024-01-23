@@ -1,7 +1,6 @@
 import { CommonModule, ViewportScroller } from '@angular/common';
 import { Component, Input, OnInit, inject } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { DomSanitizer } from '@angular/platform-browser';
 
 import { CheckboxComponent } from '../../components/checkbox/checkbox.component';
 import { RadioComponent } from '../../components/radio/radio.component';
@@ -28,7 +27,6 @@ export class ReviewerScoreComponent implements OnInit {
   @Input() criteriaList: ReviewCriteria[] = [];
 
   private readonly scroller: ViewportScroller = inject(ViewportScroller);
-  protected readonly sanitizer: DomSanitizer = inject(DomSanitizer);
 
   protected scoreOptions: RadioOption[] = [
     {

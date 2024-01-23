@@ -17,6 +17,7 @@ export class CheckboxComponent implements OnInit {
   @Input() display: string;
   @Input() disabled = false;
   @Input() onChanged: () => void;
+  @Input() innerHTML: string;
   // View version
   @Input() value: any;
   @Input() name: string;

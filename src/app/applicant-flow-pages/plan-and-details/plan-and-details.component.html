@@ -292,6 +292,69 @@
         }
       </div>
     </div>
-    <!-- END -->
+    <!-- 3.5 Start -->
+    <div class="section">
+      <h3 class="section__header section__header--no-asterisk">
+        3.5
+        โครงการมีแผนการจัดการใดบ้างที่เกี่ยวข้องกับการดูแลความปลอดภัยทางสุขภาพของนักวิ่ง
+        <span class="section__header--remark">
+          (เลือกทุกข้อที่มีการดำเนินการ)</span
+        >
+      </h3>
+      <div class="section-content">
+        <div class="safety">
+          @for (item of safetyOptions; track item.id) {
+          <div id="safety" class="measurement-section__form--checkbox">
+            @if (item.onChanged) {
+            <app-com-checkbox
+              [form]="safetyReadyFormGroup"
+              [controlName]="item.controlName"
+              [innerHTML]="item.display"
+              gap="8px"
+              fontSize="16px"
+              [onChanged]="item.onChanged"
+            >
+            </app-com-checkbox>
+            } @else {
+            <app-com-checkbox
+              [form]="safetyReadyFormGroup"
+              [controlName]="item.controlName"
+              [innerHTML]="item.display"
+              gap="8px"
+              fontSize="16px"
+            >
+            </app-com-checkbox>
+            }
+          </div>
+          } @if(!safetyReadyFormGroup.valid && safetyReadyFormGroup.touched &&
+          formTouched) {
+          <div class="error pdl-28">
+            <img src="/assets/error_icon.svg" alt="error icon" />
+            <p class="error__text">สามารถเลือกได้หลายข้อ</p>
+          </div>
+          }
+        </div>
+        @if (isOtherTypeSafety) {
+        <div class="pdl-30">
+          <app-com-input-text
+            id="safety.addition"
+            placeholder="โปรดระบุรายละเอียด"
+            [form]="safetyFormGroup"
+            controlName="addition"
+            width="55.8rem"
+          ></app-com-input-text>
+
+          @if (!safetyFormGroup.get('addition')?.valid &&
+          safetyFormGroup.get('addition')?.touched && formTouched) {
+          <div class="error mgt-10">
+            <img src="/assets/error_icon.svg" alt="error icon" />
+            <p class="error__text">โปรดระบุ</p>
+          </div>
+          }
+        </div>
+        }
+      </div>
+    </div>
+    <!-- 3.6 Start -->
   </div>
 </div>

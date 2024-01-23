@@ -15,7 +15,14 @@
       [checked]="checked"
       [formControlName]="controlName"
       (change)="_onChanged()"
-    />{{ display }}
+    />
+
+    @if (innerHTML) {
+    <span [innerHTML]="innerHTML"></span>
+    } @else {
+    {{ display }}
+    }
+
     <svg
       xmlns="http://www.w3.org/2000/svg"
       width="14"
@@ -52,7 +59,12 @@
     [disabled]="disabled"
     [ngClass]="{ checkbox__box: true, 'cursor-not-allow': disabled }"
     [checked]="checked"
-  />{{ display }}
+  />
+  @if (innerHTML) {
+    <span [innerHTML]="innerHTML"></span>
+    } @else {
+    {{ display }}
+    }
   <svg
     xmlns="http://www.w3.org/2000/svg"
     width="14"

@@ -56,6 +56,14 @@ export class PlanAndDetailsComponent {
     return this.form.get('details.judge') as FormGroup;
   }
 
+  get safetyReadyFormGroup(): FormGroup {
+    return this.form.get('details.safety.ready') as FormGroup;
+  }
+
+  get safetyFormGroup(): FormGroup {
+    return this.form.get('details.safety') as FormGroup;
+  }
+
   get isSelfMeasured(): boolean {
     return (
       this.form.value?.details?.route?.measurement?.selfMeasurement ?? false
@@ -64,6 +72,10 @@ export class PlanAndDetailsComponent {
 
   get isOtherJudgementType(): boolean {
     return this.form.value?.details?.judge?.type === 'other';
+  }
+
+  get isOtherTypeSafety(): boolean {
+    return this.form.value?.details?.safety?.ready?.other ?? false;
   }
 
   protected measurementOptions: CheckboxOption[] = [
@@ -127,6 +139,47 @@ export class PlanAndDetailsComponent {
     },
   ];
 
+  protected safetyOptions: CheckboxOption[] = [
+    {
+      id: 1,
+      controlName: 'runnerInformation',
+      display:
+        'ข้อมูลสุขภาพและเบอร์ติดต่อฉุกเฉินของนักวิ่งในแบบฟอร์มลงทะเบียน/ระบบ/BIB',
+    },
+    {
+      id: 2,
+      controlName: 'healthDecider',
+      display: 'กำหนดผู้รับผิดชอบ/ผู้ตัดสินใจเรื่องความปลอดภัยด้านสุขภาพ',
+    },
+    {
+      id: 3,
+      controlName: 'ambulance',
+      display:
+        'รถพยาบาล (ambulance) /รถมูลนิธิ <u>พร้อมเจ้าหน้าที่และอุปกรณ์</u>',
+    },
+    {
+      id: 4,
+      controlName: 'firstAid',
+      display: 'จุดปฐมพยาบาลพร้อมเวชภัณฑ์',
+    },
+    {
+      id: 5,
+      controlName: 'aed',
+      display: 'เครื่อง AED',
+    },
+    {
+      id: 6,
+      controlName: 'insurance',
+      display: 'ประกันภัยสำหรับนักวิ่ง',
+    },
+    {
+      id: 7,
+      controlName: 'other',
+      display: 'อื่น ๆ โปรดระบุ',
+      onChanged: this.onOtherSafetyTypeChanged.bind(this),
+    },
+  ];
+
   constructor() {
     this.onJudgementTypeChanged = this.onJudgementTypeChanged.bind(this);
   }
@@ -150,6 +203,15 @@ export class PlanAndDetailsComponent {
       return;
     }
     group.removeControl('tool');
+  }
+
+  onOtherSafetyTypeChanged() {
+    if (this.isOtherTypeSafety) {
+      const addition = new FormControl(null, Validators.required);
+      this.safetyFormGroup.addControl('addition', addition);
+      return;
+    }
+    this.safetyFormGroup.removeControl('addition');
   }
 
   onJudgementTypeChanged() {
