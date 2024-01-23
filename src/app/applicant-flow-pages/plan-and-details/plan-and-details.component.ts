@@ -72,6 +72,18 @@ export class PlanAndDetailsComponent {
     return this.form.get('details.support.organization') as FormGroup;
   }
 
+  get onlineAvailableFormGroup(): FormGroup {
+    return this.form.get('details.marketing.online.available') as FormGroup;
+  }
+
+  get offlineAvailableFormGroup(): FormGroup {
+    return this.form.get('details.marketing.offline') as FormGroup;
+  }
+
+  get onlineHowToFormGroup(): FormGroup {
+    return this.form.get('details.marketing.online.howTo') as FormGroup;
+  }
+
   get isSelfMeasured(): boolean {
     return (
       this.form.value?.details?.route?.measurement?.selfMeasurement ?? false
@@ -88,6 +100,31 @@ export class PlanAndDetailsComponent {
 
   get hasOtherSupportOrganization(): boolean {
     return this.form.value?.details?.support?.organization?.other ?? false;
+  }
+
+  get hasFacebook(): boolean {
+    return (
+      this.form.value?.details?.marketing?.online?.available?.facebook ?? false
+    );
+  }
+
+  get hasWebsite(): boolean {
+    return (
+      this.form.value?.details?.marketing?.online?.available?.website ?? false
+    );
+  }
+
+  get hasOnlinePage(): boolean {
+    return (
+      this.form.value?.details?.marketing?.online?.available?.onlinePage ??
+      false
+    );
+  }
+
+  get hasOnlineOther(): boolean {
+    return (
+      this.form.value?.details?.marketing?.online?.available?.other ?? false
+    );
   }
 
   protected measurementOptions: CheckboxOption[] = [
@@ -228,6 +265,10 @@ export class PlanAndDetailsComponent {
 
   constructor() {
     this.onJudgementTypeChanged = this.onJudgementTypeChanged.bind(this);
+    this.onHasFacebookChanged = this.onHasFacebookChanged.bind(this);
+    this.onHasWebsiteChanged = this.onHasWebsiteChanged.bind(this);
+    this.onHasOnlinePageChanged = this.onHasOnlinePageChanged.bind(this);
+    this.onHasOnlineOtherChanged = this.onHasOnlineOtherChanged.bind(this);
   }
 
   public validToGoNext(): boolean {
@@ -239,6 +280,42 @@ export class PlanAndDetailsComponent {
       return false;
     }
     return true;
+  }
+
+  onHasOnlineOtherChanged() {
+    if (this.hasOnlineOther) {
+      const newControl = new FormControl(null, Validators.required);
+      this.onlineHowToFormGroup.addControl('other', newControl);
+      return;
+    }
+    this.onlineHowToFormGroup.removeControl('other');
+  }
+
+  onHasOnlinePageChanged() {
+    if (this.hasOnlinePage) {
+      const newControl = new FormControl(null, Validators.required);
+      this.onlineHowToFormGroup.addControl('onlinePage', newControl);
+      return;
+    }
+    this.onlineHowToFormGroup.removeControl('onlinePage');
+  }
+
+  onHasWebsiteChanged() {
+    if (this.hasWebsite) {
+      const newControl = new FormControl(null, Validators.required);
+      this.onlineHowToFormGroup.addControl('website', newControl);
+      return;
+    }
+    this.onlineHowToFormGroup.removeControl('website');
+  }
+
+  onHasFacebookChanged() {
+    if (this.hasFacebook) {
+      const newControl = new FormControl(null, Validators.required);
+      this.onlineHowToFormGroup.addControl('facebook', newControl);
+      return;
+    }
+    this.onlineHowToFormGroup.removeControl('facebook');
   }
 
   onOtherOrganizationChanged() {

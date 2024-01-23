@@ -213,6 +213,33 @@ export class ApplicantFlowPagesComponent implements OnInit, OnDestroy {
           // Conditionally set
           // addition: new FormControl(null, Validators.required)
         }),
+        marketing: new FormGroup({
+          online: new FormGroup({
+            available: new FormGroup(
+              {
+                facebook: new FormControl(false),
+                website: new FormControl(false),
+                onlinePage: new FormControl(false),
+                other: new FormControl(false),
+              },
+              requiredCheckBoxToBeCheckedValidator()
+            ),
+            howTo: new FormGroup({}),
+          }),
+
+          offline: new FormGroup({
+            available: new FormGroup(
+              {
+                booth: new FormControl(false),
+                billboard: new FormControl(false),
+                local: new FormControl(false),
+                other: new FormControl(false),
+              },
+              requiredCheckBoxToBeCheckedValidator()
+            ),
+            otherDetails: new FormControl(null),
+          }),
+        }),
       }),
     });
   }
