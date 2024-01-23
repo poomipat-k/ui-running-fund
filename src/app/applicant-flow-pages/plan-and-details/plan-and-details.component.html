@@ -304,7 +304,7 @@
       <div class="section-content">
         <div class="safety">
           @for (item of safetyOptions; track item.id) {
-          <div id="safety" class="measurement-section__form--checkbox">
+          <div id="safety.ready" class="measurement-section__form--checkbox">
             @if (item.onChanged) {
             <app-com-checkbox
               [form]="safetyReadyFormGroup"
@@ -356,5 +356,69 @@
       </div>
     </div>
     <!-- 3.6 Start -->
+    <div class="section">
+      <h3 class="section__header section__header--no-asterisk">
+        3.6 ในการจัดงานครั้งนี้ มีหน่วยงานระดับพื้นที่ใดบ้างที่ร่วมสนับสนุน
+        <span class="section__header--remark">
+          (เลือกทุกข้อที่มีการดำเนินการ)</span
+        >
+      </h3>
+      <div class="section-content">
+        <div class="support">
+          @for (item of supportOrganizationOptions; track item.id) {
+          <div
+            id="support.organization"
+            class="measurement-section__form--checkbox"
+          >
+            @if (item.onChanged) {
+            <app-com-checkbox
+              [form]="supportOrganizationFormGroup"
+              [controlName]="item.controlName"
+              [innerHTML]="item.display"
+              gap="8px"
+              fontSize="16px"
+              [onChanged]="item.onChanged"
+            >
+            </app-com-checkbox>
+            } @else {
+            <app-com-checkbox
+              [form]="supportOrganizationFormGroup"
+              [controlName]="item.controlName"
+              [innerHTML]="item.display"
+              gap="8px"
+              fontSize="16px"
+            >
+            </app-com-checkbox>
+            }
+          </div>
+          } @if(!supportOrganizationFormGroup.valid &&
+          supportOrganizationFormGroup.touched && formTouched) {
+          <div class="error pdl-28">
+            <img src="/assets/error_icon.svg" alt="error icon" />
+            <p class="error__text">สามารถเลือกได้หลายข้อ</p>
+          </div>
+          }
+        </div>
+        @if (hasOtherSupportOrganization) {
+        <div class="pdl-30">
+          <app-com-input-text
+            id="support.addition"
+            placeholder="โปรดระบุ"
+            [form]="supportFormGroup"
+            controlName="addition"
+            width="39.3rem"
+          ></app-com-input-text>
+
+          @if (!supportFormGroup.get('addition')?.valid &&
+          supportFormGroup.get('addition')?.touched && formTouched) {
+          <div class="error mgt-10">
+            <img src="/assets/error_icon.svg" alt="error icon" />
+            <p class="error__text">โปรดระบุ</p>
+          </div>
+          }
+        </div>
+        }
+      </div>
+    </div>
   </div>
 </div>

@@ -198,6 +198,21 @@ export class ApplicantFlowPagesComponent implements OnInit, OnDestroy {
           // Conditionally set
           // addition: new FormControl(null, Validators.required)
         }),
+        support: new FormGroup({
+          organization: new FormGroup(
+            {
+              provincialAdministration: new FormControl(false),
+              safety: new FormControl(false),
+              health: new FormControl(false),
+              volunteer: new FormControl(false),
+              community: new FormControl(false),
+              other: new FormControl(false),
+            },
+            requiredCheckBoxToBeCheckedValidator()
+          ),
+          // Conditionally set
+          // addition: new FormControl(null, Validators.required)
+        }),
       }),
     });
   }

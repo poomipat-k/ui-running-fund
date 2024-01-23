@@ -64,6 +64,14 @@ export class PlanAndDetailsComponent {
     return this.form.get('details.safety') as FormGroup;
   }
 
+  get supportFormGroup(): FormGroup {
+    return this.form.get('details.support') as FormGroup;
+  }
+
+  get supportOrganizationFormGroup(): FormGroup {
+    return this.form.get('details.support.organization') as FormGroup;
+  }
+
   get isSelfMeasured(): boolean {
     return (
       this.form.value?.details?.route?.measurement?.selfMeasurement ?? false
@@ -76,6 +84,10 @@ export class PlanAndDetailsComponent {
 
   get isOtherTypeSafety(): boolean {
     return this.form.value?.details?.safety?.ready?.other ?? false;
+  }
+
+  get hasOtherSupportOrganization(): boolean {
+    return this.form.value?.details?.support?.organization?.other ?? false;
   }
 
   protected measurementOptions: CheckboxOption[] = [
@@ -180,6 +192,40 @@ export class PlanAndDetailsComponent {
     },
   ];
 
+  protected supportOrganizationOptions: CheckboxOption[] = [
+    {
+      id: 1,
+      controlName: 'provincialAdministration',
+      display: 'หน่วยงานด้านการปกครอง เช่น ผู้ว่าเมือง อบต.',
+    },
+    {
+      id: 2,
+      controlName: 'safety',
+      display: 'หน่วยงานด้านความปลอดภัย เช่น ตำรวจ อปพร. วิทยุกู้ชีพ',
+    },
+    {
+      id: 3,
+      controlName: 'health',
+      display: 'หน่วยงานด้านการแพทย์ เช่น โรงพยาบาล รพ.สต. อสม.',
+    },
+    {
+      id: 4,
+      controlName: 'volunteer',
+      display: 'มูลนิธิ อาสาสมัครชุมชน',
+    },
+    {
+      id: 5,
+      controlName: 'community',
+      display: 'องค์กรระดับชุมชน เช่น โรงเรียน วัด ชุมชน',
+    },
+    {
+      id: 6,
+      controlName: 'other',
+      display: 'อื่น ๆ',
+      onChanged: this.onOtherOrganizationChanged.bind(this),
+    },
+  ];
+
   constructor() {
     this.onJudgementTypeChanged = this.onJudgementTypeChanged.bind(this);
   }
@@ -193,6 +239,15 @@ export class PlanAndDetailsComponent {
       return false;
     }
     return true;
+  }
+
+  onOtherOrganizationChanged() {
+    if (this.hasOtherSupportOrganization) {
+      const addition = new FormControl(null, Validators.required);
+      this.supportFormGroup.addControl('addition', addition);
+      return;
+    }
+    this.supportFormGroup.removeControl('addition');
   }
 
   onSelfMeasurementValueChanged() {

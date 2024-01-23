@@ -161,6 +161,12 @@ label {
   gap: 1rem;
 }
 
+.support {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
 .textarea {
   resize: none;
   width: 100%;
