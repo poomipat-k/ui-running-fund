@@ -74,7 +74,7 @@ export class ApplicantFlowPagesComponent implements OnInit, OnDestroy {
     this.themeService.changeBackgroundColor(BackgroundColor.gray);
 
     this.initForm();
-    this.currentStep = 2;
+    this.currentStep = 3;
   }
 
   ngOnDestroy(): void {

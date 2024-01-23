@@ -1,19 +1,14 @@
 import { Routes } from '@angular/router';
-import { ApplicantFlowPagesComponent } from './applicant-flow-pages/applicant-flow-pages.component';
-import { DashboardComponent } from './dashboard/dashboard.component';
 import { EmailActivateSuccessComponent } from './email-activate-success/email-activate-success.component';
 import { ForgotPasswordEmailSentComponent } from './forgot-password-email-sent/forgot-password-email-sent.component';
-import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { ResetPasswordSuccessComponent } from './reset-password-success/reset-password-success.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
-import { ReviewerFlowPagesComponent } from './reviewer-flow-pages/reviewer-flow-pages.component';
 import { authGuard } from './shared/guard/auth.guard';
 import { reviewerAuthGuard } from './shared/guard/reviewer-auth.guard';
 import { SignupSuccessComponent } from './signup-success/signup-success.component';
-import { SignupComponent } from './signup/signup.component';
 
 const routeConfig: Routes = [
   {
@@ -23,19 +18,28 @@ const routeConfig: Routes = [
   },
   {
     path: 'proposal/create',
-    component: ApplicantFlowPagesComponent,
+    loadComponent: () =>
+      import('./applicant-flow-pages/applicant-flow-pages.component').then(
+        (mod) => mod.ApplicantFlowPagesComponent
+      ),
     title: 'Create a proposal',
     canActivate: [authGuard],
   },
   {
     path: 'dashboard',
-    component: DashboardComponent,
+    loadComponent: () =>
+      import('./dashboard/dashboard.component').then(
+        (mod) => mod.DashboardComponent
+      ),
     title: 'Dashboard',
     canActivate: [authGuard],
   },
   {
     path: 'project/review/:projectCode',
-    component: ReviewerFlowPagesComponent,
+    loadComponent: () =>
+      import('./reviewer-flow-pages/reviewer-flow-pages.component').then(
+        (mod) => mod.ReviewerFlowPagesComponent
+      ),
     canActivate: [reviewerAuthGuard],
   },
   {
@@ -45,7 +49,8 @@ const routeConfig: Routes = [
   },
   {
     path: 'signup',
-    component: SignupComponent,
+    loadComponent: () =>
+      import('./signup/signup.component').then((mod) => mod.SignupComponent),
     title: 'Signup',
   },
   {
@@ -60,7 +65,10 @@ const routeConfig: Routes = [
   },
   {
     path: 'password/forgot',
-    component: ForgotPasswordComponent,
+    loadComponent: () =>
+      import('./forgot-password/forgot-password.component').then(
+        (mod) => mod.ForgotPasswordComponent
+      ),
     title: 'Forgot Password',
   },
   {
