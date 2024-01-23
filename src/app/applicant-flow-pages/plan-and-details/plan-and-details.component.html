@@ -151,7 +151,7 @@
           </p>
         </div>
       </div>
-
+      <!-- 3.3.2 Start -->
       <div class="measurement-section">
         <div class="measurement-section__header">
           <h4>
@@ -161,49 +161,36 @@
             >
           </h4>
         </div>
-        <div class="measurement-section__form">
-          <div
-            id="route.measurement"
-            class="measurement-section__form--checkbox"
-          >
-            <app-com-checkbox
-              [form]="measurementFormGroup"
-              controlName="athleticsAssociation"
-              display="ได้รับการวัดและรับรองจากสมาคมกีฬากรีฑาแห่งประเทศไทย"
-              gap="8px"
-              fontSize="16px"
-            >
-            </app-com-checkbox>
-          </div>
+        <div class="measurement-section__form" id="route.measurement">
+          @for (item of measurementOptions; track item.id) {
           <div class="measurement-section__form--checkbox">
+            @if (item.onChanged) {
             <app-com-checkbox
               [form]="measurementFormGroup"
-              controlName="calibratedBicycle"
-              display="การวัดระยะทางด้วยจักรยานที่สอบเทียบ (Calibrated Bicycle)"
+              [controlName]="item.controlName"
+              [display]="item.display"
               gap="8px"
               fontSize="16px"
-            >
-            </app-com-checkbox>
-          </div>
-          <div class="measurement-section__form--checkbox">
+              [onChanged]="item.onChanged"
+            ></app-com-checkbox>
+            } @else {
             <app-com-checkbox
               [form]="measurementFormGroup"
-              controlName="selfMeasurement"
-              display="ผู้จัดการแข่งขันวัดระยะทางเอง โปรดระบุเครื่องมือ"
+              [controlName]="item.controlName"
+              [display]="item.display"
               gap="8px"
               fontSize="16px"
-              [onChanged]="onSelfMeasurementValueChanged"
-            >
-            </app-com-checkbox>
-            @if (!measurementFormGroup.valid && measurementFormGroup.touched &&
-            formTouched) {
-            <div class="error mgt-10">
-              <img src="/assets/error_icon.svg" alt="error icon" />
-              <p class="error__text">สามารถเลือกได้หลายข้อ</p>
-            </div>
+            ></app-com-checkbox>
             }
           </div>
-          @if (isSelfMeasured) {
+
+          } @if (!form.get('details.route.measurement')?.valid &&
+          form.get('details.route.measurement')?.touched && formTouched) {
+          <div class="error pdl-28">
+            <img src="/assets/error_icon.svg" alt="error icon" />
+            <p class="error__text">สามารถเลือกได้หลายข้อ</p>
+          </div>
+          } @if (isSelfMeasured) {
           <div class="pdl-30">
             <app-com-input-text
               id="route.tool"
@@ -224,8 +211,7 @@
           }
         </div>
       </div>
-
-      <!-- 3.4 Start -->
+      <!-- 3.3.3 Start -->
       <div class="measurement-section">
         <div class="measurement-section__header">
           <h4>
@@ -252,13 +238,14 @@
           </div>
           } @if (!trafficManagementFormGroup.valid &&
           trafficManagementFormGroup.touched && formTouched) {
-          <div class="error mgt-10">
+          <div class="error pdl-28">
             <img src="/assets/error_icon.svg" alt="error icon" />
             <p class="error__text">สามารถเลือกได้หลายข้อ</p>
           </div>
           }
         </div>
       </div>
+      <!-- 3.4 Start -->
     </div>
   </div>
 </div>

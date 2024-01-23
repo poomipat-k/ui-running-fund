@@ -57,36 +57,51 @@ export class PlanAndDetailsComponent {
     );
   }
 
+  protected measurementOptions: CheckboxOption[] = [
+    {
+      id: 1,
+      display: 'ได้รับการวัดและรับรองจากสมาคมกีฬากรีฑาแห่งประเทศไทย',
+      controlName: 'athleticsAssociation',
+    },
+    {
+      id: 2,
+      display: 'การวัดระยะทางด้วยจักรยานที่สอบเทียบ (Calibrated Bicycle)',
+      controlName: 'calibratedBicycle',
+    },
+    {
+      id: 3,
+      display: 'ผู้จัดการแข่งขันวัดระยะทางเอง โปรดระบุเครื่องมือ',
+      controlName: 'selfMeasurement',
+      onChanged: this.onSelfMeasurementValueChanged.bind(this),
+    },
+  ];
+
   protected trafficManagementOptions: CheckboxOption[] = [
     {
       id: 1,
       display: 'มีผู้ช่วยดูแลความปลอดภัย เช่น ตำรวจ อาสาสมัครในพื้นที่',
       controlName: 'hasSupporter',
-      value: '',
     },
     {
       id: 2,
       display: 'ขออนุญาตหน่วยงานปิดถนน หรือแบ่งช่องทางการจราจร',
       controlName: 'roadClosure',
-      value: '',
     },
     {
       id: 3,
       display: 'ตั้งป้ายสัญลักษณ์ เช่น ป้ายบอกระยะทาง ป้ายจุดบริการน้ำดื่ม',
       controlName: 'signs',
-      value: '',
     },
     {
       id: 4,
       display: 'มีการจัดแสงไฟในเส้นทางวิ่ง ในช่วงเส้นทางมืด',
       controlName: 'lighting',
-      value: '',
     },
   ];
 
   constructor() {
-    this.onSelfMeasurementValueChanged =
-      this.onSelfMeasurementValueChanged.bind(this);
+    // this.onSelfMeasurementValueChanged =
+    //   this.onSelfMeasurementValueChanged.bind(this);
   }
 
   public validToGoNext(): boolean {
