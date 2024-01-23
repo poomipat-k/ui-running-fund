@@ -33,6 +33,13 @@
       [form]="form"
       [enableScroll]="true"
     ></app-applicant-contact>
+    } @case (3) {
+    <app-applicant-plan-and-details
+      #planAndDetails
+      [form]="form"
+      [enableScroll]="true"
+    >
+    </app-applicant-plan-and-details>
     } }
   </form>
 

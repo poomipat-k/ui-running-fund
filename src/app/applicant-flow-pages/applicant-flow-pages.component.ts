@@ -10,9 +10,11 @@ import { ProgressBarStepsComponent } from '../components/progress-bar-steps/prog
 import { ProjectService } from '../services/project.service';
 import { ThemeService } from '../services/theme.service';
 import { BackgroundColor } from '../shared/enums/background-color';
+import { requiredCheckBoxToBeCheckedValidator } from '../shared/validators/requiredCheckbox';
 import { CollaborateComponent } from './collaborate/collaborate.component';
 import { ContactComponent } from './contact/contact.component';
 import { GeneralDetailsComponent } from './general-details/general-details.component';
+import { PlanAndDetailsComponent } from './plan-and-details/plan-and-details.component';
 
 @Component({
   selector: 'app-applicant-flow-pages',
@@ -23,6 +25,7 @@ import { GeneralDetailsComponent } from './general-details/general-details.compo
     ReactiveFormsModule,
     GeneralDetailsComponent,
     ContactComponent,
+    PlanAndDetailsComponent,
   ],
   templateUrl: './applicant-flow-pages.component.html',
   styleUrl: './applicant-flow-pages.component.scss',
@@ -32,6 +35,7 @@ export class ApplicantFlowPagesComponent implements OnInit, OnDestroy {
   @ViewChild('generalDetailsComponent')
   generalDetailsComponent: GeneralDetailsComponent;
   @ViewChild('contactComponent') contactComponent: ContactComponent;
+  @ViewChild('planAndDetails') planAndDetailsComponent: PlanAndDetailsComponent;
 
   private readonly themeService: ThemeService = inject(ThemeService);
   private readonly projectService: ProjectService = inject(ProjectService);
@@ -144,6 +148,27 @@ export class ApplicantFlowPagesComponent implements OnInit, OnDestroy {
           name: new FormControl(null, Validators.required),
         }),
       }),
+      details: new FormGroup({
+        background: new FormControl(null, Validators.required),
+        emergencyContact: new FormGroup({
+          prefix: new FormControl(null, Validators.required),
+          firstName: new FormControl(null, Validators.required),
+          lastName: new FormControl(null, Validators.required),
+          eventPosition: new FormControl(null, Validators.required),
+        }),
+        route: new FormGroup({
+          measurement: new FormGroup(
+            {
+              athleticsAssociation: new FormControl(null),
+              calibratedBicycle: new FormControl(null),
+              selfMeasurement: new FormControl(null),
+            },
+            requiredCheckBoxToBeCheckedValidator()
+          ),
+          // conditional measurement tools field
+          // tool: new FormControl(null, Validators.required)
+        }),
+      }),
     });
   }
 
@@ -170,7 +195,10 @@ export class ApplicantFlowPagesComponent implements OnInit, OnDestroy {
     ) {
       console.log('===nextPage', this.form);
       this.currentStep++;
-    } else if (this.currentStep === 3) {
+    } else if (
+      this.currentStep === 3 &&
+      this.planAndDetailsComponent.validToGoNext()
+    ) {
       console.log('===nextPage', this.form);
       this.currentStep++;
     } else if (this.currentStep === 4) {

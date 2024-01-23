@@ -1,0 +1,229 @@
+<div class="container">
+  <h2 class="header">
+    <span class="header--orange">ส่วนที่ 3</span>
+    ข้อมูลข้อเสนอโครงการและแผนบริหารจัดการงานวิ่งเพื่อสุขภาพ
+  </h2>
+
+  <div class="section-container">
+    <!-- 3.1 Start -->
+    <div class="section">
+      <h3 class="section__header">
+        3.1 ระบุรายละเอียดความเป็นมาและวัตถุประสงค์ของการจัดการแข่งขัน
+      </h3>
+      <div class="section-content">
+        <div [formGroup]="detailsFormGroup">
+          <textarea
+            id="background"
+            formControlName="background"
+            class="textarea"
+            placeholder="ระบุรายละเอียด..."
+          ></textarea>
+
+          @if (!form.get('details.background')?.valid &&
+          form.get('details.background')?.touched && formTouched) {
+          <div class="error mgt-10">
+            <img src="/assets/error_icon.svg" alt="error icon" />
+            <p class="error__text">กรูณาระบุรายละเอียด</p>
+          </div>
+          }
+        </div>
+      </div>
+    </div>
+    <!-- 3.2 Start -->
+    <div class="section">
+      <div class="section__header section__header--no-asterisk">
+        3.2 เมื่อเกิดกรณีฉุกเฉินหรือการจัดการความเสี่ยง เช่น ฝนตกหนัก
+        เหตุที่อาจต้องยกเลิกการแข่งขัน ใครเป็นผู้ตัดสินใจสูงสุด
+        <p class="section__header--remark">
+          (ระบุชื่อและตำแหน่งในการดำเนินงาน)
+        </p>
+      </div>
+
+      <div class="section-content">
+        <div class="emergencyContact__line">
+          <div class="emergencyContact__item">
+            <label class="label">คำนำหน้า</label>
+            <div>
+              <app-com-input-text
+                id="emergencyContact.prefix"
+                placeholder="คำนำหน้า"
+                [form]="emergencyFormGroup"
+                controlName="prefix"
+                width="17.6rem"
+              ></app-com-input-text>
+
+              @if (!form.get('details.emergencyContact.prefix')?.valid &&
+              form.get('details.emergencyContact.prefix')?.touched &&
+              formTouched) {
+              <div class="error mgt-10">
+                <img src="/assets/error_icon.svg" alt="error icon" />
+                <p class="error__text">กรุณากรอกคำนำหน้า</p>
+              </div>
+              }
+            </div>
+          </div>
+
+          <div class="emergencyContact__item">
+            <label class="label">ชื่อ</label>
+            <div>
+              <app-com-input-text
+                id="emergencyContact.firstName"
+                placeholder="ชื่อ"
+                [form]="emergencyFormGroup"
+                controlName="firstName"
+                width="26rem"
+              ></app-com-input-text>
+
+              @if (!form.get('details.emergencyContact.firstName')?.valid &&
+              form.get('details.emergencyContact.firstName')?.touched &&
+              formTouched) {
+              <div class="error mgt-10">
+                <img src="/assets/error_icon.svg" alt="error icon" />
+                <p class="error__text">กรุณากรอกชื่อ</p>
+              </div>
+              }
+            </div>
+          </div>
+
+          <div class="emergencyContact__item">
+            <label class="label">นามสกุล</label>
+            <div>
+              <app-com-input-text
+                id="emergencyContact.lastName"
+                placeholder="นามสกุล"
+                [form]="emergencyFormGroup"
+                controlName="lastName"
+                width="26rem"
+              ></app-com-input-text>
+
+              @if (!form.get('details.emergencyContact.lastName')?.valid &&
+              form.get('details.emergencyContact.lastName')?.touched &&
+              formTouched) {
+              <div class="error mgt-10">
+                <img src="/assets/error_icon.svg" alt="error icon" />
+                <p class="error__text">กรุณากรอกนามสกุล</p>
+              </div>
+              }
+            </div>
+          </div>
+        </div>
+
+        <div class="emergencyContact__line">
+          <div class="emergencyContact__item">
+            <label class="label">ตำแหน่งในการจัดงานครั้งนี้</label>
+            <div>
+              <app-com-input-text
+                id="emergencyContact.eventPosition"
+                placeholder="ตำแหน่งในการจัดงานครั้งนี้"
+                [form]="emergencyFormGroup"
+                controlName="eventPosition"
+                width="29.9rem"
+              ></app-com-input-text>
+
+              @if (!form.get('details.emergencyContact.eventPosition')?.valid &&
+              form.get('details.emergencyContact.eventPosition')?.touched &&
+              formTouched) {
+              <div class="error mgt-10">
+                <img src="/assets/error_icon.svg" alt="error icon" />
+                <p class="error__text">กรุณากรอกตำแหน่งในการจัดงานครั้งนี้</p>
+              </div>
+              }
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- 3.3 Start -->
+    <div class="section">
+      <h3 class="section__header">
+        3.3 โครงการมีการวัดระยะทางวิ่งและการจัดการจราจรอย่างไร
+      </h3>
+      <div class="measurement-section">
+        <div class="measurement-section__header">
+          <h4>
+            3.3.1 เส้นทาง
+            <span class="measurement-section__header--light"
+              >(เส้นทางที่มีการวัดระยะสำหรับการวิ่งทุกประเภท)</span
+            >
+          </h4>
+          <p class="measurement-section__warning">
+            โปรดเตรียมเอกสารเกี่ยวกับเส้นทางการวิ่งเพื่อใช้แนบไฟล์ในส่วนที่ 6
+          </p>
+        </div>
+      </div>
+
+      <div class="measurement-section">
+        <div class="measurement-section__header">
+          <h4>
+            3.3.2 การวัดระยะทาง
+            <span class="measurement-section__header--light"
+              >(เลือกทุกข้อที่มีการดำเนินการ)</span
+            >
+          </h4>
+        </div>
+        <div class="measurement-section__form">
+          <div
+            id="route.measurement"
+            class="measurement-section__form--checkbox"
+          >
+            <app-com-checkbox
+              [form]="measurementFormGroup"
+              controlName="athleticsAssociation"
+              display="ได้รับการวัดและรับรองจากสมาคมกีฬากรีฑาแห่งประเทศไทย"
+              gap="8px"
+              fontSize="16px"
+            >
+            </app-com-checkbox>
+          </div>
+          <div class="measurement-section__form--checkbox">
+            <app-com-checkbox
+              [form]="measurementFormGroup"
+              controlName="calibratedBicycle"
+              display="การวัดระยะทางด้วยจักรยานที่สอบเทียบ (Calibrated Bicycle)"
+              gap="8px"
+              fontSize="16px"
+            >
+            </app-com-checkbox>
+          </div>
+          <div class="measurement-section__form--checkbox">
+            <app-com-checkbox
+              [form]="measurementFormGroup"
+              controlName="selfMeasurement"
+              display="ผู้จัดการแข่งขันวัดระยะทางเอง โปรดระบุเครื่องมือ"
+              gap="8px"
+              fontSize="16px"
+              [onChanged]="onSelfMeasurementValueChanged"
+            >
+            </app-com-checkbox>
+            @if (!form.get('details.route.measurement')?.valid &&
+            form.get('details.route.measurement')?.touched && formTouched) {
+            <div class="error mgt-10">
+              <img src="/assets/error_icon.svg" alt="error icon" />
+              <p class="error__text">สามารถเลือกได้หลายข้อ</p>
+            </div>
+            }
+          </div>
+          @if (isSelfMeasured) {
+          <div>
+            <app-com-input-text
+              id="route.tool"
+              placeholder="โปรดระบุเครื่องมือ"
+              [form]="routeFormGroup"
+              controlName="tool"
+              width="40.5rem"
+            ></app-com-input-text>
+
+            @if (!form.get('details.route.tool')?.valid &&
+            form.get('details.route.tool')?.touched && formTouched) {
+            <div class="error mgt-10">
+              <img src="/assets/error_icon.svg" alt="error icon" />
+              <p class="error__text">โปรดระบุเครื่องมือ</p>
+            </div>
+            }
+          </div>
+          }
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

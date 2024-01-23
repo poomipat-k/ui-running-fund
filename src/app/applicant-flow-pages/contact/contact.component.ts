@@ -132,7 +132,6 @@ export class ContactComponent {
   }
 
   protected onProjectCoordinatorSameAsProjectHeadChanged() {
-    console.log('==same Head');
     if (!this.projectCoordinatorSameAsProjectHead) {
       this.resetProjectCoordinator();
     } else {
@@ -143,7 +142,6 @@ export class ContactComponent {
   }
 
   protected onProjectCoordinatorSameAsProjectManagerChanged() {
-    console.log('==same Manager');
     if (!this.projectCoordinatorSameAsProjectManager) {
       this.resetProjectCoordinator();
     } else {
