@@ -1,0 +1,14 @@
+<div [formGroup]="form">
+  <label [style]="{ 'font-size': fontSize }">
+    <input
+      type="radio"
+      [value]="value"
+      [name]="name"
+      [formControlName]="controlName"
+      (change)="_onChanged()"
+      [ngClass]="{ radio: true, 'radio--disabled': disabled }"
+    />
+    <span class="radio__checkmark"></span>
+    {{ display }}
+  </label>
+</div>

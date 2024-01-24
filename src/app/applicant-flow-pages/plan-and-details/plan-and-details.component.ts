@@ -1,5 +1,5 @@
-import { ViewportScroller } from '@angular/common';
-import { Component, Input, inject } from '@angular/core';
+import { CommonModule, ViewportScroller } from '@angular/common';
+import { Component, Input, OnInit, inject } from '@angular/core';
 import {
   FormControl,
   FormGroup,
@@ -8,6 +8,7 @@ import {
 } from '@angular/forms';
 import { CheckboxComponent } from '../../components/checkbox/checkbox.component';
 import { InputTextComponent } from '../../components/input-text/input-text.component';
+import { RadioItemComponent } from '../../components/radio-item/radio-item.component';
 import { RadioComponent } from '../../components/radio/radio.component';
 import { ApplicantCriteria } from '../../shared/models/applicant-criteria';
 import { CheckboxOption } from '../../shared/models/checkbox-option';
@@ -21,11 +22,13 @@ import { RadioOption } from '../../shared/models/radio-option';
     InputTextComponent,
     RadioComponent,
     CheckboxComponent,
+    CommonModule,
+    RadioItemComponent,
   ],
   templateUrl: './plan-and-details.component.html',
   styleUrl: './plan-and-details.component.scss',
 })
-export class PlanAndDetailsComponent {
+export class PlanAndDetailsComponent implements OnInit {
   @Input() form: FormGroup;
   @Input() enableScroll = false;
   @Input() criteria: ApplicantCriteria[] = [];
@@ -88,6 +91,10 @@ export class PlanAndDetailsComponent {
 
   get offlineFormGroup(): FormGroup {
     return this.form.get('details.marketing.offline') as FormGroup;
+  }
+
+  get scoreFormGroup(): FormGroup {
+    return this.form.get('details.score') as FormGroup;
   }
 
   get isSelfMeasured(): boolean {
@@ -300,6 +307,37 @@ export class PlanAndDetailsComponent {
     },
   ];
 
+  protected scoreOptions: RadioOption[] = [
+    {
+      id: 5,
+      value: 5,
+    },
+    {
+      id: 4,
+      value: 4,
+    },
+    {
+      id: 3,
+      value: 3,
+    },
+    {
+      id: 2,
+      value: 2,
+    },
+    {
+      id: 1,
+      value: 1,
+    },
+  ];
+
+  protected scoreHeader = [
+    '5. มั่นใจอย่างยิ่ง',
+    '4. มั่นใจ',
+    '3. กลาง ๆ',
+    '2. ไม่มั่นใจ',
+    '1. ไม่มั่นใจอย่างยิ่ง',
+  ];
+
   constructor() {
     this.onJudgementTypeChanged = this.onJudgementTypeChanged.bind(this);
     this.onHasFacebookChanged = this.onHasFacebookChanged.bind(this);
@@ -307,6 +345,8 @@ export class PlanAndDetailsComponent {
     this.onHasOnlinePageChanged = this.onHasOnlinePageChanged.bind(this);
     this.onHasOnlineOtherChanged = this.onHasOnlineOtherChanged.bind(this);
   }
+
+  ngOnInit(): void {}
 
   public validToGoNext(): boolean {
     if (!this.formTouched) {
@@ -438,12 +478,17 @@ export class PlanAndDetailsComponent {
     return '';
   }
 
+  generateCriteriaControlName(c: ApplicantCriteria): string {
+    return `q_${c.criteriaVersion}_${c.orderNumber}`;
+  }
+
   private scrollToId(id: string) {
     this.scroller.setOffset([0, 100]);
     this.scroller.scrollToAnchor(id);
   }
 
   private isFormValid(): boolean {
+    console.log('==control', this.scoreFormGroup.get('q_1_10'));
     return this.form.get('details')?.valid ?? false;
   }
 }

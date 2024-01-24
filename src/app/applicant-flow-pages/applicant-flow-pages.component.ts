@@ -83,6 +83,7 @@ export class ApplicantFlowPagesComponent implements OnInit, OnDestroy {
     this.initForm();
     this.loadApplicantSelfScoreCriteria();
     this.currentStep = 3;
+    this.form.disable();
   }
 
   ngOnDestroy(): void {
@@ -245,6 +246,7 @@ export class ApplicantFlowPagesComponent implements OnInit, OnDestroy {
             // addition: new FormControl(null),
           }),
         }),
+        score: new FormGroup({}),
       }),
     });
   }
@@ -316,11 +318,25 @@ export class ApplicantFlowPagesComponent implements OnInit, OnDestroy {
 
   private loadApplicantSelfScoreCriteria() {
     this.subs.push(
-      this.projectService.getApplicantCriteria(1).subscribe((result) => {
-        if (result) {
-          this.applicantSelfScoreCriteria = result;
+      this.projectService.getApplicantCriteria(1).subscribe((criteria) => {
+        if (criteria) {
+          this.addApplicantSelfScoreFormGroup(criteria);
+          this.applicantSelfScoreCriteria = criteria;
+          console.log('==load form', this.form);
         }
       })
     );
+  }
+
+  private addApplicantSelfScoreFormGroup(criteria: ApplicantCriteria[]) {
+    if (criteria) {
+      const group = this.form.get('details.score') as FormGroup;
+      criteria.forEach((c) => {
+        group.addControl(
+          `q_${c.criteriaVersion}_${c.orderNumber}`,
+          new FormControl(null, Validators.required)
+        );
+      });
+    }
   }
 }
