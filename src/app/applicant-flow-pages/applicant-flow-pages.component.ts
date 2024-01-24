@@ -83,7 +83,6 @@ export class ApplicantFlowPagesComponent implements OnInit, OnDestroy {
     this.initForm();
     this.loadApplicantSelfScoreCriteria();
     this.currentStep = 3;
-    this.form.disable();
   }
 
   ngOnDestroy(): void {

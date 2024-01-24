@@ -638,27 +638,30 @@
           }
         </div>
         @for (item of criteria; track item.orderNumber) {
-        <div class="table__row">
-          <p
-            class="table__col-grow table__cell--question"
-            [innerHTML]="item.display"
-          ></p>
+        <div class="table__row" [id]="getCriteriaId(item)">
+          <div class="table__col-grow table__cell--question">
+            <p [innerHTML]="item.display"></p>
+            @if (!scoreFormGroup.get(generateCriteriaControlName(item))?.valid
+            && scoreFormGroup.get(generateCriteriaControlName(item))?.touched &&
+            formTouched) {
+            <div class="error mgt-10">
+              <img src="/assets/error_icon.svg" alt="error icon" />
+              <p class="error__text">โปรดให้คะแนน</p>
+            </div>
+            }
+          </div>
           @for (score of scoreOptions; track score.id) {
-          <label
-            [ngClass]="{
-              'table__col-fixed': true,
-              'radio-container': true,
-              'radio-container--disabled': form.disable
-            }"
-          >
-            <input
-              [ngClass]="{ radio: true, 'radio-container--disabled': true }"
-              type="radio"
-              [value]="score.value"
-              [formControlName]="generateCriteriaControlName(item)"
-            />
-            <span class="radio__checkmark"></span>
-          </label>
+          <div class="table__col-fixed radio__container">
+            <label class="radio__label">
+              <input
+                [ngClass]="{ radio: true }"
+                type="radio"
+                [value]="score.value"
+                [formControlName]="generateCriteriaControlName(item)"
+              />
+              <div class="radio__checkmark"></div>
+            </label>
+          </div>
           }
         </div>
         }

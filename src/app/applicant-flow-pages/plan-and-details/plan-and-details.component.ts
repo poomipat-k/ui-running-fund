@@ -482,6 +482,10 @@ export class PlanAndDetailsComponent implements OnInit {
     return `q_${c.criteriaVersion}_${c.orderNumber}`;
   }
 
+  getCriteriaId(c: ApplicantCriteria): string {
+    return `score.q_${c.criteriaVersion}_${c.orderNumber}`;
+  }
+
   private scrollToId(id: string) {
     this.scroller.setOffset([0, 100]);
     this.scroller.scrollToAnchor(id);
