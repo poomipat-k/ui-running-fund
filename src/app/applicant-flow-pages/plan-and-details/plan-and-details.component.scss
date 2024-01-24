@@ -63,6 +63,7 @@
     &::after {
       content: "*";
       color: #c4320a;
+      font-weight: 500;
     }
 
     &--no-asterisk::after {
@@ -74,6 +75,7 @@
       &::after {
         content: "*";
         color: #c4320a;
+        font-weight: 500;
       }
     }
 
