@@ -9,6 +9,7 @@ import {
 import { CheckboxComponent } from '../../components/checkbox/checkbox.component';
 import { InputTextComponent } from '../../components/input-text/input-text.component';
 import { RadioComponent } from '../../components/radio/radio.component';
+import { ApplicantCriteria } from '../../shared/models/applicant-criteria';
 import { CheckboxOption } from '../../shared/models/checkbox-option';
 import { RadioOption } from '../../shared/models/radio-option';
 
@@ -27,6 +28,7 @@ import { RadioOption } from '../../shared/models/radio-option';
 export class PlanAndDetailsComponent {
   @Input() form: FormGroup;
   @Input() enableScroll = false;
+  @Input() criteria: ApplicantCriteria[] = [];
 
   private readonly scroller: ViewportScroller = inject(ViewportScroller);
 

@@ -10,6 +10,7 @@ import { ProgressBarStepsComponent } from '../components/progress-bar-steps/prog
 import { ProjectService } from '../services/project.service';
 import { ThemeService } from '../services/theme.service';
 import { BackgroundColor } from '../shared/enums/background-color';
+import { ApplicantCriteria } from '../shared/models/applicant-criteria';
 import { requiredCheckBoxToBeCheckedValidator } from '../shared/validators/requiredCheckbox';
 import { CollaborateComponent } from './collaborate/collaborate.component';
 import { ContactComponent } from './contact/contact.component';
@@ -58,6 +59,8 @@ export class ApplicantFlowPagesComponent implements OnInit, OnDestroy {
   ];
   protected currentStep = 0;
 
+  protected applicantSelfScoreCriteria: ApplicantCriteria[] = [];
+
   get collaborationFileNames(): string[] {
     const names: string[] = [];
     if (this.collaborationFiles) {
@@ -78,6 +81,7 @@ export class ApplicantFlowPagesComponent implements OnInit, OnDestroy {
     this.themeService.changeBackgroundColor(BackgroundColor.gray);
 
     this.initForm();
+    this.loadApplicantSelfScoreCriteria();
     this.currentStep = 3;
   }
 
@@ -308,5 +312,15 @@ export class ApplicantFlowPagesComponent implements OnInit, OnDestroy {
 
   reduceStep() {
     this.currentStep -= 1;
+  }
+
+  private loadApplicantSelfScoreCriteria() {
+    this.subs.push(
+      this.projectService.getApplicantCriteria(1).subscribe((result) => {
+        if (result) {
+          this.applicantSelfScoreCriteria = result;
+        }
+      })
+    );
   }
 }

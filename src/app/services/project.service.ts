@@ -3,6 +3,7 @@ import { Injectable, inject } from '@angular/core';
 import { Observable, catchError, throwError } from 'rxjs';
 
 import { environment } from '../../environments/environment';
+import { ApplicantCriteria } from '../shared/models/applicant-criteria';
 import { ReviewCriteria } from '../shared/models/review-criteria';
 import { ReviewPeriod } from '../shared/models/review-period';
 import { ReviewerDashboardRow } from '../shared/models/reviewer-dashboard-row';
@@ -47,6 +48,14 @@ export class ProjectService {
     return this.http
       .get<ReviewerProjectDetails>(
         `${this.baseApiUrl}/project/review/${projectCode}`
+      )
+      .pipe(catchError(this.handleError));
+  }
+
+  getApplicantCriteria(criteriaVersion = 1): Observable<ApplicantCriteria[]> {
+    return this.http
+      .get<ApplicantCriteria[]>(
+        `${this.baseApiUrl}/applicant/criteria/${criteriaVersion}`
       )
       .pipe(catchError(this.handleError));
   }
