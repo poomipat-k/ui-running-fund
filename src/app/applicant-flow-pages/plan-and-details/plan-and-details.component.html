@@ -667,5 +667,34 @@
         }
       </div>
     </div>
+
+    <div class="section">
+      <h3 class="section__header">
+        3.9 โครงการมีวิธีการประเมินผลความสำเร็จ/
+        รับฟังประเด็นท้าทายจากการจัดงานอย่างไรบ้าง
+        <span class="section__header--remark-no-asterisk"
+          >(เช่น มีกระบวนการรับฟัง ความคิดเห็นจากนักวิ่ง
+          มีการประชุมเพื่อสรุปงาน)</span
+        >
+      </h3>
+      <div class="section-content">
+        <div [formGroup]="detailsFormGroup">
+          <textarea
+            id="feedback"
+            formControlName="feedback"
+            class="textarea"
+            placeholder="ระบุรายละเอียด..."
+          ></textarea>
+
+          @if (!form.get('details.feedback')?.valid &&
+          form.get('details.feedback')?.touched && formTouched) {
+          <div class="error mgt-10">
+            <img src="/assets/error_icon.svg" alt="error icon" />
+            <p class="error__text">กรูณาระบุรายละเอียด</p>
+          </div>
+          }
+        </div>
+      </div>
+    </div>
   </div>
 </div>

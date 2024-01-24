@@ -246,6 +246,7 @@ export class ApplicantFlowPagesComponent implements OnInit, OnDestroy {
           }),
         }),
         score: new FormGroup({}),
+        feedback: new FormControl(null, Validators.required),
       }),
     });
   }
