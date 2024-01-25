@@ -21,6 +21,7 @@
       'contentContainer--5': currentStep === 5,
       'contentContainer--6': currentStep === 6,
       'contentContainer--7': currentStep === 7,
+      'contentContainer--8': currentStep === 8
     }"
   >
     <form [formGroup]="form">
@@ -89,6 +90,8 @@
       </app-applicant-attachment>
       }@case (7) {
       <app-applicant-confirmation></app-applicant-confirmation>
+      }@case(8) {
+      <app-applicant-success></app-applicant-success>
       } }
     </form>
 
@@ -101,7 +104,8 @@
         'mgt-48': currentStep === 3,
         'mgt-84': currentStep === 4,
         'mgt-46': currentStep === 5 || currentStep === 6,
-        'mgt-36': currentStep === 7
+        'mgt-36': currentStep === 7,
+        'mgt-27': currentStep === 8
       }"
     >
       @if (currentStep === 0) {

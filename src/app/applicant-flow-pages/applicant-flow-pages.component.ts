@@ -23,6 +23,7 @@ import { ExperienceComponent } from './experience/experience.component';
 import { FundRequestComponent } from './fund-request/fund-request.component';
 import { GeneralDetailsComponent } from './general-details/general-details.component';
 import { PlanAndDetailsComponent } from './plan-and-details/plan-and-details.component';
+import { SuccessComponent } from './success/success.component';
 
 @Component({
   selector: 'app-applicant-flow-pages',
@@ -40,6 +41,7 @@ import { PlanAndDetailsComponent } from './plan-and-details/plan-and-details.com
     AttachmentComponent,
     ConfirmationComponent,
     ArrowForwardComponent,
+    SuccessComponent,
   ],
   templateUrl: './applicant-flow-pages.component.html',
   styleUrl: './applicant-flow-pages.component.scss',
@@ -106,7 +108,7 @@ export class ApplicantFlowPagesComponent implements OnInit, OnDestroy {
 
     this.initForm();
     this.loadApplicantSelfScoreCriteria();
-    this.currentStep = 7;
+    this.currentStep = 8;
 
     this.subToUploadFileSubjects();
   }
@@ -335,12 +337,14 @@ export class ApplicantFlowPagesComponent implements OnInit, OnDestroy {
     this.eventMapUploadButtonTouched = true;
 
     if (this.currentStep === this.progressBarSteps.length) {
-      if (this.form.valid) {
-        this.submitForm();
-        console.log('===nextPage', this.form);
-      } else {
-        console.error('FORM IS NOT VALID!');
-      }
+      this.submitForm();
+      console.log('===nextPage', this.form);
+      // if (this.form.valid) {
+      //   this.submitForm();
+      //   console.log('===nextPage', this.form);
+      // } else {
+      //   console.error('FORM IS NOT VALID!');
+      // }
       return;
     }
 
