@@ -12,6 +12,7 @@ import { ThemeService } from '../services/theme.service';
 import { BackgroundColor } from '../shared/enums/background-color';
 import { ApplicantCriteria } from '../shared/models/applicant-criteria';
 import { requiredCheckBoxToBeCheckedValidator } from '../shared/validators/requiredCheckbox';
+import { AttachmentComponent } from './attachment/attachment.component';
 import { CollaborateComponent } from './collaborate/collaborate.component';
 import { ContactComponent } from './contact/contact.component';
 import { ExperienceComponent } from './experience/experience.component';
@@ -31,6 +32,7 @@ import { PlanAndDetailsComponent } from './plan-and-details/plan-and-details.com
     PlanAndDetailsComponent,
     ExperienceComponent,
     FundRequestComponent,
+    AttachmentComponent,
   ],
   templateUrl: './applicant-flow-pages.component.html',
   styleUrl: './applicant-flow-pages.component.scss',
@@ -88,7 +90,7 @@ export class ApplicantFlowPagesComponent implements OnInit, OnDestroy {
 
     this.initForm();
     this.loadApplicantSelfScoreCriteria();
-    this.currentStep = 4;
+    this.currentStep = 6;
   }
 
   ngOnDestroy(): void {
