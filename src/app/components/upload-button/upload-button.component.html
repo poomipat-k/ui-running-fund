@@ -1,4 +1,4 @@
-<div>
+<div class="container">
   <input
     type="file"
     class="file-input"
@@ -45,10 +45,17 @@
       </div>
     </button>
   </div>
-  <br /><br />
-  <hr />
-  @for (item of fileNames; track $index) {
-  <p>{{ item }}</p>
-  }
+  <div class="filename">
+    @for (item of files; track $index) {
+    <div class="filename__line">
+      <p class="filename__text">{{ item.name }}</p>
+      <img
+        src="/assets/close_small_icon.svg"
+        alt="close icon"
+        class="filename__icon"
+        (click)="removeFile(item)"
+      />
+    </div>
+    }
+  </div>
 </div>
-<button (click)="popFile()">Pop</button>

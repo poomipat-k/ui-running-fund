@@ -16,8 +16,6 @@ export class UploadButtonComponent {
 
   files: File[] = [];
 
-  fileNames: string[] = [];
-
   onFileSelected(event: Event) {
     const element = event.target as HTMLInputElement;
     let fileList: FileList | null = element?.files;
@@ -34,18 +32,11 @@ export class UploadButtonComponent {
       }
       this.files = newFiles;
       this.filesChanged.emit(newFiles);
-      this.fileNames = names;
     }
   }
 
-  popFile() {
-    console.log('===before', this.files);
-    if (this.files.length > 0) {
-      const file = this.files.pop();
-      if (file) {
-        this.fileNames = this.fileNames.filter((name) => name !== file.name);
-      }
-    }
-    console.log('==after', this.files);
+  removeFile(file: File) {
+    this.files = this.files.filter((f) => f.name !== file.name);
+    this.filesChanged.emit(this.files);
   }
 }
