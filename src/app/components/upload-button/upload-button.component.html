@@ -3,7 +3,7 @@
   class="file-input"
   (change)="onFileSelected($event)"
   multiple
-  accept="image/*, .pdf, .doc, .docx "
+  [accept]="accept"
   [disabled]="disabled"
   #fileUpload
 />

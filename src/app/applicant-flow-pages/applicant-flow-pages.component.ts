@@ -51,7 +51,10 @@ export class ApplicantFlowPagesComponent implements OnInit, OnDestroy {
 
   private readonly subs: Subscription[] = [];
 
+  // Files upload
   protected collaborationFiles: FileList | null;
+
+  // Files upload end
 
   protected collaborationUploadButtonTouched = false;
 
@@ -90,7 +93,7 @@ export class ApplicantFlowPagesComponent implements OnInit, OnDestroy {
 
     this.initForm();
     this.loadApplicantSelfScoreCriteria();
-    this.currentStep = 6;
+    // this.currentStep = 6;
   }
 
   ngOnDestroy(): void {
@@ -315,8 +318,9 @@ export class ApplicantFlowPagesComponent implements OnInit, OnDestroy {
     }
   }
 
-  handleFilesChanged(files: FileList) {
+  handleCollaborateFilesChanged(files: FileList) {
     this.collaborationFiles = files;
+    console.log('===[PAGE] files', files);
   }
 
   clearSelectedFiles() {

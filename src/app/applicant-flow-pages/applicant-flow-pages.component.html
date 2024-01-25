@@ -18,7 +18,7 @@
       [selectedFilesCount]="collaborationFiles?.length || 0"
       [uploadButtonTouched]="collaborationUploadButtonTouched"
       [fileNames]="collaborationFileNames"
-      (filesChanged)="handleFilesChanged($event)"
+      (filesChanged)="handleCollaborateFilesChanged($event)"
       (clearSelectedFiles)="clearSelectedFiles()"
     ></app-applicant-collaborate>
     } @case (1) {

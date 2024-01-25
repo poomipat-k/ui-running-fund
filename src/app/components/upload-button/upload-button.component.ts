@@ -10,6 +10,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 export class UploadButtonComponent {
   @Input() text = 'เลือกไฟล์';
   @Input() disabled = false;
+  @Input() accept = 'image/*, .pdf, .doc, .docx ';
 
   @Output() filesChanged = new EventEmitter<FileList>();
 
@@ -19,6 +20,7 @@ export class UploadButtonComponent {
     const element = event.target as HTMLInputElement;
     let fileList: FileList | null = element.files;
 
+    console.log('===button filelist', fileList);
     if (fileList && fileList?.length > 0) {
       this.filesChanged.emit(fileList);
     }
