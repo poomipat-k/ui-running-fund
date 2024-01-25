@@ -9,10 +9,12 @@ import { BehaviorSubject } from 'rxjs';
   styleUrl: './upload-button.component.scss',
 })
 export class UploadButtonComponent implements OnInit {
+  // Required to function
+  @Input() filesSubject: BehaviorSubject<File[]>;
+
   @Input() text = 'เลือกไฟล์';
   @Input() disabled = false;
   @Input() accept = 'image/jpg, image/jpeg, image/png, .pdf, .doc, .docx ';
-  @Input() filesSubject: BehaviorSubject<File[]>;
 
   files: File[] = [];
 

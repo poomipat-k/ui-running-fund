@@ -55,6 +55,21 @@ export class ApplicantFlowPagesComponent implements OnInit, OnDestroy {
   protected collaborationFiles: File[] = [];
   protected collaborationFilesSubject = new BehaviorSubject<File[]>([]);
 
+  protected proposalFiles: File[] = [];
+  protected proposalFilesSubject = new BehaviorSubject<File[]>([]);
+
+  protected marketingFiles: File[] = [];
+  protected marketingFilesSubject = new BehaviorSubject<File[]>([]);
+
+  protected routeFiles: File[] = [];
+  protected routeFilesSubject = new BehaviorSubject<File[]>([]);
+
+  protected eventMapFiles: File[] = [];
+  protected eventMapFilesSubject = new BehaviorSubject<File[]>([]);
+
+  protected eventDetailsFiles: File[] = [];
+  protected eventDetailsFilesSubject = new BehaviorSubject<File[]>([]);
+
   // Files upload end
 
   protected collaborationUploadButtonTouched = false;
@@ -78,19 +93,51 @@ export class ApplicantFlowPagesComponent implements OnInit, OnDestroy {
 
     this.initForm();
     this.loadApplicantSelfScoreCriteria();
-    // this.currentStep = 6;
+    this.currentStep = 6;
 
-    if (this.collaborationFilesSubject) {
-      this.subs.push(
-        this.collaborationFilesSubject.subscribe((files) => {
-          this.collaborationFiles = files;
-        })
-      );
-    }
+    this.subToUploadFileSubjects();
   }
 
   ngOnDestroy(): void {
     this.subs.forEach((s) => s.unsubscribe());
+  }
+
+  private subToUploadFileSubjects() {
+    this.subs.push(
+      this.collaborationFilesSubject.subscribe((files) => {
+        this.collaborationFiles = files;
+      })
+    );
+
+    this.subs.push(
+      this.proposalFilesSubject.subscribe((files) => {
+        this.proposalFiles = files;
+      })
+    );
+
+    this.subs.push(
+      this.marketingFilesSubject.subscribe((files) => {
+        this.marketingFiles = files;
+      })
+    );
+
+    this.subs.push(
+      this.routeFilesSubject.subscribe((files) => {
+        this.routeFiles = files;
+      })
+    );
+
+    this.subs.push(
+      this.eventMapFilesSubject.subscribe((files) => {
+        this.eventMapFiles = files;
+      })
+    );
+
+    this.subs.push(
+      this.eventDetailsFilesSubject.subscribe((files) => {
+        this.eventDetailsFiles = files;
+      })
+    );
   }
 
   private initForm() {

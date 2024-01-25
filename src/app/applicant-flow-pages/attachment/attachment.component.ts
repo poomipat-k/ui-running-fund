@@ -1,6 +1,7 @@
 import { ViewportScroller } from '@angular/common';
 import { Component, Input, inject } from '@angular/core';
 import { FormGroup } from '@angular/forms';
+import { BehaviorSubject } from 'rxjs';
 import { UploadButtonComponent } from '../../components/upload-button/upload-button.component';
 
 @Component({
@@ -13,6 +14,12 @@ import { UploadButtonComponent } from '../../components/upload-button/upload-but
 export class AttachmentComponent {
   @Input() form: FormGroup;
   @Input() enableScroll = false;
+
+  @Input() proposalSubject: BehaviorSubject<File[]>;
+  @Input() marketingSubject: BehaviorSubject<File[]>;
+  @Input() routeSubject: BehaviorSubject<File[]>;
+  @Input() eventMapSubject: BehaviorSubject<File[]>;
+  @Input() eventDetailsSubject: BehaviorSubject<File[]>;
 
   private readonly scroller: ViewportScroller = inject(ViewportScroller);
 }

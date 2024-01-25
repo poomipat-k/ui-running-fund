@@ -10,20 +10,20 @@
         6.1 หนังสือนำส่งข้อเสนอโครงการ
       </h3>
       <div>
-        <!-- <app-com-upload-button
-          (filesChanged)="onFilesChanged($event)"
-        ></app-com-upload-button> -->
+        <app-com-upload-button
+          [filesSubject]="proposalSubject"
+        ></app-com-upload-button>
       </div>
     </div>
 
     <div class="section">
       <h3 class="section__header section__header--with-ask">
-        6.2 ป้ายประชาสัมพันธ์งาน*
+        6.2 ป้ายประชาสัมพันธ์งาน
       </h3>
       <div>
-        <!-- <app-com-upload-button
-          (filesChanged)="onFilesChanged($event)"
-        ></app-com-upload-button> -->
+        <app-com-upload-button
+          [filesSubject]="marketingSubject"
+        ></app-com-upload-button>
       </div>
     </div>
   </div>
