@@ -17,7 +17,7 @@ export class CollaborateComponent implements OnInit {
   @Input() uploadButtonTouched = false;
   @Input() fileNames: string[] = [];
 
-  @Output() filesChanged = new EventEmitter<FileList>();
+  @Output() filesChanged = new EventEmitter<File[]>();
   @Output() clearSelectedFiles = new EventEmitter();
 
   // Getters
@@ -80,7 +80,7 @@ export class CollaborateComponent implements OnInit {
     }
   }
 
-  onFilesChanged(files: FileList) {
+  onFilesChanged(files: File[]) {
     if (files) {
       this.filesChanged.emit(files);
       this.selectedFilesCount = files.length;

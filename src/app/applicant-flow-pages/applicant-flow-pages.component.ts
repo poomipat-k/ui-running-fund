@@ -52,7 +52,7 @@ export class ApplicantFlowPagesComponent implements OnInit, OnDestroy {
   private readonly subs: Subscription[] = [];
 
   // Files upload
-  protected collaborationFiles: FileList | null;
+  protected collaborationFiles: File[] = [];
 
   // Files upload end
 
@@ -71,22 +71,6 @@ export class ApplicantFlowPagesComponent implements OnInit, OnDestroy {
   protected currentStep = 0;
 
   protected applicantSelfScoreCriteria: ApplicantCriteria[] = [];
-
-  get collaborationFileNames(): string[] {
-    const names: string[] = [];
-    if (this.collaborationFiles) {
-      for (let i = 0; i < this.collaborationFiles.length; i++) {
-        if (
-          this.collaborationFiles.item(i) &&
-          this.collaborationFiles.item(i)?.name?.length
-        ) {
-          names.push(this.collaborationFiles.item(i)!.name);
-        }
-      }
-      return names;
-    }
-    return [];
-  }
 
   ngOnInit(): void {
     this.themeService.changeBackgroundColor(BackgroundColor.gray);
@@ -318,13 +302,13 @@ export class ApplicantFlowPagesComponent implements OnInit, OnDestroy {
     }
   }
 
-  handleCollaborateFilesChanged(files: FileList) {
+  handleCollaborateFilesChanged(files: File[]) {
     this.collaborationFiles = files;
     console.log('===[PAGE] files', files);
   }
 
   clearSelectedFiles() {
-    this.collaborationFiles = null;
+    this.collaborationFiles = [];
   }
 
   submitForm() {
