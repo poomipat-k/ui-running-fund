@@ -1,5 +1,6 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormGroup } from '@angular/forms';
+import { BehaviorSubject } from 'rxjs';
 import { RadioComponent } from '../../components/radio/radio.component';
 import { UploadButtonComponent } from '../../components/upload-button/upload-button.component';
 import { RadioOption } from '../../shared/models/radio-option';
@@ -11,13 +12,12 @@ import { RadioOption } from '../../shared/models/radio-option';
   templateUrl: './collaborate.component.html',
   styleUrl: './collaborate.component.scss',
 })
-export class CollaborateComponent implements OnInit {
+export class CollaborateComponent {
   @Input() form: FormGroup;
   @Input() selectedFilesCount = 0;
   @Input() uploadButtonTouched = false;
-  @Input() fileNames: string[] = [];
+  @Input() filesSubject: BehaviorSubject<File[]>;
 
-  @Output() filesChanged = new EventEmitter<File[]>();
   @Output() clearSelectedFiles = new EventEmitter();
 
   // Getters
@@ -48,8 +48,6 @@ export class CollaborateComponent implements OnInit {
   constructor() {
     this.onCollaborateChanged = this.onCollaborateChanged.bind(this);
   }
-
-  ngOnInit(): void {}
 
   onCollaborateChanged() {
     if (this.form.get('collaborated')?.value === false) {
@@ -82,7 +80,6 @@ export class CollaborateComponent implements OnInit {
 
   onFilesChanged(files: File[]) {
     if (files) {
-      this.filesChanged.emit(files);
       this.selectedFilesCount = files.length;
     }
   }

@@ -1,4 +1,5 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'app-com-upload-button',
@@ -7,36 +8,45 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
   templateUrl: './upload-button.component.html',
   styleUrl: './upload-button.component.scss',
 })
-export class UploadButtonComponent {
+export class UploadButtonComponent implements OnInit {
   @Input() text = 'เลือกไฟล์';
   @Input() disabled = false;
   @Input() accept = 'image/jpg, image/jpeg, image/png, .pdf, .doc, .docx ';
-
-  @Output() filesChanged = new EventEmitter<File[]>();
+  @Input() filesSubject: BehaviorSubject<File[]>;
 
   files: File[] = [];
+
+  ngOnInit(): void {
+    if (this.filesSubject) {
+      this.filesSubject.subscribe((filesTransmit) => {
+        this.files = filesTransmit;
+      });
+    }
+  }
 
   onFileSelected(event: Event) {
     const element = event.target as HTMLInputElement;
     let fileList: FileList | null = element?.files;
 
     if (fileList && fileList?.length > 0) {
-      const names: string[] = [];
       const newFiles: File[] = [];
       for (let i = 0; i < fileList.length; i++) {
         const file = fileList.item(i);
         if (file) {
           newFiles.push(file);
-          names.push(file.name);
         }
       }
       this.files = newFiles;
-      this.filesChanged.emit(newFiles);
+      if (this.filesSubject) {
+        this.filesSubject.next(newFiles);
+      }
     }
   }
 
   removeFile(file: File) {
-    this.files = this.files.filter((f) => f.name !== file.name);
-    this.filesChanged.emit(this.files);
+    if (this.filesSubject) {
+      const newFiles = this.files.filter((f) => f.name !== file.name);
+      this.filesSubject.next(newFiles);
+    }
   }
 }

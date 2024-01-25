@@ -5,7 +5,7 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { Subscription } from 'rxjs';
+import { BehaviorSubject, Subscription } from 'rxjs';
 import { ProgressBarStepsComponent } from '../components/progress-bar-steps/progress-bar-steps.component';
 import { ProjectService } from '../services/project.service';
 import { ThemeService } from '../services/theme.service';
@@ -51,8 +51,9 @@ export class ApplicantFlowPagesComponent implements OnInit, OnDestroy {
 
   private readonly subs: Subscription[] = [];
 
-  // Files upload
+  // Files upload variables
   protected collaborationFiles: File[] = [];
+  protected collaborationFilesSubject = new BehaviorSubject<File[]>([]);
 
   // Files upload end
 
@@ -78,6 +79,14 @@ export class ApplicantFlowPagesComponent implements OnInit, OnDestroy {
     this.initForm();
     this.loadApplicantSelfScoreCriteria();
     // this.currentStep = 6;
+
+    if (this.collaborationFilesSubject) {
+      this.subs.push(
+        this.collaborationFilesSubject.subscribe((files) => {
+          this.collaborationFiles = files;
+        })
+      );
+    }
   }
 
   ngOnDestroy(): void {
@@ -300,11 +309,6 @@ export class ApplicantFlowPagesComponent implements OnInit, OnDestroy {
     } else {
       console.log('==error form', this.form);
     }
-  }
-
-  handleCollaborateFilesChanged(files: File[]) {
-    this.collaborationFiles = files;
-    console.log('===[PAGE] files', files);
   }
 
   clearSelectedFiles() {

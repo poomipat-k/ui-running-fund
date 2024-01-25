@@ -25,7 +25,7 @@
     </div>
     <div class="main__uploadBox">
       <app-com-upload-button
-        (filesChanged)="onFilesChanged($event)"
+        [filesSubject]="filesSubject"
         [disabled]="uploadButtonDisabled"
       ></app-com-upload-button>
 
