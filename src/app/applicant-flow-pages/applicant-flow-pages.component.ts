@@ -323,11 +323,11 @@ export class ApplicantFlowPagesComponent implements OnInit, OnDestroy {
       }),
       experience: new FormGroup({
         thisSeries: new FormGroup({
-          firstTime: new FormControl(null, Validators.required),
+          // firstTime: new FormControl(null, Validators.required),
           // FormGroup conditionally added if doneBefore is true
         }),
         otherSeries: new FormGroup({
-          doneBefore: new FormControl(null, Validators.required),
+          // doneBefore: new FormControl(null, Validators.required),
           // FormGroup conditionally added if doneBefore is true
         }),
       }),
@@ -349,6 +349,7 @@ export class ApplicantFlowPagesComponent implements OnInit, OnDestroy {
         console.log('===nextPage', this.form);
       } else {
         console.error('FORM IS NOT VALID!');
+        console.log(this.form);
       }
       return;
     }
