@@ -1,1 +1,31 @@
 @import "../../../styles.scss";
+
+.box {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  align-items: center;
+}
+
+.icon {
+  width: 4.2rem;
+  height: 4.2rem;
+}
+
+.text {
+  text-align: center;
+  font-family: "IBM Plex Sans Thai";
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 32px; /* 133.333% */
+
+  &--1 {
+    color: #344054;
+  }
+
+  &--2 {
+    color: #ec4a0a;
+    font-weight: 600;
+  }
+}
