@@ -6,8 +6,10 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
+import { Router } from '@angular/router';
 import { BehaviorSubject, Subscription } from 'rxjs';
 import { ProgressBarStepsComponent } from '../components/progress-bar-steps/progress-bar-steps.component';
+import { ArrowForwardComponent } from '../components/svg/arrow-forward/arrow-forward.component';
 import { ProjectService } from '../services/project.service';
 import { ThemeService } from '../services/theme.service';
 import { BackgroundColor } from '../shared/enums/background-color';
@@ -37,6 +39,7 @@ import { PlanAndDetailsComponent } from './plan-and-details/plan-and-details.com
     FundRequestComponent,
     AttachmentComponent,
     ConfirmationComponent,
+    ArrowForwardComponent,
   ],
   templateUrl: './applicant-flow-pages.component.html',
   styleUrl: './applicant-flow-pages.component.scss',
@@ -55,6 +58,7 @@ export class ApplicantFlowPagesComponent implements OnInit, OnDestroy {
   private readonly projectService: ProjectService = inject(ProjectService);
 
   private readonly subs: Subscription[] = [];
+  private router: Router = inject(Router);
 
   // Files upload variables
   protected collaborationFiles: File[] = [];
@@ -102,7 +106,7 @@ export class ApplicantFlowPagesComponent implements OnInit, OnDestroy {
 
     this.initForm();
     this.loadApplicantSelfScoreCriteria();
-    this.currentStep = 0;
+    this.currentStep = 7;
 
     this.subToUploadFileSubjects();
   }
@@ -331,8 +335,12 @@ export class ApplicantFlowPagesComponent implements OnInit, OnDestroy {
     this.eventMapUploadButtonTouched = true;
 
     if (this.currentStep === this.progressBarSteps.length) {
-      this.submitForm();
-      console.log('===nextPage', this.form);
+      if (this.form.valid) {
+        this.submitForm();
+        console.log('===nextPage', this.form);
+      } else {
+        console.error('FORM IS NOT VALID!');
+      }
       return;
     }
 
@@ -419,14 +427,23 @@ export class ApplicantFlowPagesComponent implements OnInit, OnDestroy {
     this.subs.push(
       this.projectService.addProject(formData).subscribe((result) => {
         console.log('===result', result);
+        if (result) {
+          this.currentStep++;
+        }
       })
     );
   }
 
-  reduceStep() {
+  prevPage() {
     if (this.currentStep > 0) {
       this.currentStep -= 1;
+      return;
     }
+    this.router.navigate(['/dashboard']);
+  }
+
+  protected redirectToHomePage(): void {
+    this.router.navigate(['/dashboard']);
   }
 
   private loadApplicantSelfScoreCriteria() {

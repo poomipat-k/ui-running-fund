@@ -20,6 +20,7 @@
       'contentContainer--4': currentStep === 4,
       'contentContainer--5': currentStep === 5,
       'contentContainer--6': currentStep === 6,
+      'contentContainer--7': currentStep === 7,
     }"
   >
     <form [formGroup]="form">
@@ -91,7 +92,51 @@
       } }
     </form>
 
-    <div style="display: flex">
+    <div
+      [ngClass]="{
+        button__container: true,
+        'mgt-5': currentStep === 0,
+        'mgt-43': currentStep === 1,
+        'mgt-20': currentStep === 2,
+        'mgt-48': currentStep === 3,
+        'mgt-84': currentStep === 4,
+        'mgt-46': currentStep === 5 || currentStep ===6,
+      }"
+    >
+      @if (currentStep === 0) {
+      <button class="button button--cancel" (click)="prevPage()">ยกเลิก</button>
+      } @else if (currentStep <= 7) {
+      <button class="button button--cancel" (click)="prevPage()">
+        <img
+          src="/assets/arrow_back.svg"
+          alt="arrow back"
+          class="button--cancel-icon"
+        />
+        <div>ก่อนหน้า</div>
+      </button>
+      } @if (currentStep < 7) {
+      <button class="button button--next" (click)="nextPage()">
+        ถัดไป
+        <div class="button--next-icon">
+          <app-com-svg-arrow-forward></app-com-svg-arrow-forward>
+        </div>
+      </button>
+      } @else if (currentStep === 7){
+      <button
+        class="button button--next"
+        (click)="nextPage()"
+        [disabled]="form.disabled"
+      >
+        ยืนยันการส่ง
+      </button>
+      } @else {
+      <button class="button button--next" (click)="redirectToHomePage()">
+        กลับสู่หน้าหลัก
+      </button>
+      }
+    </div>
+
+    <!-- <div style="display: flex">
       <button style="padding: 2rem" (click)="reduceStep()">Back</button>
       <button style="padding: 2rem; margin-left: 2rem" (click)="nextPage()">
         Next
@@ -99,6 +144,6 @@
       <button style="padding: 2rem; margin-left: 2rem" (click)="submitForm()">
         Submit
       </button>
-    </div>
+    </div> -->
   </div>
 </div>
