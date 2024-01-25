@@ -1,0 +1,75 @@
+@import "../../../styles.scss";
+
+.container {
+  padding: 6.1rem 6.1rem 9.3rem 4.8rem;
+  margin: 4.6rem 3.7rem 2.8rem 3.6rem;
+  background-color: #fff;
+  border-radius: 2rem;
+}
+
+.header {
+  color: $gray700;
+  font-family: $custom-font;
+  font-size: 2rem;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+
+  margin-bottom: 3.2rem;
+
+  &--orange {
+    color: #fb6514;
+  }
+}
+
+.section-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  padding-bottom: 3rem;
+
+  &--gap-24 {
+    gap: 2.4rem;
+  }
+
+  &__header {
+    color: $gray700;
+    font-family: $custom-font-looped;
+    font-size: 1.6rem;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+
+    padding: 1rem 2rem;
+    background-color: #f2edeb;
+
+    &--with-ask::after {
+      content: "*";
+      color: #c4320a;
+      font-weight: 500;
+    }
+
+    &--remark {
+      font-weight: 400;
+
+      &-with-ask::after {
+        content: "*";
+        color: #c4320a;
+        font-weight: 500;
+      }
+    }
+  }
+
+  &-content {
+    padding-left: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.4rem;
+  }
+}

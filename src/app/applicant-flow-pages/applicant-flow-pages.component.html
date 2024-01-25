@@ -35,12 +35,26 @@
     ></app-applicant-contact>
     } @case (3) {
     <app-applicant-plan-and-details
-      #planAndDetails
+      #planAndDetailsComponent
       [form]="form"
       [enableScroll]="true"
       [criteria]="applicantSelfScoreCriteria"
     >
     </app-applicant-plan-and-details>
+    } @case(4) {
+    <app-applicant-experience
+      #experienceComponent
+      [form]="form"
+      [enableScroll]="true"
+    >
+    </app-applicant-experience>
+    } @case(5) {
+    <app-applicant-fund-request
+      #fundRequestComponent
+      [form]="form"
+      [enableScroll]="true"
+    >
+    </app-applicant-fund-request>
     } }
   </form>
 

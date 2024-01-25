@@ -1,5 +1,5 @@
 import { CommonModule, ViewportScroller } from '@angular/common';
-import { Component, Input, OnInit, inject } from '@angular/core';
+import { Component, Input, inject } from '@angular/core';
 import {
   FormControl,
   FormGroup,
@@ -28,7 +28,7 @@ import { RadioOption } from '../../shared/models/radio-option';
   templateUrl: './plan-and-details.component.html',
   styleUrl: './plan-and-details.component.scss',
 })
-export class PlanAndDetailsComponent implements OnInit {
+export class PlanAndDetailsComponent {
   @Input() form: FormGroup;
   @Input() enableScroll = false;
   @Input() criteria: ApplicantCriteria[] = [];
@@ -346,8 +346,6 @@ export class PlanAndDetailsComponent implements OnInit {
     this.onHasOnlineOtherChanged = this.onHasOnlineOtherChanged.bind(this);
   }
 
-  ngOnInit(): void {}
-
   public validToGoNext(): boolean {
     if (!this.formTouched) {
       this.formTouched = true;
@@ -492,7 +490,6 @@ export class PlanAndDetailsComponent implements OnInit {
   }
 
   private isFormValid(): boolean {
-    console.log('==control', this.scoreFormGroup.get('q_1_10'));
     return this.form.get('details')?.valid ?? false;
   }
 }

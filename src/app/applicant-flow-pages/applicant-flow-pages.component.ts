@@ -14,6 +14,8 @@ import { ApplicantCriteria } from '../shared/models/applicant-criteria';
 import { requiredCheckBoxToBeCheckedValidator } from '../shared/validators/requiredCheckbox';
 import { CollaborateComponent } from './collaborate/collaborate.component';
 import { ContactComponent } from './contact/contact.component';
+import { ExperienceComponent } from './experience/experience.component';
+import { FundRequestComponent } from './fund-request/fund-request.component';
 import { GeneralDetailsComponent } from './general-details/general-details.component';
 import { PlanAndDetailsComponent } from './plan-and-details/plan-and-details.component';
 
@@ -27,6 +29,8 @@ import { PlanAndDetailsComponent } from './plan-and-details/plan-and-details.com
     GeneralDetailsComponent,
     ContactComponent,
     PlanAndDetailsComponent,
+    ExperienceComponent,
+    FundRequestComponent,
   ],
   templateUrl: './applicant-flow-pages.component.html',
   styleUrl: './applicant-flow-pages.component.scss',
@@ -36,7 +40,9 @@ export class ApplicantFlowPagesComponent implements OnInit, OnDestroy {
   @ViewChild('generalDetailsComponent')
   generalDetailsComponent: GeneralDetailsComponent;
   @ViewChild('contactComponent') contactComponent: ContactComponent;
-  @ViewChild('planAndDetails') planAndDetailsComponent: PlanAndDetailsComponent;
+  @ViewChild('planAndDetailsComponent')
+  planAndDetailsComponent: PlanAndDetailsComponent;
+  @ViewChild('experienceComponent') experienceComponent: ExperienceComponent;
 
   private readonly themeService: ThemeService = inject(ThemeService);
   private readonly projectService: ProjectService = inject(ProjectService);
@@ -82,7 +88,7 @@ export class ApplicantFlowPagesComponent implements OnInit, OnDestroy {
 
     this.initForm();
     this.loadApplicantSelfScoreCriteria();
-    this.currentStep = 3;
+    this.currentStep = 4;
   }
 
   ngOnDestroy(): void {
@@ -248,6 +254,16 @@ export class ApplicantFlowPagesComponent implements OnInit, OnDestroy {
         score: new FormGroup({}),
         feedback: new FormControl(null, Validators.required),
       }),
+      experience: new FormGroup({
+        thisSeries: new FormGroup({
+          firstTime: new FormControl(null, Validators.required),
+          // FormGroup conditionally added if doneBefore is true
+        }),
+        otherSeries: new FormGroup({
+          doneBefore: new FormControl(null, Validators.required),
+          // FormGroup conditionally added if doneBefore is true
+        }),
+      }),
     });
   }
 
@@ -280,7 +296,16 @@ export class ApplicantFlowPagesComponent implements OnInit, OnDestroy {
     ) {
       console.log('===nextPage', this.form);
       this.currentStep++;
-    } else if (this.currentStep === 4) {
+    } else if (
+      this.currentStep === 4
+      // this.experienceComponent.validToGoNext()
+    ) {
+      console.log('===nextPage', this.form);
+      this.currentStep++;
+    } else if (this.currentStep === 5) {
+      console.log('===nextPage', this.form);
+      this.currentStep++;
+    } else if (this.currentStep === 6) {
       console.log('===nextPage', this.form);
       this.currentStep++;
     } else {
