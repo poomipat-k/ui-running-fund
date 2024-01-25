@@ -1,5 +1,5 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { BehaviorSubject, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-com-upload-button',
@@ -8,7 +8,7 @@ import { BehaviorSubject } from 'rxjs';
   templateUrl: './upload-button.component.html',
   styleUrl: './upload-button.component.scss',
 })
-export class UploadButtonComponent implements OnInit {
+export class UploadButtonComponent implements OnInit, OnDestroy {
   // Required to function
   @Input() filesSubject: BehaviorSubject<File[]>;
 
@@ -16,14 +16,22 @@ export class UploadButtonComponent implements OnInit {
   @Input() disabled = false;
   @Input() accept = 'image/jpg, image/jpeg, image/png, .pdf, .doc, .docx ';
 
+  private readonly subs: Subscription[] = [];
+
   files: File[] = [];
 
   ngOnInit(): void {
     if (this.filesSubject) {
-      this.filesSubject.subscribe((filesTransmit) => {
-        this.files = filesTransmit;
-      });
+      this.subs.push(
+        this.filesSubject.subscribe((filesTransmit) => {
+          this.files = filesTransmit;
+        })
+      );
     }
+  }
+
+  ngOnDestroy(): void {
+    this.subs.forEach((s) => s.unsubscribe());
   }
 
   onFileSelected(event: Event) {
