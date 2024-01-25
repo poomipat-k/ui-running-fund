@@ -71,6 +71,16 @@ export class SelectDropdownComponent implements OnInit, OnDestroy {
     });
 
     this.onValueChanges();
+    this.updateDisplayOnInit();
+  }
+
+  private updateDisplayOnInit() {
+    const control = this.form.get(this.controlName);
+    if (control && control.value) {
+      this.selectedDisplay = this.items.find(
+        (item) => item.value === control.value
+      )?.display;
+    }
   }
 
   ngOnDestroy(): void {
