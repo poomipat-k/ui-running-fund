@@ -9,10 +9,21 @@
       <h3 class="section__header section__header--with-ask">
         6.1 หนังสือนำส่งข้อเสนอโครงการ
       </h3>
-      <div>
-        <app-com-upload-button
-          [filesSubject]="proposalSubject"
-        ></app-com-upload-button>
+      <div class="uploadBox">
+        <div>
+          <app-com-upload-button
+            [filesSubject]="proposalSubject"
+          ></app-com-upload-button>
+          @if (true) {
+          <div class="error">
+            <img src="/assets/error_icon.svg" alt="error icon" />
+            <p class="error__text">กรุณาอัพโหลดไฟล์</p>
+          </div>
+          }
+        </div>
+        <p class="uploadBox__text">
+          แนะนำไฟล์ประเภท PDF, JPG ขนาดไม่เกิน 25 MB
+        </p>
       </div>
     </div>
 
@@ -20,10 +31,81 @@
       <h3 class="section__header section__header--with-ask">
         6.2 ป้ายประชาสัมพันธ์งาน
       </h3>
-      <div>
-        <app-com-upload-button
-          [filesSubject]="marketingSubject"
-        ></app-com-upload-button>
+      <div class="uploadBox">
+        <div>
+          <app-com-upload-button
+            [filesSubject]="marketingSubject"
+          ></app-com-upload-button>
+          @if (true) {
+          <div class="error">
+            <img src="/assets/error_icon.svg" alt="error icon" />
+            <p class="error__text">กรุณาอัพโหลดไฟล์</p>
+          </div>
+          }
+        </div>
+        <p class="uploadBox__text">
+          แนะนำไฟล์ประเภท PDF, JPG ขนาดไม่เกิน 25 MB
+        </p>
+      </div>
+    </div>
+
+    <div class="section">
+      <h3 class="section__header section__header--with-ask">
+        6.3 เส้นทางจุดเริ่มต้นถึงจุดสิ้นสุด และเส้นทางวิ่งในทุกระยะ
+      </h3>
+      <div class="uploadBox">
+        <div>
+          <app-com-upload-button
+            [filesSubject]="routeSubject"
+          ></app-com-upload-button>
+          @if (true) {
+          <div class="error">
+            <img src="/assets/error_icon.svg" alt="error icon" />
+            <p class="error__text">กรุณาอัพโหลดไฟล์</p>
+          </div>
+          }
+        </div>
+        <p class="uploadBox__text">
+          แนะนำไฟล์ประเภท PDF, JPG ขนาดไม่เกิน 25 MB
+        </p>
+      </div>
+    </div>
+
+    <div class="section">
+      <h3 class="section__header section__header--with-ask">
+        6.4 แผนผังบริเวณการจัดงาน
+      </h3>
+      <div class="uploadBox">
+        <div>
+          <app-com-upload-button
+            [filesSubject]="eventMapSubject"
+          ></app-com-upload-button>
+          @if (true) {
+          <div class="error">
+            <img src="/assets/error_icon.svg" alt="error icon" />
+            <p class="error__text">กรุณาอัพโหลดไฟล์</p>
+          </div>
+          }
+        </div>
+        <p class="uploadBox__text">
+          แนะนำไฟล์ประเภท PDF, JPG ขนาดไม่เกิน 25 MB
+        </p>
+      </div>
+    </div>
+
+    <div class="section">
+      <h3 class="section__header section__header--with-ask">
+        6.5 รายละเอียดจัดการงาน (ถ้ามี)
+      </h3>
+      <div class="uploadBox">
+        <div>
+          <app-com-upload-button
+            [filesSubject]="eventDetailsSubject"
+          ></app-com-upload-button>
+        </div>
+        <p class="uploadBox__text">
+          แนะนำไฟล์ประเภท PDF, JPG ขนาดไม่เกิน 25 MB
+        </p>
       </div>
     </div>
   </div>

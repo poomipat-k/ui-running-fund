@@ -309,6 +309,8 @@ export class ApplicantFlowPagesComponent implements OnInit, OnDestroy {
           // FormGroup conditionally added if doneBefore is true
         }),
       }),
+
+      // Section 6
     });
   }
 
@@ -367,7 +369,33 @@ export class ApplicantFlowPagesComponent implements OnInit, OnDestroy {
     const formData = new FormData();
     if (this.collaborationFiles) {
       for (let i = 0; i < this.collaborationFiles.length; i++) {
-        formData.append('files', this.collaborationFiles[i]);
+        // to change "files" to "collaborationFiles"
+        formData.append('collaborationFiles', this.collaborationFiles[i]);
+      }
+    }
+    if (this.proposalFiles) {
+      for (let i = 0; i < this.proposalFiles.length; i++) {
+        formData.append('files', this.proposalFiles[i]);
+      }
+    }
+    if (this.marketingFiles) {
+      for (let i = 0; i < this.marketingFiles.length; i++) {
+        formData.append('files', this.marketingFiles[i]);
+      }
+    }
+    if (this.routeFiles) {
+      for (let i = 0; i < this.routeFiles.length; i++) {
+        formData.append('files', this.routeFiles[i]);
+      }
+    }
+    if (this.eventMapFiles) {
+      for (let i = 0; i < this.eventMapFiles.length; i++) {
+        formData.append('files', this.eventMapFiles[i]);
+      }
+    }
+    if (this.eventDetailsFiles) {
+      for (let i = 0; i < this.eventDetailsFiles.length; i++) {
+        formData.append('files', this.eventDetailsFiles[i]);
       }
     }
     formData.append('form', JSON.stringify(this.form.value));
@@ -379,7 +407,9 @@ export class ApplicantFlowPagesComponent implements OnInit, OnDestroy {
   }
 
   reduceStep() {
-    this.currentStep -= 1;
+    if (this.currentStep > 0) {
+      this.currentStep -= 1;
+    }
   }
 
   private loadApplicantSelfScoreCriteria() {
