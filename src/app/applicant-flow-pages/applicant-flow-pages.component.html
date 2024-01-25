@@ -140,15 +140,16 @@
       </button>
       }
     </div>
-
-    <!-- <div style="display: flex">
-      <button style="padding: 2rem" (click)="reduceStep()">Back</button>
-      <button style="padding: 2rem; margin-left: 2rem" (click)="nextPage()">
-        Next
-      </button>
-      <button style="padding: 2rem; margin-left: 2rem" (click)="submitForm()">
-        Submit
-      </button>
-    </div> -->
   </div>
+
+  @if (showSuccessPopup) {
+  <div [ngClass]="{ popup: true, 'popup--show': showSuccessPopup }">
+    <app-com-success-popup displayText="รีวิวเรียบร้อย"></app-com-success-popup>
+  </div>
+  } @else if (showErrorPopup) {
+  <div [ngClass]="{ popup: true, 'popup--show': showSuccessPopup }">
+    <app-com-error-popup displayText="รีวิวไม่สำเร็จ โปรดลองอีกครั้ง">
+    </app-com-error-popup>
+  </div>
+  }
 </div>

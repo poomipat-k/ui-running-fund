@@ -8,7 +8,9 @@ import {
 } from '@angular/forms';
 import { Router } from '@angular/router';
 import { BehaviorSubject, Subscription } from 'rxjs';
+import { ErrorPopupComponent } from '../components/error-popup/error-popup.component';
 import { ProgressBarStepsComponent } from '../components/progress-bar-steps/progress-bar-steps.component';
+import { SuccessPopupComponent } from '../components/success-popup/success-popup.component';
 import { ArrowForwardComponent } from '../components/svg/arrow-forward/arrow-forward.component';
 import { ProjectService } from '../services/project.service';
 import { ThemeService } from '../services/theme.service';
@@ -42,6 +44,8 @@ import { SuccessComponent } from './success/success.component';
     ConfirmationComponent,
     ArrowForwardComponent,
     SuccessComponent,
+    SuccessPopupComponent,
+    ErrorPopupComponent,
   ],
   templateUrl: './applicant-flow-pages.component.html',
   styleUrl: './applicant-flow-pages.component.scss',
@@ -89,6 +93,9 @@ export class ApplicantFlowPagesComponent implements OnInit, OnDestroy {
   protected routeUploadButtonTouched = false;
   protected eventMapUploadButtonTouched = false;
 
+  protected showSuccessPopup = false;
+  protected showErrorPopup = false;
+
   protected form: FormGroup;
   protected progressBarSteps = [
     ['ข้อมูลพื้นฐานโครงการ'],
@@ -108,7 +115,7 @@ export class ApplicantFlowPagesComponent implements OnInit, OnDestroy {
 
     this.initForm();
     this.loadApplicantSelfScoreCriteria();
-    this.currentStep = 8;
+    // this.currentStep = 7;
 
     this.subToUploadFileSubjects();
   }
@@ -337,14 +344,12 @@ export class ApplicantFlowPagesComponent implements OnInit, OnDestroy {
     this.eventMapUploadButtonTouched = true;
 
     if (this.currentStep === this.progressBarSteps.length) {
-      this.submitForm();
-      console.log('===nextPage', this.form);
-      // if (this.form.valid) {
-      //   this.submitForm();
-      //   console.log('===nextPage', this.form);
-      // } else {
-      //   console.error('FORM IS NOT VALID!');
-      // }
+      if (this.form.valid) {
+        this.submitForm();
+        console.log('===nextPage', this.form);
+      } else {
+        console.error('FORM IS NOT VALID!');
+      }
       return;
     }
 
@@ -428,12 +433,25 @@ export class ApplicantFlowPagesComponent implements OnInit, OnDestroy {
       }
     }
     formData.append('form', JSON.stringify(this.form.value));
+
     this.subs.push(
-      this.projectService.addProject(formData).subscribe((result) => {
-        console.log('===result', result);
-        if (result) {
-          this.currentStep++;
-        }
+      this.projectService.addProject(formData).subscribe({
+        next: (result) => {
+          if (result) {
+            this.form.disable();
+            this.showSuccessPopup = true;
+            setTimeout(() => {
+              this.showSuccessPopup = false;
+              this.currentStep++;
+            }, 2000);
+          }
+        },
+        error: () => {
+          this.showErrorPopup = true;
+          setTimeout(() => {
+            this.showErrorPopup = false;
+          }, 2000);
+        },
       })
     );
   }
