@@ -10,82 +10,95 @@
     ></app-com-progress-bar-steps>
   </div>
 
-  <form [formGroup]="form">
-    @switch (currentStep) { @case (0) {
-    <app-applicant-collaborate
-      #collaborateComponent
-      [form]="form"
-      [selectedFilesCount]="collaborationFiles.length || 0"
-      [uploadButtonTouched]="collaborationUploadButtonTouched"
-      (clearSelectedFiles)="clearSelectedFiles()"
-      [filesSubject]="collaborationFilesSubject"
-    ></app-applicant-collaborate>
-    } @case (1) {
-    <app-applicant-general-details
-      [form]="form"
-      [enableScroll]="true"
-      #generalDetailsComponent
-    ></app-applicant-general-details>
-    } @case (2) {
-    <app-applicant-contact
-      #contactComponent
-      [form]="form"
-      [enableScroll]="true"
-    ></app-applicant-contact>
-    } @case (3) {
-    <app-applicant-plan-and-details
-      #planAndDetailsComponent
-      [form]="form"
-      [enableScroll]="true"
-      [criteria]="applicantSelfScoreCriteria"
-    >
-    </app-applicant-plan-and-details>
-    } @case(4) {
-    <app-applicant-experience
-      #experienceComponent
-      [form]="form"
-      [enableScroll]="true"
-    >
-    </app-applicant-experience>
-    } @case(5) {
-    <app-applicant-fund-request
-      #fundRequestComponent
-      [form]="form"
-      [enableScroll]="true"
-    >
-    </app-applicant-fund-request>
-    }@case (6) {
-    <app-applicant-attachment
-      #attachmentComponent
-      [form]="form"
-      [enableScroll]="true"
-      [proposalSubject]="proposalFilesSubject"
-      [marketingSubject]="marketingFilesSubject"
-      [routeSubject]="routeFilesSubject"
-      [eventMapSubject]="eventMapFilesSubject"
-      [eventDetailsSubject]="eventDetailsFilesSubject"
-      [proposalCount]="proposalFiles.length || 0"
-      [marketingCount]="marketingFiles.length || 0"
-      [routeCount]="routeFiles.length || 0"
-      [eventMapCount]="eventMapFiles.length || 0"
-      [proposalUploadButtonTouched]="proposalUploadButtonTouched"
-      [marketingUploadButtonTouched]="marketingUploadButtonTouched"
-      [routeUploadButtonTouched]="routeUploadButtonTouched"
-      [eventMapUploadButtonTouched]="eventMapUploadButtonTouched"
-    >
-    </app-applicant-attachment>
-    }@case (7) {
-    <app-applicant-confirmation></app-applicant-confirmation>
-    } }
-  </form>
+  <div
+    [ngClass]="{
+      contentContainer: true,
+      'contentContainer--0': currentStep === 0,
+      'contentContainer--1': currentStep === 1,
+      'contentContainer--2': currentStep === 2,
+      'contentContainer--3': currentStep === 3,
+      'contentContainer--4': currentStep === 4,
+      'contentContainer--5': currentStep === 5,
+      'contentContainer--6': currentStep === 6,
+    }"
+  >
+    <form [formGroup]="form">
+      @switch (currentStep) { @case (0) {
+      <app-applicant-collaborate
+        #collaborateComponent
+        [form]="form"
+        [selectedFilesCount]="collaborationFiles.length || 0"
+        [uploadButtonTouched]="collaborationUploadButtonTouched"
+        (clearSelectedFiles)="clearSelectedFiles()"
+        [filesSubject]="collaborationFilesSubject"
+      ></app-applicant-collaborate>
+      } @case (1) {
+      <app-applicant-general-details
+        [form]="form"
+        [enableScroll]="true"
+        #generalDetailsComponent
+      ></app-applicant-general-details>
+      } @case (2) {
+      <app-applicant-contact
+        #contactComponent
+        [form]="form"
+        [enableScroll]="true"
+      ></app-applicant-contact>
+      } @case (3) {
+      <app-applicant-plan-and-details
+        #planAndDetailsComponent
+        [form]="form"
+        [enableScroll]="true"
+        [criteria]="applicantSelfScoreCriteria"
+      >
+      </app-applicant-plan-and-details>
+      } @case(4) {
+      <app-applicant-experience
+        #experienceComponent
+        [form]="form"
+        [enableScroll]="true"
+      >
+      </app-applicant-experience>
+      } @case(5) {
+      <app-applicant-fund-request
+        #fundRequestComponent
+        [form]="form"
+        [enableScroll]="true"
+      >
+      </app-applicant-fund-request>
+      }@case (6) {
+      <app-applicant-attachment
+        #attachmentComponent
+        [form]="form"
+        [enableScroll]="true"
+        [proposalSubject]="proposalFilesSubject"
+        [marketingSubject]="marketingFilesSubject"
+        [routeSubject]="routeFilesSubject"
+        [eventMapSubject]="eventMapFilesSubject"
+        [eventDetailsSubject]="eventDetailsFilesSubject"
+        [proposalCount]="proposalFiles.length || 0"
+        [marketingCount]="marketingFiles.length || 0"
+        [routeCount]="routeFiles.length || 0"
+        [eventMapCount]="eventMapFiles.length || 0"
+        [proposalUploadButtonTouched]="proposalUploadButtonTouched"
+        [marketingUploadButtonTouched]="marketingUploadButtonTouched"
+        [routeUploadButtonTouched]="routeUploadButtonTouched"
+        [eventMapUploadButtonTouched]="eventMapUploadButtonTouched"
+      >
+      </app-applicant-attachment>
+      }@case (7) {
+      <app-applicant-confirmation></app-applicant-confirmation>
+      } }
+    </form>
 
-  <div style="display: flex">
-    <button style="padding: 2rem" (click)="reduceStep()">Back</button>
-    <button style="padding: 2rem; margin-left: 2rem" (click)="nextPage()">
-      Next
-    </button>
-    <button style="padding: 2rem; margin-left: 2rem" (click)="submitForm()">
-      Submit
-    </button>
+    <div style="display: flex">
+      <button style="padding: 2rem" (click)="reduceStep()">Back</button>
+      <button style="padding: 2rem; margin-left: 2rem" (click)="nextPage()">
+        Next
+      </button>
+      <button style="padding: 2rem; margin-left: 2rem" (click)="submitForm()">
+        Submit
+      </button>
+    </div>
   </div>
 </div>

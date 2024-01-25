@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common';
 import { Component, OnDestroy, OnInit, ViewChild, inject } from '@angular/core';
 import {
   FormControl,
@@ -25,6 +26,7 @@ import { PlanAndDetailsComponent } from './plan-and-details/plan-and-details.com
   selector: 'app-applicant-flow-pages',
   standalone: true,
   imports: [
+    CommonModule,
     ProgressBarStepsComponent,
     CollaborateComponent,
     ReactiveFormsModule,
@@ -100,7 +102,7 @@ export class ApplicantFlowPagesComponent implements OnInit, OnDestroy {
 
     this.initForm();
     this.loadApplicantSelfScoreCriteria();
-    this.currentStep = 7;
+    this.currentStep = 0;
 
     this.subToUploadFileSubjects();
   }

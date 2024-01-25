@@ -8,6 +8,51 @@
   }
 }
 
+.contentContainer {
+  background-color: #fff;
+  border-radius: 2rem;
+
+  &--0 {
+    padding: 6.1rem 5.9rem 3.9rem 5.5rem;
+    margin: 4.8rem 4.4rem 3.9rem 3.8rem;
+  }
+
+  &--1 {
+    padding: 6.1rem 5.7rem 8rem 5.7rem;
+    margin: 4.5rem 3.5rem 12.7rem 3.8rem;
+  }
+
+  &--2 {
+    padding: 6.1rem 5.7rem 8rem 5.7rem;
+    margin: 4.5rem 3.5rem 12.7rem 3.8rem;
+  }
+
+  &--3 {
+    padding: 6.1rem 5.7rem 8rem 5.7rem;
+    margin: 4.5rem 3.5rem 12.7rem 3.8rem;
+  }
+
+  &--4 {
+    padding: 6.1rem 6.1rem 9.3rem 4.8rem;
+    margin: 4.6rem 3.7rem 2.8rem 3.6rem;
+  }
+
+  &--5 {
+    padding: 6.1rem 6.1rem 7.2rem 4.8rem;
+    margin: 4.6rem 3.7rem 2.2rem 3.6rem;
+  }
+
+  &--6 {
+    padding: 6.1rem 6.1rem 9.3rem 4.8rem;
+    margin: 4.6rem 3.7rem 2.8rem 3.6rem;
+  }
+
+  &--7 {
+    padding: 6.1rem 9.4rem 11rem;
+    margin: 4.8rem 4.4rem 3.9rem 3.8rem;
+  }
+}
+
 .header {
   &__mainText {
     color: $gray700;
