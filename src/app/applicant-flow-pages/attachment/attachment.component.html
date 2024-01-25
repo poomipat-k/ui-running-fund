@@ -12,9 +12,10 @@
       <div class="uploadBox">
         <div>
           <app-com-upload-button
+            id="proposal"
             [filesSubject]="proposalSubject"
           ></app-com-upload-button>
-          @if (true) {
+          @if (proposalCount === 0 && proposalUploadButtonTouched) {
           <div class="error">
             <img src="/assets/error_icon.svg" alt="error icon" />
             <p class="error__text">กรุณาอัพโหลดไฟล์</p>
@@ -34,9 +35,10 @@
       <div class="uploadBox">
         <div>
           <app-com-upload-button
+            id="marketing"
             [filesSubject]="marketingSubject"
           ></app-com-upload-button>
-          @if (true) {
+          @if (marketingCount === 0 && marketingUploadButtonTouched) {
           <div class="error">
             <img src="/assets/error_icon.svg" alt="error icon" />
             <p class="error__text">กรุณาอัพโหลดไฟล์</p>
@@ -56,9 +58,10 @@
       <div class="uploadBox">
         <div>
           <app-com-upload-button
+            id="route"
             [filesSubject]="routeSubject"
           ></app-com-upload-button>
-          @if (true) {
+          @if (routeCount === 0 && routeUploadButtonTouched) {
           <div class="error">
             <img src="/assets/error_icon.svg" alt="error icon" />
             <p class="error__text">กรุณาอัพโหลดไฟล์</p>
@@ -78,9 +81,10 @@
       <div class="uploadBox">
         <div>
           <app-com-upload-button
+            id="eventMap"
             [filesSubject]="eventMapSubject"
           ></app-com-upload-button>
-          @if (true) {
+          @if (eventMapCount === 0 && eventMapUploadButtonTouched) {
           <div class="error">
             <img src="/assets/error_icon.svg" alt="error icon" />
             <p class="error__text">กรุณาอัพโหลดไฟล์</p>

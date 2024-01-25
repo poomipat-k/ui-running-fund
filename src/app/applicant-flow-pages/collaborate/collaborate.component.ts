@@ -77,10 +77,4 @@ export class CollaborateComponent {
       control.markAsTouched({ onlySelf: true });
     }
   }
-
-  onFilesChanged(files: File[]) {
-    if (files) {
-      this.selectedFilesCount = files.length;
-    }
-  }
 }

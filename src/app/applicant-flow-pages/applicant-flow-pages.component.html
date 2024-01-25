@@ -64,8 +64,18 @@
       [routeSubject]="routeFilesSubject"
       [eventMapSubject]="eventMapFilesSubject"
       [eventDetailsSubject]="eventDetailsFilesSubject"
+      [proposalCount]="proposalFiles.length || 0"
+      [marketingCount]="marketingFiles.length || 0"
+      [routeCount]="routeFiles.length || 0"
+      [eventMapCount]="eventMapFiles.length || 0"
+      [proposalUploadButtonTouched]="proposalUploadButtonTouched"
+      [marketingUploadButtonTouched]="marketingUploadButtonTouched"
+      [routeUploadButtonTouched]="routeUploadButtonTouched"
+      [eventMapUploadButtonTouched]="eventMapUploadButtonTouched"
     >
     </app-applicant-attachment>
+    }@case (7) {
+    <app-applicant-confirmation></app-applicant-confirmation>
     } }
   </form>
 

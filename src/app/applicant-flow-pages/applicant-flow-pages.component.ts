@@ -14,6 +14,7 @@ import { ApplicantCriteria } from '../shared/models/applicant-criteria';
 import { requiredCheckBoxToBeCheckedValidator } from '../shared/validators/requiredCheckbox';
 import { AttachmentComponent } from './attachment/attachment.component';
 import { CollaborateComponent } from './collaborate/collaborate.component';
+import { ConfirmationComponent } from './confirmation/confirmation.component';
 import { ContactComponent } from './contact/contact.component';
 import { ExperienceComponent } from './experience/experience.component';
 import { FundRequestComponent } from './fund-request/fund-request.component';
@@ -33,6 +34,7 @@ import { PlanAndDetailsComponent } from './plan-and-details/plan-and-details.com
     ExperienceComponent,
     FundRequestComponent,
     AttachmentComponent,
+    ConfirmationComponent,
   ],
   templateUrl: './applicant-flow-pages.component.html',
   styleUrl: './applicant-flow-pages.component.scss',
@@ -45,6 +47,7 @@ export class ApplicantFlowPagesComponent implements OnInit, OnDestroy {
   @ViewChild('planAndDetailsComponent')
   planAndDetailsComponent: PlanAndDetailsComponent;
   @ViewChild('experienceComponent') experienceComponent: ExperienceComponent;
+  @ViewChild('attachmentComponent') attachmentComponent: AttachmentComponent;
 
   private readonly themeService: ThemeService = inject(ThemeService);
   private readonly projectService: ProjectService = inject(ProjectService);
@@ -73,6 +76,10 @@ export class ApplicantFlowPagesComponent implements OnInit, OnDestroy {
   // Files upload end
 
   protected collaborationUploadButtonTouched = false;
+  protected proposalUploadButtonTouched = false;
+  protected marketingUploadButtonTouched = false;
+  protected routeUploadButtonTouched = false;
+  protected eventMapUploadButtonTouched = false;
 
   protected form: FormGroup;
   protected progressBarSteps = [
@@ -93,7 +100,7 @@ export class ApplicantFlowPagesComponent implements OnInit, OnDestroy {
 
     this.initForm();
     this.loadApplicantSelfScoreCriteria();
-    this.currentStep = 6;
+    this.currentStep = 7;
 
     this.subToUploadFileSubjects();
   }
@@ -316,6 +323,11 @@ export class ApplicantFlowPagesComponent implements OnInit, OnDestroy {
 
   protected nextPage(): void {
     this.collaborationUploadButtonTouched = true;
+    this.proposalUploadButtonTouched = true;
+    this.marketingUploadButtonTouched = true;
+    this.routeUploadButtonTouched = true;
+    this.eventMapUploadButtonTouched = true;
+
     if (this.currentStep === this.progressBarSteps.length) {
       this.submitForm();
       console.log('===nextPage', this.form);
@@ -352,7 +364,10 @@ export class ApplicantFlowPagesComponent implements OnInit, OnDestroy {
     } else if (this.currentStep === 5) {
       console.log('===nextPage', this.form);
       this.currentStep++;
-    } else if (this.currentStep === 6) {
+    } else if (
+      this.currentStep === 6 &&
+      this.attachmentComponent.validToGoNext()
+    ) {
       console.log('===nextPage', this.form);
       this.currentStep++;
     } else {

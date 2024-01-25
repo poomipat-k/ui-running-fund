@@ -21,5 +21,40 @@ export class AttachmentComponent {
   @Input() eventMapSubject: BehaviorSubject<File[]>;
   @Input() eventDetailsSubject: BehaviorSubject<File[]>;
 
+  @Input() proposalCount = 0;
+  @Input() marketingCount = 0;
+  @Input() routeCount = 0;
+  @Input() eventMapCount = 0;
+
+  @Input() proposalUploadButtonTouched = false;
+  @Input() marketingUploadButtonTouched = false;
+  @Input() routeUploadButtonTouched = false;
+  @Input() eventMapUploadButtonTouched = false;
+
   private readonly scroller: ViewportScroller = inject(ViewportScroller);
+
+  public validToGoNext(): boolean {
+    if (this.proposalCount === 0) {
+      this.scrollToId('proposal');
+      return false;
+    }
+    if (this.marketingCount === 0) {
+      this.scrollToId('marketing');
+      return false;
+    }
+    if (this.routeCount === 0) {
+      this.scrollToId('route');
+      return false;
+    }
+    if (this.eventMapCount === 0) {
+      this.scrollToId('eventMap');
+      return false;
+    }
+    return true;
+  }
+
+  private scrollToId(id: string) {
+    this.scroller.setOffset([0, 140]);
+    this.scroller.scrollToAnchor(id);
+  }
 }
