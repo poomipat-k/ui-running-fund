@@ -45,6 +45,7 @@ export class GeneralDetailsComponent implements OnInit, OnDestroy {
   protected provinceOptions: RadioOption[] = [];
   protected districtOptions: RadioOption[] = [];
   protected subdistrictOptions: RadioOption[] = [];
+  protected postcodeOptions: RadioOption[] = [];
 
   get generalFormGroup() {
     return this.form.get('general') as FormGroup;
@@ -135,6 +136,7 @@ export class GeneralDetailsComponent implements OnInit, OnDestroy {
     this.onYearOrMonthChanged = this.onYearOrMonthChanged.bind(this);
     this.onProvinceChanged = this.onProvinceChanged.bind(this);
     this.onDistrictChanged = this.onDistrictChanged.bind(this);
+    this.onSubdistrictChanged = this.onSubdistrictChanged.bind(this);
   }
 
   ngOnInit(): void {
@@ -151,11 +153,16 @@ export class GeneralDetailsComponent implements OnInit, OnDestroy {
 
     const provinceId = this.form.value?.general?.address?.provinceId;
     const districtId = this.form.value?.general?.address?.districtId;
+    const subdistrictId = this.form.value?.general?.address?.subdistrictId;
+
     if (provinceId) {
       this.getDistrictsByProvinceId(provinceId);
     }
     if (districtId) {
       this.getSubdistrictsByDistrictId(districtId);
+    }
+    if (subdistrictId) {
+      this.getPostcodeBySubdistrictId(subdistrictId);
     }
   }
 
@@ -174,6 +181,13 @@ export class GeneralDetailsComponent implements OnInit, OnDestroy {
     this.addressFormGroup.patchValue({ subdistrictId: null });
     const districtId = this.form.value.general.address.districtId;
     this.getSubdistrictsByDistrictId(districtId);
+  }
+
+  onSubdistrictChanged() {
+    // Clear postcode
+    this.addressFormGroup.patchValue({ postcodeId: null });
+    const subdistrictId = this.form.value.general.address.subdistrictId;
+    this.getPostcodeBySubdistrictId(subdistrictId);
   }
 
   onYearOrMonthChanged() {
@@ -197,7 +211,7 @@ export class GeneralDetailsComponent implements OnInit, OnDestroy {
       this.addressService
         .getDistrictsByProvinceId(provinceId)
         .subscribe((result) => {
-          if (result) {
+          if (result && result?.length > 0) {
             this.districtOptions = result.map((d) => ({
               id: d.id,
               value: d.id,
@@ -213,7 +227,7 @@ export class GeneralDetailsComponent implements OnInit, OnDestroy {
       this.addressService
         .getSubdistrictsByDistrictId(districtId)
         .subscribe((result) => {
-          if (result) {
+          if (result && result?.length > 0) {
             this.subdistrictOptions = result.map((d) => ({
               id: d.id,
               value: d.id,
@@ -224,10 +238,26 @@ export class GeneralDetailsComponent implements OnInit, OnDestroy {
     );
   }
 
+  private getPostcodeBySubdistrictId(subdistrictId: number) {
+    this.subs.push(
+      this.addressService
+        .getPostcodesBySubdistrictId(subdistrictId)
+        .subscribe((result) => {
+          if (result && result?.length > 0) {
+            this.postcodeOptions = result.map((post) => ({
+              id: post.id,
+              value: post.id,
+              display: post.code,
+            }));
+          }
+        })
+    );
+  }
+
   private getProvinces() {
     this.subs.push(
       this.addressService.getProvinces().subscribe((result) => {
-        if (result) {
+        if (result && result?.length > 0) {
           this.provinceOptions = result.map((p) => ({
             id: p.id,
             value: p.id,

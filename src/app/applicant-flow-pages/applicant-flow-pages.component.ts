@@ -182,6 +182,7 @@ export class ApplicantFlowPagesComponent implements OnInit, OnDestroy {
           provinceId: new FormControl(null, Validators.required),
           districtId: new FormControl(null, Validators.required),
           subdistrictId: new FormControl(null, Validators.required),
+          postcodeId: new FormControl(null, Validators.required),
         }),
         startPoint: new FormControl(null, Validators.required),
         finishPoint: new FormControl(null, Validators.required),
@@ -331,8 +332,6 @@ export class ApplicantFlowPagesComponent implements OnInit, OnDestroy {
           // FormGroup conditionally added if doneBefore is true
         }),
       }),
-
-      // Section 6
     });
   }
 
@@ -477,7 +476,6 @@ export class ApplicantFlowPagesComponent implements OnInit, OnDestroy {
         if (criteria) {
           this.addApplicantSelfScoreFormGroup(criteria);
           this.applicantSelfScoreCriteria = criteria;
-          console.log('==load form', this.form);
         }
       })
     );

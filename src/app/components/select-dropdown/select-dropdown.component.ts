@@ -41,7 +41,6 @@ export class SelectDropdownComponent implements OnInit, OnDestroy {
 
   protected showDropdown = false;
   protected searchText = '';
-  protected selectedDisplay = '';
 
   get filteredOptions(): any[] {
     const options = this.items.filter((item) =>
@@ -74,8 +73,6 @@ export class SelectDropdownComponent implements OnInit, OnDestroy {
         this.hideDropdown();
       }
     });
-
-    this.onValueChanges();
   }
 
   ngOnDestroy(): void {
@@ -110,24 +107,6 @@ export class SelectDropdownComponent implements OnInit, OnDestroy {
 
   onDropdownClicked() {
     this.hideDropdown();
-  }
-
-  // internal subscription to show latest selected display
-  private onValueChanges(): void {
-    const control = this.form.get(this.controlName);
-    if (control) {
-      this.subs.push(
-        control.valueChanges.subscribe((value) => {
-          if (value || value === 0) {
-            this.selectedDisplay = this.items.find(
-              (item) => item.value === value
-            )?.display;
-          } else {
-            this.selectedDisplay = '';
-          }
-        })
-      );
-    }
   }
 
   onRadioValueChange() {

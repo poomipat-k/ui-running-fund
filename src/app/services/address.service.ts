@@ -3,6 +3,7 @@ import { Injectable, inject } from '@angular/core';
 import { catchError, throwError } from 'rxjs';
 
 import { environment } from '../../environments/environment';
+import { Postcode } from '../shared/models/Postcode';
 import { District } from '../shared/models/district';
 import { Province } from '../shared/models/province';
 
@@ -30,6 +31,12 @@ export class AddressService {
   getSubdistrictsByDistrictId(districtId: number) {
     return this.http
       .get<District[]>(`${this.baseApiUrl}/address/subdistricts/${districtId}`)
+      .pipe(catchError(this.handleError));
+  }
+
+  getPostcodesBySubdistrictId(subdistrictId: number) {
+    return this.http
+      .get<Postcode[]>(`${this.baseApiUrl}/address/postcodes/${subdistrictId}`)
       .pipe(catchError(this.handleError));
   }
 

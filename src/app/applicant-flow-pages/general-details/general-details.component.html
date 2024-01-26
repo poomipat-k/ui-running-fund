@@ -266,6 +266,7 @@
               placeholder="ตำบล/แขวง"
               width="32rem"
               controlName="subdistrictId"
+              [onChange]="onSubdistrictChanged"
               [disabled]="!form.value.general.address.districtId"
             ></app-com-select-dropdown>
             @if (!form.get('general.address.subdistrictId')?.valid &&
@@ -273,6 +274,28 @@
             <div class="error mgt-10">
               <img src="/assets/error_icon.svg" alt="error icon" />
               <p class="error__text">กรุณาเลือกตำบล/แขวง</p>
+            </div>
+            }
+          </div>
+        </div>
+
+        <div class="address__line">
+          <label class="address__label">รหัสไปรษณีย์</label>
+          <div>
+            <app-com-select-dropdown
+              id="postcodeId"
+              [form]="addressFormGroup"
+              [items]="postcodeOptions"
+              placeholder="รหัสไปรษณีย์"
+              width="32rem"
+              controlName="postcodeId"
+              [disabled]="!form.value.general.address.subdistrictId"
+            ></app-com-select-dropdown>
+            @if (!form.get('general.address.postcodeId')?.valid &&
+            form.get('general.address.postcodeId')?.touched && formTouched) {
+            <div class="error mgt-10">
+              <img src="/assets/error_icon.svg" alt="error icon" />
+              <p class="error__text">กรุณารหัสไปรษณีย์</p>
             </div>
             }
           </div>
