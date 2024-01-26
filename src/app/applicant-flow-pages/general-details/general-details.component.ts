@@ -148,6 +148,15 @@ export class GeneralDetailsComponent implements OnInit, OnDestroy {
     this.thirtyOneDays = days31;
     this.hourOptions = hours;
     this.minuteOptions = minutes;
+
+    const provinceId = this.form.value?.general?.address?.provinceId;
+    const districtId = this.form.value?.general?.address?.districtId;
+    if (provinceId) {
+      this.getDistrictsByProvinceId(provinceId);
+    }
+    if (districtId) {
+      this.getSubdistrictsByDistrictId(districtId);
+    }
   }
 
   ngOnDestroy(): void {

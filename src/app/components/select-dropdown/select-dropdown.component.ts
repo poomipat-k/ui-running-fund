@@ -44,14 +44,19 @@ export class SelectDropdownComponent implements OnInit, OnDestroy {
   protected selectedDisplay = '';
 
   get filteredOptions(): any[] {
-    return this.items.filter((item) =>
+    const options = this.items.filter((item) =>
       item.display.toString()?.includes(this.searchText)
     );
+
+    return options;
   }
 
   get inputValue() {
     if (!this.showDropdown) {
-      return this.selectedDisplay;
+      const display = this.items.find(
+        (item) => item.value === this.form.get(this.controlName)?.value
+      )?.display;
+      return display || '';
     }
     return this.searchText;
   }
@@ -71,17 +76,6 @@ export class SelectDropdownComponent implements OnInit, OnDestroy {
     });
 
     this.onValueChanges();
-    this.updateDisplayOnInit();
-  }
-
-  private updateDisplayOnInit() {
-    const control = this.form.get(this.controlName);
-    console.log('===updateDisplayOnInit', { control, value: control?.value });
-    if (control && control.value) {
-      this.selectedDisplay = this.items.find(
-        (item) => item.value === control.value
-      )?.display;
-    }
   }
 
   ngOnDestroy(): void {
