@@ -338,10 +338,12 @@ export class ApplicantFlowPagesComponent implements OnInit, OnDestroy {
 
   protected nextPage(): void {
     this.collaborationUploadButtonTouched = true;
-    this.proposalUploadButtonTouched = true;
-    this.marketingUploadButtonTouched = true;
-    this.routeUploadButtonTouched = true;
-    this.eventMapUploadButtonTouched = true;
+    if (this.currentStep >= 6) {
+      this.proposalUploadButtonTouched = true;
+      this.marketingUploadButtonTouched = true;
+      this.routeUploadButtonTouched = true;
+      this.eventMapUploadButtonTouched = true;
+    }
 
     if (this.currentStep === this.progressBarSteps.length) {
       if (this.form.valid) {

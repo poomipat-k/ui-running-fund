@@ -76,6 +76,7 @@ export class SelectDropdownComponent implements OnInit, OnDestroy {
 
   private updateDisplayOnInit() {
     const control = this.form.get(this.controlName);
+    console.log('===updateDisplayOnInit', { control, value: control?.value });
     if (control && control.value) {
       this.selectedDisplay = this.items.find(
         (item) => item.value === control.value
