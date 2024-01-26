@@ -420,10 +420,11 @@
 
         <div class="projectCoordinator__line-important">
           <label class="label width-177">ที่อยู่ (ที่ติดต่อได้สะดวก)</label>
+          <!-- Old Address -->
           <div class="flex-1">
-            <div [formGroup]="projectCoordinatorGroup">
+            <div [formGroup]="coordinatorAddressFormGroup">
               <textarea
-                id="projectCoordinator.address"
+                id="projectCoordinator.address.address"
                 formControlName="address"
                 class="textarea"
                 placeholder="ระบุที่อยู่ที่ติดต่อได้สะดวก"
@@ -436,6 +437,114 @@
             <div class="error mgt-10">
               <img src="/assets/error_icon.svg" alt="error icon" />
               <p class="error__text">กรูณาระบุที่อยู่ที่ติดต่อได้สะดวก</p>
+            </div>
+            }
+          </div>
+          <!-- End Address -->
+        </div>
+
+        <div class="projectCoordinator__line-important">
+          <label class="label width-177">จังหวัด</label>
+          <div>
+            <app-com-select-dropdown
+              id="provinceId"
+              [form]="coordinatorAddressFormGroup"
+              [items]="provinceOptions"
+              placeholder="จังหวัด"
+              width="32rem"
+              controlName="provinceId"
+              [onChange]="onProvinceChanged"
+            ></app-com-select-dropdown>
+            @if
+            (!form.get('contact.projectCoordinator.address.provinceId')?.valid
+            &&
+            form.get('contact.projectCoordinator.address.provinceId')?.touched
+            && formTouched) {
+            <div class="error mgt-10">
+              <img src="/assets/error_icon.svg" alt="error icon" />
+              <p class="error__text">กรุณาเลือกจังหวัด</p>
+            </div>
+            }
+          </div>
+        </div>
+
+        <div class="projectCoordinator__line-important">
+          <label class="label width-177">อำเภอ/เขต</label>
+          <div>
+            <app-com-select-dropdown
+              id="districtId"
+              [form]="coordinatorAddressFormGroup"
+              [items]="districtOptions"
+              placeholder="อำเภอ/เขต"
+              width="32rem"
+              controlName="districtId"
+              [onChange]="onDistrictChanged"
+              [disabled]="
+                !form.value.contact.projectCoordinator.address.provinceId
+              "
+            ></app-com-select-dropdown>
+            @if(!form.get('contact.projectCoordinator.address.districtId')?.valid
+            &&
+            form.get('contact.projectCoordinator.address.districtId')?.touched
+            && formTouched) {
+            <div class="error mgt-10">
+              <img src="/assets/error_icon.svg" alt="error icon" />
+              <p class="error__text">กรุณาเลือกอำเภอ/เขต</p>
+            </div>
+            }
+          </div>
+        </div>
+
+        <div class="projectCoordinator__line-important">
+          <label class="label width-177">ตำบล/แขวง</label>
+          <div>
+            <app-com-select-dropdown
+              id="subdistrictId"
+              [form]="coordinatorAddressFormGroup"
+              [items]="subdistrictOptions"
+              placeholder="ตำบล/แขวง"
+              width="32rem"
+              controlName="subdistrictId"
+              [onChange]="onSubdistrictChanged"
+              [disabled]="
+                !form.value.contact.projectCoordinator.address.districtId
+              "
+            ></app-com-select-dropdown>
+            @if
+            (!form.get('contact.projectCoordinator.address.subdistrictId')?.valid
+            &&
+            form.get('contact.projectCoordinator.address.subdistrictId')?.touched
+            && formTouched) {
+            <div class="error mgt-10">
+              <img src="/assets/error_icon.svg" alt="error icon" />
+              <p class="error__text">กรุณาเลือกตำบล/แขวง</p>
+            </div>
+            }
+          </div>
+        </div>
+
+        <div class="projectCoordinator__line-important">
+          <label class="label width-177">รหัสไปรษณีย์</label>
+          <div>
+            <app-com-select-dropdown
+              id="postcodeId"
+              [form]="coordinatorAddressFormGroup"
+              [items]="postcodeOptions"
+              placeholder="รหัสไปรษณีย์"
+              width="32rem"
+              controlName="postcodeId"
+              [disabled]="
+                !form.value.contact.projectCoordinator.address.subdistrictId
+              "
+            ></app-com-select-dropdown>
+            @if
+            (!form.get('contact.projectCoordinator.address.postcodeId')?.valid
+            &&
+            form.get('contact.projectCoordinator.address.postcodeId')?.touched
+            && formTouched) {
+            <div class="error mgt-10">
+              <img src="/assets/error_icon.svg" alt="error icon" />
+              <p class="error__text">กรุณารหัสไปรษณีย์</p>
             </div>
             }
           </div>

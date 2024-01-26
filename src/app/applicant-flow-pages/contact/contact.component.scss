@@ -71,6 +71,24 @@
   }
 }
 
+.address {
+  &__line {
+    display: flex;
+    justify-content: space-between;
+    width: 43.3rem;
+  }
+
+  &__label {
+    color: $gray700;
+    font-family: $custom-font-looped;
+    font-size: 1.6rem;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    padding-top: 9px;
+  }
+}
+
 .importantText {
   color: #ec4a0a;
   font-family: $custom-font-looped;
