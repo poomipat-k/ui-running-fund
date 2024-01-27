@@ -115,7 +115,7 @@ export class ApplicantFlowPagesComponent implements OnInit, OnDestroy {
 
     this.initForm();
     this.loadApplicantSelfScoreCriteria();
-    this.currentStep = 2;
+    this.currentStep = 3;
 
     this.subToUploadFileSubjects();
   }
@@ -213,7 +213,6 @@ export class ApplicantFlowPagesComponent implements OnInit, OnDestroy {
           lastName: new FormControl(null, Validators.required),
           organizationPosition: new FormControl(null, Validators.required),
           eventPosition: new FormControl(null, Validators.required),
-          // address: new FormControl(null, Validators.required),
           address: new FormGroup({
             address: new FormControl(null, Validators.required),
             provinceId: new FormControl(null, Validators.required),

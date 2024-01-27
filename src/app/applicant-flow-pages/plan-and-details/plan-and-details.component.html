@@ -444,13 +444,19 @@
                 controlName="facebook"
                 width="48.1rem"
               ></app-com-input-text>
-              @if (!onlineHowToFormGroup.get('facebook')?.valid &&
-              onlineHowToFormGroup.get('facebook')?.touched && formTouched) {
+              @if (!facebookHowToControl?.valid && facebookHowToControl?.touched
+              && formTouched) { @if (facebookHowToControl?.errors &&
+              facebookHowToControl?.errors?.['required']) {
               <div class="error mgt-10">
                 <img src="/assets/error_icon.svg" alt="error icon" />
                 <p class="error__text">โปรดระบุชื่อเพจ</p>
               </div>
-              }
+              } @else {
+              <div class="error mgt-10">
+                <img src="/assets/error_icon.svg" alt="error icon" />
+                <p class="error__text">กรุณาตรวจสอบข้อมูลให้ถูกต้อง</p>
+              </div>
+              } }
             </div>
             }
           </div>

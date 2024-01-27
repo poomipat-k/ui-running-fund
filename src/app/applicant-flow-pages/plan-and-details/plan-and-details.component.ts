@@ -35,6 +35,18 @@ export class PlanAndDetailsComponent {
 
   private readonly scroller: ViewportScroller = inject(ViewportScroller);
 
+  private readonly validUrlRegex = new RegExp(
+    '^(https?:\\/\\/)?' + // validate protocol
+      '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|' + // validate domain name
+      '((\\d{1,3}\\.){3}\\d{1,3}))' + // validate OR ip (v4) address
+      '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*' + // validate port and path
+      '(\\?[;&a-z\\d%_.~+=-]*)?' + // validate query string
+      '(\\#[-a-z\\d_]*)?$',
+    'i'
+  ); // validate fragment locator
+
+  private readonly isValidFacebook = new RegExp('facebook.com');
+
   protected formTouched = false;
 
   get detailsFormGroup(): FormGroup {
@@ -95,6 +107,10 @@ export class PlanAndDetailsComponent {
 
   get scoreFormGroup(): FormGroup {
     return this.form.get('details.score') as FormGroup;
+  }
+
+  get facebookHowToControl() {
+    return this.form.get('details.marketing.online.howTo.facebook');
   }
 
   get isSelfMeasured(): boolean {
@@ -386,7 +402,10 @@ export class PlanAndDetailsComponent {
 
   onHasWebsiteChanged() {
     if (this.hasWebsite) {
-      const newControl = new FormControl(null, Validators.required);
+      const newControl = new FormControl(null, [
+        Validators.required,
+        Validators.pattern(this.validUrlRegex),
+      ]);
       this.onlineHowToFormGroup.addControl('website', newControl);
       return;
     }
@@ -395,7 +414,11 @@ export class PlanAndDetailsComponent {
 
   onHasFacebookChanged() {
     if (this.hasFacebook) {
-      const newControl = new FormControl(null, Validators.required);
+      const newControl = new FormControl(null, [
+        Validators.required,
+        Validators.pattern(this.validUrlRegex),
+        Validators.pattern(this.isValidFacebook),
+      ]);
       this.onlineHowToFormGroup.addControl('facebook', newControl);
       return;
     }
