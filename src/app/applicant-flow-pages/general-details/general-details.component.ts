@@ -7,7 +7,6 @@ import { RadioComponent } from '../../components/radio/radio.component';
 import { SelectDropdownComponent } from '../../components/select-dropdown/select-dropdown.component';
 import { AddressService } from '../../services/address.service';
 import { DateService } from '../../services/date.service';
-import { RadioOption } from '../../shared/models/radio-option';
 import {
   days28,
   days29,
@@ -16,7 +15,8 @@ import {
   hours,
   minutes,
   months,
-} from './date-objects';
+} from '../../shared/constants/date-objects';
+import { RadioOption } from '../../shared/models/radio-option';
 
 @Component({
   selector: 'app-applicant-general-details',

@@ -4,7 +4,7 @@
     ประสบการณ์ดำเนินการโครงการ
   </h2>
 
-  <!-- <div class="section-container">
+  <div class="section-container">
     <div class="section">
       <h3 class="section__header section__header--with-ask">
         4.1 งานแข่งขันวิ่งเพื่อสุขภาพครั้งนี้เป็นการจัดกิจกรรมครั้งแรกหรือไม่
@@ -19,8 +19,174 @@
           fontSize="16px"
           gap="1.8rem"
         ></app-com-radio>
+
+        @if (!form.get('experience.thisSeries.firstTime')?.valid &&
+        form.get('experience.thisSeries.firstTime')?.touched && formTouched) {
+        <div class="error mgt-10">
+          <img src="/assets/error_icon.svg" alt="error icon" />
+          <p class="error__text">กรุณาเลือกตัวเลือก</p>
+        </div>
+        }
       </div>
-      <div style="font-size: 3rem">TODO: Collapsable</div>
+      <!-- Collapse 1 -->
+      <div
+        [ngClass]="{
+          section__hidable: true,
+          'section__hidable--hide': false
+        }"
+      >
+        <div class="eventCount">
+          <div class="eventCount__item-16">
+            <label class="label">ครั้งนี้ครั้งที่ (โปรดระบุเป็นตัวเลข)</label>
+            <div>
+              <app-com-input-text
+                id="thisSeries.history.ordinalNumber"
+                placeholder="1234"
+                [form]="thisSeriesHistoryFormGroup"
+                controlName="ordinalNumber"
+                width="7.2rem"
+              ></app-com-input-text>
+              @if (!thisSeriesHistoryFormGroup.get('ordinalNumber')?.valid &&
+              thisSeriesHistoryFormGroup.get('ordinalNumber')?.touched &&
+              formTouched) {
+              <div class="error mgt-10">
+                <img src="/assets/error_icon.svg" alt="error icon" />
+                <p class="error__text">กรุณาระบุครั้งที่</p>
+              </div>
+              }
+            </div>
+          </div>
+          <div class="eventCount__item-16">
+            <label class="label">จัดครั้งล่าสุดเมื่อวันที่</label>
+            <div class="eventCount__latest">
+              <div>
+                <app-com-select-dropdown
+                  id="thisSeries.history.year"
+                  [form]="thisSeriesHistoryFormGroup"
+                  [items]="yearOptions"
+                  placeholder="ปี"
+                  width="10.5rem"
+                  controlName="year"
+                  [onChange]="onYearOrMonthChanged"
+                ></app-com-select-dropdown>
+                @if (!thisSeriesHistoryFormGroup.get('year')?.valid &&
+                thisSeriesHistoryFormGroup.get('year')?.touched && formTouched)
+                {
+                <div class="error mgt-10">
+                  <img src="/assets/error_icon.svg" alt="error icon" />
+                  <p class="error__text">กรุณาเลือกปี</p>
+                </div>
+                }
+              </div>
+
+              <div>
+                <app-com-select-dropdown
+                  id="thisSeries.history.month"
+                  [form]="thisSeriesHistoryFormGroup"
+                  [items]="monthOptions"
+                  placeholder="เดือน"
+                  width="15.3rem"
+                  controlName="month"
+                  [onChange]="onYearOrMonthChanged"
+                ></app-com-select-dropdown>
+                @if (!thisSeriesHistoryFormGroup.get('month')?.valid &&
+                thisSeriesHistoryFormGroup.get('month')?.touched && formTouched)
+                {
+                <div class="error mgt-10">
+                  <img src="/assets/error_icon.svg" alt="error icon" />
+                  <p class="error__text">กรุณาเลือกเดือน</p>
+                </div>
+                }
+              </div>
+
+              <div>
+                <app-com-select-dropdown
+                  id="thisSeries.history.day"
+                  [form]="thisSeriesHistoryFormGroup"
+                  [items]="daysInMonthOptions"
+                  placeholder="วันที่"
+                  width="8rem"
+                  controlName="day"
+                  [disabled]="dayDropdownDisabled"
+                  emptyMessage="กรุณาเลือกปีและวัน"
+                ></app-com-select-dropdown>
+                @if (!thisSeriesHistoryFormGroup.get('day')?.valid &&
+                thisSeriesHistoryFormGroup.get('day')?.touched && formTouched) {
+                <div class="error mgt-10">
+                  <img src="/assets/error_icon.svg" alt="error icon" />
+                  <p class="error__text">กรุณาเลือกวันที่</p>
+                </div>
+                }
+              </div>
+            </div>
+          </div>
+        </div>
+        <h2 class="label--2">
+          โปรดระบุรายละเอียดงานวิ่งนี้ในครั้งที่ผ่านมา 3 ปีย้อนหลัง
+        </h2>
+      </div>
+
+      @for (item of completedEvent; track $index) {
+      <div class="history__item">
+        <label class="label">• ปีที่จัดงาน พ.ศ.</label>
+        <div>
+          <app-com-input-text
+            [id]="'thisSeries.history.completed' + item + '.year'"
+            placeholder="YYYY"
+            [form]="getThisSeriesCompletedFormGroup(item)"
+            controlName="year"
+            width="9rem"
+          ></app-com-input-text>
+          @if (!getThisSeriesCompletedFormGroup(item).get('year')?.valid &&
+          getThisSeriesCompletedFormGroup(item).get('year')?.touched &&
+          formTouched) {
+          <div class="error mgt-10">
+            <img src="/assets/error_icon.svg" alt="error icon" />
+            <p class="error__text">กรุณาเลือกปี</p>
+          </div>
+          }
+        </div>
+
+        <label class="label">ชื่องาน</label>
+        <div>
+          <app-com-input-text
+            [id]="'thisSeries.history.completed' + item + '.name'"
+            placeholder="โปรดระบุชื่องาน"
+            [form]="getThisSeriesCompletedFormGroup(item)"
+            controlName="name"
+            width="34.8rem"
+          ></app-com-input-text>
+          @if (!getThisSeriesCompletedFormGroup(item).get('name')?.valid &&
+          getThisSeriesCompletedFormGroup(item).get('name')?.touched &&
+          formTouched) {
+          <div class="error mgt-10">
+            <img src="/assets/error_icon.svg" alt="error icon" />
+            <p class="error__text">กรุณาระบุชื่องาน</p>
+          </div>
+          }
+        </div>
+
+        <label class="label">จำนวนผู้เข้าร่วม</label>
+        <div>
+          <app-com-input-text
+            [id]="'thisSeries.history.completed' + item + '.participant'"
+            placeholder="XXXXX"
+            [form]="getThisSeriesCompletedFormGroup(item)"
+            controlName="participant"
+            width="9rem"
+          ></app-com-input-text>
+          @if (!getThisSeriesCompletedFormGroup(item).get('participant')?.valid
+          && getThisSeriesCompletedFormGroup(item).get('participant')?.touched
+          && formTouched) {
+          <div class="error mgt-10">
+            <img src="/assets/error_icon.svg" alt="error icon" />
+            <p class="error__text">กรุณาระบุผู้เข้าร่วม</p>
+          </div>
+          }
+        </div>
+      </div>
+      }
+      <!-- Collapse 1 End -->
     </div>
 
     <div class="section">
@@ -39,5 +205,5 @@
 
       <div style="font-size: 3rem">TODO: Collapsable</div>
     </div>
-  </div> -->
+  </div>
 </div>

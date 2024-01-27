@@ -115,7 +115,7 @@ export class ApplicantFlowPagesComponent implements OnInit, OnDestroy {
 
     this.initForm();
     this.loadApplicantSelfScoreCriteria();
-    this.currentStep = 3;
+    this.currentStep = 4;
 
     this.subToUploadFileSubjects();
   }
@@ -330,11 +330,32 @@ export class ApplicantFlowPagesComponent implements OnInit, OnDestroy {
       }),
       experience: new FormGroup({
         thisSeries: new FormGroup({
-          // firstTime: new FormControl(null, Validators.required),
+          firstTime: new FormControl(null, Validators.required),
           // FormGroup conditionally added if doneBefore is true
+          history: new FormGroup({
+            ordinalNumber: new FormControl(null, Validators.required),
+            year: new FormControl(null, Validators.required),
+            month: new FormControl(null, Validators.required),
+            day: new FormControl(null, Validators.required),
+            completed1: new FormGroup({
+              year: new FormControl(null, Validators.required),
+              name: new FormControl(null, Validators.required),
+              participant: new FormControl(null, Validators.required),
+            }),
+            completed2: new FormGroup({
+              year: new FormControl(null, Validators.required),
+              name: new FormControl(null, Validators.required),
+              participant: new FormControl(null, Validators.required),
+            }),
+            completed3: new FormGroup({
+              year: new FormControl(null, Validators.required),
+              name: new FormControl(null, Validators.required),
+              participant: new FormControl(null, Validators.required),
+            }),
+          }),
         }),
         otherSeries: new FormGroup({
-          // doneBefore: new FormControl(null, Validators.required),
+          doneBefore: new FormControl(null, Validators.required),
           // FormGroup conditionally added if doneBefore is true
         }),
       }),
@@ -383,8 +404,8 @@ export class ApplicantFlowPagesComponent implements OnInit, OnDestroy {
       console.log('===nextPage', this.form);
       this.currentStep++;
     } else if (
-      this.currentStep === 4
-      // this.experienceComponent.validToGoNext()
+      this.currentStep === 4 &&
+      this.experienceComponent.validToGoNext()
     ) {
       console.log('===nextPage', this.form);
       this.currentStep++;

@@ -65,4 +65,94 @@
     flex-direction: column;
     gap: 1.4rem;
   }
+
+  &__hidable {
+    border: 1px solid red;
+    padding-left: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.4rem;
+    opacity: 1;
+    transition: opacity 300ms ease-out, max-height 300ms ease-out;
+    max-height: 26rem; // Need to be a little higher than actual for smooth animation
+    z-index: 0;
+
+    &--hide {
+      z-index: -1;
+      opacity: 0;
+      max-height: 0;
+
+      transition: opacity 300ms ease-out, max-height 300ms ease-out;
+    }
+  }
+}
+
+.history {
+  &__item {
+    display: flex;
+    gap: 1rem;
+    padding-left: 2rem;
+    &:not(:last-child) {
+      border-bottom: 1px solid #cfd6e4;
+      padding-bottom: 2rem;
+    }
+  }
+}
+
+.label {
+  color: $gray700;
+  font-family: "IBM Plex Sans Thai Looped";
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+
+  padding-top: 9px;
+
+  &-500 {
+    font-weight: 500;
+  }
+
+  &--2 {
+    color: $gray700;
+    font-family: $custom-font-looped;
+    font-size: 1.6rem;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+  }
+}
+
+.eventCount {
+  display: flex;
+  gap: 3rem;
+
+  &__item-16 {
+    display: flex;
+    gap: 1.6rem;
+  }
+
+  &__latest {
+    display: flex;
+    gap: 1rem;
+  }
+}
+
+.error {
+  display: flex;
+  font-family: $custom-font-looped;
+  font-size: 1.3rem;
+  font-weight: 400;
+  line-height: normal;
+  color: #ec4a0a;
+
+  &__text {
+    margin-left: 4px;
+  }
+}
+
+.mgt {
+  &-10 {
+    margin-top: 1rem;
+  }
 }
