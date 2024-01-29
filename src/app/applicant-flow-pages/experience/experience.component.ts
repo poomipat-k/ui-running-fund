@@ -1,6 +1,7 @@
-import { CommonModule, ViewportScroller } from '@angular/common';
+import { animate, style, transition, trigger } from '@angular/animations';
+import { ViewportScroller } from '@angular/common';
 import { Component, Input, OnInit, inject } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { InputTextComponent } from '../../components/input-text/input-text.component';
 import { RadioComponent } from '../../components/radio/radio.component';
 import { SelectDropdownComponent } from '../../components/select-dropdown/select-dropdown.component';
@@ -16,18 +17,27 @@ import { RadioOption } from '../../shared/models/radio-option';
 @Component({
   selector: 'app-applicant-experience',
   standalone: true,
-  imports: [
-    RadioComponent,
-    CommonModule,
-    InputTextComponent,
-    SelectDropdownComponent,
-  ],
+  imports: [RadioComponent, InputTextComponent, SelectDropdownComponent],
   templateUrl: './experience.component.html',
   styleUrl: './experience.component.scss',
+  animations: [
+    trigger('thisSeriesDisplay', [
+      transition(':enter', [
+        style({ opacity: 0, maxHeight: 0 }),
+        animate('300ms ease-out', style({ opacity: 1, maxHeight: '44rem' })),
+      ]),
+      transition(':leave', [
+        style({ opacity: 1, maxHeight: '44rem' }),
+        animate('300ms ease-out', style({ opacity: 0, maxHeight: 0 })),
+      ]),
+    ]),
+  ],
 })
 export class ExperienceComponent implements OnInit {
   @Input() form: FormGroup;
   @Input() enableScroll = false;
+
+  protected thisSeriesDisplay = 'show';
 
   private readonly scroller: ViewportScroller = inject(ViewportScroller);
   private readonly dateService: DateService = inject(DateService);
@@ -96,8 +106,14 @@ export class ExperienceComponent implements OnInit {
     return this.form.get('experience.otherSeries') as FormGroup;
   }
 
+  get isThisSeriesFirstTime(): boolean {
+    return this.form.get('experience.thisSeries.firstTime')?.value;
+  }
+
   constructor() {
     this.onYearOrMonthChanged = this.onYearOrMonthChanged.bind(this);
+    this.onThisSeriesFirstTimeChanged =
+      this.onThisSeriesFirstTimeChanged.bind(this);
   }
 
   ngOnInit(): void {
@@ -124,7 +140,42 @@ export class ExperienceComponent implements OnInit {
     return this.thisSeriesHistoryFormGroup.get('completed' + item) as FormGroup;
   }
 
-  onThisSeriesFirstTimeChanged() {}
+  onThisSeriesFirstTimeChanged() {
+    if (this.isThisSeriesFirstTime === true) {
+      this.thisSeriesDisplay = 'hide';
+      this.thisSeriesFormGroup.removeControl('history');
+      return;
+    }
+    if (!this.thisSeriesFormGroup.get('history')) {
+      this.thisSeriesDisplay = 'show';
+      const historyFormGroup = this.generateHistoryFormGroup();
+      this.thisSeriesFormGroup.addControl('history', historyFormGroup);
+    }
+  }
+
+  private generateHistoryFormGroup(): FormGroup {
+    return new FormGroup({
+      ordinalNumber: new FormControl(null, Validators.required),
+      year: new FormControl(null, Validators.required),
+      month: new FormControl(null, Validators.required),
+      day: new FormControl(null, Validators.required),
+      completed1: new FormGroup({
+        year: new FormControl(null, Validators.required),
+        name: new FormControl(null, Validators.required),
+        participant: new FormControl(null, Validators.required),
+      }),
+      completed2: new FormGroup({
+        year: new FormControl(null, Validators.required),
+        name: new FormControl(null, Validators.required),
+        participant: new FormControl(null, Validators.required),
+      }),
+      completed3: new FormGroup({
+        year: new FormControl(null, Validators.required),
+        name: new FormControl(null, Validators.required),
+        participant: new FormControl(null, Validators.required),
+      }),
+    });
+  }
 
   private markFieldsTouched() {
     const groupControl = this.form.get('experience');
