@@ -37,8 +37,6 @@ export class ExperienceComponent implements OnInit {
   @Input() form: FormGroup;
   @Input() enableScroll = false;
 
-  protected thisSeriesDisplay = 'show';
-
   private readonly scroller: ViewportScroller = inject(ViewportScroller);
   private readonly dateService: DateService = inject(DateService);
 
@@ -101,6 +99,9 @@ export class ExperienceComponent implements OnInit {
   get thisSeriesHistoryFormGroup(): FormGroup {
     return this.form.get('experience.thisSeries.history') as FormGroup;
   }
+  get otherSeriesHistoryFormGroup(): FormGroup {
+    return this.form.get('experience.otherSeries.history') as FormGroup;
+  }
 
   get otherSeriesFormGroup(): FormGroup {
     return this.form.get('experience.otherSeries') as FormGroup;
@@ -110,10 +111,16 @@ export class ExperienceComponent implements OnInit {
     return this.form.get('experience.thisSeries.firstTime')?.value;
   }
 
+  get hasDoneOtherSeriesBefore(): boolean {
+    return this.form.get('experience.otherSeries.doneBefore')?.value;
+  }
+
   constructor() {
     this.onYearOrMonthChanged = this.onYearOrMonthChanged.bind(this);
     this.onThisSeriesFirstTimeChanged =
       this.onThisSeriesFirstTimeChanged.bind(this);
+    this.onDoneOtherSeriesBeforeChanged =
+      this.onDoneOtherSeriesBeforeChanged.bind(this);
   }
 
   ngOnInit(): void {
@@ -140,17 +147,52 @@ export class ExperienceComponent implements OnInit {
     return this.thisSeriesHistoryFormGroup.get('completed' + item) as FormGroup;
   }
 
+  getOtherSeriesCompletedFormGroup(item: number): FormGroup {
+    return this.otherSeriesHistoryFormGroup.get(
+      'completed' + item
+    ) as FormGroup;
+  }
+
   onThisSeriesFirstTimeChanged() {
     if (this.isThisSeriesFirstTime === true) {
-      this.thisSeriesDisplay = 'hide';
       this.thisSeriesFormGroup.removeControl('history');
       return;
     }
     if (!this.thisSeriesFormGroup.get('history')) {
-      this.thisSeriesDisplay = 'show';
       const historyFormGroup = this.generateHistoryFormGroup();
       this.thisSeriesFormGroup.addControl('history', historyFormGroup);
     }
+  }
+
+  onDoneOtherSeriesBeforeChanged() {
+    if (this.hasDoneOtherSeriesBefore === false) {
+      this.otherSeriesFormGroup.removeControl('history');
+      return;
+    }
+    if (!this.otherSeriesFormGroup.get('history')) {
+      const historyFormGroup = this.generateOtherSeriesHistoryFormGroup();
+      this.otherSeriesFormGroup.addControl('history', historyFormGroup);
+    }
+  }
+
+  private generateOtherSeriesHistoryFormGroup(): FormGroup {
+    return new FormGroup({
+      completed1: new FormGroup({
+        year: new FormControl(null, Validators.required),
+        name: new FormControl(null, Validators.required),
+        participant: new FormControl(null, Validators.required),
+      }),
+      completed2: new FormGroup({
+        year: new FormControl(null, Validators.required),
+        name: new FormControl(null, Validators.required),
+        participant: new FormControl(null, Validators.required),
+      }),
+      completed3: new FormGroup({
+        year: new FormControl(null, Validators.required),
+        name: new FormControl(null, Validators.required),
+        participant: new FormControl(null, Validators.required),
+      }),
+    });
   }
 
   private generateHistoryFormGroup(): FormGroup {

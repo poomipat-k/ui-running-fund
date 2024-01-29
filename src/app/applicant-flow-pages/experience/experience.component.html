@@ -193,15 +193,97 @@
       </h3>
       <div>
         <app-com-radio
-          id="thisSeries.firstTime"
+          id="otherSeries.doneBefore"
           [options]="hasOtherRunEventExperience"
           [form]="otherSeriesFormGroup"
           controlName="doneBefore"
           fontSize="16px"
+          gap="1.8rem"
+          [onChanged]="onDoneOtherSeriesBeforeChanged"
         ></app-com-radio>
+        @if (!form.get('experience.otherSeries.doneBefore')?.valid &&
+        form.get('experience.otherSeries.doneBefore')?.touched && formTouched) {
+        <div class="error mgt-10">
+          <img src="/assets/error_icon.svg" alt="error icon" />
+          <p class="error__text">กรุณาเลือกตัวเลือก</p>
+        </div>
+        }
       </div>
+      <!-- Collapse 2 -->
+      @if (hasDoneOtherSeriesBefore !== false) {
+      <div class="section__hidable" @thisSeriesDisplay>
+        <h2 class="label--2">
+          โปรดระบุประสบการณ์การจัดงานวิ่งอื่น ๆ
+          ที่ท่านเป็นผู้รับผิดชอบหลักมาพอสังเขป
+          <span class="label--2--light"
+            >(หากมีจำนวนมาก ให้ยกตัวอย่างมา 3 งาน)</span
+          >
+        </h2>
 
-      <div style="font-size: 3rem">TODO: Collapsable</div>
+        @for (item of completedEvent; track $index) {
+        <div class="history__item">
+          <label class="label">• ปีที่จัดงาน พ.ศ.</label>
+          <div>
+            <app-com-input-text
+              [id]="'otherSeries.history.completed' + item + '.year'"
+              placeholder="YYYY"
+              [form]="getOtherSeriesCompletedFormGroup(item)"
+              controlName="year"
+              width="9rem"
+            ></app-com-input-text>
+            @if (!getOtherSeriesCompletedFormGroup(item).get('year')?.valid &&
+            getOtherSeriesCompletedFormGroup(item).get('year')?.touched &&
+            formTouched) {
+            <div class="error mgt-10">
+              <img src="/assets/error_icon.svg" alt="error icon" />
+              <p class="error__text">กรุณาเลือกปี</p>
+            </div>
+            }
+          </div>
+
+          <label class="label">ชื่องาน</label>
+          <div>
+            <app-com-input-text
+              [id]="'otherSeries.history.completed' + item + '.name'"
+              placeholder="โปรดระบุชื่องาน"
+              [form]="getOtherSeriesCompletedFormGroup(item)"
+              controlName="name"
+              width="34.8rem"
+            ></app-com-input-text>
+            @if (!getOtherSeriesCompletedFormGroup(item).get('name')?.valid &&
+            getOtherSeriesCompletedFormGroup(item).get('name')?.touched &&
+            formTouched) {
+            <div class="error mgt-10">
+              <img src="/assets/error_icon.svg" alt="error icon" />
+              <p class="error__text">กรุณาระบุชื่องาน</p>
+            </div>
+            }
+          </div>
+
+          <label class="label">จำนวนผู้เข้าร่วม</label>
+          <div>
+            <app-com-input-text
+              [id]="'otherSeries.history.completed' + item + '.participant'"
+              placeholder="XXXXX"
+              [form]="getOtherSeriesCompletedFormGroup(item)"
+              controlName="participant"
+              width="9rem"
+            ></app-com-input-text>
+            @if(!getOtherSeriesCompletedFormGroup(item).get('participant')?.valid
+            &&
+            getOtherSeriesCompletedFormGroup(item).get('participant')?.touched
+            && formTouched) {
+            <div class="error mgt-10">
+              <img src="/assets/error_icon.svg" alt="error icon" />
+              <p class="error__text">กรุณาระบุผู้เข้าร่วม</p>
+            </div>
+            }
+          </div>
+        </div>
+        }
+      </div>
+      }
+      <!-- End Collapse 2 -->
     </div>
   </div>
 </div>

@@ -331,7 +331,6 @@ export class ApplicantFlowPagesComponent implements OnInit, OnDestroy {
       experience: new FormGroup({
         thisSeries: new FormGroup({
           firstTime: new FormControl(null, Validators.required),
-          // FormGroup conditionally added if doneBefore is true
           history: new FormGroup({
             ordinalNumber: new FormControl(null, Validators.required),
             year: new FormControl(null, Validators.required),
@@ -356,7 +355,23 @@ export class ApplicantFlowPagesComponent implements OnInit, OnDestroy {
         }),
         otherSeries: new FormGroup({
           doneBefore: new FormControl(null, Validators.required),
-          // FormGroup conditionally added if doneBefore is true
+          history: new FormGroup({
+            completed1: new FormGroup({
+              year: new FormControl(null, Validators.required),
+              name: new FormControl(null, Validators.required),
+              participant: new FormControl(null, Validators.required),
+            }),
+            completed2: new FormGroup({
+              year: new FormControl(null, Validators.required),
+              name: new FormControl(null, Validators.required),
+              participant: new FormControl(null, Validators.required),
+            }),
+            completed3: new FormGroup({
+              year: new FormControl(null, Validators.required),
+              name: new FormControl(null, Validators.required),
+              participant: new FormControl(null, Validators.required),
+            }),
+          }),
         }),
       }),
     });

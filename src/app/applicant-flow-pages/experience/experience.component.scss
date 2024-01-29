@@ -67,7 +67,6 @@
   }
 
   &__hidable {
-    border: 1px solid red;
     padding-left: 2rem;
     display: flex;
     flex-direction: column;
@@ -109,6 +108,10 @@
     font-style: normal;
     font-weight: 500;
     line-height: normal;
+
+    &--light {
+      font-weight: 400;
+    }
   }
 }
 
