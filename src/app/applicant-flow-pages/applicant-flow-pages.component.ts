@@ -60,6 +60,7 @@ export class ApplicantFlowPagesComponent implements OnInit, OnDestroy {
   planAndDetailsComponent: PlanAndDetailsComponent;
   @ViewChild('experienceComponent') experienceComponent: ExperienceComponent;
   @ViewChild('attachmentComponent') attachmentComponent: AttachmentComponent;
+  @ViewChild('fundRequestComponent') fundRequestComponent: FundRequestComponent;
 
   private readonly themeService: ThemeService = inject(ThemeService);
   private readonly projectService: ProjectService = inject(ProjectService);
@@ -117,7 +118,7 @@ export class ApplicantFlowPagesComponent implements OnInit, OnDestroy {
 
     this.initForm();
     this.loadApplicantSelfScoreCriteria();
-    this.currentStep = 4;
+    this.currentStep = 5;
 
     this.subToUploadFileSubjects();
   }
@@ -406,6 +407,29 @@ export class ApplicantFlowPagesComponent implements OnInit, OnDestroy {
           }),
         }),
       }),
+      fund: new FormGroup({
+        budget: new FormGroup({
+          total: new FormControl(null, [
+            Validators.required,
+            Validators.min(0),
+          ]),
+          supportOrganization: new FormControl(null, Validators.required),
+        }),
+        request: new FormGroup({
+          type: new FormGroup({
+            fund: new FormControl(false),
+            bib: new FormControl(false),
+            seminar: new FormControl(false),
+            other: new FormControl(false),
+          }),
+          details: new FormGroup({
+            // fundAmount: new FormControl(null),
+            // bibAmount: new FormControl(null),
+            // seminarTopic: new FormControl(null),
+            // other: new FormControl(null),
+          }),
+        }),
+      }),
     });
   }
 
@@ -456,7 +480,10 @@ export class ApplicantFlowPagesComponent implements OnInit, OnDestroy {
     ) {
       console.log('===nextPage', this.form);
       this.currentStep++;
-    } else if (this.currentStep === 5) {
+    } else if (
+      this.currentStep === 5 &&
+      this.fundRequestComponent.validToGoNext()
+    ) {
       console.log('===nextPage', this.form);
       this.currentStep++;
     } else if (

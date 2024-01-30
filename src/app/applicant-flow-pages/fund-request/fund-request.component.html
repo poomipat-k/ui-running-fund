@@ -4,3 +4,125 @@
     ความต้องการขอรับการสนับสนุน
   </h2>
 </div>
+
+<div class="section-container">
+  <div class="section">
+    <h3 class="section__header section__header--with-ask">
+      5.1 งบประมาณในภาพรวมและการสนับสนุนจากแหล่งอื่น
+    </h3>
+    <div class="section-content">
+      <div class="line">
+        <label class="line__label width-239 mgr-59">
+          <p>โปรดระบุจำนวนงบประมาณ</p>
+          <p>จัดงานทั้งหมด(เช่น 300,000 บาท)</p>
+        </label>
+        <div class="total">
+          <div>
+            <app-com-input-number
+              id="fund.budget.total"
+              placeholder="โปรดระบุเป็นตัวเลข"
+              [form]="budgetFormGroup"
+              controlName="total"
+              width="17.3rem"
+            ></app-com-input-number>
+            @if (!form.get('fund.budget.total')?.valid &&
+            form.get('fund.budget.total')?.touched && formTouched) {
+            <div class="error mgt-10">
+              <img src="/assets/error_icon.svg" alt="error icon" />
+              <p class="error__text">กรุณาระบุงบประมาณ</p>
+            </div>
+            }
+          </div>
+          <p class="total__unit">บาท</p>
+        </div>
+      </div>
+      <div class="line">
+        <label class="line__label width-239 mgr-59">
+          <p>โปรดระบุหน่วยงาน/องค์กร</p>
+          <p>ที่ให้การสนับสนุนการจัดงานครั้งนี้</p>
+        </label>
+        <div>
+          <div [formGroup]="budgetFormGroup">
+            <textarea
+              id="fund.budget.supportOrganization"
+              formControlName="supportOrganization"
+              class="textarea"
+              placeholder="แหล่งงบประมาณ"
+            ></textarea>
+          </div>
+          @if (!budgetFormGroup.get('supportOrganization')?.valid &&
+          budgetFormGroup.get('supportOrganization')?.touched && formTouched) {
+          <div class="error mgt-10">
+            <img src="/assets/error_icon.svg" alt="error icon" />
+            <p class="error__text">กรุณาระบแหล่งงบประมาณ</p>
+          </div>
+          }
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <h3 class="section__header section__header--with-ask">
+      5.2 ความต้องการการสนับสนุนจากสสส. และสมาพันธ์ฯ
+      <span class="section__header--remark">(ตอบได้มากกว่า 1 ข้อ)</span>
+    </h3>
+    <div class="section-content gap-10">
+      <div class="fund">
+        <div>
+          <app-com-checkbox
+            [form]="requestTypeFormGroup"
+            controlName="fund"
+            display="งบประมาณ"
+            gap="8px"
+            fontSize="16px"
+            [onChanged]="onNeedFundChanged"
+          >
+          </app-com-checkbox>
+        </div>
+        @if (needFund) {
+        <div class="fund__amount">
+          <app-com-radio
+            [form]="requestDetailsFormGroup"
+            controlName="fundAmount"
+            [options]="fundAmountOptions"
+            fontSize="16px"
+            direction="horizontal"
+          >
+          </app-com-radio>
+        </div>
+        }
+      </div>
+      <div>
+        <app-com-checkbox
+          [form]="requestTypeFormGroup"
+          controlName="bib"
+          display="เบอร์วิ่ง (Bib) จำนวน"
+          gap="8px"
+          fontSize="16px"
+        >
+        </app-com-checkbox>
+      </div>
+      <div>
+        <app-com-checkbox
+          [form]="requestTypeFormGroup"
+          controlName="seminar"
+          display="การอบรม/การพัฒนาศักยภาพ หัวข้อเรื่อง"
+          gap="8px"
+          fontSize="16px"
+        >
+        </app-com-checkbox>
+      </div>
+      <div>
+        <app-com-checkbox
+          [form]="requestTypeFormGroup"
+          controlName="other"
+          display="อื่น ๆ โปรดระบุ"
+          gap="8px"
+          fontSize="16px"
+        >
+        </app-com-checkbox>
+      </div>
+    </div>
+  </div>
+</div>
