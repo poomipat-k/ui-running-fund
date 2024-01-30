@@ -36,13 +36,13 @@
           <div class="eventCount__item-16">
             <label class="label">ครั้งนี้ครั้งที่ (โปรดระบุเป็นตัวเลข)</label>
             <div>
-              <app-com-input-text
+              <app-com-input-number
                 id="thisSeries.history.ordinalNumber"
                 placeholder="1234"
                 [form]="thisSeriesHistoryFormGroup"
                 controlName="ordinalNumber"
                 width="7.2rem"
-              ></app-com-input-text>
+              ></app-com-input-number>
               @if (!thisSeriesHistoryFormGroup.get('ordinalNumber')?.valid &&
               thisSeriesHistoryFormGroup.get('ordinalNumber')?.touched &&
               formTouched) {
@@ -126,21 +126,30 @@
         <div class="history__item">
           <label class="label">• ปีที่จัดงาน พ.ศ.</label>
           <div>
-            <app-com-input-text
+            <app-com-input-number
               [id]="'thisSeries.history.completed' + item + '.year'"
               placeholder="YYYY"
               [form]="getThisSeriesCompletedFormGroup(item)"
               controlName="year"
               width="9rem"
-            ></app-com-input-text>
+            ></app-com-input-number>
             @if (!getThisSeriesCompletedFormGroup(item).get('year')?.valid &&
             getThisSeriesCompletedFormGroup(item).get('year')?.touched &&
             formTouched) {
+            @if(getThisSeriesCompletedFormGroup(item).get('year')?.errors?.['required'])
+            {
             <div class="error mgt-10">
               <img src="/assets/error_icon.svg" alt="error icon" />
               <p class="error__text">กรุณาเลือกปี</p>
             </div>
-            }
+            } @else {
+            <div class="error mgt-10">
+              <img src="/assets/error_icon.svg" alt="error icon" />
+              <p class="error__text">
+                {{ currentYear + 543 }} - {{ currentYear - 3 + 543 }}
+              </p>
+            </div>
+            } }
           </div>
 
           <label class="label">ชื่องาน</label>
@@ -164,13 +173,13 @@
 
           <label class="label">จำนวนผู้เข้าร่วม</label>
           <div>
-            <app-com-input-text
+            <app-com-input-number
               [id]="'thisSeries.history.completed' + item + '.participant'"
               placeholder="XXXXX"
               [form]="getThisSeriesCompletedFormGroup(item)"
               controlName="participant"
               width="9rem"
-            ></app-com-input-text>
+            ></app-com-input-number>
             @if(!getThisSeriesCompletedFormGroup(item).get('participant')?.valid
             && getThisSeriesCompletedFormGroup(item).get('participant')?.touched
             && formTouched) {
@@ -224,21 +233,29 @@
         <div class="history__item">
           <label class="label">• ปีที่จัดงาน พ.ศ.</label>
           <div>
-            <app-com-input-text
+            <app-com-input-number
               [id]="'otherSeries.history.completed' + item + '.year'"
               placeholder="YYYY"
               [form]="getOtherSeriesCompletedFormGroup(item)"
               controlName="year"
               width="9rem"
-            ></app-com-input-text>
+            ></app-com-input-number>
             @if (!getOtherSeriesCompletedFormGroup(item).get('year')?.valid &&
             getOtherSeriesCompletedFormGroup(item).get('year')?.touched &&
             formTouched) {
+            @if(getOtherSeriesCompletedFormGroup(item).get('year')) {
             <div class="error mgt-10">
               <img src="/assets/error_icon.svg" alt="error icon" />
               <p class="error__text">กรุณาเลือกปี</p>
             </div>
-            }
+            } @else {
+            <div class="error mgt-10">
+              <img src="/assets/error_icon.svg" alt="error icon" />
+              <p class="error__text">
+                {{ currentYear + 543 }} - {{ currentYear - 3 + 543 }}
+              </p>
+            </div>
+            } }
           </div>
 
           <label class="label">ชื่องาน</label>
@@ -262,13 +279,13 @@
 
           <label class="label">จำนวนผู้เข้าร่วม</label>
           <div>
-            <app-com-input-text
+            <app-com-input-number
               [id]="'otherSeries.history.completed' + item + '.participant'"
               placeholder="XXXXX"
               [form]="getOtherSeriesCompletedFormGroup(item)"
               controlName="participant"
               width="9rem"
-            ></app-com-input-text>
+            ></app-com-input-number>
             @if(!getOtherSeriesCompletedFormGroup(item).get('participant')?.valid
             &&
             getOtherSeriesCompletedFormGroup(item).get('participant')?.touched

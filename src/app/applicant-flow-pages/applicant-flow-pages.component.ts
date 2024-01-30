@@ -12,6 +12,7 @@ import { ErrorPopupComponent } from '../components/error-popup/error-popup.compo
 import { ProgressBarStepsComponent } from '../components/progress-bar-steps/progress-bar-steps.component';
 import { SuccessPopupComponent } from '../components/success-popup/success-popup.component';
 import { ArrowForwardComponent } from '../components/svg/arrow-forward/arrow-forward.component';
+import { DateService } from '../services/date.service';
 import { ProjectService } from '../services/project.service';
 import { ThemeService } from '../services/theme.service';
 import { BackgroundColor } from '../shared/enums/background-color';
@@ -62,6 +63,7 @@ export class ApplicantFlowPagesComponent implements OnInit, OnDestroy {
 
   private readonly themeService: ThemeService = inject(ThemeService);
   private readonly projectService: ProjectService = inject(ProjectService);
+  private readonly dateService: DateService = inject(DateService);
 
   private readonly subs: Subscription[] = [];
   private router: Router = inject(Router);
@@ -163,6 +165,7 @@ export class ApplicantFlowPagesComponent implements OnInit, OnDestroy {
   }
 
   private initForm() {
+    const currentYear = this.dateService.getCurrentYear();
     this.form = new FormGroup({
       collaborated: new FormControl(null, Validators.required),
       general: new FormGroup({
@@ -332,24 +335,40 @@ export class ApplicantFlowPagesComponent implements OnInit, OnDestroy {
         thisSeries: new FormGroup({
           firstTime: new FormControl(null, Validators.required),
           history: new FormGroup({
-            ordinalNumber: new FormControl(null, Validators.required),
-            year: new FormControl(null, Validators.required),
+            ordinalNumber: new FormControl(null, [
+              Validators.required,
+              Validators.min(2),
+            ]),
+            year: new FormControl(null, [Validators.required]),
             month: new FormControl(null, Validators.required),
             day: new FormControl(null, Validators.required),
             completed1: new FormGroup({
-              year: new FormControl(null, Validators.required),
+              year: new FormControl(null, [
+                Validators.required,
+                Validators.max(currentYear + 543),
+                Validators.min(currentYear - 3 + 543),
+              ]),
               name: new FormControl(null, Validators.required),
-              participant: new FormControl(null, Validators.required),
+              participant: new FormControl(null, [
+                Validators.required,
+                Validators.min(0),
+              ]),
             }),
             completed2: new FormGroup({
-              year: new FormControl(null, Validators.required),
-              name: new FormControl(null, Validators.required),
-              participant: new FormControl(null, Validators.required),
+              year: new FormControl(null, [
+                Validators.max(currentYear + 543),
+                Validators.min(currentYear - 3 + 543),
+              ]),
+              name: new FormControl(null),
+              participant: new FormControl(null, [Validators.min(0)]),
             }),
             completed3: new FormGroup({
-              year: new FormControl(null, Validators.required),
-              name: new FormControl(null, Validators.required),
-              participant: new FormControl(null, Validators.required),
+              year: new FormControl(null, [
+                Validators.max(currentYear + 543),
+                Validators.min(currentYear - 3 + 543),
+              ]),
+              name: new FormControl(null),
+              participant: new FormControl(null, [Validators.min(0)]),
             }),
           }),
         }),
@@ -357,19 +376,32 @@ export class ApplicantFlowPagesComponent implements OnInit, OnDestroy {
           doneBefore: new FormControl(null, Validators.required),
           history: new FormGroup({
             completed1: new FormGroup({
-              year: new FormControl(null, Validators.required),
+              year: new FormControl(null, [
+                Validators.required,
+                Validators.max(currentYear + 543),
+                Validators.min(currentYear - 3 + 543),
+              ]),
               name: new FormControl(null, Validators.required),
-              participant: new FormControl(null, Validators.required),
+              participant: new FormControl(null, [
+                Validators.required,
+                Validators.min(0),
+              ]),
             }),
             completed2: new FormGroup({
-              year: new FormControl(null, Validators.required),
-              name: new FormControl(null, Validators.required),
-              participant: new FormControl(null, Validators.required),
+              year: new FormControl(null, [
+                Validators.max(currentYear + 543),
+                Validators.min(currentYear - 3 + 543),
+              ]),
+              name: new FormControl(null),
+              participant: new FormControl(null, [Validators.min(0)]),
             }),
             completed3: new FormGroup({
-              year: new FormControl(null, Validators.required),
-              name: new FormControl(null, Validators.required),
-              participant: new FormControl(null, Validators.required),
+              year: new FormControl(null, [
+                Validators.max(currentYear + 543),
+                Validators.min(currentYear - 3 + 543),
+              ]),
+              name: new FormControl(null),
+              participant: new FormControl(null, [Validators.min(0)]),
             }),
           }),
         }),

@@ -2,6 +2,7 @@ import { animate, style, transition, trigger } from '@angular/animations';
 import { ViewportScroller } from '@angular/common';
 import { Component, Input, OnInit, inject } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { InputNumberComponent } from '../../components/input-number/input-number.component';
 import { InputTextComponent } from '../../components/input-text/input-text.component';
 import { RadioComponent } from '../../components/radio/radio.component';
 import { SelectDropdownComponent } from '../../components/select-dropdown/select-dropdown.component';
@@ -17,7 +18,12 @@ import { RadioOption } from '../../shared/models/radio-option';
 @Component({
   selector: 'app-applicant-experience',
   standalone: true,
-  imports: [RadioComponent, InputTextComponent, SelectDropdownComponent],
+  imports: [
+    RadioComponent,
+    InputTextComponent,
+    SelectDropdownComponent,
+    InputNumberComponent,
+  ],
   templateUrl: './experience.component.html',
   styleUrl: './experience.component.scss',
   animations: [
@@ -50,6 +56,7 @@ export class ExperienceComponent implements OnInit {
   protected monthOptions: RadioOption[] = [];
   protected dayDropdownDisabled = true;
   protected completedEvent = [1, 2, 3];
+  protected currentYear = this.dateService.getCurrentYear();
 
   protected firstTimeDoThisSeriesOptions: RadioOption[] = [
     {
@@ -178,19 +185,32 @@ export class ExperienceComponent implements OnInit {
   private generateOtherSeriesHistoryFormGroup(): FormGroup {
     return new FormGroup({
       completed1: new FormGroup({
-        year: new FormControl(null, Validators.required),
+        year: new FormControl(null, [
+          Validators.required,
+          Validators.max(this.currentYear + 543),
+          Validators.min(this.currentYear - 3 + 543),
+        ]),
         name: new FormControl(null, Validators.required),
-        participant: new FormControl(null, Validators.required),
+        participant: new FormControl(null, [
+          Validators.required,
+          Validators.min(0),
+        ]),
       }),
       completed2: new FormGroup({
-        year: new FormControl(null, Validators.required),
-        name: new FormControl(null, Validators.required),
-        participant: new FormControl(null, Validators.required),
+        year: new FormControl(null, [
+          Validators.max(this.currentYear + 543),
+          Validators.min(this.currentYear - 3 + 543),
+        ]),
+        name: new FormControl(null),
+        participant: new FormControl(null, [Validators.min(0)]),
       }),
       completed3: new FormGroup({
-        year: new FormControl(null, Validators.required),
-        name: new FormControl(null, Validators.required),
-        participant: new FormControl(null, Validators.required),
+        year: new FormControl(null, [
+          Validators.max(this.currentYear + 543),
+          Validators.min(this.currentYear - 3 + 543),
+        ]),
+        name: new FormControl(null),
+        participant: new FormControl(null, [Validators.min(0)]),
       }),
     });
   }
@@ -202,19 +222,32 @@ export class ExperienceComponent implements OnInit {
       month: new FormControl(null, Validators.required),
       day: new FormControl(null, Validators.required),
       completed1: new FormGroup({
-        year: new FormControl(null, Validators.required),
+        year: new FormControl(null, [
+          Validators.required,
+          Validators.max(this.currentYear + 543),
+          Validators.min(this.currentYear - 3 + 543),
+        ]),
         name: new FormControl(null, Validators.required),
-        participant: new FormControl(null, Validators.required),
+        participant: new FormControl(null, [
+          Validators.required,
+          Validators.min(0),
+        ]),
       }),
       completed2: new FormGroup({
-        year: new FormControl(null, Validators.required),
-        name: new FormControl(null, Validators.required),
-        participant: new FormControl(null, Validators.required),
+        year: new FormControl(null, [
+          Validators.max(this.currentYear + 543),
+          Validators.min(this.currentYear - 3 + 543),
+        ]),
+        name: new FormControl(null),
+        participant: new FormControl(null, [Validators.min(0)]),
       }),
       completed3: new FormGroup({
-        year: new FormControl(null, Validators.required),
-        name: new FormControl(null, Validators.required),
-        participant: new FormControl(null, Validators.required),
+        year: new FormControl(null, [
+          Validators.max(this.currentYear + 543),
+          Validators.min(this.currentYear - 3 + 543),
+        ]),
+        name: new FormControl(null),
+        participant: new FormControl(null, [Validators.min(0)]),
       }),
     });
   }
@@ -297,11 +330,11 @@ export class ExperienceComponent implements OnInit {
   private getYearsOptions() {
     const currentYear = this.dateService.getCurrentYear();
     const years = [];
-    for (let y = currentYear; y < currentYear + 10; y++) {
+    for (let y = currentYear; y >= currentYear - 3; y--) {
       years.push({
         id: y,
         value: y,
-        display: y,
+        display: y + 543,
       });
     }
     this.yearOptions = years;
