@@ -17,7 +17,5 @@ export class CheckboxViewComponent {
   @Input() gap = '1.4rem';
   @Input() fontSize = '2rem';
 
-  onChanged(e: any) {
-    console.log('===onChanged e', e);
-  }
+  onChanged(_e: any) {}
 }
