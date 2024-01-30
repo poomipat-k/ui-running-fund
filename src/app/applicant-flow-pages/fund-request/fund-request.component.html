@@ -68,6 +68,7 @@
       <span class="section__header--remark">(ตอบได้มากกว่า 1 ข้อ)</span>
     </h3>
     <div class="section-content gap-10" id="request.type">
+      <!-- FUND -->
       <div class="fund">
         <app-com-checkbox
           [form]="requestTypeFormGroup"
@@ -99,8 +100,9 @@
         </div>
         }
       </div>
-      <div class="bib">
-        <div class="bib__checkbox">
+      <!-- BIB -->
+      <div class="line">
+        <div [ngClass]="{ line__checkbox: needBib }">
           <app-com-checkbox
             [form]="requestTypeFormGroup"
             controlName="bib"
@@ -117,7 +119,7 @@
             id="request.details.bibAmount"
             placeholder="โปรดระบุเป็นตัวเลข"
             [form]="requestDetailsFormGroup"
-            controlName="bib"
+            controlName="bibAmount"
             width="19.3rem"
           >
           </app-com-input-number>
@@ -129,28 +131,77 @@
           </div>
           }
         </div>
+        <p class="line__unit">ใบ</p>
         }
       </div>
-      <div>
-        <app-com-checkbox
-          [form]="requestTypeFormGroup"
-          controlName="seminar"
-          display="การอบรม/การพัฒนาศักยภาพ หัวข้อเรื่อง"
-          gap="8px"
-          fontSize="16px"
-        >
-        </app-com-checkbox>
+      <!-- SEMINAR -->
+      <div class="line">
+        <div [ngClass]="{ line__checkbox: needSeminar }">
+          <app-com-checkbox
+            [form]="requestTypeFormGroup"
+            controlName="seminar"
+            display="การอบรม/การพัฒนาศักยภาพ หัวข้อเรื่อง"
+            gap="8px"
+            fontSize="16px"
+            [onChanged]="onNeedSeminarChanged"
+          >
+          </app-com-checkbox>
+        </div>
+        @if (needSeminar) {
+        <div>
+          <app-com-input-text
+            id="request.details.seminar"
+            placeholder="โปรดระบุหัวข้อ"
+            [form]="requestDetailsFormGroup"
+            controlName="seminar"
+            width="37.4rem"
+          >
+          </app-com-input-text>
+          @if (!requestDetailsFormGroup.get('seminar')?.valid &&
+          requestDetailsFormGroup.get('seminar')?.touched && formTouched) {
+          <div class="error mgt-10">
+            <img src="/assets/error_icon.svg" alt="error icon" />
+            <p class="error__text">กรุณาระบุหัวข้อ</p>
+          </div>
+          }
+        </div>
+        }
       </div>
-      <div>
-        <app-com-checkbox
-          [form]="requestTypeFormGroup"
-          controlName="other"
-          display="อื่น ๆ โปรดระบุ"
-          gap="8px"
-          fontSize="16px"
-        >
-        </app-com-checkbox>
+      <!-- OTHER -->
+      <div class="line">
+        <div [ngClass]="{ line__checkbox: needOther }">
+          <app-com-checkbox
+            [form]="requestTypeFormGroup"
+            controlName="other"
+            display="อื่น ๆ โปรดระบุ"
+            gap="8px"
+            fontSize="16px"
+            [onChanged]="onNeedOtherChanged"
+          >
+          </app-com-checkbox>
+        </div>
+
+        @if (needOther) {
+        <div>
+          <app-com-input-text
+            id="request.details.other"
+            placeholder="โปรดระบุหัวข้อ"
+            [form]="requestDetailsFormGroup"
+            controlName="other"
+            width="55.8rem"
+          >
+          </app-com-input-text>
+          @if (!requestDetailsFormGroup.get('other')?.valid &&
+          requestDetailsFormGroup.get('other')?.touched && formTouched) {
+          <div class="error mgt-10">
+            <img src="/assets/error_icon.svg" alt="error icon" />
+            <p class="error__text">กรุณาระบุหัวข้อ</p>
+          </div>
+          }
+        </div>
+        }
       </div>
+
       @if (!form.get('fund.request.type')?.valid &&
       form.get('fund.request.type')?.touched && formTouched
       &&errorAtLeastOneRequired) {

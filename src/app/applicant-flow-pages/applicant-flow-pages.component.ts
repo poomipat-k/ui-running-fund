@@ -426,10 +426,10 @@ export class ApplicantFlowPagesComponent implements OnInit, OnDestroy {
             requiredCheckBoxToBeCheckedValidator()
           ),
           details: new FormGroup({
-            // fundAmount: new FormControl(null),
-            // bibAmount: new FormControl(null),
-            // seminarTopic: new FormControl(null),
-            // other: new FormControl(null),
+            // fundAmount: new FormControl(null, Validators.required),
+            // bibAmount: new FormControl(null, Validators.required),
+            // seminar: new FormControl(null, Validators.required),
+            // other: new FormControl(null, Validators.required),
           }),
         }),
       }),

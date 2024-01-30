@@ -150,12 +150,22 @@
   }
 }
 
-.bib {
+.line {
   display: flex;
   gap: 8px;
 
   &__checkbox {
     padding-top: 9px;
+  }
+
+  &__unit {
+    padding-top: 9px;
+    color: $gray700;
+    font-family: $custom-font-looped;
+    font-size: 1.6rem;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
   }
 }
 

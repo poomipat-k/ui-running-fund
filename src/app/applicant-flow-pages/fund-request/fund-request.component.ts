@@ -1,4 +1,4 @@
-import { ViewportScroller } from '@angular/common';
+import { CommonModule, ViewportScroller } from '@angular/common';
 import { Component, Input, inject } from '@angular/core';
 import {
   FormControl,
@@ -8,6 +8,7 @@ import {
 } from '@angular/forms';
 import { CheckboxComponent } from '../../components/checkbox/checkbox.component';
 import { InputNumberComponent } from '../../components/input-number/input-number.component';
+import { InputTextComponent } from '../../components/input-text/input-text.component';
 import { RadioComponent } from '../../components/radio/radio.component';
 import { RadioOption } from '../../shared/models/radio-option';
 
@@ -16,9 +17,11 @@ import { RadioOption } from '../../shared/models/radio-option';
   standalone: true,
   imports: [
     InputNumberComponent,
+    InputTextComponent,
     ReactiveFormsModule,
     CheckboxComponent,
     RadioComponent,
+    CommonModule,
   ],
   templateUrl: './fund-request.component.html',
   styleUrl: './fund-request.component.scss',
@@ -77,6 +80,14 @@ export class FundRequestComponent {
     return this.form.value.fund.request.type.bib;
   }
 
+  get needSeminar(): boolean {
+    return this.form.value.fund.request.type.seminar;
+  }
+
+  get needOther(): boolean {
+    return this.form.value.fund.request.type.other;
+  }
+
   get errorAtLeastOneRequired(): boolean {
     return !!this.form.get('fund.request.type')?.errors?.[
       'requiredCheckBoxToBeChecked'
@@ -86,6 +97,8 @@ export class FundRequestComponent {
   constructor() {
     this.onNeedFundChanged = this.onNeedFundChanged.bind(this);
     this.onNeedBibChanged = this.onNeedBibChanged.bind(this);
+    this.onNeedSeminarChanged = this.onNeedSeminarChanged.bind(this);
+    this.onNeedOtherChanged = this.onNeedOtherChanged.bind(this);
   }
 
   public validToGoNext(): boolean {
@@ -115,6 +128,24 @@ export class FundRequestComponent {
       return;
     }
     this.requestDetailsFormGroup.removeControl('bibAmount');
+  }
+
+  onNeedSeminarChanged() {
+    if (this.needSeminar) {
+      const control = new FormControl(null, Validators.required);
+      this.requestDetailsFormGroup.addControl('seminar', control);
+      return;
+    }
+    this.requestDetailsFormGroup.removeControl('seminar');
+  }
+
+  onNeedOtherChanged() {
+    if (this.needOther) {
+      const control = new FormControl(null, Validators.required);
+      this.requestDetailsFormGroup.addControl('other', control);
+      return;
+    }
+    this.requestDetailsFormGroup.removeControl('other');
   }
 
   // DFS to get formControl error first then check formGroup
