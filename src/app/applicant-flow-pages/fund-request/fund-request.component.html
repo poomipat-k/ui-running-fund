@@ -19,7 +19,7 @@
         <div class="total">
           <div>
             <app-com-input-number
-              id="fund.budget.total"
+              id="budget.total"
               placeholder="โปรดระบุเป็นตัวเลข"
               [form]="budgetFormGroup"
               controlName="total"
@@ -44,7 +44,7 @@
         <div>
           <div [formGroup]="budgetFormGroup">
             <textarea
-              id="fund.budget.supportOrganization"
+              id="budget.supportOrganization"
               formControlName="supportOrganization"
               class="textarea"
               placeholder="แหล่งงบประมาณ"
@@ -54,7 +54,7 @@
           budgetFormGroup.get('supportOrganization')?.touched && formTouched) {
           <div class="error mgt-10">
             <img src="/assets/error_icon.svg" alt="error icon" />
-            <p class="error__text">กรุณาระบแหล่งงบประมาณ</p>
+            <p class="error__text">กรุณาระบุแหล่งงบประมาณ</p>
           </div>
           }
         </div>
@@ -67,22 +67,21 @@
       5.2 ความต้องการการสนับสนุนจากสสส. และสมาพันธ์ฯ
       <span class="section__header--remark">(ตอบได้มากกว่า 1 ข้อ)</span>
     </h3>
-    <div class="section-content gap-10">
+    <div class="section-content gap-10" id="request.type">
       <div class="fund">
-        <div>
-          <app-com-checkbox
-            [form]="requestTypeFormGroup"
-            controlName="fund"
-            display="งบประมาณ"
-            gap="8px"
-            fontSize="16px"
-            [onChanged]="onNeedFundChanged"
-          >
-          </app-com-checkbox>
-        </div>
+        <app-com-checkbox
+          [form]="requestTypeFormGroup"
+          controlName="fund"
+          display="งบประมาณ"
+          gap="8px"
+          fontSize="16px"
+          [onChanged]="onNeedFundChanged"
+        >
+        </app-com-checkbox>
         @if (needFund) {
         <div class="fund__amount">
           <app-com-radio
+            id="request.details.fundAmount"
             [form]="requestDetailsFormGroup"
             controlName="fundAmount"
             [options]="fundAmountOptions"
@@ -90,18 +89,47 @@
             direction="horizontal"
           >
           </app-com-radio>
+          @if (!requestDetailsFormGroup.get('fundAmount')?.valid &&
+          requestDetailsFormGroup.get('fundAmount')?.touched && formTouched) {
+          <div class="error mgt-10">
+            <img src="/assets/error_icon.svg" alt="error icon" />
+            <p class="error__text">กรุณาระบุงบประมาณ</p>
+          </div>
+          }
         </div>
         }
       </div>
-      <div>
-        <app-com-checkbox
-          [form]="requestTypeFormGroup"
-          controlName="bib"
-          display="เบอร์วิ่ง (Bib) จำนวน"
-          gap="8px"
-          fontSize="16px"
-        >
-        </app-com-checkbox>
+      <div class="bib">
+        <div class="bib__checkbox">
+          <app-com-checkbox
+            [form]="requestTypeFormGroup"
+            controlName="bib"
+            display="เบอร์วิ่ง (Bib) จำนวน"
+            gap="8px"
+            fontSize="16px"
+            [onChanged]="onNeedBibChanged"
+          >
+          </app-com-checkbox>
+        </div>
+        @if (needBib) {
+        <div>
+          <app-com-input-number
+            id="request.details.bibAmount"
+            placeholder="โปรดระบุเป็นตัวเลข"
+            [form]="requestDetailsFormGroup"
+            controlName="bib"
+            width="19.3rem"
+          >
+          </app-com-input-number>
+          @if (!requestDetailsFormGroup.get('bibAmount')?.valid &&
+          requestDetailsFormGroup.get('bibAmount')?.touched && formTouched) {
+          <div class="error mgt-10">
+            <img src="/assets/error_icon.svg" alt="error icon" />
+            <p class="error__text">กรุณาระบุจำนวน bib</p>
+          </div>
+          }
+        </div>
+        }
       </div>
       <div>
         <app-com-checkbox
@@ -123,6 +151,14 @@
         >
         </app-com-checkbox>
       </div>
+      @if (!form.get('fund.request.type')?.valid &&
+      form.get('fund.request.type')?.touched && formTouched
+      &&errorAtLeastOneRequired) {
+      <div class="error">
+        <img src="/assets/error_icon.svg" alt="error icon" />
+        <p class="error__text">สามารถเลือกได้หลายข้อ</p>
+      </div>
+      }
     </div>
   </div>
 </div>

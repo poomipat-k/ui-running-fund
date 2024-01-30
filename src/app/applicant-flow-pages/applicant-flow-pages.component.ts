@@ -416,12 +416,15 @@ export class ApplicantFlowPagesComponent implements OnInit, OnDestroy {
           supportOrganization: new FormControl(null, Validators.required),
         }),
         request: new FormGroup({
-          type: new FormGroup({
-            fund: new FormControl(false),
-            bib: new FormControl(false),
-            seminar: new FormControl(false),
-            other: new FormControl(false),
-          }),
+          type: new FormGroup(
+            {
+              fund: new FormControl(false),
+              bib: new FormControl(false),
+              seminar: new FormControl(false),
+              other: new FormControl(false),
+            },
+            requiredCheckBoxToBeCheckedValidator()
+          ),
           details: new FormGroup({
             // fundAmount: new FormControl(null),
             // bibAmount: new FormControl(null),

@@ -73,8 +73,19 @@ export class FundRequestComponent {
     return this.form.value.fund.request.type.fund;
   }
 
+  get needBib(): boolean {
+    return this.form.value.fund.request.type.bib;
+  }
+
+  get errorAtLeastOneRequired(): boolean {
+    return !!this.form.get('fund.request.type')?.errors?.[
+      'requiredCheckBoxToBeChecked'
+    ];
+  }
+
   constructor() {
     this.onNeedFundChanged = this.onNeedFundChanged.bind(this);
+    this.onNeedBibChanged = this.onNeedBibChanged.bind(this);
   }
 
   public validToGoNext(): boolean {
@@ -89,13 +100,21 @@ export class FundRequestComponent {
   }
 
   onNeedFundChanged() {
-    const needFund = this.form.value.fund.request.type.fund;
-    if (needFund) {
-      const fundAmountControl = new FormControl(null, Validators.required);
-      this.requestDetailsFormGroup.addControl('fundAmount', fundAmountControl);
+    if (this.needFund) {
+      const control = new FormControl(null, Validators.required);
+      this.requestDetailsFormGroup.addControl('fundAmount', control);
       return;
     }
     this.requestDetailsFormGroup.removeControl('fundAmount');
+  }
+
+  onNeedBibChanged() {
+    if (this.needBib) {
+      const control = new FormControl(null, Validators.required);
+      this.requestDetailsFormGroup.addControl('bibAmount', control);
+      return;
+    }
+    this.requestDetailsFormGroup.removeControl('bibAmount');
   }
 
   // DFS to get formControl error first then check formGroup

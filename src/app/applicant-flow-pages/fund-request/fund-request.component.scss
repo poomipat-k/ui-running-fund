@@ -150,6 +150,15 @@
   }
 }
 
+.bib {
+  display: flex;
+  gap: 8px;
+
+  &__checkbox {
+    padding-top: 9px;
+  }
+}
+
 .gap {
   &-10 {
     gap: 1rem;
