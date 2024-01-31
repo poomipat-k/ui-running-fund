@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnDestroy, OnInit, ViewChild, inject } from '@angular/core';
 import {
+  FormArray,
   FormControl,
   FormGroup,
   ReactiveFormsModule,
@@ -118,7 +119,7 @@ export class ApplicantFlowPagesComponent implements OnInit, OnDestroy {
 
     this.initForm();
     this.loadApplicantSelfScoreCriteria();
-    this.currentStep = 5;
+    this.currentStep = 1;
 
     this.subToUploadFileSubjects();
   }
@@ -190,6 +191,39 @@ export class ApplicantFlowPagesComponent implements OnInit, OnDestroy {
         }),
         startPoint: new FormControl(null, Validators.required),
         finishPoint: new FormControl(null, Validators.required),
+        // 1.5
+        category: new FormArray([
+          new FormGroup({
+            checked: new FormControl(false),
+            dynamic: new FormControl(false),
+            type: new FormControl('fun'),
+            fee: new FormControl(null),
+          }),
+          new FormGroup({
+            checked: new FormControl(false),
+            dynamic: new FormControl(false),
+            type: new FormControl('mini'),
+            fee: new FormControl(null),
+          }),
+          new FormGroup({
+            checked: new FormControl(false),
+            dynamic: new FormControl(false),
+            type: new FormControl('half'),
+            fee: new FormControl(null),
+          }),
+          new FormGroup({
+            checked: new FormControl(false),
+            dynamic: new FormControl(false),
+            type: new FormControl('full'),
+            fee: new FormControl(null),
+          }),
+          new FormGroup({
+            checked: new FormControl(false),
+            dynamic: new FormControl(true),
+            type: new FormControl(null),
+            fee: new FormControl(null),
+          }),
+        ]),
         expectedParticipants: new FormControl(null, Validators.required),
         hasOrganizer: new FormControl(null, Validators.required),
       }),

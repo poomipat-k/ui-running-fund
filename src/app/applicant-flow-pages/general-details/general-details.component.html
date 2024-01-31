@@ -356,7 +356,39 @@
         1.5 ประเภทงานวิ่งและอัตราค่าสมัคร (ตอบได้มากกว่า 1 ข้อ
         โปรดเลือกทุกระยะทางทีโครงการของท่านจัดการแข่งขัน)
       </h3>
-      <div class="section-content">1.5 Content</div>
+      <div class="category">
+        @for (group of categoryFormArray.controls; track $index) {
+        <div class="category__line">
+          <app-com-checkbox
+            [form]="getCategoryItem($index)"
+            controlName="checked"
+            [display]="group.value.type"
+            gap="8px"
+            fontSize="16px"
+          >
+          </app-com-checkbox>
+          <div>
+            @if (group.value.dynamic) {
+            <app-com-input-text
+              id="thisSeries.history.ordinalNumber"
+              placeholder="ระบุประเภทอื่นๆ"
+              [form]="getCategoryItem($index)"
+              controlName="type"
+              width="17.2rem"
+            ></app-com-input-text>
+            }
+            <app-com-input-number
+              id="thisSeries.history.fee"
+              placeholder="1234"
+              [form]="getCategoryItem($index)"
+              controlName="fee"
+              width="7.2rem"
+            ></app-com-input-number>
+          </div>
+        </div>
+        }
+      </div>
+      <button (click)="addNewCategory()">Add +</button>
     </div>
 
     <div class="section section--wider-gap">

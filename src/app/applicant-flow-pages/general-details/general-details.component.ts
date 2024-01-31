@@ -1,7 +1,15 @@
 import { ViewportScroller } from '@angular/common';
 import { Component, Input, OnDestroy, OnInit, inject } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import {
+  FormArray,
+  FormControl,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { Subscription } from 'rxjs';
+import { CheckboxComponent } from '../../components/checkbox/checkbox.component';
+import { InputNumberComponent } from '../../components/input-number/input-number.component';
 import { InputTextComponent } from '../../components/input-text/input-text.component';
 import { RadioComponent } from '../../components/radio/radio.component';
 import { SelectDropdownComponent } from '../../components/select-dropdown/select-dropdown.component';
@@ -21,7 +29,14 @@ import { RadioOption } from '../../shared/models/radio-option';
 @Component({
   selector: 'app-applicant-general-details',
   standalone: true,
-  imports: [InputTextComponent, RadioComponent, SelectDropdownComponent],
+  imports: [
+    InputTextComponent,
+    RadioComponent,
+    SelectDropdownComponent,
+    CheckboxComponent,
+    ReactiveFormsModule,
+    InputNumberComponent,
+  ],
   templateUrl: './general-details.component.html',
   styleUrl: './general-details.component.scss',
 })
@@ -57,6 +72,10 @@ export class GeneralDetailsComponent implements OnInit, OnDestroy {
 
   get addressFormGroup() {
     return this.form.get('general.address') as FormGroup;
+  }
+
+  get categoryFormArray() {
+    return this.form.get('general.category') as FormArray;
   }
 
   get daysInMonthOptions() {
@@ -170,6 +189,17 @@ export class GeneralDetailsComponent implements OnInit, OnDestroy {
     this.subs.forEach((s) => s.unsubscribe());
   }
 
+  addNewCategory() {
+    this.categoryFormArray.push(
+      new FormGroup({
+        checked: new FormControl(false),
+        dynamic: new FormControl(true),
+        type: new FormControl(null),
+        fee: new FormControl(null),
+      })
+    );
+  }
+
   onProvinceChanged() {
     this.addressFormGroup.patchValue({ districtId: null, subdistrictId: null });
     const provinceId = this.form.value.general.address.provinceId;
@@ -204,6 +234,10 @@ export class GeneralDetailsComponent implements OnInit, OnDestroy {
         day: null,
       });
     }
+  }
+
+  getCategoryItem(index: number): FormGroup {
+    return this.categoryFormArray.at(index) as FormGroup;
   }
 
   private getDistrictsByProvinceId(provinceId: number) {
