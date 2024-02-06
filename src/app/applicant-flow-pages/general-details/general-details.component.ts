@@ -96,38 +96,38 @@ export class GeneralDetailsComponent implements OnInit, OnDestroy {
   readonly expectedParticipantsOptions: RadioOption[] = [
     {
       id: 1,
-      value: '<500',
+      value: '<=500',
       display: 'ต่ำกว่า 500 คน',
     },
     {
       id: 2,
-      value: '500-1499',
-      display: '500 - 1,499 คน',
+      value: '501-1500',
+      display: '501 - 1,500 คน',
     },
     {
       id: 3,
-      value: '1500-2499',
-      display: '1,500 - 2,499 คน',
+      value: '1501-2500',
+      display: '1,501 - 2,500 คน',
     },
     {
       id: 4,
-      value: '2500-3499',
-      display: '2,500 - 3,499 คน',
+      value: '2501-3500',
+      display: '2,501 - 3,500 คน',
     },
     {
       id: 5,
-      value: '3500-4499',
-      display: '3,500 - 4,499 คน',
+      value: '3501-4500',
+      display: '3,501 - 4,500 คน',
     },
     {
       id: 6,
-      value: '4500-5499',
-      display: '4,500 - 5,499 คน',
+      value: '4501-5500',
+      display: '4,501 - 5,500 คน',
     },
     {
       id: 7,
-      value: '>=5500',
-      display: '5,500 คน หรือมากกว่า',
+      value: '>=5501',
+      display: '5,501 คนขึ้นไป',
     },
   ];
 

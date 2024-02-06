@@ -5,7 +5,7 @@
 
   <div class="section-container">
     <div class="section">
-      <h3 class="section__header">1.1 ชื่อโครงการ/งานวิ่ง</h3>
+      <h3 class="section__header">1.1 ชื่อโครงการ/งานวิ่งเพื่อสุขภาพ</h3>
       <div class="section-content">
         <div>
           <app-com-input-text
@@ -27,7 +27,7 @@
     </div>
 
     <div class="section">
-      <h3 class="section__header">1.2 วันที่จัดการแข่งขัน</h3>
+      <h3 class="section__header">1.2 วันที่จัดกิจกรรม</h3>
       <div class="section-content">
         <div class="eventDate__line">
           <p class="eventDate__line-label">วันที่</p>
@@ -188,8 +188,11 @@
 
     <div class="section">
       <h3 class="section__header">
-        1.3 สถานที่จัดการแข่งขัน (สถานที่จัดส่วนอำนวยการต่าง ๆ
-        ควรเป็นสถานที่สำคัญในชุมชน เช่น โรงเรียน วัด)
+        1.3 สถานที่จัดกิจกรรม
+        <span class="section__header--light"
+          >(สถานที่จัดส่วนอำนวยการต่าง ๆ ควรเป็นสถานที่สำคัญในชุมชน เช่น
+          โรงเรียน วัด)</span
+        >
       </h3>
       <div class="section-content">
         <div class="address__line">
@@ -353,8 +356,10 @@
 
     <div class="section section--wider-gap">
       <h3 class="section__header">
-        1.5 ประเภทงานวิ่งและอัตราค่าสมัคร (ตอบได้มากกว่า 1 ข้อ
-        โปรดเลือกทุกระยะทางทีโครงการของท่านจัดการแข่งขัน)
+        1.5 ประเภทกิจกรรมและอัตราค่าสมัคร
+        <span class="section__header--light"
+          >(โปรดเลือกทุกระยะทางทีโครงการของท่านจัดกิจกรรม)
+        </span>
       </h3>
       <div class="category">
         @for (group of categoryFormArray.controls; track $index) {
@@ -393,7 +398,8 @@
 
     <div class="section section--wider-gap">
       <h3 class="section__header">
-        1.6 จำนวนผู้เข้าร่วมที่คาดหวัง (เลือกตอบเพียง 1ข้อ)
+        1.6 จำนวนผู้เข้าร่วมที่คาดหวัง
+        <span class="section__header--light">(เลือกตอบเพียง 1ข้อ)</span>
       </h3>
       <div class="section-content">
         <app-com-radio
@@ -415,7 +421,8 @@
 
     <div class="section section--wider-gap">
       <h3 class="section__header">
-        1.7 การจัดงานครั้งนี้ใช้บริษัทจัดงานหรือไม่ (เลือกตอบเพียง 1 ข้อ)
+        1.7 การจัดกิจกรรมครั้งนี้ใช้บริษัทจัดงาน (Organizer) หรือไม่
+        <span class="section__header--light">(เลือกตอบเพียง 1 ข้อ)</span>
       </h3>
       <div class="section-content">
         <app-com-radio

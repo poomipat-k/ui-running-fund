@@ -20,7 +20,7 @@
   cursor: pointer;
 
   color: #344054;
-  font-family: $custom-font;
+  font-family: $custom-font-looped;
   font-size: 1.6rem;
   font-style: normal;
   font-weight: 400;
@@ -76,7 +76,7 @@
 
   &--empty {
     color: #8b909c;
-    font-family: $custom-font;
+    font-family: $custom-font-looped;
     font-size: 1.6rem;
     font-style: normal;
     font-weight: 400;
@@ -102,7 +102,7 @@
     user-select: none;
 
     color: #344054;
-    font-family: $custom-font;
+    font-family: $custom-font-looped;
     font-size: 1.6rem;
     font-style: normal;
     font-weight: 400;
