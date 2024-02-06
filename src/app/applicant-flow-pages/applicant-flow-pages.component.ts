@@ -192,38 +192,47 @@ export class ApplicantFlowPagesComponent implements OnInit, OnDestroy {
         startPoint: new FormControl(null, Validators.required),
         finishPoint: new FormControl(null, Validators.required),
         // 1.5
-        category: new FormArray([
-          new FormGroup({
-            checked: new FormControl(false),
-            dynamic: new FormControl(false),
-            type: new FormControl('fun'),
-            fee: new FormControl(null),
+        eventDetails: new FormGroup({
+          category: new FormGroup({
+            roadRace: new FormControl(false),
+            trailRunning: new FormControl(false),
+            other: new FormControl(false),
+            // otherType: new FormControl(null, Validators.required)s
           }),
-          new FormGroup({
-            checked: new FormControl(false),
-            dynamic: new FormControl(false),
-            type: new FormControl('mini'),
-            fee: new FormControl(null),
-          }),
-          new FormGroup({
-            checked: new FormControl(false),
-            dynamic: new FormControl(false),
-            type: new FormControl('half'),
-            fee: new FormControl(null),
-          }),
-          new FormGroup({
-            checked: new FormControl(false),
-            dynamic: new FormControl(false),
-            type: new FormControl('full'),
-            fee: new FormControl(null),
-          }),
-          new FormGroup({
-            checked: new FormControl(false),
-            dynamic: new FormControl(true),
-            type: new FormControl(null),
-            fee: new FormControl(null),
-          }),
-        ]),
+          distanceAndFee: new FormArray([
+            new FormGroup({
+              checked: new FormControl(false),
+              dynamic: new FormControl(false),
+              type: new FormControl('fun'),
+              fee: new FormControl(null),
+            }),
+            new FormGroup({
+              checked: new FormControl(false),
+              dynamic: new FormControl(false),
+              type: new FormControl('mini'),
+              fee: new FormControl(null),
+            }),
+            new FormGroup({
+              checked: new FormControl(false),
+              dynamic: new FormControl(false),
+              type: new FormControl('half'),
+              fee: new FormControl(null),
+            }),
+            new FormGroup({
+              checked: new FormControl(false),
+              dynamic: new FormControl(false),
+              type: new FormControl('full'),
+              fee: new FormControl(null),
+            }),
+            new FormGroup({
+              checked: new FormControl(false),
+              dynamic: new FormControl(true),
+              type: new FormControl(null),
+              fee: new FormControl(null),
+            }),
+          ]),
+          vip: new FormControl(null, Validators.required),
+        }),
         expectedParticipants: new FormControl(null, Validators.required),
         hasOrganizer: new FormControl(null, Validators.required),
       }),

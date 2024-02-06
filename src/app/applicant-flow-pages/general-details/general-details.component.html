@@ -362,7 +362,7 @@
         </span>
       </h3>
       <div class="category">
-        @for (group of categoryFormArray.controls; track $index) {
+        @for (group of distanceAndFeeFormArray.controls; track $index) {
         <div class="category__line">
           <app-com-checkbox
             [form]="getCategoryItem($index)"

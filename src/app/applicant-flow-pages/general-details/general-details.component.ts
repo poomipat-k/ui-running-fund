@@ -74,8 +74,8 @@ export class GeneralDetailsComponent implements OnInit, OnDestroy {
     return this.form.get('general.address') as FormGroup;
   }
 
-  get categoryFormArray() {
-    return this.form.get('general.category') as FormArray;
+  get distanceAndFeeFormArray() {
+    return this.form.get('general.eventDetails.distanceAndFee') as FormArray;
   }
 
   get daysInMonthOptions() {
@@ -190,7 +190,7 @@ export class GeneralDetailsComponent implements OnInit, OnDestroy {
   }
 
   addNewCategory() {
-    this.categoryFormArray.push(
+    this.distanceAndFeeFormArray.push(
       new FormGroup({
         checked: new FormControl(false),
         dynamic: new FormControl(true),
@@ -237,7 +237,7 @@ export class GeneralDetailsComponent implements OnInit, OnDestroy {
   }
 
   getCategoryItem(index: number): FormGroup {
-    return this.categoryFormArray.at(index) as FormGroup;
+    return this.distanceAndFeeFormArray.at(index) as FormGroup;
   }
 
   private getDistrictsByProvinceId(provinceId: number) {
