@@ -74,8 +74,22 @@ export class GeneralDetailsComponent implements OnInit, OnDestroy {
     return this.form.get('general.address') as FormGroup;
   }
 
+  get eventDetailsFormGroup() {
+    return this.form.get('general.eventDetails') as FormGroup;
+  }
+
   get distanceAndFeeFormArray() {
     return this.form.get('general.eventDetails.distanceAndFee') as FormArray;
+  }
+
+  get categoryFormGroup() {
+    return this.form.get('general.eventDetails.category') as FormGroup;
+  }
+
+  get categoryAvailableFormGroup() {
+    return this.form.get(
+      'general.eventDetails.category.available'
+    ) as FormGroup;
   }
 
   get daysInMonthOptions() {
@@ -93,7 +107,24 @@ export class GeneralDetailsComponent implements OnInit, OnDestroy {
     return this.isLeapYear(year) ? this.febLeap : this.febNormal;
   }
 
-  readonly expectedParticipantsOptions: RadioOption[] = [
+  get hasOtherEventType() {
+    return this.form.value.general.eventDetails.category.available.other;
+  }
+
+  protected readonly vipOptions: RadioOption[] = [
+    {
+      id: 1,
+      value: true,
+      display: 'มี',
+    },
+    {
+      id: 2,
+      value: false,
+      display: 'ไม่มี',
+    },
+  ];
+
+  protected readonly expectedParticipantsOptions: RadioOption[] = [
     {
       id: 1,
       value: '<=500',
@@ -156,6 +187,7 @@ export class GeneralDetailsComponent implements OnInit, OnDestroy {
     this.onProvinceChanged = this.onProvinceChanged.bind(this);
     this.onDistrictChanged = this.onDistrictChanged.bind(this);
     this.onSubdistrictChanged = this.onSubdistrictChanged.bind(this);
+    this.onOtherEventTypeChanged = this.onOtherEventTypeChanged.bind(this);
   }
 
   ngOnInit(): void {
@@ -198,6 +230,17 @@ export class GeneralDetailsComponent implements OnInit, OnDestroy {
         fee: new FormControl(null),
       })
     );
+  }
+
+  onOtherEventTypeChanged() {
+    if (this.hasOtherEventType) {
+      this.categoryFormGroup.addControl(
+        'otherType',
+        new FormControl(null, Validators.required)
+      );
+      return;
+    }
+    this.categoryFormGroup.removeControl('otherType');
   }
 
   onProvinceChanged() {
@@ -359,7 +402,8 @@ export class GeneralDetailsComponent implements OnInit, OnDestroy {
     }
 
     const generalFormGroup = this.form.get('general') as FormGroup;
-    const errorId = this.getFirstErrorId(generalFormGroup);
+    // const errorId = this.getFirstErrorId(generalFormGroup);
+    const errorId = this.getFirstErrorIdWithPrefix(generalFormGroup, '');
     console.log('===errorId', errorId);
     if (errorId && this.enableScroll) {
       this.scrollToId(errorId);
@@ -382,12 +426,34 @@ export class GeneralDetailsComponent implements OnInit, OnDestroy {
     return '';
   }
 
+  private getFirstErrorIdWithPrefix(
+    rootGroup: FormGroup,
+    prefix: string
+  ): string {
+    const keys = Object.keys(rootGroup.controls);
+    for (const k of keys) {
+      if ((rootGroup.controls[k] as FormGroup)?.controls) {
+        const val = this.getFirstErrorIdWithPrefix(
+          rootGroup.controls[k] as FormGroup,
+          prefix ? `${prefix}.${k}` : k
+        );
+        if (val) {
+          return val;
+        }
+      }
+      if (!rootGroup.controls[k].valid) {
+        return prefix ? `${prefix}.${k}` : k;
+      }
+    }
+    return '';
+  }
+
   private isLeapYear(year: number): boolean {
     return new Date(year, 1, 29).getDate() === 29;
   }
 
   private scrollToId(id: string) {
-    this.scroller.setOffset([0, 100]);
+    this.scroller.setOffset([0, 120]);
     this.scroller.scrollToAnchor(id);
   }
 }

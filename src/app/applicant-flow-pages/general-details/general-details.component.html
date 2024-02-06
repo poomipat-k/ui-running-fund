@@ -34,7 +34,7 @@
           <div class="eventDate__line--group">
             <div>
               <app-com-select-dropdown
-                id="year"
+                id="eventDate.year"
                 [form]="eventDateFormGroup"
                 [items]="yearOptions"
                 placeholder="ปี"
@@ -53,7 +53,7 @@
 
             <div>
               <app-com-select-dropdown
-                id="month"
+                id="eventDate.month"
                 [form]="eventDateFormGroup"
                 [items]="monthOptions"
                 placeholder="เดือน"
@@ -72,7 +72,7 @@
 
             <div>
               <app-com-select-dropdown
-                id="day"
+                id="eventDate.day"
                 [form]="eventDateFormGroup"
                 [items]="daysInMonthOptions"
                 placeholder="วันที่"
@@ -99,7 +99,7 @@
               <div class="eventDate__with-colon">
                 <div>
                   <app-com-select-dropdown
-                    id="fromHour"
+                    id="eventDate.fromHour"
                     [form]="eventDateFormGroup"
                     [items]="hourOptions"
                     placeholder="ชั่วโมง"
@@ -118,7 +118,7 @@
                 <div class="eventDate__colon">:</div>
                 <div>
                   <app-com-select-dropdown
-                    id="fromMinute"
+                    id="eventDate.fromMinute"
                     [form]="eventDateFormGroup"
                     [items]="minuteOptions"
                     placeholder="นาที"
@@ -144,7 +144,7 @@
               <div class="eventDate__with-colon">
                 <div>
                   <app-com-select-dropdown
-                    id="toHour"
+                    id="eventDate.toHour"
                     [form]="eventDateFormGroup"
                     [items]="hourOptions"
                     placeholder="ชั่วโมง"
@@ -163,7 +163,7 @@
                 <div class="eventDate__colon">:</div>
                 <div>
                   <app-com-select-dropdown
-                    id="toMinute"
+                    id="eventDate.toMinute"
                     [form]="eventDateFormGroup"
                     [items]="minuteOptions"
                     placeholder="นาที"
@@ -199,7 +199,7 @@
           <label class="address__label">ชื่อสถานที่</label>
           <div>
             <app-com-input-text
-              id="address"
+              id="address.address"
               placeholder="สถานที่"
               width="32rem"
               controlName="address"
@@ -218,7 +218,7 @@
           <label class="address__label">จังหวัด</label>
           <div>
             <app-com-select-dropdown
-              id="provinceId"
+              id="address.provinceId"
               [form]="addressFormGroup"
               [items]="provinceOptions"
               placeholder="จังหวัด"
@@ -240,7 +240,7 @@
           <label class="address__label">อำเภอ/เขต</label>
           <div>
             <app-com-select-dropdown
-              id="districtId"
+              id="address.districtId"
               [form]="addressFormGroup"
               [items]="districtOptions"
               placeholder="อำเภอ/เขต"
@@ -263,7 +263,7 @@
           <label class="address__label">ตำบล/แขวง</label>
           <div>
             <app-com-select-dropdown
-              id="subdistrictId"
+              id="address.subdistrictId"
               [form]="addressFormGroup"
               [items]="subdistrictOptions"
               placeholder="ตำบล/แขวง"
@@ -286,7 +286,7 @@
           <label class="address__label">รหัสไปรษณีย์</label>
           <div>
             <app-com-select-dropdown
-              id="postcodeId"
+              id="address.postcodeId"
               [form]="addressFormGroup"
               [items]="postcodeOptions"
               placeholder="รหัสไปรษณีย์"
@@ -344,7 +344,7 @@
             ></app-com-input-text>
             @if (!form.get('general.finishPoint')?.valid &&
             form.get('general.finishPoint')?.touched && formTouched) {
-            <div class="error">
+            <div class="error mgt-10">
               <img src="/assets/error_icon.svg" alt="error icon" />
               <p class="error__text">กรุณากรอกจุด Finish</p>
             </div>
@@ -361,39 +361,116 @@
           >(โปรดเลือกทุกระยะทางทีโครงการของท่านจัดกิจกรรม)
         </span>
       </h3>
-      <div class="category">
-        @for (group of distanceAndFeeFormArray.controls; track $index) {
-        <div class="category__line">
-          <app-com-checkbox
-            [form]="getCategoryItem($index)"
-            controlName="checked"
-            [display]="group.value.type"
-            gap="8px"
-            fontSize="16px"
-          >
-          </app-com-checkbox>
-          <div>
-            @if (group.value.dynamic) {
-            <app-com-input-text
-              id="thisSeries.history.ordinalNumber"
-              placeholder="ระบุประเภทอื่นๆ"
-              [form]="getCategoryItem($index)"
-              controlName="type"
-              width="17.2rem"
-            ></app-com-input-text>
+      <div class="eventDetails">
+        <div class="subgroup" id="eventDetails.category.available">
+          <h4 class="subgroup__header">1.5.1 ประเภทการจัดกิจกรรม</h4>
+          <div class="subgroup__checkbox">
+            <app-com-checkbox
+              [form]="categoryAvailableFormGroup"
+              controlName="roadRace"
+              display="วิ่งถนน (Road Race)"
+              gap="8px"
+              fontSize="16px"
+            >
+            </app-com-checkbox>
+            <app-com-checkbox
+              [form]="categoryAvailableFormGroup"
+              controlName="trailRunning"
+              display="Trail Running (การวิ่งตามภูมิประเทศ)"
+              gap="8px"
+              fontSize="16px"
+            >
+            </app-com-checkbox>
+            <app-com-checkbox
+              [form]="categoryAvailableFormGroup"
+              controlName="other"
+              display="อื่น ๆ (โปรดระบุ)"
+              gap="8px"
+              fontSize="16px"
+              [onChanged]="onOtherEventTypeChanged"
+            >
+            </app-com-checkbox>
+
+            @if (!categoryAvailableFormGroup.valid &&
+            categoryAvailableFormGroup.touched && formTouched) {
+            <div class="error">
+              <img src="/assets/error_icon.svg" alt="error icon" />
+              <p class="error__text">สามารถเลือกได้หลายข้อ</p>
+            </div>
+            } @if (hasOtherEventType) {
+            <div class="pdl-28">
+              <app-com-input-text
+                id="eventDetails.category.otherType"
+                [form]="categoryFormGroup"
+                placeholder="ระบุประเภทอื่น ๆ"
+                width="40.1rem"
+                controlName="otherType"
+              ></app-com-input-text>
+              @if (!categoryFormGroup.get('otherType')?.valid &&
+              categoryFormGroup.get('otherType')?.touched && formTouched) {
+              <div class="error mgt-10">
+                <img src="/assets/error_icon.svg" alt="error icon" />
+                <p class="error__text">โปรดระบุประเภทอื่น ๆ</p>
+              </div>
+              }
+            </div>
             }
-            <app-com-input-number
-              id="thisSeries.history.fee"
-              placeholder="1234"
-              [form]="getCategoryItem($index)"
-              controlName="fee"
-              width="7.2rem"
-            ></app-com-input-number>
           </div>
         </div>
-        }
+        <!-- <div class="distance">
+          @for (group of distanceAndFeeFormArray.controls; track $index) {
+          <div class="distance__line">
+            <app-com-checkbox
+              [form]="getCategoryItem($index)"
+              controlName="checked"
+              [display]="group.value.type"
+              gap="8px"
+              fontSize="16px"
+            >
+            </app-com-checkbox>
+            <div>
+              @if (group.value.dynamic) {
+              <app-com-input-text
+                id="thisSeries.history.ordinalNumber"
+                placeholder="ระบุประเภทอื่นๆ"
+                [form]="getCategoryItem($index)"
+                controlName="type"
+                width="17.2rem"
+              ></app-com-input-text>
+              }
+              <app-com-input-number
+                id="thisSeries.history.fee"
+                placeholder="1234"
+                [form]="getCategoryItem($index)"
+                controlName="fee"
+                width="7.2rem"
+              ></app-com-input-number>
+            </div>
+          </div>
+          }
+          <button (click)="addNewCategory()">Add +</button>
+        </div> -->
+        <div class="subgroup">
+          <h4 class="subgroup__header">1.5.3 การจัดประเภท VIP</h4>
+          <div>
+            <app-com-radio
+              id="eventDetails.vip"
+              [form]="eventDetailsFormGroup"
+              [options]="vipOptions"
+              controlName="vip"
+              gap="1rem"
+            >
+            </app-com-radio>
+            @if (!eventDetailsFormGroup.get('vip')?.valid &&
+            eventDetailsFormGroup.get('vip')?.touched && formTouched) {
+            <div class="error">
+              <img src="/assets/error_icon.svg" alt="error icon" />
+              <p class="error__text">กรุณาเลือกตัวเลือก</p>
+            </div>
+            }
+          </div>
+        </div>
       </div>
-      <button (click)="addNewCategory()">Add +</button>
     </div>
 
     <div class="section section--wider-gap">

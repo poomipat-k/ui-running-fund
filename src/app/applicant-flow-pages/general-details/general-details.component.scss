@@ -154,15 +154,47 @@
   }
 }
 
-.category {
+.eventDetails {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: 2.4rem;
+  padding-left: 2rem;
+}
 
-  &__line {
+.subgroup {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+
+  &__header {
+    font-family: $custom-font-looped;
+    font-weight: 400;
+    font-size: 1.6rem;
+    line-height: 2.6rem;
+    color: #000;
+  }
+
+  &__checkbox {
     display: flex;
-    &--1 {
-    }
+    flex-direction: column;
+    gap: 1rem;
+    padding-left: 2rem;
+  }
+}
+
+// .distance {
+//   display: flex;
+//   flex-direction: column;
+//   gap: 1rem;
+
+//   &__line {
+//     display: flex;
+//   }
+// }
+
+.pdl {
+  &-28 {
+    padding-left: 2.8rem;
   }
 }
 

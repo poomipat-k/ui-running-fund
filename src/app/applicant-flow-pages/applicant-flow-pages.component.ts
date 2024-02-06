@@ -194,9 +194,14 @@ export class ApplicantFlowPagesComponent implements OnInit, OnDestroy {
         // 1.5
         eventDetails: new FormGroup({
           category: new FormGroup({
-            roadRace: new FormControl(false),
-            trailRunning: new FormControl(false),
-            other: new FormControl(false),
+            available: new FormGroup(
+              {
+                roadRace: new FormControl(false),
+                trailRunning: new FormControl(false),
+                other: new FormControl(false),
+              },
+              requiredCheckBoxToBeCheckedValidator()
+            ),
             // otherType: new FormControl(null, Validators.required)s
           }),
           distanceAndFee: new FormArray([
