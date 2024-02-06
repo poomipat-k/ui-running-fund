@@ -1,4 +1,4 @@
-import { ViewportScroller } from '@angular/common';
+import { CommonModule, ViewportScroller } from '@angular/common';
 import { Component, Input, OnDestroy, OnInit, inject } from '@angular/core';
 import {
   FormArray,
@@ -30,6 +30,7 @@ import { RadioOption } from '../../shared/models/radio-option';
   selector: 'app-applicant-general-details',
   standalone: true,
   imports: [
+    CommonModule,
     InputTextComponent,
     RadioComponent,
     SelectDropdownComponent,
@@ -228,6 +229,7 @@ export class GeneralDetailsComponent implements OnInit, OnDestroy {
         dynamic: new FormControl(true),
         type: new FormControl(null),
         fee: new FormControl(null),
+        display: new FormControl('อื่น ๆ (โปรดระบุ)'),
       })
     );
   }
