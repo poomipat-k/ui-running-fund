@@ -209,6 +209,34 @@
   }
 }
 
+.closeButton {
+  outline: none;
+  border: none;
+  cursor: pointer;
+  background-color: transparent;
+
+  &:hover {
+    transform: scale(1.1);
+  }
+}
+
+.addButton {
+  outline: none;
+  // border: none;
+  border: 1px solid red;
+  cursor: pointer;
+  background-color: transparent;
+
+  width: 10.1rem;
+
+  font-family: $custom-font-looped;
+  font-size: 1.6rem;
+  line-height: normal;
+  font-weight: 400;
+  text-decoration: underline;
+  color: #2e3192;
+}
+
 .width {
   &-587 {
     width: 58.7rem;

@@ -222,7 +222,7 @@ export class GeneralDetailsComponent implements OnInit, OnDestroy {
     this.subs.forEach((s) => s.unsubscribe());
   }
 
-  addNewCategory() {
+  addDistance() {
     this.distanceAndFeeFormArray.push(
       new FormGroup({
         checked: new FormControl(false),
@@ -232,6 +232,11 @@ export class GeneralDetailsComponent implements OnInit, OnDestroy {
         display: new FormControl('อื่น ๆ (โปรดระบุ)'),
       })
     );
+  }
+
+  removeDistance(index: number) {
+    console.log('==index', index);
+    this.distanceAndFeeFormArray.removeAt(index);
   }
 
   onOtherEventTypeChanged() {

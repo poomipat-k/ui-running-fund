@@ -443,7 +443,7 @@
 
               @if (group.value.dynamic) {
               <app-com-input-text
-                id="thisSeries.history.ordinalNumber"
+                id="eventDetails.distanceAndFee"
                 placeholder="ระบุประเภทอื่นๆ"
                 [form]="getCategoryItem($index)"
                 controlName="type"
@@ -455,7 +455,7 @@
                 <p class="distance__text">ค่าสมัคร</p>
                 <div>
                   <app-com-input-number
-                    id="thisSeries.history.fee"
+                    id="eventDetails.distanceAndFee"
                     placeholder="ค่าสมัคร"
                     [form]="getCategoryItem($index)"
                     controlName="fee"
@@ -464,10 +464,21 @@
                 </div>
                 <p class="distance__text">บาท</p>
               </div>
+
+              @if (group.value.dynamic) {
+              <img
+                class="closeButton"
+                src="/assets/close_icon_bg_gray.svg"
+                alt="close icon"
+                (click)="removeDistance($index)"
+              />
+              }
             </div>
             }
           </div>
-          <button (click)="addNewCategory()">Add +</button>
+          <button class="addButton mgl-20" (click)="addDistance()">
+            + เพิ่ม
+          </button>
         </div>
         <!-- 1.5.2 End -->
         <div class="subgroup">
