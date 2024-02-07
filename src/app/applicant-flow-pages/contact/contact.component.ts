@@ -1,12 +1,19 @@
 import { CommonModule, ViewportScroller } from '@angular/common';
 import { Component, Input, OnInit, inject } from '@angular/core';
-import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import {
+  FormControl,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { CheckboxComponent } from '../../components/checkbox/checkbox.component';
 import { InputTextComponent } from '../../components/input-text/input-text.component';
 import { RadioComponent } from '../../components/radio/radio.component';
 import { SelectDropdownComponent } from '../../components/select-dropdown/select-dropdown.component';
 import { AddressService } from '../../services/address.service';
+import { OnlyNumberDirective } from '../../shared/directives/only-number.directive';
+import { CheckboxOption } from '../../shared/models/checkbox-option';
 import { RadioOption } from '../../shared/models/radio-option';
 
 @Component({
@@ -19,6 +26,7 @@ import { RadioOption } from '../../shared/models/radio-option';
     RadioComponent,
     ReactiveFormsModule,
     SelectDropdownComponent,
+    OnlyNumberDirective,
   ],
   templateUrl: './contact.component.html',
   styleUrl: './contact.component.scss',
@@ -40,6 +48,10 @@ export class ContactComponent implements OnInit {
 
   get projectCoordinatorEmailControl(): FormControl {
     return this.form.get('contact.projectCoordinator.email') as FormControl;
+  }
+
+  get projectCoordinatorLineIdControl(): FormControl {
+    return this.form.get('contact.projectCoordinator.lineId') as FormControl;
   }
 
   get projectCoordinatorPhoneNumberControl(): FormControl {
@@ -68,6 +80,18 @@ export class ContactComponent implements OnInit {
     return this.form.get('contact.organization') as FormGroup;
   }
 
+  get raceDirectorGroup(): FormGroup {
+    return this.form.get('contact.raceDirector') as FormGroup;
+  }
+
+  get directorGroup(): FormGroup {
+    return this.form.get('contact.raceDirector.director') as FormGroup;
+  }
+
+  get raceDirectorAlternativeGroup(): FormGroup {
+    return this.form.get('contact.raceDirector.alternative') as FormGroup;
+  }
+
   get projectManagerSameAsProjectHead(): boolean {
     return this.form.value.contact.projectManager.sameAsProjectHead;
   }
@@ -78,6 +102,10 @@ export class ContactComponent implements OnInit {
 
   get projectCoordinatorSameAsProjectManager(): boolean {
     return this.form.value.contact.projectCoordinator.sameAsProjectManager;
+  }
+
+  get raceDirectorOther(): boolean {
+    return this.form.value.contact.raceDirector.director.other;
   }
 
   protected orgTypeOptions: RadioOption[] = [
@@ -94,7 +122,31 @@ export class ContactComponent implements OnInit {
     {
       id: 3,
       value: 'civil_society',
-      display: 'ภาคประชาสังคม (เช่น มูลนิธิ ชมรม)',
+      display: 'ภาคประชาสังคม (เช่น มูลนิธิ ชมรม NGO)',
+    },
+  ];
+
+  protected raceDirectorOptions: CheckboxOption[] = [
+    {
+      id: 1,
+      display: 'หัวหน้าโครงการ',
+      controlName: 'projectHead',
+    },
+    {
+      id: 2,
+      display: 'ผู้รับผิดชอบโครงการ',
+      controlName: 'projectManager',
+    },
+    {
+      id: 3,
+      display: 'ผู้ประสานงาน',
+      controlName: 'projectCoordinator',
+    },
+    {
+      id: 4,
+      display: 'คนอื่น โปรดระบุ',
+      controlName: 'other',
+      onChanged: this.onRaceDirectorOtherChanged.bind(this),
     },
   ];
 
@@ -153,6 +205,21 @@ export class ContactComponent implements OnInit {
       return false;
     }
     return true;
+  }
+
+  onRaceDirectorOtherChanged() {
+    if (this.raceDirectorOther) {
+      this.raceDirectorGroup.addControl(
+        'alternative',
+        new FormGroup({
+          prefix: new FormControl(null, Validators.required),
+          firstName: new FormControl(null, Validators.required),
+          lastName: new FormControl(null, Validators.required),
+        })
+      );
+      return;
+    }
+    this.raceDirectorGroup.removeControl('alternative');
   }
 
   onProvinceChanged() {

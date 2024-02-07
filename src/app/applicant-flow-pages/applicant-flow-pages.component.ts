@@ -281,12 +281,25 @@ export class ApplicantFlowPagesComponent implements OnInit, OnDestroy {
             subdistrictId: new FormControl(null, Validators.required),
             postcodeId: new FormControl(null, Validators.required),
           }),
-          email: new FormControl(null, [Validators.required, Validators.email]),
+          email: new FormControl(null, [Validators.required]),
+          lineId: new FormControl(null, [Validators.required]),
           phoneNumber: new FormControl(null, [
             Validators.required,
             // Allow only number len >= 9
             Validators.pattern('[0-9]{9,}'),
           ]),
+        }),
+        raceDirector: new FormGroup({
+          director: new FormGroup(
+            {
+              projectHead: new FormControl(false),
+              projectManager: new FormControl(false),
+              projectCoordinator: new FormControl(false),
+              other: new FormControl(false),
+            },
+            requiredCheckBoxToBeCheckedValidator()
+          ),
+          // alternative
         }),
         organization: new FormGroup({
           type: new FormControl(null, Validators.required),

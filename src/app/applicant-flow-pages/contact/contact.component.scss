@@ -139,6 +139,33 @@
   }
 }
 
+.projectDirector {
+  &__header {
+    font-family: $custom-font-looped;
+    font-size: 1.6rem;
+    line-height: 2.6rem;
+    color: $black;
+    cursor: default;
+    &--bold {
+      font-weight: 500;
+      &::before {
+        content: "*";
+        color: #ec4a0a;
+      }
+    }
+
+    &--light {
+      font-weight: 400;
+    }
+  }
+
+  &__checkbox {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+}
+
 label {
   padding-top: 9px;
   color: $black;
