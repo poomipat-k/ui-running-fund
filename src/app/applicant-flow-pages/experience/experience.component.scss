@@ -1,7 +1,7 @@
 @import "../../../styles.scss";
 
 .header {
-  color: $gray700;
+  color: $black;
   font-family: $custom-font;
   font-size: 2rem;
   font-style: normal;
@@ -32,7 +32,7 @@
   }
 
   &__header {
-    color: $gray700;
+    color: $black;
     font-family: $custom-font-looped;
     font-size: 1.6rem;
     font-style: normal;
@@ -87,7 +87,7 @@
 }
 
 .label {
-  color: $gray700;
+  color: $black;
   font-family: "IBM Plex Sans Thai Looped";
   font-size: 16px;
   font-style: normal;
@@ -101,7 +101,7 @@
   }
 
   &--2 {
-    color: $gray700;
+    color: $black;
     font-family: $custom-font-looped;
     font-size: 1.6rem;
     font-style: normal;

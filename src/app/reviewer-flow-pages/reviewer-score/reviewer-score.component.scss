@@ -21,7 +21,7 @@
     font-style: normal;
     font-weight: 500;
     line-height: normal;
-    color: $gray700;
+    color: $black;
 
     &::after {
       content: "*";
@@ -48,7 +48,7 @@
     font-style: normal;
     font-weight: 500;
     line-height: normal;
-    color: $gray700;
+    color: $black;
 
     &::after {
       content: "*";
@@ -91,7 +91,7 @@
     font-style: normal;
     font-weight: 400;
     line-height: normal;
-    color: $gray700;
+    color: $black;
   }
 }
 
@@ -135,7 +135,7 @@
   font-weight: 700;
   font-size: 1.8rem;
   line-height: normal;
-  color: $gray700;
+  color: $black;
   flex-shrink: 0;
 }
 
@@ -163,7 +163,7 @@
   }
 
   &__text {
-    color: $gray700;
+    color: $black;
     font-family: $custom-font-looped;
     font-size: 1.8rem;
     font-style: normal;

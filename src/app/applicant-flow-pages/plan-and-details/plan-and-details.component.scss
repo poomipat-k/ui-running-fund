@@ -1,7 +1,7 @@
 @import "../../../styles.scss";
 
 .header {
-  color: $gray700;
+  color: $black;
   font-family: $custom-font;
   font-size: 2rem;
   font-style: normal;
@@ -43,7 +43,7 @@
   }
 
   &__header {
-    color: $gray700;
+    color: $black;
     font-family: $custom-font-looped;
     font-size: 1.6rem;
     font-style: normal;
@@ -78,7 +78,7 @@
   }
 
   &__sub-header {
-    color: $gray700;
+    color: $black;
     font-family: $custom-font-looped;
     font-size: 1.6rem;
     font-style: normal;
@@ -86,7 +86,7 @@
     line-height: normal;
 
     &--no-asterisk {
-      color: $gray700;
+      color: $black;
       font-family: $custom-font-looped;
       font-size: 1.6rem;
       font-style: normal;
@@ -127,7 +127,7 @@
   }
 
   &__header {
-    color: $gray700;
+    color: $black;
     font-family: $custom-font-looped;
     font-size: 1.6rem;
     font-style: normal;
@@ -217,7 +217,7 @@
 
 .label {
   padding-top: 9px;
-  color: $gray700;
+  color: $black;
   font-family: $custom-font-looped;
   font-size: 1.6rem;
   font-style: normal;

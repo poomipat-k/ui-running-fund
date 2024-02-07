@@ -1,7 +1,7 @@
 @import "../../../styles.scss";
 
 .header {
-  color: $gray700;
+  color: $black;
   font-family: $custom-font;
   font-size: 2rem;
   font-style: normal;
@@ -28,7 +28,7 @@
   padding-bottom: 3rem;
 
   &__header {
-    color: $gray700;
+    color: $black;
     font-family: $custom-font-looped;
     font-size: 1.6rem;
     font-style: normal;
@@ -67,7 +67,7 @@
   display: flex;
 
   &__label {
-    color: $gray700;
+    color: $black;
     font-family: $custom-font-looped;
     font-size: 1.6rem;
     font-style: normal;
@@ -81,7 +81,7 @@
   gap: 1rem;
 
   &__unit {
-    color: $gray700;
+    color: $black;
     font-family: $custom-font-looped;
     font-size: 1.6rem;
     font-style: normal;
@@ -160,7 +160,7 @@
 
   &__unit {
     padding-top: 9px;
-    color: $gray700;
+    color: $black;
     font-family: $custom-font-looped;
     font-size: 1.6rem;
     font-style: normal;
@@ -170,7 +170,7 @@
 }
 
 .remark {
-  color: $gray700;
+  color: $black;
   font-family: $custom-font-looped;
   font-size: 1.6rem;
   font-style: normal;
