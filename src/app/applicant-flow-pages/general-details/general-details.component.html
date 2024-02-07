@@ -419,7 +419,9 @@
         </div>
         <!-- 1.5.2 -->
         <div class="subgroup">
-          <h4 class="subgroup__header">1.5.2 ระยะทางและอัตราค่าสมัคร</h4>
+          <h4 class="subgroup__header" id="eventDetails.distanceAndFee">
+            1.5.2 ระยะทางและอัตราค่าสมัคร
+          </h4>
           <div class="subgroup__checkbox pdl-20">
             @for (group of distanceAndFeeFormArray.controls; track $index) {
             <div
@@ -442,25 +444,38 @@
               </div>
 
               @if (group.value.dynamic) {
-              <app-com-input-text
-                id="eventDetails.distanceAndFee"
-                placeholder="ระบุประเภทอื่นๆ"
-                [form]="getDistanceFormGroup($index)"
-                controlName="type"
-                width="31.3rem"
-              ></app-com-input-text>
+              <div>
+                <app-com-input-text
+                  [id]="getDistanceRowId($index, 'type')"
+                  placeholder="ระบุประเภทอื่นๆ"
+                  [form]="getDistanceFormGroup($index)"
+                  controlName="type"
+                  width="31.3rem"
+                ></app-com-input-text>
+                @if(!getDistanceFormGroup($index).get('type')?.valid &&
+                getDistanceFormGroup($index).get('type')?.touched &&
+                getDistanceFormGroup($index).get('type')?.enabled &&
+                formTouched) {
+                <div class="error mgt-10">
+                  <img src="/assets/error_icon.svg" alt="error icon" />
+                  <p class="error__text">กรุณาระบุประเภท</p>
+                </div>
+                }
+              </div>
               }
 
               <div class="distance__fee">
                 <p class="distance__text">ค่าสมัคร</p>
                 <div>
-                  <app-com-input-number
-                    id="eventDetails.distanceAndFee"
-                    placeholder="ค่าสมัคร"
-                    [form]="getDistanceFormGroup($index)"
-                    controlName="fee"
-                    width="18.9rem"
-                  ></app-com-input-number>
+                  <div>
+                    <app-com-input-number
+                      [id]="getDistanceRowId($index, 'fee')"
+                      placeholder="ค่าสมัคร"
+                      [form]="getDistanceFormGroup($index)"
+                      controlName="fee"
+                      width="18.9rem"
+                    ></app-com-input-number>
+                  </div>
                   @if(!getDistanceFormGroup($index).get('fee')?.valid &&
                   getDistanceFormGroup($index).get('fee')?.touched &&
                   getDistanceFormGroup($index).get('fee')?.enabled &&
@@ -476,10 +491,11 @@
 
               @if (group.value.dynamic) {
               <img
-                class="closeButton"
+                class="removeButton"
                 src="/assets/close_icon_bg_gray.svg"
                 alt="close icon"
                 (click)="removeDistance($index)"
+                draggable="false"
               />
               }
             </div>
@@ -491,7 +507,11 @@
             </div>
             }
           </div>
-          <button class="addButton mgl-20" (click)="addDistance()">
+          <button
+            class="addButton mgl-20"
+            (click)="addDistance()"
+            [disabled]="disableAddDistance"
+          >
             + เพิ่ม
           </button>
         </div>

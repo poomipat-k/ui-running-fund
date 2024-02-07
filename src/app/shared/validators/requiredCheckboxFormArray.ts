@@ -15,7 +15,6 @@ export function requiredCheckBoxFormArrayToBeCheckedValidator(
         checked++;
       }
     });
-    console.log('===checked', checked);
     if (checked < minRequired) {
       return {
         requiredCheckBoxFormArrayToBeChecked: true,

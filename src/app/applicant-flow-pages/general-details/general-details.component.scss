@@ -208,11 +208,14 @@
   }
 }
 
-.closeButton {
+.removeButton {
   outline: none;
   border: none;
   cursor: pointer;
   background-color: transparent;
+  width: 3.6rem;
+  height: 3.6rem;
+  margin-top: 5px;
 
   &:hover {
     transform: scale(1.1);
@@ -236,6 +239,14 @@
 
   &:hover {
     transform: scale(1.1);
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+
+    &:hover {
+      transform: scale(1);
+    }
   }
 }
 

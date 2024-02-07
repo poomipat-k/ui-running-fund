@@ -7,7 +7,7 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { Subscription } from 'rxjs';
+import { Subscription, pairwise, startWith } from 'rxjs';
 import { CheckboxComponent } from '../../components/checkbox/checkbox.component';
 import { InputNumberComponent } from '../../components/input-number/input-number.component';
 import { InputTextComponent } from '../../components/input-text/input-text.component';
@@ -63,6 +63,44 @@ export class GeneralDetailsComponent implements OnInit, OnDestroy {
   protected subdistrictOptions: RadioOption[] = [];
   protected postcodeOptions: RadioOption[] = [];
 
+  private readonly initialDistanceAndFee = [
+    {
+      checked: false,
+      dynamic: false,
+      type: 'fun',
+      display: 'Fun run (ระยะทางไม่เกิน 10 km)',
+      fee: 23,
+    },
+    {
+      checked: false,
+      dynamic: false,
+      type: 'mini',
+      display: 'Mini Marathon (ระยะทาง 10 km)',
+      fee: null,
+    },
+    {
+      checked: false,
+      dynamic: false,
+      type: 'half',
+      display: 'Half Marathon (ระยะทาง 21.1 km)',
+      fee: null,
+    },
+    {
+      checked: false,
+      dynamic: false,
+      type: 'full',
+      display: 'Marathon (ระยะทาง 42.195 km)',
+      fee: null,
+    },
+    {
+      checked: false,
+      dynamic: true,
+      type: null,
+      display: 'อื่น ๆ (โปรดระบุ)',
+      fee: null,
+    },
+  ];
+
   get generalFormGroup() {
     return this.form.get('general') as FormGroup;
   }
@@ -91,6 +129,24 @@ export class GeneralDetailsComponent implements OnInit, OnDestroy {
     return this.form.get(
       'general.eventDetails.category.available'
     ) as FormGroup;
+  }
+
+  get disableAddDistance() {
+    const distanceFormArray = this.form.get(
+      'general.eventDetails.distanceAndFee'
+    ) as FormArray;
+    const n = distanceFormArray.controls.length;
+    if (!distanceFormArray.controls[n - 1].value.dynamic) {
+      return false;
+    }
+    if (
+      distanceFormArray.controls[n - 1].value.dynamic &&
+      distanceFormArray.controls[n - 1].value.checked &&
+      distanceFormArray.controls[n - 1].valid
+    ) {
+      return false;
+    }
+    return true;
   }
 
   get daysInMonthOptions() {
@@ -217,35 +273,66 @@ export class GeneralDetailsComponent implements OnInit, OnDestroy {
       this.getPostcodeBySubdistrictId(subdistrictId);
     }
 
-    this.subs.push(
-      this.distanceAndFeeFormArray.valueChanges.subscribe((updatedArray) => {
-        console.log('==updatedArray', updatedArray);
-        updatedArray?.forEach((item: any, index: number) => {
-          // Enable fee field and add required validator on checked otherwise disable and remove required validator.
-          const feeFormControl = this.getDistanceFormGroup(index)?.get(
-            'fee'
-          ) as FormControl;
-          if (item.checked) {
-            // feeFormControl.enable({ onlySelf: true });
-            feeFormControl.addValidators(Validators.required);
-            feeFormControl.updateValueAndValidity({
-              emitEvent: false,
-            });
-          } else {
-            // feeFormControl.disable({ onlySelf: true });
-            feeFormControl.clearValidators();
-            feeFormControl.updateValueAndValidity({
-              emitEvent: false,
-            });
-            // feeFormControl.reset(null, { onlySelf: true });
-          }
-        });
-      })
-    );
+    this.manageDistanceFeeValidator();
   }
 
   ngOnDestroy(): void {
     this.subs.forEach((s) => s.unsubscribe());
+  }
+
+  private manageDistanceFeeValidator() {
+    this.subs.push(
+      this.distanceAndFeeFormArray.valueChanges
+        .pipe(startWith(this.initialDistanceAndFee), pairwise())
+        .subscribe(([prev, next]: [any, any]) => {
+          next?.forEach((item: any, index: number) => {
+            const feeFormControl = this.getDistanceFormGroup(index)?.get(
+              'fee'
+            ) as FormControl;
+            const typeFormControl = this.getDistanceFormGroup(index)?.get(
+              'type'
+            ) as FormControl;
+            // Determine which field is changed
+            const checkedStateChanged = item.checked !== prev?.[index]?.checked;
+            const feeChanged = item.fee !== prev?.[index]?.fee;
+            const typeChanged = item.type !== prev?.[index]?.type;
+            if (typeChanged && item.type && !item.checked) {
+              this.distanceAndFeeFormArray.controls[index].patchValue({
+                checked: true,
+              });
+            }
+            if (feeChanged && item.fee && !item.checked) {
+              this.distanceAndFeeFormArray.controls[index].patchValue({
+                checked: true,
+              });
+            }
+            if (checkedStateChanged) {
+              if (item.checked) {
+                this.addRequiredValidator(feeFormControl);
+                if (item.dynamic) {
+                  this.addRequiredValidator(typeFormControl);
+                }
+              } else {
+                this.clearFormControl(feeFormControl);
+                if (item.dynamic) {
+                  this.clearFormControl(typeFormControl);
+                }
+              }
+            }
+          });
+        })
+    );
+  }
+
+  private addRequiredValidator(formControl: FormControl) {
+    formControl.addValidators(Validators.required);
+    formControl.updateValueAndValidity({ emitEvent: false });
+  }
+
+  private clearFormControl(formControl: FormControl) {
+    formControl.clearValidators();
+    formControl.reset(null, { emitEvent: false });
+    formControl.updateValueAndValidity({ emitEvent: false });
   }
 
   addDistance() {
@@ -387,6 +474,10 @@ export class GeneralDetailsComponent implements OnInit, OnDestroy {
     return new Date(year, month - 1, day).getDate() === day;
   }
 
+  getDistanceRowId(index: number, fieldName: string) {
+    return `eventDetails.distanceAndFee.${index}.${fieldName}`;
+  }
+
   validToGoNext(): boolean {
     if (!this.formTouched) {
       this.formTouched = true;
@@ -473,6 +564,7 @@ export class GeneralDetailsComponent implements OnInit, OnDestroy {
     this.scroller.scrollToAnchor(id);
   }
 
+  // TODO: remove this func for dev purpose
   patchForm() {
     this.generalFormGroup.patchValue({
       projectName: 'a',
@@ -487,10 +579,6 @@ export class GeneralDetailsComponent implements OnInit, OnDestroy {
       },
       address: {
         address: 'DUMMY',
-        // provinceId: 1,
-        // districtId: 1,
-        // subdistrictId: 1,
-        // postcodeId: 1,
       },
       startPoint: 'x',
       finishPoint: 'y',

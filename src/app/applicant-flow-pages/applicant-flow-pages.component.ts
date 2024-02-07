@@ -212,35 +212,35 @@ export class ApplicantFlowPagesComponent implements OnInit, OnDestroy {
                 dynamic: new FormControl(false),
                 type: new FormControl('fun'),
                 display: new FormControl('Fun run (ระยะทางไม่เกิน 10 km)'),
-                fee: new FormControl({ value: null, disabled: false }),
+                fee: new FormControl(null),
               }),
               new FormGroup({
                 checked: new FormControl(false),
                 dynamic: new FormControl(false),
                 type: new FormControl('mini'),
                 display: new FormControl('Mini Marathon (ระยะทาง 10 km)'),
-                fee: new FormControl({ value: null, disabled: false }),
+                fee: new FormControl(null),
               }),
               new FormGroup({
                 checked: new FormControl(false),
                 dynamic: new FormControl(false),
                 type: new FormControl('half'),
                 display: new FormControl('Half Marathon (ระยะทาง 21.1 km)'),
-                fee: new FormControl({ value: null, disabled: false }),
+                fee: new FormControl(null),
               }),
               new FormGroup({
                 checked: new FormControl(false),
                 dynamic: new FormControl(false),
                 type: new FormControl('full'),
                 display: new FormControl('Marathon (ระยะทาง 42.195 km)'),
-                fee: new FormControl({ value: null, disabled: false }),
+                fee: new FormControl(null),
               }),
               new FormGroup({
                 checked: new FormControl(false),
                 dynamic: new FormControl(true),
-                type: new FormControl({ value: null, disabled: false }),
+                type: new FormControl(null),
                 display: new FormControl('อื่น ๆ (โปรดระบุ)'),
-                fee: new FormControl({ value: null, disabled: false }),
+                fee: new FormControl(null),
               }),
             ],
             requiredCheckBoxFormArrayToBeCheckedValidator()
@@ -503,7 +503,7 @@ export class ApplicantFlowPagesComponent implements OnInit, OnDestroy {
     }
 
     if (this.currentStep === this.progressBarSteps.length) {
-      if (this.form.valid) {
+      if (this.form.valid && !this.form.disabled) {
         this.submitForm();
         console.log('===nextPage', this.form);
       } else {
