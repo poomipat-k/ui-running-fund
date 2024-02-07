@@ -216,6 +216,32 @@ export class GeneralDetailsComponent implements OnInit, OnDestroy {
     if (subdistrictId) {
       this.getPostcodeBySubdistrictId(subdistrictId);
     }
+
+    this.subs.push(
+      this.distanceAndFeeFormArray.valueChanges.subscribe((updatedArray) => {
+        console.log('==updatedArray', updatedArray);
+        updatedArray?.forEach((item: any, index: number) => {
+          // Enable fee field and add required validator on checked otherwise disable and remove required validator.
+          const feeFormControl = this.getDistanceFormGroup(index)?.get(
+            'fee'
+          ) as FormControl;
+          if (item.checked) {
+            // feeFormControl.enable({ onlySelf: true });
+            feeFormControl.addValidators(Validators.required);
+            feeFormControl.updateValueAndValidity({
+              emitEvent: false,
+            });
+          } else {
+            // feeFormControl.disable({ onlySelf: true });
+            feeFormControl.clearValidators();
+            feeFormControl.updateValueAndValidity({
+              emitEvent: false,
+            });
+            // feeFormControl.reset(null, { onlySelf: true });
+          }
+        });
+      })
+    );
   }
 
   ngOnDestroy(): void {
@@ -227,15 +253,14 @@ export class GeneralDetailsComponent implements OnInit, OnDestroy {
       new FormGroup({
         checked: new FormControl(false),
         dynamic: new FormControl(true),
-        type: new FormControl(null),
-        fee: new FormControl(null),
+        type: new FormControl({ value: null, disabled: false }),
         display: new FormControl('อื่น ๆ (โปรดระบุ)'),
+        fee: new FormControl({ value: null, disabled: false }),
       })
     );
   }
 
   removeDistance(index: number) {
-    console.log('==index', index);
     this.distanceAndFeeFormArray.removeAt(index);
   }
 
@@ -286,7 +311,7 @@ export class GeneralDetailsComponent implements OnInit, OnDestroy {
     }
   }
 
-  getCategoryItem(index: number): FormGroup {
+  getDistanceFormGroup(index: number): FormGroup {
     return this.distanceAndFeeFormArray.at(index) as FormGroup;
   }
 
@@ -417,22 +442,6 @@ export class GeneralDetailsComponent implements OnInit, OnDestroy {
     }
   }
 
-  private getFirstErrorId(rootGroup: FormGroup): string {
-    const keys = Object.keys(rootGroup.controls);
-    for (const k of keys) {
-      if ((rootGroup.controls[k] as FormGroup)?.controls) {
-        const val = this.getFirstErrorId(rootGroup.controls[k] as FormGroup);
-        if (val) {
-          return val;
-        }
-      }
-      if (!rootGroup.controls[k].valid) {
-        return k;
-      }
-    }
-    return '';
-  }
-
   private getFirstErrorIdWithPrefix(
     rootGroup: FormGroup,
     prefix: string
@@ -462,5 +471,41 @@ export class GeneralDetailsComponent implements OnInit, OnDestroy {
   private scrollToId(id: string) {
     this.scroller.setOffset([0, 120]);
     this.scroller.scrollToAnchor(id);
+  }
+
+  patchForm() {
+    this.generalFormGroup.patchValue({
+      projectName: 'a',
+      eventDate: {
+        year: 2024,
+        month: 2,
+        day: 3,
+        fromHour: 5,
+        fromMinute: 2,
+        toHour: 8,
+        toMinute: 2,
+      },
+      address: {
+        address: 'DUMMY',
+        // provinceId: 1,
+        // districtId: 1,
+        // subdistrictId: 1,
+        // postcodeId: 1,
+      },
+      startPoint: 'x',
+      finishPoint: 'y',
+      eventDetails: {
+        category: {
+          available: {
+            roadRace: true,
+            trailRunning: true,
+            other: false,
+          },
+        },
+        vip: false,
+      },
+      expectedParticipants: '>=5501',
+      hasOrganizer: false,
+    });
   }
 }

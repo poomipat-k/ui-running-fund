@@ -432,7 +432,7 @@
             >
               <div class="pdt-10">
                 <app-com-checkbox
-                  [form]="getCategoryItem($index)"
+                  [form]="getDistanceFormGroup($index)"
                   controlName="checked"
                   [display]="group.value.display"
                   gap="8px"
@@ -445,7 +445,7 @@
               <app-com-input-text
                 id="eventDetails.distanceAndFee"
                 placeholder="ระบุประเภทอื่นๆ"
-                [form]="getCategoryItem($index)"
+                [form]="getDistanceFormGroup($index)"
                 controlName="type"
                 width="31.3rem"
               ></app-com-input-text>
@@ -457,10 +457,19 @@
                   <app-com-input-number
                     id="eventDetails.distanceAndFee"
                     placeholder="ค่าสมัคร"
-                    [form]="getCategoryItem($index)"
+                    [form]="getDistanceFormGroup($index)"
                     controlName="fee"
                     width="18.9rem"
                   ></app-com-input-number>
+                  @if(!getDistanceFormGroup($index).get('fee')?.valid &&
+                  getDistanceFormGroup($index).get('fee')?.touched &&
+                  getDistanceFormGroup($index).get('fee')?.enabled &&
+                  formTouched) {
+                  <div class="error mgt-10">
+                    <img src="/assets/error_icon.svg" alt="error icon" />
+                    <p class="error__text">กรุณาระบุค่าสมัคร</p>
+                  </div>
+                  }
                 </div>
                 <p class="distance__text">บาท</p>
               </div>
@@ -473,6 +482,12 @@
                 (click)="removeDistance($index)"
               />
               }
+            </div>
+            } @if(distanceAndFeeFormArray.errors &&
+            distanceAndFeeFormArray.touched && formTouched) {
+            <div class="error mgt-10">
+              <img src="/assets/error_icon.svg" alt="error icon" />
+              <p class="error__text">สามารถเลือกได้หลายข้อ</p>
             </div>
             }
           </div>
@@ -567,3 +582,5 @@
     </div>
   </div>
 </div>
+
+<button [style]="{ padding: '3rem' }" (click)="patchForm()">patchForm</button>

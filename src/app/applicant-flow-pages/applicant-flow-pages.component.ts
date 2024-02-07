@@ -19,6 +19,7 @@ import { ThemeService } from '../services/theme.service';
 import { BackgroundColor } from '../shared/enums/background-color';
 import { ApplicantCriteria } from '../shared/models/applicant-criteria';
 import { requiredCheckBoxToBeCheckedValidator } from '../shared/validators/requiredCheckbox';
+import { requiredCheckBoxFormArrayToBeCheckedValidator } from '../shared/validators/requiredCheckboxFormArray';
 import { AttachmentComponent } from './attachment/attachment.component';
 import { CollaborateComponent } from './collaborate/collaborate.component';
 import { ConfirmationComponent } from './confirmation/confirmation.component';
@@ -204,43 +205,46 @@ export class ApplicantFlowPagesComponent implements OnInit, OnDestroy {
             ),
             // otherType: new FormControl(null, Validators.required)s
           }),
-          distanceAndFee: new FormArray([
-            new FormGroup({
-              checked: new FormControl(false),
-              dynamic: new FormControl(false),
-              type: new FormControl('fun'),
-              display: new FormControl('Fun run (ระยะทางไม่เกิน 10 km)'),
-              fee: new FormControl(null),
-            }),
-            new FormGroup({
-              checked: new FormControl(false),
-              dynamic: new FormControl(false),
-              type: new FormControl('mini'),
-              display: new FormControl('Mini Marathon (ระยะทาง 10 km)'),
-              fee: new FormControl(null),
-            }),
-            new FormGroup({
-              checked: new FormControl(false),
-              dynamic: new FormControl(false),
-              type: new FormControl('half'),
-              display: new FormControl('Half Marathon (ระยะทาง 21.1 km)'),
-              fee: new FormControl(null),
-            }),
-            new FormGroup({
-              checked: new FormControl(false),
-              dynamic: new FormControl(false),
-              type: new FormControl('full'),
-              display: new FormControl('Marathon (ระยะทาง 42.195 km)'),
-              fee: new FormControl(null),
-            }),
-            new FormGroup({
-              checked: new FormControl(false),
-              dynamic: new FormControl(true),
-              type: new FormControl(null),
-              display: new FormControl('อื่น ๆ (โปรดระบุ)'),
-              fee: new FormControl(null),
-            }),
-          ]),
+          distanceAndFee: new FormArray(
+            [
+              new FormGroup({
+                checked: new FormControl(false),
+                dynamic: new FormControl(false),
+                type: new FormControl('fun'),
+                display: new FormControl('Fun run (ระยะทางไม่เกิน 10 km)'),
+                fee: new FormControl({ value: null, disabled: false }),
+              }),
+              new FormGroup({
+                checked: new FormControl(false),
+                dynamic: new FormControl(false),
+                type: new FormControl('mini'),
+                display: new FormControl('Mini Marathon (ระยะทาง 10 km)'),
+                fee: new FormControl({ value: null, disabled: false }),
+              }),
+              new FormGroup({
+                checked: new FormControl(false),
+                dynamic: new FormControl(false),
+                type: new FormControl('half'),
+                display: new FormControl('Half Marathon (ระยะทาง 21.1 km)'),
+                fee: new FormControl({ value: null, disabled: false }),
+              }),
+              new FormGroup({
+                checked: new FormControl(false),
+                dynamic: new FormControl(false),
+                type: new FormControl('full'),
+                display: new FormControl('Marathon (ระยะทาง 42.195 km)'),
+                fee: new FormControl({ value: null, disabled: false }),
+              }),
+              new FormGroup({
+                checked: new FormControl(false),
+                dynamic: new FormControl(true),
+                type: new FormControl({ value: null, disabled: false }),
+                display: new FormControl('อื่น ๆ (โปรดระบุ)'),
+                fee: new FormControl({ value: null, disabled: false }),
+              }),
+            ],
+            requiredCheckBoxFormArrayToBeCheckedValidator()
+          ),
           vip: new FormControl(null, Validators.required),
         }),
         expectedParticipants: new FormControl(null, Validators.required),

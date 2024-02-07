@@ -184,7 +184,6 @@
 .distance {
   &__line {
     display: flex;
-    border: 1px solid red;
 
     &--other {
       gap: 1rem;
@@ -222,8 +221,7 @@
 
 .addButton {
   outline: none;
-  // border: none;
-  border: 1px solid red;
+  border: none;
   cursor: pointer;
   background-color: transparent;
 
@@ -235,6 +233,10 @@
   font-weight: 400;
   text-decoration: underline;
   color: #2e3192;
+
+  &:hover {
+    transform: scale(1.1);
+  }
 }
 
 .width {

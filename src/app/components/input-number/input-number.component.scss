@@ -22,6 +22,8 @@
 
   &:disabled {
     color: #667085;
+    cursor: not-allowed;
+    background-color: #f9fafb;
   }
 
   &:focus-visible {
