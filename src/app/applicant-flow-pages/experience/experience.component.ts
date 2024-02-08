@@ -62,7 +62,7 @@ export class ExperienceComponent implements OnInit {
     {
       id: 1,
       value: true,
-      display: 'ใช่ (ข้ามไปส่วนที่ 5)',
+      display: 'ครั้งแรก (ข้ามไปส่วนที่ 4.2)',
     },
     {
       id: 2,
