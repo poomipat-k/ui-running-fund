@@ -154,6 +154,24 @@
   }
 }
 
+.aed {
+  display: flex;
+  gap: 1.3rem;
+
+  &__inner {
+    display: flex;
+    gap: 8px;
+  }
+
+  &__text {
+    font-family: $custom-font-looped;
+    font-weight: 400;
+    font-size: 1.6rem;
+    line-height: 2.6rem;
+    padding-top: 9px;
+  }
+}
+
 .online {
   display: flex;
   flex-direction: column;
@@ -384,6 +402,12 @@
 .gap {
   &-20 {
     gap: 2rem;
+  }
+}
+
+.pdt {
+  &-9 {
+    padding-top: 9px;
   }
 }
 

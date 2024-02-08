@@ -339,32 +339,7 @@ export class ApplicantFlowPagesComponent implements OnInit, OnDestroy {
             // addition: new FormControl(null),
           }),
         }),
-        route: new FormGroup({
-          measurement: new FormGroup(
-            {
-              athleticsAssociation: new FormControl(false),
-              calibratedBicycle: new FormControl(false),
-              selfMeasurement: new FormControl(false),
-            },
-            requiredCheckBoxToBeCheckedValidator()
-          ),
-          // conditional measurement tools field
-          // tool: new FormControl(null, Validators.required)
-          trafficManagement: new FormGroup(
-            {
-              hasSupporter: new FormControl(false),
-              roadClosure: new FormControl(false),
-              signs: new FormControl(false),
-              lighting: new FormControl(false),
-            },
-            requiredCheckBoxToBeCheckedValidator()
-          ),
-        }),
-        judge: new FormGroup({
-          type: new FormControl(null, Validators.required),
-          // Conditionally set
-          // otherType: new FormControl(null, Validators.required),
-        }),
+        score: new FormGroup({}),
         safety: new FormGroup({
           ready: new FormGroup(
             {
@@ -380,6 +355,34 @@ export class ApplicantFlowPagesComponent implements OnInit, OnDestroy {
           ),
           // Conditionally set
           // addition: new FormControl(null, Validators.required)
+          // aedCount: new FormControl(null, Validators.required)
+        }),
+        route: new FormGroup({
+          measurement: new FormGroup(
+            {
+              athleticsAssociation: new FormControl(false),
+              calibratedBicycle: new FormControl(false),
+              selfMeasurement: new FormControl(false),
+            },
+            requiredCheckBoxToBeCheckedValidator()
+          ),
+          // conditional measurement tools field
+          // tool: new FormControl(null, Validators.required)
+          trafficManagement: new FormGroup(
+            {
+              askPermission: new FormControl(false),
+              hasSupporter: new FormControl(false),
+              roadClosure: new FormControl(false),
+              signs: new FormControl(false),
+              lighting: new FormControl(false),
+            },
+            requiredCheckBoxToBeCheckedValidator()
+          ),
+        }),
+        judge: new FormGroup({
+          type: new FormControl(null, Validators.required),
+          // Conditionally set
+          // otherType: new FormControl(null, Validators.required),
         }),
         support: new FormGroup({
           organization: new FormGroup(
@@ -396,7 +399,6 @@ export class ApplicantFlowPagesComponent implements OnInit, OnDestroy {
           // Conditionally set
           // addition: new FormControl(null, Validators.required)
         }),
-        score: new FormGroup({}),
         feedback: new FormControl(null, Validators.required),
       }),
       experience: new FormGroup({

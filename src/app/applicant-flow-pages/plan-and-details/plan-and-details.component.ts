@@ -7,6 +7,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { CheckboxComponent } from '../../components/checkbox/checkbox.component';
+import { InputNumberComponent } from '../../components/input-number/input-number.component';
 import { InputTextComponent } from '../../components/input-text/input-text.component';
 import { RadioItemComponent } from '../../components/radio-item/radio-item.component';
 import { RadioComponent } from '../../components/radio/radio.component';
@@ -24,6 +25,7 @@ import { RadioOption } from '../../shared/models/radio-option';
     CheckboxComponent,
     CommonModule,
     RadioItemComponent,
+    InputNumberComponent,
   ],
   templateUrl: './plan-and-details.component.html',
   styleUrl: './plan-and-details.component.scss',
@@ -158,6 +160,10 @@ export class PlanAndDetailsComponent {
     );
   }
 
+  get hasAed(): boolean {
+    return this.form.value.details.safety.ready.aed;
+  }
+
   protected measurementOptions: CheckboxOption[] = [
     {
       id: 1,
@@ -180,21 +186,27 @@ export class PlanAndDetailsComponent {
   protected trafficManagementOptions: CheckboxOption[] = [
     {
       id: 1,
+      display:
+        '<u>ก่อนและระหว่างการจัดกิจกรรม</u>มีการติดตั้งป้ายขออภัยในความไม่สะดวกในการใช้เส้นทาง',
+      controlName: 'askPermission',
+    },
+    {
+      id: 2,
       display: 'มีผู้ช่วยดูแลความปลอดภัย เช่น ตำรวจ อาสาสมัครในพื้นที่',
       controlName: 'hasSupporter',
     },
     {
-      id: 2,
+      id: 3,
       display: 'ขออนุญาตหน่วยงานปิดถนน หรือแบ่งช่องทางการจราจร',
       controlName: 'roadClosure',
     },
     {
-      id: 3,
+      id: 4,
       display: 'ตั้งป้ายสัญลักษณ์ เช่น ป้ายบอกระยะทาง ป้ายจุดบริการน้ำดื่ม',
       controlName: 'signs',
     },
     {
-      id: 4,
+      id: 5,
       display: 'มีการจัดแสงไฟในเส้นทางวิ่ง ในช่วงเส้นทางมืด',
       controlName: 'lighting',
     },
@@ -224,7 +236,7 @@ export class PlanAndDetailsComponent {
       id: 1,
       controlName: 'runnerInformation',
       display:
-        'ข้อมูลสุขภาพและเบอร์ติดต่อฉุกเฉินของนักวิ่งในแบบฟอร์มลงทะเบียน/ระบบ/BIB',
+        'ข้อมูลสุขภาพและหมายเลขโทรศัพท์ติดต่อฉุกเฉินของนักวิ่งในแบบฟอร์มลงทะเบียน/ระบบ/BIB',
     },
     {
       id: 2,
@@ -234,23 +246,24 @@ export class PlanAndDetailsComponent {
     {
       id: 3,
       controlName: 'ambulance',
-      display:
-        'รถพยาบาล (ambulance) /รถมูลนิธิ <u>พร้อมเจ้าหน้าที่และอุปกรณ์</u>',
+      display: 'รถพยาบาลฉุกเฉิน (ambulance) พร้อมแพทย์/พยาบาลเคลื่อนที่',
     },
     {
       id: 4,
       controlName: 'firstAid',
-      display: 'จุดปฐมพยาบาลพร้อมเวชภัณฑ์',
+      display:
+        'จุดปฐมพยาบาลพร้อมเวชภัณฑ์ เช่น แอมโมเนีย ที่ติดแผล สเปรย์ฉีดคลายกล้ามเนื้อ',
     },
     {
       id: 5,
       controlName: 'aed',
       display: 'เครื่อง AED',
+      onChanged: this.onHasAedChanged.bind(this),
     },
     {
       id: 6,
       controlName: 'insurance',
-      display: 'ประกันภัยสำหรับนักวิ่ง',
+      display: 'ประกันชีวิตสำหรับนักวิ่ง',
     },
     {
       id: 7,
@@ -264,7 +277,8 @@ export class PlanAndDetailsComponent {
     {
       id: 1,
       controlName: 'provincialAdministration',
-      display: 'หน่วยงานด้านการปกครอง เช่น ผู้ว่าเมือง อบต.',
+      display:
+        'หน่วยงานด้านการปกครอง เช่น ผู้ว่าราชการ นายอำเภอ นายกเทศบาล ทต. อบต.',
     },
     {
       id: 2,
@@ -284,7 +298,7 @@ export class PlanAndDetailsComponent {
     {
       id: 5,
       controlName: 'community',
-      display: 'องค์กรระดับชุมชน เช่น โรงเรียน วัด ชุมชน',
+      display: 'องค์กรระดับชุมชน เช่น โรงเรียน วัด ชุมชน อสม.',
     },
     {
       id: 6,
@@ -377,6 +391,17 @@ export class PlanAndDetailsComponent {
       return false;
     }
     return true;
+  }
+
+  onHasAedChanged() {
+    if (this.hasAed) {
+      this.safetyFormGroup.addControl(
+        'aedCount',
+        new FormControl(null, Validators.required)
+      );
+      return;
+    }
+    this.safetyFormGroup.removeControl('aedCount');
   }
 
   onOfflineAdditionChanged() {

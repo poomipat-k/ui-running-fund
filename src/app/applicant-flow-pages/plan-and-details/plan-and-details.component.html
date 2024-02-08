@@ -263,57 +263,62 @@
         </div>
       </div>
     </div>
-
-    <!-- 3.4 Start -->
-    <div class="section">
+    <!-- 3.3 Start -->
+    <div class="section section--gap-24">
       <h3 class="section__header section__header--no-asterisk">
-        3.4 ระบบตัดสินของการแข่งขันเป็นรูปแบบใด
-        <span class="section__header--remark">(เลือกตอบเพียง 1 ข้อ)</span>
+        3.3
+        โครงการมี<u>ความมั่นใจ</u>มากน้อยในระดับใดต่อการจัดบริการเพื่ออำนวยความสะดวกให้นักวิ่ง
+        ประเมินจากข้อความดังต่อไปนี้
+        <p class="section__header--remark">(ระดับความมั่นใจ 5 คะแนน)</p>
       </h3>
-      <div class="section-content">
-        <div>
-          <app-com-radio
-            id="judge.type"
-            [form]="judgeFormGroup"
-            [options]="judgeTypeOptions"
-            controlName="type"
-            fontSize="16px"
-            gap="8px"
-            [onChanged]="onJudgementTypeChanged"
-          ></app-com-radio>
-          @if (!judgeFormGroup.get('type')?.valid &&
-          judgeFormGroup.get('type')?.touched && formTouched) {
-          <div class="error pdl-28">
-            <img src="/assets/error_icon.svg" alt="error icon" />
-            <p class="error__text">กรุณาเลือกระบบตัดสินของการแข่งขัน</p>
-          </div>
+      <div class="table" [formGroup]="scoreFormGroup">
+        <div class="table__row">
+          <h4
+            class="table__col-grow table__cell--header table__cell--header-left"
+          >
+            การจัดบริการ
+          </h4>
+          @for (item of scoreHeader; track $index) {
+          <h4 class="table__col-fixed table__cell--header">{{ item }}</h4>
           }
         </div>
-        @if (isOtherJudgementType) {
-        <div class="pdl-30">
-          <app-com-input-text
-            id="judge.otherType"
-            placeholder="โปรดระบุรายละเอียด"
-            [form]="judgeFormGroup"
-            controlName="otherType"
-            width="50.5rem"
-          ></app-com-input-text>
-
-          @if (!judgeFormGroup.get('otherType')?.valid &&
-          judgeFormGroup.get('otherType')?.touched && formTouched) {
-          <div class="error mgt-10">
-            <img src="/assets/error_icon.svg" alt="error icon" />
-            <p class="error__text">โปรดระบุรายละเอียด</p>
+        @for (item of criteria; track item.orderNumber) {
+        <div class="table__row" [id]="getCriteriaId(item)">
+          <div class="table__col-grow table__cell--question">
+            <p [innerHTML]="item.display"></p>
+            @if (!scoreFormGroup.get(generateCriteriaControlName(item))?.valid
+            && scoreFormGroup.get(generateCriteriaControlName(item))?.touched &&
+            formTouched) {
+            <div class="error mgt-10">
+              <img src="/assets/error_icon.svg" alt="error icon" />
+              <p class="error__text">โปรดให้คะแนน</p>
+            </div>
+            }
+          </div>
+          @for (score of scoreOptions; track score.id) {
+          <div class="table__col-fixed radio__container">
+            <label class="radio__label">
+              <input
+                [ngClass]="{ radio: true }"
+                type="radio"
+                [value]="score.value"
+                [formControlName]="generateCriteriaControlName(item)"
+              />
+              <div class="radio__checkmark"></div>
+            </label>
           </div>
           }
         </div>
         }
       </div>
     </div>
-    <!-- 3.5 Start -->
+    <!-- 3.4 Start -->
     <div class="section">
-      <h3 class="section__header section__header--no-asterisk">
-        3.5
+      <h3
+        class="section__header section__header--no-asterisk"
+        id="safety.ready"
+      >
+        3.4
         โครงการมีแผนการจัดการใดบ้างที่เกี่ยวข้องกับการดูแลความปลอดภัยทางสุขภาพของนักวิ่ง
         <span class="section__header--remark">
           (เลือกทุกข้อที่มีการดำเนินการ)</span
@@ -322,17 +327,43 @@
       <div class="section-content">
         <div class="safety">
           @for (item of safetyOptions; track item.id) {
-          <div id="safety.ready" class="pdl-4">
+          <div class="pdl-4">
             @if (item.onChanged) {
-            <app-com-checkbox
-              [form]="safetyReadyFormGroup"
-              [controlName]="item.controlName"
-              [innerHTML]="item.display"
-              gap="8px"
-              fontSize="16px"
-              [onChanged]="item.onChanged"
-            >
-            </app-com-checkbox>
+            <div class="aed">
+              <div class="pdt-9">
+                <app-com-checkbox
+                  [form]="safetyReadyFormGroup"
+                  [controlName]="item.controlName"
+                  [innerHTML]="item.display"
+                  gap="8px"
+                  fontSize="16px"
+                  [onChanged]="item.onChanged"
+                >
+                </app-com-checkbox>
+              </div>
+              @if (hasAed && item.controlName === 'aed') {
+              <div class="aed__inner">
+                <p class="aed__text">จำนวน</p>
+                <div>
+                  <app-com-input-number
+                    id="safety.aedCount"
+                    placeholder="ระบุจำนวน"
+                    [form]="safetyFormGroup"
+                    controlName="aedCount"
+                    width="18.9rem"
+                  ></app-com-input-number>
+                  @if(!safetyFormGroup.get('aedCount')?.valid &&
+                  safetyFormGroup.get('aedCount')?.touched && formTouched) {
+                  <div class="error pdl-28">
+                    <img src="/assets/error_icon.svg" alt="error icon" />
+                    <p class="error__text">กรุณาระบุจำนวณ</p>
+                  </div>
+                  }
+                </div>
+                <p class="aed__text">เครื่อง</p>
+              </div>
+              }
+            </div>
             } @else {
             <app-com-checkbox
               [form]="safetyReadyFormGroup"
@@ -373,10 +404,169 @@
         }
       </div>
     </div>
+    <!-- 3.5 Start -->
+    <div class="section">
+      <h3 class="section__header">
+        3.5 โครงการมีการวัดระยะทางวิ่งและการจัดการจราจรอย่างไร
+      </h3>
+      <!-- 3.5.1 -->
+      <div class="measurement-section">
+        <div class="measurement-section__header">
+          <h4>
+            3.5.1 เส้นทาง
+            <span class="measurement-section__header--light"
+              >(เส้นทางที่มีการวัดระยะสำหรับการวิ่งทุกประเภท)</span
+            >
+          </h4>
+          <p class="measurement-section__warning">
+            โปรดเตรียมเอกสารเกี่ยวกับเส้นทางการวิ่งเพื่อใช้แนบไฟล์ในส่วนที่ 6
+          </p>
+        </div>
+      </div>
+      <!-- 3.5.2 Start -->
+      <div class="measurement-section">
+        <div class="measurement-section__header">
+          <h4 id="route.measurement">
+            3.5.2 การวัดระยะทาง
+            <span class="measurement-section__header--light"
+              >(เลือกทุกข้อที่มีการดำเนินการ)</span
+            >
+          </h4>
+        </div>
+        <div class="measurement-section__form">
+          @for (item of measurementOptions; track item.id) {
+          <div class="pdl-4">
+            @if (item.onChanged) {
+            <app-com-checkbox
+              [form]="measurementFormGroup"
+              [controlName]="item.controlName"
+              [display]="item.display"
+              gap="8px"
+              fontSize="16px"
+              [onChanged]="item.onChanged"
+            ></app-com-checkbox>
+            } @else {
+            <app-com-checkbox
+              [form]="measurementFormGroup"
+              [controlName]="item.controlName"
+              [display]="item.display"
+              gap="8px"
+              fontSize="16px"
+            ></app-com-checkbox>
+            }
+          </div>
+
+          } @if (!form.get('details.route.measurement')?.valid &&
+          form.get('details.route.measurement')?.touched && formTouched) {
+          <div class="error pdl-28">
+            <img src="/assets/error_icon.svg" alt="error icon" />
+            <p class="error__text">สามารถเลือกได้หลายข้อ</p>
+          </div>
+          } @if (isSelfMeasured) {
+          <div class="pdl-30">
+            <app-com-input-text
+              id="route.tool"
+              placeholder="โปรดระบุเครื่องมือ"
+              [form]="routeFormGroup"
+              controlName="tool"
+              width="40.5rem"
+            ></app-com-input-text>
+
+            @if (!form.get('details.route.tool')?.valid &&
+            form.get('details.route.tool')?.touched && formTouched) {
+            <div class="error mgt-10">
+              <img src="/assets/error_icon.svg" alt="error icon" />
+              <p class="error__text">โปรดระบุเครื่องมือ</p>
+            </div>
+            }
+          </div>
+          }
+        </div>
+      </div>
+      <!-- 3.5.3 Start -->
+      <div class="measurement-section">
+        <div class="measurement-section__header">
+          <h4 id="route.trafficManagement">
+            3.5.3 การจัดการจราจร
+            <span class="measurement-section__header--light"
+              >(เลือกทุกข้อที่มีการดำเนินการ)</span
+            >
+          </h4>
+        </div>
+        <div class="measurement-section__form">
+          @for (item of trafficManagementOptions; track item.id) {
+          <div class="pdl-4">
+            <app-com-checkbox
+              [form]="trafficManagementFormGroup"
+              [controlName]="item.controlName"
+              [innerHTML]="item.display"
+              gap="8px"
+              fontSize="16px"
+            >
+            </app-com-checkbox>
+          </div>
+          } @if (!trafficManagementFormGroup.valid &&
+          trafficManagementFormGroup.touched && formTouched) {
+          <div class="error pdl-28">
+            <img src="/assets/error_icon.svg" alt="error icon" />
+            <p class="error__text">สามารถเลือกได้หลายข้อ</p>
+          </div>
+          }
+        </div>
+      </div>
+    </div>
     <!-- 3.6 Start -->
     <div class="section">
-      <h3 class="section__header section__header--no-asterisk">
-        3.6 ในการจัดงานครั้งนี้ มีหน่วยงานระดับพื้นที่ใดบ้างที่ร่วมสนับสนุน
+      <h3 id="judge.type" class="section__header section__header--no-asterisk">
+        3.6 <u>ระบบตัดสิน</u>ผลของการจัดกิจกรรมของการแข่งขันเป็นรูปแบบใด
+        <span class="section__header--remark">(เลือกตอบเพียง 1 ข้อ)</span>
+      </h3>
+      <div class="section-content">
+        <div>
+          <app-com-radio
+            [form]="judgeFormGroup"
+            [options]="judgeTypeOptions"
+            controlName="type"
+            fontSize="16px"
+            gap="8px"
+            [onChanged]="onJudgementTypeChanged"
+          ></app-com-radio>
+          @if (!judgeFormGroup.get('type')?.valid &&
+          judgeFormGroup.get('type')?.touched && formTouched) {
+          <div class="error pdl-28">
+            <img src="/assets/error_icon.svg" alt="error icon" />
+            <p class="error__text">กรุณาเลือกระบบตัดสินของการแข่งขัน</p>
+          </div>
+          }
+        </div>
+        @if (isOtherJudgementType) {
+        <div class="pdl-30">
+          <app-com-input-text
+            id="judge.otherType"
+            placeholder="โปรดระบุรายละเอียด"
+            [form]="judgeFormGroup"
+            controlName="otherType"
+            width="50.5rem"
+          ></app-com-input-text>
+
+          @if (!judgeFormGroup.get('otherType')?.valid &&
+          judgeFormGroup.get('otherType')?.touched && formTouched) {
+          <div class="error mgt-10">
+            <img src="/assets/error_icon.svg" alt="error icon" />
+            <p class="error__text">โปรดระบุรายละเอียด</p>
+          </div>
+          }
+        </div>
+        }
+      </div>
+    </div>
+    <!-- 3.7 Start -->
+    <div class="section">
+      <h3
+        id="support.organization"
+        class="section__header section__header--no-asterisk"
+      >
+        3.7 ในการจัดกิจกรรมครั้งนี้ มีหน่วยงานระดับพื้นที่ใดบ้างที่ร่วมสนับสนุน
         <span class="section__header--remark">
           (เลือกทุกข้อที่มีการดำเนินการ)</span
         >
@@ -384,7 +574,7 @@
       <div class="section-content">
         <div class="support">
           @for (item of supportOrganizationOptions; track item.id) {
-          <div id="support.organization" class="pdl-4">
+          <div class="pdl-4">
             @if (item.onChanged) {
             <app-com-checkbox
               [form]="supportOrganizationFormGroup"
@@ -435,171 +625,11 @@
         }
       </div>
     </div>
-    <!-- 3.7 Start -->
+
+    <!-- 3.8 Start -->
     <div class="section">
-      <h3 class="section__header">
-        3.3 โครงการมีการวัดระยะทางวิ่งและการจัดการจราจรอย่างไร
-      </h3>
-      <div class="measurement-section">
-        <div class="measurement-section__header">
-          <h4>
-            3.3.1 เส้นทาง
-            <span class="measurement-section__header--light"
-              >(เส้นทางที่มีการวัดระยะสำหรับการวิ่งทุกประเภท)</span
-            >
-          </h4>
-          <p class="measurement-section__warning">
-            โปรดเตรียมเอกสารเกี่ยวกับเส้นทางการวิ่งเพื่อใช้แนบไฟล์ในส่วนที่ 6
-          </p>
-        </div>
-      </div>
-      <!-- 3.7.2 Start -->
-      <div class="measurement-section">
-        <div class="measurement-section__header">
-          <h4>
-            3.3.2 การวัดระยะทาง
-            <span class="measurement-section__header--light"
-              >(เลือกทุกข้อที่มีการดำเนินการ)</span
-            >
-          </h4>
-        </div>
-        <div class="measurement-section__form" id="route.measurement">
-          @for (item of measurementOptions; track item.id) {
-          <div class="pdl-4">
-            @if (item.onChanged) {
-            <app-com-checkbox
-              [form]="measurementFormGroup"
-              [controlName]="item.controlName"
-              [display]="item.display"
-              gap="8px"
-              fontSize="16px"
-              [onChanged]="item.onChanged"
-            ></app-com-checkbox>
-            } @else {
-            <app-com-checkbox
-              [form]="measurementFormGroup"
-              [controlName]="item.controlName"
-              [display]="item.display"
-              gap="8px"
-              fontSize="16px"
-            ></app-com-checkbox>
-            }
-          </div>
-
-          } @if (!form.get('details.route.measurement')?.valid &&
-          form.get('details.route.measurement')?.touched && formTouched) {
-          <div class="error pdl-28">
-            <img src="/assets/error_icon.svg" alt="error icon" />
-            <p class="error__text">สามารถเลือกได้หลายข้อ</p>
-          </div>
-          } @if (isSelfMeasured) {
-          <div class="pdl-30">
-            <app-com-input-text
-              id="route.tool"
-              placeholder="โปรดระบุเครื่องมือ"
-              [form]="routeFormGroup"
-              controlName="tool"
-              width="40.5rem"
-            ></app-com-input-text>
-
-            @if (!form.get('details.route.tool')?.valid &&
-            form.get('details.route.tool')?.touched && formTouched) {
-            <div class="error mgt-10">
-              <img src="/assets/error_icon.svg" alt="error icon" />
-              <p class="error__text">โปรดระบุเครื่องมือ</p>
-            </div>
-            }
-          </div>
-          }
-        </div>
-      </div>
-      <!-- 3.3.3 Start -->
-      <div class="measurement-section">
-        <div class="measurement-section__header">
-          <h4>
-            3.3.3 การจัดการจราจร
-            <span class="measurement-section__header--light"
-              >(เลือกทุกข้อที่มีการดำเนินการ)</span
-            >
-          </h4>
-        </div>
-        <div class="measurement-section__form">
-          @for (item of trafficManagementOptions; track item.id) {
-          <div id="route.trafficManagement" class="pdl-4">
-            <app-com-checkbox
-              [form]="trafficManagementFormGroup"
-              [controlName]="item.controlName"
-              [display]="item.display"
-              gap="8px"
-              fontSize="16px"
-            >
-            </app-com-checkbox>
-          </div>
-          } @if (!trafficManagementFormGroup.valid &&
-          trafficManagementFormGroup.touched && formTouched) {
-          <div class="error pdl-28">
-            <img src="/assets/error_icon.svg" alt="error icon" />
-            <p class="error__text">สามารถเลือกได้หลายข้อ</p>
-          </div>
-          }
-        </div>
-      </div>
-    </div>
-
-    <div class="section section--gap-24">
-      <h3 class="section__header">
-        3.8
-        โครงการมีความมั่นใจมากน้อยในระดับใดต่อการจัดบริการเพื่ออำนวยความสะดวกให้นักวิ่งและสร้างประสบการณ์ที่ดี
-        ประเมินจากข้อความดังต่อไปนี้
-        <span class="section__header--remark-no-asterisk"
-          >(ระดับความมั่นใจ 5 คะแนน)</span
-        >
-      </h3>
-      <div class="table" [formGroup]="scoreFormGroup">
-        <div class="table__row">
-          <h4
-            class="table__col-grow table__cell--header table__cell--header-left"
-          >
-            การจัดบริการ
-          </h4>
-          @for (item of scoreHeader; track $index) {
-          <h4 class="table__col-fixed table__cell--header">{{ item }}</h4>
-          }
-        </div>
-        @for (item of criteria; track item.orderNumber) {
-        <div class="table__row" [id]="getCriteriaId(item)">
-          <div class="table__col-grow table__cell--question">
-            <p [innerHTML]="item.display"></p>
-            @if (!scoreFormGroup.get(generateCriteriaControlName(item))?.valid
-            && scoreFormGroup.get(generateCriteriaControlName(item))?.touched &&
-            formTouched) {
-            <div class="error mgt-10">
-              <img src="/assets/error_icon.svg" alt="error icon" />
-              <p class="error__text">โปรดให้คะแนน</p>
-            </div>
-            }
-          </div>
-          @for (score of scoreOptions; track score.id) {
-          <div class="table__col-fixed radio__container">
-            <label class="radio__label">
-              <input
-                [ngClass]="{ radio: true }"
-                type="radio"
-                [value]="score.value"
-                [formControlName]="generateCriteriaControlName(item)"
-              />
-              <div class="radio__checkmark"></div>
-            </label>
-          </div>
-          }
-        </div>
-        }
-      </div>
-    </div>
-
-    <div class="section">
-      <h3 class="section__header">
-        3.9 โครงการมีวิธีการประเมินผลความสำเร็จ/
+      <h3 class="section__header" id="feedback">
+        3.8 โครงการมีวิธีการประเมินผลความสำเร็จ/
         รับฟังประเด็นท้าทายจากการจัดงานอย่างไรบ้าง
         <span class="section__header--remark-no-asterisk"
           >(เช่น มีกระบวนการรับฟัง ความคิดเห็นจากนักวิ่ง
@@ -609,7 +639,6 @@
       <div class="section-content">
         <div [formGroup]="detailsFormGroup">
           <textarea
-            id="feedback"
             formControlName="feedback"
             class="textarea"
             placeholder="ระบุรายละเอียด..."
