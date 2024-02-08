@@ -53,10 +53,6 @@ export class PlanAndDetailsComponent {
     return this.form.get('details') as FormGroup;
   }
 
-  get emergencyFormGroup(): FormGroup {
-    return this.form.get('details.emergencyContact') as FormGroup;
-  }
-
   get routeFormGroup(): FormGroup {
     return this.form.get('details.route') as FormGroup;
   }
@@ -508,7 +504,7 @@ export class PlanAndDetailsComponent {
   }
 
   private scrollToId(id: string) {
-    this.scroller.setOffset([0, 100]);
+    this.scroller.setOffset([0, 110]);
     this.scroller.scrollToAnchor(id);
   }
 

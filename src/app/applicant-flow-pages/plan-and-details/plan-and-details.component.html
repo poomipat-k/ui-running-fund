@@ -8,132 +8,54 @@
     <!-- 3.1 Start -->
     <div class="section">
       <h3 class="section__header">
-        3.1 ระบุรายละเอียดความเป็นมาและวัตถุประสงค์ของการจัดการแข่งขัน
+        3.1 ระบุรายละเอียด<u>ความเป็นมาและวัตถุประสงค์</u>ของการจัดการแข่งขัน
       </h3>
-      <div class="section-content">
-        <div [formGroup]="detailsFormGroup">
-          <textarea
-            id="background"
-            formControlName="background"
-            class="textarea"
-            placeholder="ระบุรายละเอียด..."
-          ></textarea>
+      <div class="section-content gap-20">
+        <div>
+          <h4 class="section__sub-header--no-asterisk" id="background">
+            3.1.1 รายละเอียดความเป็นมา
+          </h4>
+          <div [formGroup]="detailsFormGroup" class="mgt-8">
+            <textarea
+              formControlName="background"
+              class="textarea"
+              placeholder="ระบุรายละเอียด..."
+            ></textarea>
 
-          @if (!form.get('details.background')?.valid &&
-          form.get('details.background')?.touched && formTouched) {
-          <div class="error mgt-10">
-            <img src="/assets/error_icon.svg" alt="error icon" />
-            <p class="error__text">กรูณาระบุรายละเอียด</p>
+            @if (!form.get('details.background')?.valid &&
+            form.get('details.background')?.touched && formTouched) {
+            <div class="error mgt-10">
+              <img src="/assets/error_icon.svg" alt="error icon" />
+              <p class="error__text">กรูณาระบุรายละเอียด</p>
+            </div>
+            }
           </div>
-          }
+        </div>
+
+        <div>
+          <h4 class="section__sub-header--no-asterisk">
+            3.1.2 วัตถุประสงค์ของการจัดกิจกรรม
+          </h4>
+          <div [formGroup]="detailsFormGroup" class="mgt-8" id="objective">
+            <textarea
+              formControlName="objective"
+              class="textarea"
+              placeholder="ระบุรายละเอียด..."
+            ></textarea>
+
+            @if (!form.get('details.objective')?.valid &&
+            form.get('details.objective')?.touched && formTouched) {
+            <div class="error mgt-10">
+              <img src="/assets/error_icon.svg" alt="error icon" />
+              <p class="error__text">กรูณาระบุรายละเอียด</p>
+            </div>
+            }
+          </div>
         </div>
       </div>
     </div>
+
     <!-- 3.2 Start -->
-    <div class="section">
-      <div class="section__header section__header--no-asterisk">
-        3.2 เมื่อเกิดกรณีฉุกเฉินหรือการจัดการความเสี่ยง เช่น ฝนตกหนัก
-        เหตุที่อาจต้องยกเลิกการแข่งขัน ใครเป็นผู้ตัดสินใจสูงสุด
-        <p class="section__header--remark">
-          (ระบุชื่อและตำแหน่งในการดำเนินงาน)
-        </p>
-      </div>
-
-      <div class="section-content">
-        <div class="emergencyContact__line">
-          <div class="emergencyContact__item">
-            <label class="label">คำนำหน้า</label>
-            <div>
-              <app-com-input-text
-                id="emergencyContact.prefix"
-                placeholder="คำนำหน้า"
-                [form]="emergencyFormGroup"
-                controlName="prefix"
-                width="17.6rem"
-              ></app-com-input-text>
-
-              @if (!form.get('details.emergencyContact.prefix')?.valid &&
-              form.get('details.emergencyContact.prefix')?.touched &&
-              formTouched) {
-              <div class="error mgt-10">
-                <img src="/assets/error_icon.svg" alt="error icon" />
-                <p class="error__text">กรุณากรอกคำนำหน้า</p>
-              </div>
-              }
-            </div>
-          </div>
-
-          <div class="emergencyContact__item">
-            <label class="label">ชื่อ</label>
-            <div>
-              <app-com-input-text
-                id="emergencyContact.firstName"
-                placeholder="ชื่อ"
-                [form]="emergencyFormGroup"
-                controlName="firstName"
-                width="26rem"
-              ></app-com-input-text>
-
-              @if (!form.get('details.emergencyContact.firstName')?.valid &&
-              form.get('details.emergencyContact.firstName')?.touched &&
-              formTouched) {
-              <div class="error mgt-10">
-                <img src="/assets/error_icon.svg" alt="error icon" />
-                <p class="error__text">กรุณากรอกชื่อ</p>
-              </div>
-              }
-            </div>
-          </div>
-
-          <div class="emergencyContact__item">
-            <label class="label">นามสกุล</label>
-            <div>
-              <app-com-input-text
-                id="emergencyContact.lastName"
-                placeholder="นามสกุล"
-                [form]="emergencyFormGroup"
-                controlName="lastName"
-                width="26rem"
-              ></app-com-input-text>
-
-              @if (!form.get('details.emergencyContact.lastName')?.valid &&
-              form.get('details.emergencyContact.lastName')?.touched &&
-              formTouched) {
-              <div class="error mgt-10">
-                <img src="/assets/error_icon.svg" alt="error icon" />
-                <p class="error__text">กรุณากรอกนามสกุล</p>
-              </div>
-              }
-            </div>
-          </div>
-        </div>
-
-        <div class="emergencyContact__line">
-          <div class="emergencyContact__item">
-            <label class="label">ตำแหน่งในการจัดงานครั้งนี้</label>
-            <div>
-              <app-com-input-text
-                id="emergencyContact.eventPosition"
-                placeholder="ตำแหน่งในการจัดงานครั้งนี้"
-                [form]="emergencyFormGroup"
-                controlName="eventPosition"
-                width="29.9rem"
-              ></app-com-input-text>
-
-              @if (!form.get('details.emergencyContact.eventPosition')?.valid &&
-              form.get('details.emergencyContact.eventPosition')?.touched &&
-              formTouched) {
-              <div class="error mgt-10">
-                <img src="/assets/error_icon.svg" alt="error icon" />
-                <p class="error__text">กรุณากรอกตำแหน่งในการจัดงานครั้งนี้</p>
-              </div>
-              }
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- 3.3 Start -->
     <div class="section">
       <h3 class="section__header">
         3.3 โครงการมีการวัดระยะทางวิ่งและการจัดการจราจรอย่างไร

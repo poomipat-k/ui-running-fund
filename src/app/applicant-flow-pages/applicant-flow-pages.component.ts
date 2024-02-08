@@ -120,7 +120,7 @@ export class ApplicantFlowPagesComponent implements OnInit, OnDestroy {
 
     this.initForm();
     this.loadApplicantSelfScoreCriteria();
-    this.currentStep = 2;
+    this.currentStep = 3;
 
     this.subToUploadFileSubjects();
   }
@@ -299,7 +299,7 @@ export class ApplicantFlowPagesComponent implements OnInit, OnDestroy {
             },
             requiredCheckBoxToBeCheckedValidator()
           ),
-          // alternative
+          // alternative formGroup
         }),
         organization: new FormGroup({
           type: new FormControl(null, Validators.required),
@@ -308,12 +308,7 @@ export class ApplicantFlowPagesComponent implements OnInit, OnDestroy {
       }),
       details: new FormGroup({
         background: new FormControl(null, Validators.required),
-        emergencyContact: new FormGroup({
-          prefix: new FormControl(null, Validators.required),
-          firstName: new FormControl(null, Validators.required),
-          lastName: new FormControl(null, Validators.required),
-          eventPosition: new FormControl(null, Validators.required),
-        }),
+        objective: new FormControl(null, Validators.required),
         route: new FormGroup({
           measurement: new FormGroup(
             {

@@ -238,18 +238,6 @@
   }
 }
 
-.emergencyContact {
-  &__line {
-    display: flex;
-    gap: 1.4rem;
-  }
-
-  &__item {
-    display: flex;
-    gap: 8px;
-  }
-}
-
 .safety {
   display: flex;
   flex-direction: column;
@@ -385,8 +373,17 @@
 }
 
 .mgt {
+  &-8 {
+    margin-top: 8px;
+  }
   &-10 {
     margin-top: 10px;
+  }
+}
+
+.gap {
+  &-20 {
+    gap: 2rem;
   }
 }
 
