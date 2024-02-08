@@ -25,11 +25,13 @@ export class AttachmentComponent {
   @Input() marketingCount = 0;
   @Input() routeCount = 0;
   @Input() eventMapCount = 0;
+  @Input() eventDetailsCount = 0;
 
   @Input() proposalUploadButtonTouched = false;
   @Input() marketingUploadButtonTouched = false;
   @Input() routeUploadButtonTouched = false;
   @Input() eventMapUploadButtonTouched = false;
+  @Input() eventDetailsUploadButtonTouched = false;
 
   private readonly scroller: ViewportScroller = inject(ViewportScroller);
 
@@ -48,6 +50,10 @@ export class AttachmentComponent {
     }
     if (this.eventMapCount === 0) {
       this.scrollToId('eventMap');
+      return false;
+    }
+    if (this.eventDetailsCount === 0) {
+      this.scrollToId('eventDetails');
       return false;
     }
     return true;

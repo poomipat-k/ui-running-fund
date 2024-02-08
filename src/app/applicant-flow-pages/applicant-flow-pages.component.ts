@@ -97,6 +97,7 @@ export class ApplicantFlowPagesComponent implements OnInit, OnDestroy {
   protected marketingUploadButtonTouched = false;
   protected routeUploadButtonTouched = false;
   protected eventMapUploadButtonTouched = false;
+  protected eventDetailsUploadButtonTouched = false;
 
   protected showSuccessPopup = false;
   protected showErrorPopup = false;
@@ -120,7 +121,7 @@ export class ApplicantFlowPagesComponent implements OnInit, OnDestroy {
 
     this.initForm();
     this.loadApplicantSelfScoreCriteria();
-    this.currentStep = 5;
+    this.currentStep = 6;
 
     this.subToUploadFileSubjects();
   }
@@ -513,6 +514,7 @@ export class ApplicantFlowPagesComponent implements OnInit, OnDestroy {
       this.marketingUploadButtonTouched = true;
       this.routeUploadButtonTouched = true;
       this.eventMapUploadButtonTouched = true;
+      this.eventDetailsUploadButtonTouched = true;
     }
 
     if (this.currentStep === this.progressBarSteps.length) {

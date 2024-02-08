@@ -104,8 +104,15 @@
       <div class="uploadBox">
         <div>
           <app-com-upload-button
+            id="eventDetails"
             [filesSubject]="eventDetailsSubject"
           ></app-com-upload-button>
+          @if (eventDetailsCount === 0 && eventDetailsUploadButtonTouched) {
+          <div class="error">
+            <img src="/assets/error_icon.svg" alt="error icon" />
+            <p class="error__text">กรุณาอัพโหลดไฟล์</p>
+          </div>
+          }
         </div>
         <p class="uploadBox__text">
           แนะนำไฟล์ประเภท PDF, JPG ขนาดไม่เกิน 25 MB
