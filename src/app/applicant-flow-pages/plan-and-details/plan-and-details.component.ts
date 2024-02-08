@@ -297,22 +297,32 @@ export class PlanAndDetailsComponent {
   protected offlineAvailableOptions: CheckboxOption[] = [
     {
       id: 1,
-      controlName: 'booth',
-      display: 'การตั้งบูธประชาสัมพันธ์/ รับสมัคร',
+      controlName: 'pr',
+      display: 'ส่งหนังสือให้กับหน่วยงาน/องค์กรอื่นช่วยประชาสัมพันธ์',
     },
     {
       id: 2,
-      controlName: 'billboard',
-      display: 'กระจายสื่อในพื้นที่ เช่น ป้าย ไวนิล รถประชาสัมพันธ์',
-    },
-    {
-      id: 3,
-      controlName: 'local',
+      controlName: 'localOfficial',
       display:
         'ประชาสัมพันธ์ผ่านบุคคลในพื้นที่ เช่น กำนัน ผู้ใหญ่บ้าน อสม. ชมรมวิ่ง',
     },
     {
+      id: 3,
+      controlName: 'booth',
+      display: 'การตั้งบูธประชาสัมพันธ์/ รับสมัคร',
+    },
+    {
       id: 4,
+      controlName: 'billboard',
+      display: 'กระจายสื่อในพื้นที่ เช่น ป้าย ไวนิล รถประชาสัมพันธ์',
+    },
+    {
+      id: 5,
+      controlName: 'tv',
+      display: 'การลงข่าวหรือโฆษณาทาง TV',
+    },
+    {
+      id: 6,
       controlName: 'other',
       display: 'ช่องทางออฟไลน์อื่น ๆ ระบุ',
       onChanged: this.onOfflineAdditionChanged.bind(this),

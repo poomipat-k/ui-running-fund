@@ -309,6 +309,36 @@ export class ApplicantFlowPagesComponent implements OnInit, OnDestroy {
       details: new FormGroup({
         background: new FormControl(null, Validators.required),
         objective: new FormControl(null, Validators.required),
+        marketing: new FormGroup({
+          online: new FormGroup({
+            available: new FormGroup(
+              {
+                facebook: new FormControl(false),
+                website: new FormControl(false),
+                onlinePage: new FormControl(false),
+                other: new FormControl(false),
+              },
+              requiredCheckBoxToBeCheckedValidator()
+            ),
+            howTo: new FormGroup({}),
+          }),
+
+          offline: new FormGroup({
+            available: new FormGroup(
+              {
+                pr: new FormControl(false),
+                localOfficial: new FormControl(false),
+                booth: new FormControl(false),
+                billboard: new FormControl(false),
+                tv: new FormControl(false),
+                other: new FormControl(false),
+              },
+              requiredCheckBoxToBeCheckedValidator()
+            ),
+            // Conditionally set
+            // addition: new FormControl(null),
+          }),
+        }),
         route: new FormGroup({
           measurement: new FormGroup(
             {
@@ -365,34 +395,6 @@ export class ApplicantFlowPagesComponent implements OnInit, OnDestroy {
           ),
           // Conditionally set
           // addition: new FormControl(null, Validators.required)
-        }),
-        marketing: new FormGroup({
-          online: new FormGroup({
-            available: new FormGroup(
-              {
-                facebook: new FormControl(false),
-                website: new FormControl(false),
-                onlinePage: new FormControl(false),
-                other: new FormControl(false),
-              },
-              requiredCheckBoxToBeCheckedValidator()
-            ),
-            howTo: new FormGroup({}),
-          }),
-
-          offline: new FormGroup({
-            available: new FormGroup(
-              {
-                booth: new FormControl(false),
-                billboard: new FormControl(false),
-                local: new FormControl(false),
-                other: new FormControl(false),
-              },
-              requiredCheckBoxToBeCheckedValidator()
-            ),
-            // Conditionally set
-            // addition: new FormControl(null),
-          }),
         }),
         score: new FormGroup({}),
         feedback: new FormControl(null, Validators.required),
