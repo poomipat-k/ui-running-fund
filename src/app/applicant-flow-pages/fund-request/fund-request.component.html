@@ -106,7 +106,7 @@
           <app-com-checkbox
             [form]="requestTypeFormGroup"
             controlName="bib"
-            display="เบอร์วิ่ง (Bib) จำนวน"
+            display="เบอร์วิ่ง (BIB) จำนวน"
             gap="8px"
             fontSize="16px"
             [onChanged]="onNeedBibChanged"
@@ -133,6 +133,19 @@
         </div>
         <p class="line__unit">ใบ</p>
         }
+      </div>
+      <!-- PR -->
+      <div class="line">
+        <div [ngClass]="{ line__checkbox: needBib }">
+          <app-com-checkbox
+            [form]="requestTypeFormGroup"
+            controlName="pr"
+            display="การประชาสัมพันธ์กิจกรรม และการรับสมัคร"
+            gap="8px"
+            fontSize="16px"
+          >
+          </app-com-checkbox>
+        </div>
       </div>
       <!-- SEMINAR -->
       <div class="line">
