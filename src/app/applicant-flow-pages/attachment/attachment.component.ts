@@ -15,19 +15,16 @@ export class AttachmentComponent {
   @Input() form: FormGroup;
   @Input() enableScroll = false;
 
-  @Input() proposalSubject: BehaviorSubject<File[]>;
   @Input() marketingSubject: BehaviorSubject<File[]>;
   @Input() routeSubject: BehaviorSubject<File[]>;
   @Input() eventMapSubject: BehaviorSubject<File[]>;
   @Input() eventDetailsSubject: BehaviorSubject<File[]>;
 
-  @Input() proposalCount = 0;
   @Input() marketingCount = 0;
   @Input() routeCount = 0;
   @Input() eventMapCount = 0;
   @Input() eventDetailsCount = 0;
 
-  @Input() proposalUploadButtonTouched = false;
   @Input() marketingUploadButtonTouched = false;
   @Input() routeUploadButtonTouched = false;
   @Input() eventMapUploadButtonTouched = false;
@@ -36,10 +33,6 @@ export class AttachmentComponent {
   private readonly scroller: ViewportScroller = inject(ViewportScroller);
 
   public validToGoNext(): boolean {
-    if (this.proposalCount === 0) {
-      this.scrollToId('proposal');
-      return false;
-    }
     if (this.marketingCount === 0) {
       this.scrollToId('marketing');
       return false;

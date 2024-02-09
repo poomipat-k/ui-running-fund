@@ -75,9 +75,6 @@ export class ApplicantFlowPagesComponent implements OnInit, OnDestroy {
   protected collaborationFiles: File[] = [];
   protected collaborationFilesSubject = new BehaviorSubject<File[]>([]);
 
-  protected proposalFiles: File[] = [];
-  protected proposalFilesSubject = new BehaviorSubject<File[]>([]);
-
   protected marketingFiles: File[] = [];
   protected marketingFilesSubject = new BehaviorSubject<File[]>([]);
 
@@ -93,7 +90,6 @@ export class ApplicantFlowPagesComponent implements OnInit, OnDestroy {
   // Files upload end
 
   protected collaborationUploadButtonTouched = false;
-  protected proposalUploadButtonTouched = false;
   protected marketingUploadButtonTouched = false;
   protected routeUploadButtonTouched = false;
   protected eventMapUploadButtonTouched = false;
@@ -121,7 +117,7 @@ export class ApplicantFlowPagesComponent implements OnInit, OnDestroy {
 
     this.initForm();
     this.loadApplicantSelfScoreCriteria();
-    this.currentStep = 6;
+    // this.currentStep = 0;
 
     this.subToUploadFileSubjects();
   }
@@ -134,12 +130,6 @@ export class ApplicantFlowPagesComponent implements OnInit, OnDestroy {
     this.subs.push(
       this.collaborationFilesSubject.subscribe((files) => {
         this.collaborationFiles = files;
-      })
-    );
-
-    this.subs.push(
-      this.proposalFilesSubject.subscribe((files) => {
-        this.proposalFiles = files;
       })
     );
 
@@ -510,7 +500,6 @@ export class ApplicantFlowPagesComponent implements OnInit, OnDestroy {
   protected nextPage(): void {
     this.collaborationUploadButtonTouched = true;
     if (this.currentStep >= 6) {
-      this.proposalUploadButtonTouched = true;
       this.marketingUploadButtonTouched = true;
       this.routeUploadButtonTouched = true;
       this.eventMapUploadButtonTouched = true;
@@ -583,11 +572,6 @@ export class ApplicantFlowPagesComponent implements OnInit, OnDestroy {
       for (let i = 0; i < this.collaborationFiles.length; i++) {
         // to change "files" to "collaborationFiles"
         formData.append('collaborationFiles', this.collaborationFiles[i]);
-      }
-    }
-    if (this.proposalFiles) {
-      for (let i = 0; i < this.proposalFiles.length; i++) {
-        formData.append('files', this.proposalFiles[i]);
       }
     }
     if (this.marketingFiles) {

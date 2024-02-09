@@ -43,6 +43,21 @@
     align-items: flex-start;
   }
 
+  &__exampleBox {
+    display: flex;
+    gap: 1rem;
+  }
+
+  &__uploadExampleLink {
+    color: #ec4a0a;
+    font-family: $custom-font-looped;
+    font-size: 1.4rem;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    text-decoration: underline;
+  }
+
   &__uploadLabel {
     color: $black;
     text-align: center;
