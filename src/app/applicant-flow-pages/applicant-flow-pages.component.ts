@@ -117,7 +117,7 @@ export class ApplicantFlowPagesComponent implements OnInit, OnDestroy {
 
     this.initForm();
     this.loadApplicantSelfScoreCriteria();
-    // this.currentStep = 0;
+    this.currentStep = 0;
 
     this.subToUploadFileSubjects();
   }
@@ -576,22 +576,22 @@ export class ApplicantFlowPagesComponent implements OnInit, OnDestroy {
     }
     if (this.marketingFiles) {
       for (let i = 0; i < this.marketingFiles.length; i++) {
-        formData.append('files', this.marketingFiles[i]);
+        formData.append('marketingFiles', this.marketingFiles[i]);
       }
     }
     if (this.routeFiles) {
       for (let i = 0; i < this.routeFiles.length; i++) {
-        formData.append('files', this.routeFiles[i]);
+        formData.append('routeFiles', this.routeFiles[i]);
       }
     }
     if (this.eventMapFiles) {
       for (let i = 0; i < this.eventMapFiles.length; i++) {
-        formData.append('files', this.eventMapFiles[i]);
+        formData.append('eventMapFiles', this.eventMapFiles[i]);
       }
     }
     if (this.eventDetailsFiles) {
       for (let i = 0; i < this.eventDetailsFiles.length; i++) {
-        formData.append('files', this.eventDetailsFiles[i]);
+        formData.append('eventDetailsFiles', this.eventDetailsFiles[i]);
       }
     }
     formData.append('form', JSON.stringify(this.form.value));
