@@ -16,7 +16,7 @@ import {
 } from '@angular/forms';
 import { Router } from '@angular/router';
 import html2canvas from 'html2canvas';
-import { BehaviorSubject, Subscription, from, throwError } from 'rxjs';
+import { BehaviorSubject, Subscription, concatMap, from } from 'rxjs';
 
 import { ErrorPopupComponent } from '../components/error-popup/error-popup.component';
 import { ProgressBarStepsComponent } from '../components/progress-bar-steps/progress-bar-steps.component';
@@ -623,44 +623,43 @@ export class ApplicantFlowPagesComponent implements OnInit, OnDestroy {
           this.dataUrlToFile(ss.data, `${ss.name}.png`)
         )
       )
-    ).subscribe({
-      next: (screenshotFiles) => {
-        console.log('===screenshotFiles', screenshotFiles);
-        for (let i = 0; i < screenshotFiles.length; i++) {
-          if (!screenshotFiles[i]) {
-            console.log('==empty');
-            throwError(() => new Error('Empty Error'));
+    )
+      .pipe(
+        concatMap((screenshotFiles) => {
+          console.log('===screenshotFiles', screenshotFiles);
+          for (let i = 0; i < screenshotFiles.length; i++) {
+            // CollaborationFiles is an optional
+            if (i !== 0 && !screenshotFiles[i]) {
+              console.log('===i', i);
+              throw new Error(
+                'ไม่สามารถสร้างข้อมูล snapshot เพื่ออัพโหลดแบบฟอร์มได้'
+              );
+            }
+            formData.append('screenshotFiles', screenshotFiles[i]);
           }
-          formData.append('screenshotFiles', screenshotFiles[i]);
-        }
-
-        // Form Data
-        formData.append('form', JSON.stringify(this.form.value));
-        this.subs.push(
-          this.projectService.addProject(formData).subscribe({
-            next: (result) => {
-              if (result) {
-                this.form.disable();
-                this.showSuccessPopup = true;
-                setTimeout(() => {
-                  this.showSuccessPopup = false;
-                  this.currentStep++;
-                }, 2000);
-              }
-            },
-            error: () => {
-              this.showErrorPopup = true;
-              setTimeout(() => {
-                this.showErrorPopup = false;
-              }, 2000);
-            },
-          })
-        );
-      },
-      error: (error) => {
-        console.error('Error generate screenshots files err:', error);
-      },
-    });
+          formData.append('form', JSON.stringify(this.form.value));
+          return this.projectService.addProject(formData);
+        })
+      )
+      .subscribe({
+        next: (result) => {
+          if (result) {
+            this.form.disable();
+            this.showSuccessPopup = true;
+            setTimeout(() => {
+              this.showSuccessPopup = false;
+              this.currentStep++;
+            }, 2000);
+          }
+        },
+        error: (err) => {
+          console.error(err);
+          this.showErrorPopup = true;
+          setTimeout(() => {
+            this.showErrorPopup = false;
+          }, 2000);
+        },
+      });
   }
 
   prevPage() {
