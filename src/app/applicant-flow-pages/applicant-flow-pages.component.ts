@@ -1,5 +1,12 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnDestroy, OnInit, ViewChild, inject } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  OnDestroy,
+  OnInit,
+  ViewChild,
+  inject,
+} from '@angular/core';
 import {
   FormArray,
   FormControl,
@@ -8,7 +15,9 @@ import {
   Validators,
 } from '@angular/forms';
 import { Router } from '@angular/router';
-import { BehaviorSubject, Subscription } from 'rxjs';
+import html2canvas from 'html2canvas';
+import { BehaviorSubject, Subscription, from, throwError } from 'rxjs';
+
 import { ErrorPopupComponent } from '../components/error-popup/error-popup.component';
 import { ProgressBarStepsComponent } from '../components/progress-bar-steps/progress-bar-steps.component';
 import { SuccessPopupComponent } from '../components/success-popup/success-popup.component';
@@ -54,6 +63,7 @@ import { SuccessComponent } from './success/success.component';
   styleUrl: './applicant-flow-pages.component.scss',
 })
 export class ApplicantFlowPagesComponent implements OnInit, OnDestroy {
+  @ViewChild('captureTarget') captureTarget: ElementRef;
   @ViewChild('collaborateComponent') collaborateComponent: CollaborateComponent;
   @ViewChild('generalDetailsComponent')
   generalDetailsComponent: GeneralDetailsComponent;
@@ -71,6 +81,8 @@ export class ApplicantFlowPagesComponent implements OnInit, OnDestroy {
   private readonly subs: Subscription[] = [];
   private router: Router = inject(Router);
 
+  private screenshots: { name: string; data: string }[] = new Array(6);
+
   // Files upload variables
   protected collaborationFiles: File[] = [];
   protected collaborationFilesSubject = new BehaviorSubject<File[]>([]);
@@ -86,6 +98,8 @@ export class ApplicantFlowPagesComponent implements OnInit, OnDestroy {
 
   protected eventDetailsFiles: File[] = [];
   protected eventDetailsFilesSubject = new BehaviorSubject<File[]>([]);
+
+  protected screenshotFiles: File[] = [];
 
   // Files upload end
 
@@ -519,41 +533,48 @@ export class ApplicantFlowPagesComponent implements OnInit, OnDestroy {
 
     if (this.currentStep === 0 && this.collaborateComponent.validToGoNext()) {
       console.log('===nextPage', this.form);
+      this.capture(this.currentStep);
       this.currentStep++;
     } else if (
       this.currentStep === 1 &&
       this.generalDetailsComponent.validToGoNext()
     ) {
       console.log('===nextPage', this.form);
+      this.capture(this.currentStep);
       this.currentStep++;
     } else if (
       this.currentStep === 2 &&
       this.contactComponent.validToGoNext()
     ) {
+      this.capture(this.currentStep);
       console.log('===nextPage', this.form);
       this.currentStep++;
     } else if (
       this.currentStep === 3 &&
       this.planAndDetailsComponent.validToGoNext()
     ) {
+      this.capture(this.currentStep);
       console.log('===nextPage', this.form);
       this.currentStep++;
     } else if (
       this.currentStep === 4 &&
       this.experienceComponent.validToGoNext()
     ) {
+      this.capture(this.currentStep);
       console.log('===nextPage', this.form);
       this.currentStep++;
     } else if (
       this.currentStep === 5 &&
       this.fundRequestComponent.validToGoNext()
     ) {
+      this.capture(this.currentStep);
       console.log('===nextPage', this.form);
       this.currentStep++;
     } else if (
       this.currentStep === 6 &&
       this.attachmentComponent.validToGoNext()
     ) {
+      this.capture(this.currentStep);
       console.log('===nextPage', this.form);
       this.currentStep++;
     } else {
@@ -594,28 +615,52 @@ export class ApplicantFlowPagesComponent implements OnInit, OnDestroy {
         formData.append('eventDetailsFiles', this.eventDetailsFiles[i]);
       }
     }
-    formData.append('form', JSON.stringify(this.form.value));
 
-    this.subs.push(
-      this.projectService.addProject(formData).subscribe({
-        next: (result) => {
-          if (result) {
-            this.form.disable();
-            this.showSuccessPopup = true;
-            setTimeout(() => {
-              this.showSuccessPopup = false;
-              this.currentStep++;
-            }, 2000);
+    // upload snapshots
+    from(
+      Promise.all(
+        this.screenshots.map((ss) =>
+          this.dataUrlToFile(ss.data, `${ss.name}.png`)
+        )
+      )
+    ).subscribe({
+      next: (screenshotFiles) => {
+        console.log('===screenshotFiles', screenshotFiles);
+        for (let i = 0; i < screenshotFiles.length; i++) {
+          if (!screenshotFiles[i]) {
+            console.log('==empty');
+            throwError(() => new Error('Empty Error'));
           }
-        },
-        error: () => {
-          this.showErrorPopup = true;
-          setTimeout(() => {
-            this.showErrorPopup = false;
-          }, 2000);
-        },
-      })
-    );
+          formData.append('screenshotFiles', screenshotFiles[i]);
+        }
+
+        // Form Data
+        formData.append('form', JSON.stringify(this.form.value));
+        this.subs.push(
+          this.projectService.addProject(formData).subscribe({
+            next: (result) => {
+              if (result) {
+                this.form.disable();
+                this.showSuccessPopup = true;
+                setTimeout(() => {
+                  this.showSuccessPopup = false;
+                  this.currentStep++;
+                }, 2000);
+              }
+            },
+            error: () => {
+              this.showErrorPopup = true;
+              setTimeout(() => {
+                this.showErrorPopup = false;
+              }, 2000);
+            },
+          })
+        );
+      },
+      error: (error) => {
+        console.error('Error generate screenshots files err:', error);
+      },
+    });
   }
 
   prevPage() {
@@ -651,5 +696,24 @@ export class ApplicantFlowPagesComponent implements OnInit, OnDestroy {
         );
       });
     }
+  }
+
+  private capture(index: number) {
+    this.subs.push(
+      from(
+        html2canvas(this.captureTarget.nativeElement, {
+          logging: false,
+        })
+      ).subscribe((canvas) => {
+        const base64Image = canvas.toDataURL('image/png');
+        this.screenshots[index] = { name: `p${index}`, data: base64Image };
+      })
+    );
+  }
+
+  async dataUrlToFile(dataUrl: string, fileName: string): Promise<File> {
+    const res: Response = await fetch(dataUrl);
+    const blob: Blob = await res.blob();
+    return new File([blob], fileName, { type: 'image/png' });
   }
 }
