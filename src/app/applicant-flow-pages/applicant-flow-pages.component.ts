@@ -584,6 +584,7 @@ export class ApplicantFlowPagesComponent implements OnInit, OnDestroy {
 
   clearSelectedFiles() {
     this.collaborationFiles = [];
+    this.collaborationFilesSubject.next([]);
   }
 
   submitForm() {
@@ -630,9 +631,8 @@ export class ApplicantFlowPagesComponent implements OnInit, OnDestroy {
           for (let i = 0; i < screenshotFiles.length; i++) {
             // CollaborationFiles is an optional
             if (i !== 0 && !screenshotFiles[i]) {
-              console.log('===i', i);
               throw new Error(
-                'ไม่สามารถสร้างข้อมูล snapshot เพื่ออัพโหลดแบบฟอร์มได้'
+                'ไม่สามารถสร้างข้อมูล screenshot เพื่ออัพโหลดแบบฟอร์มได้'
               );
             }
             formData.append('screenshotFiles', screenshotFiles[i]);
@@ -706,6 +706,7 @@ export class ApplicantFlowPagesComponent implements OnInit, OnDestroy {
       ).subscribe((canvas) => {
         const base64Image = canvas.toDataURL('image/png');
         this.screenshots[index] = { name: `p${index}`, data: base64Image };
+        console.log('==this.screenshots', this.screenshots);
       })
     );
   }

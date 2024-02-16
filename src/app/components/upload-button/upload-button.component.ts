@@ -24,6 +24,7 @@ export class UploadButtonComponent implements OnInit, OnDestroy {
     if (this.filesSubject) {
       this.subs.push(
         this.filesSubject.subscribe((filesTransmit) => {
+          console.log('===filesTransmit', filesTransmit);
           this.files = filesTransmit;
         })
       );
