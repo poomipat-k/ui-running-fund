@@ -11,6 +11,7 @@ import {
 } from '@angular/core';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { Subscription } from 'rxjs';
+import { ScreenshotService } from '../../services/screenshot.service';
 
 @Component({
   selector: 'app-com-select-dropdown',
@@ -33,6 +34,10 @@ export class SelectDropdownComponent implements OnInit, OnDestroy {
   @Input() disabled = false;
   @Input() onChange: () => void;
 
+  protected capturing = false;
+
+  private readonly screenshotService: ScreenshotService =
+    inject(ScreenshotService);
   private readonly subs: Subscription[] = [];
 
   private listenerFn = () => {};
@@ -67,11 +72,15 @@ export class SelectDropdownComponent implements OnInit, OnDestroy {
     */
     this.listenerFn = this.renderer.listen('window', 'click', (e: Event) => {
       if (
-        e.target !== this.selectDropdownButton.nativeElement &&
-        e.target !== this.inputIcon.nativeElement
+        e.target !== this.selectDropdownButton?.nativeElement &&
+        e.target !== this.inputIcon?.nativeElement
       ) {
         this.hideDropdown();
       }
+    });
+
+    this.screenshotService.screenshotCapturing$.subscribe((capturing) => {
+      this.capturing = capturing;
     });
   }
 

@@ -703,12 +703,6 @@ export class ApplicantFlowPagesComponent implements OnInit, OnDestroy {
     }
   }
 
-  private prepareForScreenshot() {
-    document.querySelectorAll('input[type="text"]')?.forEach((elem) => elem);
-  }
-
-  private cleanupScreenshotConfig() {}
-
   private capture(index: number) {
     this.screenshotService.changeCapturingStateTo(true);
     // manually detect changes to update view since Angular can't update view in-time
