@@ -1,17 +1,30 @@
-import { Component, Input } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { Component, Input, OnInit, inject } from '@angular/core';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { ScreenshotService } from '../../services/screenshot.service';
 
 @Component({
   selector: 'app-com-input-text',
   standalone: true,
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, CommonModule],
   templateUrl: './input-text.component.html',
   styleUrl: './input-text.component.scss',
 })
-export class InputTextComponent {
+export class InputTextComponent implements OnInit {
   @Input() form: FormGroup;
   @Input() controlName: string;
   @Input() placeholder = '';
   @Input() width = '100%';
   @Input() margin = '0';
+
+  protected capturing = false;
+  private readonly screenshotService: ScreenshotService =
+    inject(ScreenshotService);
+
+  ngOnInit(): void {
+    this.screenshotService.screenshotCapturing$.subscribe((capturing) => {
+      console.log('==capturing', capturing);
+      this.capturing = capturing;
+    });
+  }
 }

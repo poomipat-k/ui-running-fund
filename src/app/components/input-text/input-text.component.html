@@ -1,9 +1,9 @@
 <ng-container [formGroup]="form">
   <input
     type="text"
-    class="input"
     [placeholder]="placeholder"
     [style]="{ width: width, margin: margin }"
     [formControlName]="controlName"
+    [ngClass]="{ input: true, 'input--screenCapturing': capturing }"
   />
 </ng-container>

@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import {
+  ChangeDetectorRef,
   Component,
   ElementRef,
   OnDestroy,
@@ -15,15 +16,16 @@ import {
   Validators,
 } from '@angular/forms';
 import { Router } from '@angular/router';
-import html2canvas from 'html2canvas';
 import { BehaviorSubject, Subscription, concatMap, from } from 'rxjs';
 
+import html2canvas from 'html2canvas';
 import { ErrorPopupComponent } from '../components/error-popup/error-popup.component';
 import { ProgressBarStepsComponent } from '../components/progress-bar-steps/progress-bar-steps.component';
 import { SuccessPopupComponent } from '../components/success-popup/success-popup.component';
 import { ArrowForwardComponent } from '../components/svg/arrow-forward/arrow-forward.component';
 import { DateService } from '../services/date.service';
 import { ProjectService } from '../services/project.service';
+import { ScreenshotService } from '../services/screenshot.service';
 import { ThemeService } from '../services/theme.service';
 import { BackgroundColor } from '../shared/enums/background-color';
 import { ApplicantCriteria } from '../shared/models/applicant-criteria';
@@ -77,6 +79,10 @@ export class ApplicantFlowPagesComponent implements OnInit, OnDestroy {
   private readonly themeService: ThemeService = inject(ThemeService);
   private readonly projectService: ProjectService = inject(ProjectService);
   private readonly dateService: DateService = inject(DateService);
+  private readonly changeDetectorRef: ChangeDetectorRef =
+    inject(ChangeDetectorRef);
+  private readonly screenshotService: ScreenshotService =
+    inject(ScreenshotService);
 
   private readonly subs: Subscription[] = [];
   private router: Router = inject(Router);
@@ -697,17 +703,34 @@ export class ApplicantFlowPagesComponent implements OnInit, OnDestroy {
     }
   }
 
+  private prepareForScreenshot() {
+    document.querySelectorAll('input[type="text"]')?.forEach((elem) => elem);
+  }
+
+  private cleanupScreenshotConfig() {}
+
   private capture(index: number) {
+    this.screenshotService.changeCapturingStateTo(true);
+    // manually detect changes to update view since Angular can't update view in-time
+    // before we took a screenshot
+    this.changeDetectorRef.detectChanges();
+
     this.subs.push(
       from(
         html2canvas(this.captureTarget.nativeElement, {
           logging: false,
         })
-      ).subscribe((canvas) => {
-        const base64Image = canvas.toDataURL('image/png');
-        this.screenshots[index] = { name: `p${index}`, data: base64Image };
-        console.log('==this.screenshots', this.screenshots);
-        console.log(this.screenshots[index].data);
+      ).subscribe({
+        next: (canvas) => {
+          const base64Image = canvas.toDataURL('image/png');
+          this.screenshots[index] = { name: `p${index}`, data: base64Image };
+          console.log({ data: this.screenshots[index].data });
+        },
+        complete: () => {
+          // style.remove();
+
+          this.screenshotService.changeCapturingStateTo(false);
+        },
       })
     );
   }

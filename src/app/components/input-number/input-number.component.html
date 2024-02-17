@@ -1,7 +1,7 @@
 <ng-container [formGroup]="form">
   <input
     type="number"
-    class="input"
+    [ngClass]="{ input: true, 'input--screenCapturing': capturing }"
     [placeholder]="placeholder"
     [style]="{ width: width, margin: margin }"
     [formControlName]="controlName"
