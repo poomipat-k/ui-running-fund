@@ -567,7 +567,7 @@ export class GeneralDetailsComponent implements OnInit, OnDestroy {
   // TODO: remove this func for dev purpose
   patchForm() {
     this.generalFormGroup.patchValue({
-      projectName: 'a',
+      projectName: 'พี่อุิ๊กระบี่',
       eventDate: {
         year: 2024,
         month: 2,
@@ -578,7 +578,7 @@ export class GeneralDetailsComponent implements OnInit, OnDestroy {
         toMinute: 2,
       },
       address: {
-        address: 'DUMMY',
+        address: 'พี่อุิ๊กระบี่',
       },
       startPoint: 'x',
       finishPoint: 'y',

@@ -131,7 +131,7 @@ export class ApplicantFlowPagesComponent implements OnInit, OnDestroy {
 
     this.initForm();
     this.loadApplicantSelfScoreCriteria();
-    this.currentStep = 0;
+    this.currentStep = 1;
 
     this.subToUploadFileSubjects();
   }
@@ -536,12 +536,12 @@ export class ApplicantFlowPagesComponent implements OnInit, OnDestroy {
       this.capture(this.currentStep);
       this.currentStep++;
     } else if (
-      this.currentStep === 1 &&
-      this.generalDetailsComponent.validToGoNext()
+      this.currentStep === 1
+      // this.generalDetailsComponent.validToGoNext()
     ) {
       console.log('===nextPage', this.form);
       this.capture(this.currentStep);
-      this.currentStep++;
+      // this.currentStep++;
     } else if (
       this.currentStep === 2 &&
       this.contactComponent.validToGoNext()
@@ -631,9 +631,9 @@ export class ApplicantFlowPagesComponent implements OnInit, OnDestroy {
           for (let i = 0; i < screenshotFiles.length; i++) {
             // CollaborationFiles is an optional
             if (i !== 0 && !screenshotFiles[i]) {
-              throw new Error(
-                'ไม่สามารถสร้างข้อมูล screenshot เพื่ออัพโหลดแบบฟอร์มได้'
-              );
+              // throw new Error(
+              //   'ไม่สามารถสร้างข้อมูล screenshot เพื่ออัพโหลดแบบฟอร์มได้'
+              // );
             }
             formData.append('screenshotFiles', screenshotFiles[i]);
           }
@@ -707,6 +707,7 @@ export class ApplicantFlowPagesComponent implements OnInit, OnDestroy {
         const base64Image = canvas.toDataURL('image/png');
         this.screenshots[index] = { name: `p${index}`, data: base64Image };
         console.log('==this.screenshots', this.screenshots);
+        console.log(this.screenshots[index].data);
       })
     );
   }
