@@ -23,7 +23,6 @@ export class InputTextComponent implements OnInit {
 
   ngOnInit(): void {
     this.screenshotService.screenshotCapturing$.subscribe((capturing) => {
-      console.log('==capturing', capturing);
       this.capturing = capturing;
     });
   }

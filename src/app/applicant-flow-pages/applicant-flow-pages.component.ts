@@ -727,8 +727,6 @@ export class ApplicantFlowPagesComponent implements OnInit, OnDestroy {
           console.log({ data: this.screenshots[index].data });
         },
         complete: () => {
-          // style.remove();
-
           this.screenshotService.changeCapturingStateTo(false);
         },
       })

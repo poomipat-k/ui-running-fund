@@ -23,7 +23,6 @@ export class InputNumberComponent {
 
   ngOnInit(): void {
     this.screenshotService.screenshotCapturing$.subscribe((capturing) => {
-      console.log('==capturing', capturing);
       this.capturing = capturing;
     });
   }
