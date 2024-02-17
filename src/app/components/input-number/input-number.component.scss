@@ -16,10 +16,6 @@
   box-shadow: 0px 1px 2px 0px rgba(16, 24, 40, 0.05);
   width: 100%;
 
-  &--screenCapturing {
-    box-shadow: none;
-  }
-
   &::placeholder {
     color: #667085;
   }
@@ -48,4 +44,17 @@ input::-webkit-inner-spin-button {
 input[type="number"] {
   -moz-appearance: textfield;
   appearance: none;
+}
+
+.capture {
+  height: 4.4rem;
+  padding: 1rem 1.4rem;
+  border: 1px solid #d0d5dd;
+  border-radius: 8px;
+
+  font-family: $custom-font-looped;
+  font-size: 1.6rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
 }

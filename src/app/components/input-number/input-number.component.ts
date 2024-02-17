@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common';
 import { Component, Input, inject } from '@angular/core';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { ScreenshotService } from '../../services/screenshot.service';
@@ -6,7 +5,7 @@ import { ScreenshotService } from '../../services/screenshot.service';
 @Component({
   selector: 'app-com-input-number',
   standalone: true,
-  imports: [ReactiveFormsModule, CommonModule],
+  imports: [ReactiveFormsModule],
   templateUrl: './input-number.component.html',
   styleUrl: './input-number.component.scss',
 })
@@ -20,6 +19,10 @@ export class InputNumberComponent {
   protected capturing = false;
   private readonly screenshotService: ScreenshotService =
     inject(ScreenshotService);
+
+  get captureDisplay() {
+    return this.form?.value?.[this.controlName] || '';
+  }
 
   ngOnInit(): void {
     this.screenshotService.screenshotCapturing$.subscribe((capturing) => {

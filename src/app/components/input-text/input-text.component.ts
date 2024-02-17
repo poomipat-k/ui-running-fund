@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common';
 import { Component, Input, OnInit, inject } from '@angular/core';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { ScreenshotService } from '../../services/screenshot.service';
@@ -6,7 +5,7 @@ import { ScreenshotService } from '../../services/screenshot.service';
 @Component({
   selector: 'app-com-input-text',
   standalone: true,
-  imports: [ReactiveFormsModule, CommonModule],
+  imports: [ReactiveFormsModule],
   templateUrl: './input-text.component.html',
   styleUrl: './input-text.component.scss',
 })
@@ -18,8 +17,13 @@ export class InputTextComponent implements OnInit {
   @Input() margin = '0';
 
   protected capturing = false;
+
   private readonly screenshotService: ScreenshotService =
     inject(ScreenshotService);
+
+  get captureDisplay() {
+    return this.form?.value?.[this.controlName] || '';
+  }
 
   ngOnInit(): void {
     this.screenshotService.screenshotCapturing$.subscribe((capturing) => {
