@@ -29,6 +29,7 @@ import { ScreenshotService } from '../services/screenshot.service';
 import { ThemeService } from '../services/theme.service';
 import { BackgroundColor } from '../shared/enums/background-color';
 import { ApplicantCriteria } from '../shared/models/applicant-criteria';
+import { ScreenshotPage } from '../shared/models/screenshot-page';
 import { requiredCheckBoxToBeCheckedValidator } from '../shared/validators/requiredCheckbox';
 import { requiredCheckBoxFormArrayToBeCheckedValidator } from '../shared/validators/requiredCheckboxFormArray';
 import { AttachmentComponent } from './attachment/attachment.component';
@@ -87,7 +88,7 @@ export class ApplicantFlowPagesComponent implements OnInit, OnDestroy {
   private readonly subs: Subscription[] = [];
   private router: Router = inject(Router);
 
-  private screenshots: { name: string; data: string }[] = new Array(6);
+  private screenshots: ScreenshotPage[] = new Array(6);
   private fileType = 'image/png';
 
   // Files upload variables
@@ -544,37 +545,61 @@ export class ApplicantFlowPagesComponent implements OnInit, OnDestroy {
 
     if (this.currentStep === 0 && this.collaborateComponent.validToGoNext()) {
       console.log('===nextPage', this.form);
-      this.capture(this.currentStep, this.incrementStep);
+      this.capture(
+        this.currentStep,
+        [this.captureTarget.nativeElement],
+        this.incrementStep
+      );
     } else if (
       this.currentStep === 1 &&
       this.generalDetailsComponent.validToGoNext()
     ) {
       console.log('===nextPage', this.form);
-      this.capture(this.currentStep, this.incrementStep);
+      this.capture(
+        this.currentStep,
+        [this.captureTarget.nativeElement],
+        this.incrementStep
+      );
     } else if (
       this.currentStep === 2 &&
       this.contactComponent.validToGoNext()
     ) {
       console.log('===nextPage', this.form);
-      this.capture(this.currentStep, this.incrementStep);
+      this.capture(
+        this.currentStep,
+        [this.captureTarget.nativeElement],
+        this.incrementStep
+      );
     } else if (
-      this.currentStep === 3 &&
-      this.planAndDetailsComponent.validToGoNext()
+      this.currentStep === 3
+      // this.planAndDetailsComponent.validToGoNext()
     ) {
       console.log('===nextPage', this.form);
-      this.capture(this.currentStep, this.incrementStep);
+      this.capture(
+        this.currentStep,
+        [this.captureTarget.nativeElement]
+        // this.incrementStep
+      );
     } else if (
       this.currentStep === 4 &&
       this.experienceComponent.validToGoNext()
     ) {
       console.log('===nextPage', this.form);
-      this.capture(this.currentStep, this.incrementStep);
+      this.capture(
+        this.currentStep,
+        [this.captureTarget.nativeElement],
+        this.incrementStep
+      );
     } else if (
       this.currentStep === 5 &&
       this.fundRequestComponent.validToGoNext()
     ) {
       console.log('===nextPage', this.form);
-      this.capture(this.currentStep, this.incrementStep);
+      this.capture(
+        this.currentStep,
+        [this.captureTarget.nativeElement],
+        this.incrementStep
+      );
     } else if (
       this.currentStep === 6 &&
       this.attachmentComponent.validToGoNext()
@@ -624,9 +649,13 @@ export class ApplicantFlowPagesComponent implements OnInit, OnDestroy {
     // upload snapshots
     from(
       Promise.all(
-        this.screenshots.map((ss) =>
-          this.dataUrlToFile(ss.data, `${ss.name}.png`)
-        )
+        this.screenshots
+          .map((p) => {
+            return p.page.map((ss) =>
+              this.dataUrlToFile(ss.base64, `${ss.name}.${ss.fileExtension}`)
+            );
+          })
+          .flat()
       )
     )
       .pipe(
@@ -641,6 +670,7 @@ export class ApplicantFlowPagesComponent implements OnInit, OnDestroy {
             }
             formData.append('screenshotFiles', screenshotFiles[i]);
           }
+
           formData.append('form', JSON.stringify(this.form.value));
           return this.projectService.addProject(formData);
         })
@@ -705,32 +735,43 @@ export class ApplicantFlowPagesComponent implements OnInit, OnDestroy {
     this.currentStep += 1;
   }
 
-  private capture(index: number, callbackFn?: () => void) {
+  private capture(
+    pageIndex: number,
+    targetElements: HTMLElement[],
+    callbackFn?: () => void
+  ) {
     this.screenshotService.changeCapturingStateTo(true);
     // manually detect changes to update view since Angular can't update view in-time
     // before we took a screenshot
     this.changeDetectorRef.detectChanges();
 
-    this.subs.push(
-      from(
-        html2canvas(this.captureTarget.nativeElement, {
-          logging: false,
+    from(
+      Promise.all(
+        targetElements.map((element) => {
+          return html2canvas(element, {
+            logging: false,
+          });
         })
-      ).subscribe({
-        next: (canvas) => {
-          const base64Image = canvas.toDataURL(this.fileType);
-          this.screenshots[index] = { name: `p${index}`, data: base64Image };
-          console.log({ data: this.screenshots[index].data });
-
-          if (callbackFn) {
-            callbackFn();
-          }
-        },
-        complete: () => {
-          this.screenshotService.changeCapturingStateTo(false);
-        },
-      })
-    );
+      )
+    ).subscribe({
+      next: (canvasInPage) => {
+        this.screenshots[pageIndex] = {
+          page: canvasInPage.map((canvas, ssIndex) => {
+            const base64 = canvas.toDataURL(this.fileType);
+            const name = `p${pageIndex}-${ssIndex + 1}`;
+            const fileExtension = 'png';
+            return { name, fileExtension, base64 };
+          }),
+        };
+        if (callbackFn) {
+          callbackFn();
+        }
+        console.log('===this.screenshots', this.screenshots);
+      },
+      complete: () => {
+        this.screenshotService.changeCapturingStateTo(false);
+      },
+    });
   }
 
   async dataUrlToFile(dataUrl: string, fileName: string): Promise<File> {
