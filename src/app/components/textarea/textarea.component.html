@@ -1,3 +1,8 @@
+@if (capturing) {
+<div class="capture" [style]="{ width: width, height: height }">
+  {{ captureDisplay }}
+</div>
+} @else {
 <ng-container [formGroup]="form">
   <textarea
     [formControlName]="controlName"
@@ -6,3 +11,5 @@
     [style]="{ width: width, height: height }"
   ></textarea>
 </ng-container>
+
+}

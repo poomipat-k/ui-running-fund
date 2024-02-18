@@ -120,6 +120,8 @@ export class ApplicantFlowPagesComponent implements OnInit, OnDestroy {
   protected showSuccessPopup = false;
   protected showErrorPopup = false;
 
+  protected apiLoading = false;
+
   protected form: FormGroup;
   protected progressBarSteps = [
     ['ข้อมูลพื้นฐานโครงการ'],
@@ -144,7 +146,7 @@ export class ApplicantFlowPagesComponent implements OnInit, OnDestroy {
     this.initForm();
     this.loadApplicantSelfScoreCriteria();
     // Change page
-    this.currentStep = 3;
+    // this.currentStep = 2;
 
     this.subToUploadFileSubjects();
   }
@@ -535,6 +537,7 @@ export class ApplicantFlowPagesComponent implements OnInit, OnDestroy {
 
     if (this.currentStep === this.progressBarSteps.length) {
       if (this.form.valid && !this.form.disabled) {
+        this.apiLoading = true;
         this.submitForm();
         console.log('===nextPage', this.form);
       } else {
@@ -562,14 +565,14 @@ export class ApplicantFlowPagesComponent implements OnInit, OnDestroy {
         this.incrementStep
       );
     } else if (
-      this.currentStep === 2
-      // this.contactComponent.validToGoNext()
+      this.currentStep === 2 &&
+      this.contactComponent.validToGoNext()
     ) {
       console.log('===nextPage', this.form);
       this.capture(
         this.currentStep,
-        [this.captureTarget.nativeElement]
-        // this.incrementStep
+        [this.captureTarget.nativeElement],
+        this.incrementStep
       );
     } else if (
       this.currentStep === 3 &&
@@ -606,7 +609,7 @@ export class ApplicantFlowPagesComponent implements OnInit, OnDestroy {
       this.attachmentComponent.validToGoNext()
     ) {
       console.log('===nextPage', this.form);
-      this.currentStep++;
+      this.incrementStep();
     } else {
       console.log('==error form', this.form);
     }
@@ -622,7 +625,6 @@ export class ApplicantFlowPagesComponent implements OnInit, OnDestroy {
     const formData = new FormData();
     if (this.collaborationFiles) {
       for (let i = 0; i < this.collaborationFiles.length; i++) {
-        // to change "files" to "collaborationFiles"
         formData.append('collaborationFiles', this.collaborationFiles[i]);
       }
     }
@@ -648,53 +650,59 @@ export class ApplicantFlowPagesComponent implements OnInit, OnDestroy {
     }
 
     // upload snapshots
-    from(
-      Promise.all(
-        this.screenshots
-          .map((p) => {
-            return p.page.map((ss) =>
-              this.dataUrlToFile(ss.base64, `${ss.name}.${ss.fileExtension}`)
-            );
-          })
-          .flat()
+    this.subs.push(
+      from(
+        Promise.all(
+          this.screenshots
+            .map((p) => {
+              return p.page.map((ss) =>
+                this.dataUrlToFile(ss.base64, `${ss.name}.${ss.fileExtension}`)
+              );
+            })
+            .flat()
+        )
       )
-    )
-      .pipe(
-        concatMap((screenshotFiles) => {
-          console.log('===screenshotFiles', screenshotFiles);
-          for (let i = 0; i < screenshotFiles.length; i++) {
-            // CollaborationFiles is an optional
-            if (i !== 0 && !screenshotFiles[i]) {
-              // throw new Error(
-              //   'ไม่สามารถสร้างข้อมูล screenshot เพื่ออัพโหลดแบบฟอร์มได้'
-              // );
+        .pipe(
+          concatMap((screenshotFiles) => {
+            console.log('===screenshotFiles', screenshotFiles);
+            for (let i = 0; i < screenshotFiles.length; i++) {
+              // CollaborationFiles is an optional
+              if (i !== 0 && !screenshotFiles[i]) {
+                throw new Error(
+                  'ไม่สามารถสร้าง screenshot เพื่ออัพโหลดแบบฟอร์มได้'
+                );
+              }
+              formData.append('screenshotFiles', screenshotFiles[i]);
             }
-            formData.append('screenshotFiles', screenshotFiles[i]);
-          }
 
-          formData.append('form', JSON.stringify(this.form.value));
-          return this.projectService.addProject(formData);
-        })
-      )
-      .subscribe({
-        next: (result) => {
-          if (result) {
-            this.form.disable();
-            this.showSuccessPopup = true;
+            formData.append('form', JSON.stringify(this.form.value));
+            return this.projectService.addProject(formData);
+          })
+        )
+        .subscribe({
+          next: (result) => {
+            if (result) {
+              this.form.disable();
+              this.showSuccessPopup = true;
+              setTimeout(() => {
+                this.showSuccessPopup = false;
+                this.incrementStep();
+              }, 2000);
+            }
+          },
+          error: (err) => {
+            console.error(err);
+            this.showErrorPopup = true;
             setTimeout(() => {
-              this.showSuccessPopup = false;
-              this.currentStep++;
+              this.showErrorPopup = false;
             }, 2000);
-          }
-        },
-        error: (err) => {
-          console.error(err);
-          this.showErrorPopup = true;
-          setTimeout(() => {
-            this.showErrorPopup = false;
-          }, 2000);
-        },
-      });
+          },
+          complete: () => {
+            console.log('===complete api, set loading to false');
+            this.apiLoading = false;
+          },
+        })
+    );
   }
 
   prevPage() {
