@@ -274,42 +274,6 @@
   gap: 1rem;
 }
 
-.textarea {
-  resize: none;
-  width: 73.9rem;
-  height: 25.7rem;
-  border-radius: 8px;
-  padding: 1rem 1.4rem;
-  text-align: left;
-  box-sizing: border-box;
-
-  border: 1px solid #d0d5dd;
-  box-shadow: 0px 1px 2px 0px rgba(16, 24, 40, 0.05);
-  background-color: #fff;
-
-  font-family: $custom-font-looped;
-  font-size: 1.6rem;
-  font-style: normal;
-  font-weight: 400;
-  line-height: 2.4rem;
-  color: #101828;
-
-  &:disabled {
-    cursor: not-allowed;
-    color: #667085;
-  }
-
-  &::placeholder {
-    color: #667085;
-  }
-
-  &:focus-visible {
-    outline: none;
-    border: 1px solid #d9dbe1;
-    box-shadow: 0px 0px 0px 4px #eaecf1, 0px 1px 2px 0px rgba(16, 24, 40, 0.05);
-  }
-}
-
 .radio-container {
   position: relative;
   display: flex;
