@@ -42,14 +42,14 @@
           <p>ที่ให้การสนับสนุนการจัดงานครั้งนี้</p>
         </label>
         <div>
-          <div [formGroup]="budgetFormGroup">
-            <textarea
-              id="budget.supportOrganization"
-              formControlName="supportOrganization"
-              class="textarea"
-              placeholder="แหล่งงบประมาณ"
-            ></textarea>
-          </div>
+          <app-com-textarea
+            id="budget.supportOrganization"
+            [form]="budgetFormGroup"
+            controlName="supportOrganization"
+            placeholder="แหล่งงบประมาณ"
+            width="49.5rem"
+            height="10.5rem"
+          ></app-com-textarea>
           @if (!budgetFormGroup.get('supportOrganization')?.valid &&
           budgetFormGroup.get('supportOrganization')?.touched && formTouched) {
           <div class="error mgt-10">

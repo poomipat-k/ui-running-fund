@@ -143,6 +143,7 @@ export class ApplicantFlowPagesComponent implements OnInit, OnDestroy {
 
     this.initForm();
     this.loadApplicantSelfScoreCriteria();
+    // Change page
     this.currentStep = 3;
 
     this.subToUploadFileSubjects();
@@ -561,23 +562,25 @@ export class ApplicantFlowPagesComponent implements OnInit, OnDestroy {
         this.incrementStep
       );
     } else if (
-      this.currentStep === 2 &&
-      this.contactComponent.validToGoNext()
+      this.currentStep === 2
+      // this.contactComponent.validToGoNext()
     ) {
       console.log('===nextPage', this.form);
       this.capture(
         this.currentStep,
-        [this.captureTarget.nativeElement],
-        this.incrementStep
+        [this.captureTarget.nativeElement]
+        // this.incrementStep
       );
     } else if (
       this.currentStep === 3 &&
       this.planAndDetailsComponent.validToGoNext()
     ) {
       console.log('===nextPage', this.form);
-      const targetElementRefs =
-        this.planAndDetailsComponent.getCaptureElementRefs();
-      this.capture(this.currentStep, targetElementRefs, this.incrementStep);
+      this.capture(
+        this.currentStep,
+        this.planAndDetailsComponent.getCaptureElementRefs(),
+        this.incrementStep
+      );
     } else if (
       this.currentStep === 4 &&
       this.experienceComponent.validToGoNext()

@@ -419,16 +419,16 @@
         <p class="importantText">*ข้อมูลจำเป็น*</p>
 
         <div class="projectCoordinator__line-important">
-          <label class="label width-177">ที่อยู่ (ที่ติดต่อได้สะดวก)</label>
+          <label class="label width-177" id="projectCoordinator.address.address"
+            >ที่อยู่ (ที่ติดต่อได้สะดวก)</label
+          >
           <div class="flex-1">
-            <div [formGroup]="coordinatorAddressFormGroup">
-              <textarea
-                id="projectCoordinator.address.address"
-                formControlName="address"
-                class="textarea"
-                placeholder="ระบุที่อยู่ที่ติดต่อได้สะดวก"
-              ></textarea>
-            </div>
+            <app-com-textarea
+              [form]="coordinatorAddressFormGroup"
+              controlName="address"
+              placeholder="ระบุที่อยู่ที่ติดต่อได้สะดวก"
+              height="15.8rem"
+            ></app-com-textarea>
 
             @if (!form.get('contact.projectCoordinator.address')?.valid &&
             form.get('contact.projectCoordinator.address')?.touched &&

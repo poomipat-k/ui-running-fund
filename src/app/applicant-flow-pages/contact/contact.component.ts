@@ -1,16 +1,12 @@
 import { CommonModule, ViewportScroller } from '@angular/common';
 import { Component, Input, OnInit, inject } from '@angular/core';
-import {
-  FormControl,
-  FormGroup,
-  ReactiveFormsModule,
-  Validators,
-} from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { CheckboxComponent } from '../../components/checkbox/checkbox.component';
 import { InputTextComponent } from '../../components/input-text/input-text.component';
 import { RadioComponent } from '../../components/radio/radio.component';
 import { SelectDropdownComponent } from '../../components/select-dropdown/select-dropdown.component';
+import { TextareaComponent } from '../../components/textarea/textarea.component';
 import { AddressService } from '../../services/address.service';
 import { OnlyNumberDirective } from '../../shared/directives/only-number.directive';
 import { CheckboxOption } from '../../shared/models/checkbox-option';
@@ -24,9 +20,9 @@ import { RadioOption } from '../../shared/models/radio-option';
     InputTextComponent,
     CheckboxComponent,
     RadioComponent,
-    ReactiveFormsModule,
     SelectDropdownComponent,
     OnlyNumberDirective,
+    TextareaComponent,
   ],
   templateUrl: './contact.component.html',
   styleUrl: './contact.component.scss',

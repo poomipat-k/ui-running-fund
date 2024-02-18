@@ -10,6 +10,7 @@ import { CheckboxComponent } from '../../components/checkbox/checkbox.component'
 import { InputNumberComponent } from '../../components/input-number/input-number.component';
 import { InputTextComponent } from '../../components/input-text/input-text.component';
 import { RadioComponent } from '../../components/radio/radio.component';
+import { TextareaComponent } from '../../components/textarea/textarea.component';
 import { RadioOption } from '../../shared/models/radio-option';
 
 @Component({
@@ -22,6 +23,7 @@ import { RadioOption } from '../../shared/models/radio-option';
     CheckboxComponent,
     RadioComponent,
     CommonModule,
+    TextareaComponent,
   ],
   templateUrl: './fund-request.component.html',
   styleUrl: './fund-request.component.scss',
