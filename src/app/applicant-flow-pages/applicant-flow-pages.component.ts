@@ -571,15 +571,13 @@ export class ApplicantFlowPagesComponent implements OnInit, OnDestroy {
         this.incrementStep
       );
     } else if (
-      this.currentStep === 3
-      // this.planAndDetailsComponent.validToGoNext()
+      this.currentStep === 3 &&
+      this.planAndDetailsComponent.validToGoNext()
     ) {
       console.log('===nextPage', this.form);
-      this.capture(
-        this.currentStep,
-        [this.captureTarget.nativeElement]
-        // this.incrementStep
-      );
+      const targetElementRefs =
+        this.planAndDetailsComponent.getCaptureElementRefs();
+      this.capture(this.currentStep, targetElementRefs, this.incrementStep);
     } else if (
       this.currentStep === 4 &&
       this.experienceComponent.validToGoNext()

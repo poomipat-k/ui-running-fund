@@ -1,5 +1,5 @@
 import { CommonModule, ViewportScroller } from '@angular/common';
-import { Component, Input, inject } from '@angular/core';
+import { Component, ElementRef, Input, ViewChild, inject } from '@angular/core';
 import {
   FormControl,
   FormGroup,
@@ -34,6 +34,10 @@ export class PlanAndDetailsComponent {
   @Input() form: FormGroup;
   @Input() enableScroll = false;
   @Input() criteria: ApplicantCriteria[] = [];
+
+  @ViewChild('capture1') captureTarget1: ElementRef;
+  @ViewChild('capture2') captureTarget2: ElementRef;
+  @ViewChild('capture3') captureTarget3: ElementRef;
 
   private readonly scroller: ViewportScroller = inject(ViewportScroller);
 
@@ -391,6 +395,15 @@ export class PlanAndDetailsComponent {
       return false;
     }
     return true;
+  }
+
+  // called from parent (page)
+  public getCaptureElementRefs() {
+    return [
+      this.captureTarget1.nativeElement,
+      this.captureTarget2.nativeElement,
+      this.captureTarget3.nativeElement,
+    ];
   }
 
   onHasAedChanged() {
