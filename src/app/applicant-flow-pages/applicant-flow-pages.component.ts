@@ -88,6 +88,7 @@ export class ApplicantFlowPagesComponent implements OnInit, OnDestroy {
   private router: Router = inject(Router);
 
   private screenshots: { name: string; data: string }[] = new Array(6);
+  private fileType = 'image/png';
 
   // Files upload variables
   protected collaborationFiles: File[] = [];
@@ -132,12 +133,16 @@ export class ApplicantFlowPagesComponent implements OnInit, OnDestroy {
 
   protected applicantSelfScoreCriteria: ApplicantCriteria[] = [];
 
+  constructor() {
+    this.incrementStep = this.incrementStep.bind(this);
+  }
+
   ngOnInit(): void {
     this.themeService.changeBackgroundColor(BackgroundColor.gray);
 
     this.initForm();
     this.loadApplicantSelfScoreCriteria();
-    this.currentStep = 1;
+    this.currentStep = 3;
 
     this.subToUploadFileSubjects();
   }
@@ -539,48 +544,41 @@ export class ApplicantFlowPagesComponent implements OnInit, OnDestroy {
 
     if (this.currentStep === 0 && this.collaborateComponent.validToGoNext()) {
       console.log('===nextPage', this.form);
-      this.capture(this.currentStep);
-      this.currentStep++;
+      this.capture(this.currentStep, this.incrementStep);
     } else if (
-      this.currentStep === 1
-      // this.generalDetailsComponent.validToGoNext()
+      this.currentStep === 1 &&
+      this.generalDetailsComponent.validToGoNext()
     ) {
       console.log('===nextPage', this.form);
-      this.capture(this.currentStep);
-      // this.currentStep++;
+      this.capture(this.currentStep, this.incrementStep);
     } else if (
       this.currentStep === 2 &&
       this.contactComponent.validToGoNext()
     ) {
-      this.capture(this.currentStep);
       console.log('===nextPage', this.form);
-      this.currentStep++;
+      this.capture(this.currentStep, this.incrementStep);
     } else if (
       this.currentStep === 3 &&
       this.planAndDetailsComponent.validToGoNext()
     ) {
-      this.capture(this.currentStep);
       console.log('===nextPage', this.form);
-      this.currentStep++;
+      this.capture(this.currentStep, this.incrementStep);
     } else if (
       this.currentStep === 4 &&
       this.experienceComponent.validToGoNext()
     ) {
-      this.capture(this.currentStep);
       console.log('===nextPage', this.form);
-      this.currentStep++;
+      this.capture(this.currentStep, this.incrementStep);
     } else if (
       this.currentStep === 5 &&
       this.fundRequestComponent.validToGoNext()
     ) {
-      this.capture(this.currentStep);
       console.log('===nextPage', this.form);
-      this.currentStep++;
+      this.capture(this.currentStep, this.incrementStep);
     } else if (
       this.currentStep === 6 &&
       this.attachmentComponent.validToGoNext()
     ) {
-      this.capture(this.currentStep);
       console.log('===nextPage', this.form);
       this.currentStep++;
     } else {
@@ -703,7 +701,11 @@ export class ApplicantFlowPagesComponent implements OnInit, OnDestroy {
     }
   }
 
-  private capture(index: number) {
+  private incrementStep(): void {
+    this.currentStep += 1;
+  }
+
+  private capture(index: number, callbackFn?: () => void) {
     this.screenshotService.changeCapturingStateTo(true);
     // manually detect changes to update view since Angular can't update view in-time
     // before we took a screenshot
@@ -716,9 +718,13 @@ export class ApplicantFlowPagesComponent implements OnInit, OnDestroy {
         })
       ).subscribe({
         next: (canvas) => {
-          const base64Image = canvas.toDataURL('image/png');
+          const base64Image = canvas.toDataURL(this.fileType);
           this.screenshots[index] = { name: `p${index}`, data: base64Image };
           console.log({ data: this.screenshots[index].data });
+
+          if (callbackFn) {
+            callbackFn();
+          }
         },
         complete: () => {
           this.screenshotService.changeCapturingStateTo(false);
@@ -730,6 +736,6 @@ export class ApplicantFlowPagesComponent implements OnInit, OnDestroy {
   async dataUrlToFile(dataUrl: string, fileName: string): Promise<File> {
     const res: Response = await fetch(dataUrl);
     const blob: Blob = await res.blob();
-    return new File([blob], fileName, { type: 'image/png' });
+    return new File([blob], fileName, { type: this.fileType });
   }
 }
