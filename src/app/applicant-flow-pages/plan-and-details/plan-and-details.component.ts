@@ -11,6 +11,7 @@ import { InputNumberComponent } from '../../components/input-number/input-number
 import { InputTextComponent } from '../../components/input-text/input-text.component';
 import { RadioItemComponent } from '../../components/radio-item/radio-item.component';
 import { RadioComponent } from '../../components/radio/radio.component';
+import { TextareaComponent } from '../../components/textarea/textarea.component';
 import { ApplicantCriteria } from '../../shared/models/applicant-criteria';
 import { CheckboxOption } from '../../shared/models/checkbox-option';
 import { RadioOption } from '../../shared/models/radio-option';
@@ -26,6 +27,7 @@ import { RadioOption } from '../../shared/models/radio-option';
     CommonModule,
     RadioItemComponent,
     InputNumberComponent,
+    TextareaComponent,
   ],
   templateUrl: './plan-and-details.component.html',
   styleUrl: './plan-and-details.component.scss',

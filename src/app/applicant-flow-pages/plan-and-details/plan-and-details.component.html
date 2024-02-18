@@ -16,12 +16,14 @@
             <h4 class="section__sub-header--no-asterisk" id="background">
               3.1.1 รายละเอียดความเป็นมา
             </h4>
-            <div [formGroup]="detailsFormGroup" class="mgt-8">
-              <textarea
-                formControlName="background"
-                class="textarea"
+            <div class="mgt-8">
+              <app-com-textarea
+                [form]="detailsFormGroup"
+                controlName="background"
                 placeholder="ระบุรายละเอียด..."
-              ></textarea>
+                width="73.9rem"
+                height="25.7rem"
+              ></app-com-textarea>
 
               @if (!form.get('details.background')?.valid &&
               form.get('details.background')?.touched && formTouched) {
