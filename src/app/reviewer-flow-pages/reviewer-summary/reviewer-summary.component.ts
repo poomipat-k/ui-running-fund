@@ -1,7 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input } from '@angular/core';
-import { FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { FormGroup } from '@angular/forms';
 import { TableComponent } from '../../components/table/table.component';
+import { TextareaComponent } from '../../components/textarea/textarea.component';
 import { ReviewCriteria } from '../../shared/models/review-criteria';
 import { TableCell } from '../../shared/models/table-cell';
 import { TableColumn } from '../../shared/models/table-column';
@@ -10,7 +11,7 @@ import { criteriaGroup } from '../data/criteria-group';
 @Component({
   selector: 'app-reviewer-summary',
   standalone: true,
-  imports: [CommonModule, TableComponent, ReactiveFormsModule],
+  imports: [CommonModule, TableComponent, TextareaComponent],
   templateUrl: './reviewer-summary.component.html',
   styleUrl: './reviewer-summary.component.scss',
 })
