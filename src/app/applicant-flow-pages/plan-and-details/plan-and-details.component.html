@@ -39,12 +39,14 @@
             <h4 class="section__sub-header--no-asterisk">
               3.1.2 วัตถุประสงค์ของการจัดกิจกรรม
             </h4>
-            <div [formGroup]="detailsFormGroup" class="mgt-8" id="objective">
-              <textarea
-                formControlName="objective"
-                class="textarea"
+            <div class="mgt-8" id="objective">
+              <app-com-textarea
+                [form]="detailsFormGroup"
+                controlName="objective"
                 placeholder="ระบุรายละเอียด..."
-              ></textarea>
+                width="73.9rem"
+                height="25.7rem"
+              ></app-com-textarea>
 
               @if (!form.get('details.objective')?.valid &&
               form.get('details.objective')?.touched && formTouched) {
@@ -650,12 +652,14 @@
           >
         </h3>
         <div class="section-content">
-          <div [formGroup]="detailsFormGroup">
-            <textarea
-              formControlName="feedback"
-              class="textarea"
+          <div>
+            <app-com-textarea
+              [form]="detailsFormGroup"
+              controlName="feedback"
               placeholder="ระบุรายละเอียด..."
-            ></textarea>
+              width="73.9rem"
+              height="25.7rem"
+            ></app-com-textarea>
 
             @if (!form.get('details.feedback')?.valid &&
             form.get('details.feedback')?.touched && formTouched) {
