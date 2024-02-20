@@ -146,7 +146,7 @@ export class ApplicantFlowPagesComponent implements OnInit, OnDestroy {
     this.initForm();
     this.loadApplicantSelfScoreCriteria();
     // Change page
-    // this.currentStep = 2;
+    this.currentStep = 2;
 
     this.subToUploadFileSubjects();
   }
@@ -539,16 +539,16 @@ export class ApplicantFlowPagesComponent implements OnInit, OnDestroy {
       if (this.form.valid && !this.form.disabled) {
         this.apiLoading = true;
         this.submitForm();
-        console.log('===nextPage', this.form);
+        console.log('===nextPage', this.form.value);
       } else {
         console.error('FORM IS NOT VALID!');
-        console.log(this.form);
+        console.log(this.form.value);
       }
       return;
     }
 
     if (this.currentStep === 0 && this.collaborateComponent.validToGoNext()) {
-      console.log('===nextPage', this.form);
+      console.log('===nextPage', this.form.value);
       this.capture(
         this.currentStep,
         [this.captureTarget.nativeElement],
@@ -558,7 +558,7 @@ export class ApplicantFlowPagesComponent implements OnInit, OnDestroy {
       this.currentStep === 1 &&
       this.generalDetailsComponent.validToGoNext()
     ) {
-      console.log('===nextPage', this.form);
+      console.log('===nextPage', this.form.value);
       this.capture(
         this.currentStep,
         [this.captureTarget.nativeElement],
@@ -568,7 +568,7 @@ export class ApplicantFlowPagesComponent implements OnInit, OnDestroy {
       this.currentStep === 2 &&
       this.contactComponent.validToGoNext()
     ) {
-      console.log('===nextPage', this.form);
+      console.log('===nextPage', this.form.value);
       this.capture(
         this.currentStep,
         [this.captureTarget.nativeElement],
@@ -578,7 +578,7 @@ export class ApplicantFlowPagesComponent implements OnInit, OnDestroy {
       this.currentStep === 3 &&
       this.planAndDetailsComponent.validToGoNext()
     ) {
-      console.log('===nextPage', this.form);
+      console.log('===nextPage', this.form.value);
       this.capture(
         this.currentStep,
         this.planAndDetailsComponent.getCaptureElementRefs(),
@@ -588,7 +588,7 @@ export class ApplicantFlowPagesComponent implements OnInit, OnDestroy {
       this.currentStep === 4 &&
       this.experienceComponent.validToGoNext()
     ) {
-      console.log('===nextPage', this.form);
+      console.log('===nextPage', this.form.value);
       this.capture(
         this.currentStep,
         [this.captureTarget.nativeElement],
@@ -598,7 +598,7 @@ export class ApplicantFlowPagesComponent implements OnInit, OnDestroy {
       this.currentStep === 5 &&
       this.fundRequestComponent.validToGoNext()
     ) {
-      console.log('===nextPage', this.form);
+      console.log('===nextPage', this.form.value);
       this.capture(
         this.currentStep,
         [this.captureTarget.nativeElement],
@@ -608,10 +608,10 @@ export class ApplicantFlowPagesComponent implements OnInit, OnDestroy {
       this.currentStep === 6 &&
       this.attachmentComponent.validToGoNext()
     ) {
-      console.log('===nextPage', this.form);
+      console.log('===nextPage', this.form.value);
       this.incrementStep();
     } else {
-      console.log('==error form', this.form);
+      console.log('==error form', this.form.value);
     }
   }
 
@@ -621,7 +621,7 @@ export class ApplicantFlowPagesComponent implements OnInit, OnDestroy {
   }
 
   submitForm() {
-    console.log('===SUBMIT this.form', this.form);
+    // console.log('===SUBMIT this.form', this.form);
     const formData = new FormData();
     if (this.collaborationFiles) {
       for (let i = 0; i < this.collaborationFiles.length; i++) {
@@ -665,15 +665,21 @@ export class ApplicantFlowPagesComponent implements OnInit, OnDestroy {
         .pipe(
           concatMap((screenshotFiles) => {
             console.log('===screenshotFiles', screenshotFiles);
+            if (screenshotFiles.length === 0) {
+              // throw new Error('screenshotFiles is empty');
+            }
             for (let i = 0; i < screenshotFiles.length; i++) {
               // CollaborationFiles is an optional
               if (i !== 0 && !screenshotFiles[i]) {
-                throw new Error(
-                  'ไม่สามารถสร้าง screenshot เพื่ออัพโหลดแบบฟอร์มได้'
-                );
+                // throw new Error(
+                //   'ไม่สามารถสร้าง screenshot เพื่ออัพโหลดแบบฟอร์มได้'
+                // );
               }
               formData.append('screenshotFiles', screenshotFiles[i]);
             }
+
+            console.log('====FORM VALUE ====');
+            console.log(this.form.value);
 
             formData.append('form', JSON.stringify(this.form.value));
             return this.projectService.addProject(formData);

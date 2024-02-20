@@ -245,7 +245,7 @@ export class ContactComponent implements OnInit {
   }
 
   protected onProjectManagerSameAsProjectHeadChanged() {
-    if (!this.projectCoordinatorSameAsProjectHead) {
+    if (!this.projectManagerSameAsProjectHead) {
       this.resetProjectManager();
     }
   }
