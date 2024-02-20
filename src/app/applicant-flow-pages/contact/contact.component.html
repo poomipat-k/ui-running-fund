@@ -634,33 +634,22 @@
       </h4>
       <div class="section-content">
         <div class="projectDirector__checkbox" id="raceDirector.director">
-          @for (item of raceDirectorOptions; track $index) { @if(item.onChanged)
-          {
-          <app-com-checkbox
-            [form]="directorGroup"
-            [controlName]="item.controlName"
-            [display]="item.display"
-            gap="8px"
+          <app-com-radio
+            id="raceDirector.who"
+            [form]="raceDirectorGroup"
+            [options]="raceDirectorOptions"
+            controlName="who"
             fontSize="16px"
-            [onChanged]="item.onChanged"
-          >
-          </app-com-checkbox>
-          } @else {
-          <app-com-checkbox
-            [form]="directorGroup"
-            [controlName]="item.controlName"
-            [display]="item.display"
             gap="8px"
-            fontSize="16px"
-          >
-          </app-com-checkbox>
-          } } @if (!form.get('contact.raceDirector.director')?.valid &&
-          form.get('contact.raceDirector.director')?.touched && formTouched) {
-          <div class="error">
+            [onChanged]="onRaceDirectorWhoChanged"
+          ></app-com-radio>
+          @if (!form.get('contact.raceDirector.who')?.valid &&
+          form.get('contact.raceDirector.who')?.touched && formTouched) {
+          <div class="error mgt-10">
             <img src="/assets/error_icon.svg" alt="error icon" />
-            <p class="error__text">สามารถเลือกได้หลายข้อ</p>
+            <p class="error__text">กรุณาเลือกผู้ตัดสินใจสูงสุด</p>
           </div>
-          } @if (raceDirectorOther) {
+          } @if (isOtherRaceDirector) {
           <div class="projectHead__line">
             <div class="projectHead__item">
               <label class="label">คำนำหน้า</label>

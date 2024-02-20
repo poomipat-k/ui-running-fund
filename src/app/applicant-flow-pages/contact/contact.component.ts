@@ -9,7 +9,6 @@ import { SelectDropdownComponent } from '../../components/select-dropdown/select
 import { TextareaComponent } from '../../components/textarea/textarea.component';
 import { AddressService } from '../../services/address.service';
 import { OnlyNumberDirective } from '../../shared/directives/only-number.directive';
-import { CheckboxOption } from '../../shared/models/checkbox-option';
 import { RadioOption } from '../../shared/models/radio-option';
 
 @Component({
@@ -80,10 +79,6 @@ export class ContactComponent implements OnInit {
     return this.form.get('contact.raceDirector') as FormGroup;
   }
 
-  get directorGroup(): FormGroup {
-    return this.form.get('contact.raceDirector.director') as FormGroup;
-  }
-
   get raceDirectorAlternativeGroup(): FormGroup {
     return this.form.get('contact.raceDirector.alternative') as FormGroup;
   }
@@ -100,8 +95,8 @@ export class ContactComponent implements OnInit {
     return this.form.value.contact.projectCoordinator.sameAsProjectManager;
   }
 
-  get raceDirectorOther(): boolean {
-    return this.form.value.contact.raceDirector.director.other;
+  get isOtherRaceDirector(): boolean {
+    return this.form.value.contact.raceDirector.who === 'other';
   }
 
   protected orgTypeOptions: RadioOption[] = [
@@ -122,27 +117,26 @@ export class ContactComponent implements OnInit {
     },
   ];
 
-  protected raceDirectorOptions: CheckboxOption[] = [
+  protected raceDirectorOptions: RadioOption[] = [
     {
       id: 1,
       display: 'หัวหน้าโครงการ',
-      controlName: 'projectHead',
+      value: 'projectHead',
     },
     {
       id: 2,
       display: 'ผู้รับผิดชอบโครงการ',
-      controlName: 'projectManager',
+      value: 'projectManager',
     },
     {
       id: 3,
       display: 'ผู้ประสานงาน',
-      controlName: 'projectCoordinator',
+      value: 'projectCoordinator',
     },
     {
       id: 4,
       display: 'คนอื่น โปรดระบุ',
-      controlName: 'other',
-      onChanged: this.onRaceDirectorOtherChanged.bind(this),
+      value: 'other',
     },
   ];
 
@@ -155,6 +149,7 @@ export class ContactComponent implements OnInit {
       this.onProjectCoordinatorSameAsProjectHeadChanged.bind(this);
     this.onProjectCoordinatorSameAsProjectManagerChanged =
       this.onProjectCoordinatorSameAsProjectManagerChanged.bind(this);
+    this.onRaceDirectorWhoChanged = this.onRaceDirectorWhoChanged.bind(this);
 
     this.onProvinceChanged = this.onProvinceChanged.bind(this);
     this.onDistrictChanged = this.onDistrictChanged.bind(this);
@@ -203,8 +198,8 @@ export class ContactComponent implements OnInit {
     return true;
   }
 
-  onRaceDirectorOtherChanged() {
-    if (this.raceDirectorOther) {
+  onRaceDirectorWhoChanged() {
+    if (this.isOtherRaceDirector) {
       this.raceDirectorGroup.addControl(
         'alternative',
         new FormGroup({
@@ -215,7 +210,9 @@ export class ContactComponent implements OnInit {
       );
       return;
     }
-    this.raceDirectorGroup.removeControl('alternative');
+    if (this.raceDirectorAlternativeGroup) {
+      this.raceDirectorGroup.removeControl('alternative');
+    }
   }
 
   onProvinceChanged() {

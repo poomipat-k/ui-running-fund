@@ -310,15 +310,7 @@ export class ApplicantFlowPagesComponent implements OnInit, OnDestroy {
           ]),
         }),
         raceDirector: new FormGroup({
-          director: new FormGroup(
-            {
-              projectHead: new FormControl(false),
-              projectManager: new FormControl(false),
-              projectCoordinator: new FormControl(false),
-              other: new FormControl(false),
-            },
-            requiredCheckBoxToBeCheckedValidator()
-          ),
+          who: new FormControl(null, Validators.required),
           // alternative formGroup
         }),
         organization: new FormGroup({
