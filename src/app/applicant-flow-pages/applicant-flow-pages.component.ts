@@ -90,6 +90,7 @@ export class ApplicantFlowPagesComponent implements OnInit, OnDestroy {
 
   private screenshots: ScreenshotPage[] = new Array(6);
   private fileType = 'image/png';
+  private readonly minHistoryYear = 2010;
 
   // Files upload variables
   protected collaborationFiles: File[] = [];
@@ -146,7 +147,7 @@ export class ApplicantFlowPagesComponent implements OnInit, OnDestroy {
     this.initForm();
     this.loadApplicantSelfScoreCriteria();
     // Change page
-    this.currentStep = 2;
+    this.currentStep = 4;
 
     this.subToUploadFileSubjects();
   }
@@ -428,7 +429,7 @@ export class ApplicantFlowPagesComponent implements OnInit, OnDestroy {
               year: new FormControl(null, [
                 Validators.required,
                 Validators.max(currentYear + 543),
-                Validators.min(currentYear - 3 + 543),
+                Validators.min(this.minHistoryYear + 543),
               ]),
               name: new FormControl(null, Validators.required),
               participant: new FormControl(null, [
@@ -439,7 +440,7 @@ export class ApplicantFlowPagesComponent implements OnInit, OnDestroy {
             completed2: new FormGroup({
               year: new FormControl(null, [
                 Validators.max(currentYear + 543),
-                Validators.min(currentYear - 3 + 543),
+                Validators.min(this.minHistoryYear + 543),
               ]),
               name: new FormControl(null),
               participant: new FormControl(null, [Validators.min(0)]),
@@ -447,7 +448,7 @@ export class ApplicantFlowPagesComponent implements OnInit, OnDestroy {
             completed3: new FormGroup({
               year: new FormControl(null, [
                 Validators.max(currentYear + 543),
-                Validators.min(currentYear - 3 + 543),
+                Validators.min(this.minHistoryYear + 543),
               ]),
               name: new FormControl(null),
               participant: new FormControl(null, [Validators.min(0)]),
@@ -461,7 +462,7 @@ export class ApplicantFlowPagesComponent implements OnInit, OnDestroy {
               year: new FormControl(null, [
                 Validators.required,
                 Validators.max(currentYear + 543),
-                Validators.min(currentYear - 3 + 543),
+                Validators.min(this.minHistoryYear + 543),
               ]),
               name: new FormControl(null, Validators.required),
               participant: new FormControl(null, [
@@ -472,7 +473,7 @@ export class ApplicantFlowPagesComponent implements OnInit, OnDestroy {
             completed2: new FormGroup({
               year: new FormControl(null, [
                 Validators.max(currentYear + 543),
-                Validators.min(currentYear - 3 + 543),
+                Validators.min(this.minHistoryYear + 543),
               ]),
               name: new FormControl(null),
               participant: new FormControl(null, [Validators.min(0)]),
@@ -480,7 +481,7 @@ export class ApplicantFlowPagesComponent implements OnInit, OnDestroy {
             completed3: new FormGroup({
               year: new FormControl(null, [
                 Validators.max(currentYear + 543),
-                Validators.min(currentYear - 3 + 543),
+                Validators.min(this.minHistoryYear + 543),
               ]),
               name: new FormControl(null),
               participant: new FormControl(null, [Validators.min(0)]),
@@ -580,7 +581,7 @@ export class ApplicantFlowPagesComponent implements OnInit, OnDestroy {
       this.currentStep === 4 &&
       this.experienceComponent.validToGoNext()
     ) {
-      console.log('===nextPage', this.form.value);
+      console.log('===nextPage', this.form);
       this.capture(
         this.currentStep,
         [this.captureTarget.nativeElement],
@@ -603,7 +604,7 @@ export class ApplicantFlowPagesComponent implements OnInit, OnDestroy {
       console.log('===nextPage', this.form.value);
       this.incrementStep();
     } else {
-      console.log('==error form', this.form.value);
+      console.log('==error form', this.form);
     }
   }
 

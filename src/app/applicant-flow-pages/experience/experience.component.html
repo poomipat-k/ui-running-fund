@@ -12,23 +12,25 @@
         <span class="section__header--remark">(เลือกตอบเพียง 1 ข้อ)</span>
       </h3>
       <div>
-        <app-com-radio
-          id="thisSeries.firstTime"
-          [options]="firstTimeDoThisSeriesOptions"
-          [form]="thisSeriesFormGroup"
-          controlName="firstTime"
-          fontSize="16px"
-          gap="1.8rem"
-          [onChanged]="onThisSeriesFirstTimeChanged"
-        ></app-com-radio>
+        <div class="pdl-20">
+          <app-com-radio
+            id="thisSeries.firstTime"
+            [options]="firstTimeDoThisSeriesOptions"
+            [form]="thisSeriesFormGroup"
+            controlName="firstTime"
+            fontSize="16px"
+            gap="1.8rem"
+            [onChanged]="onThisSeriesFirstTimeChanged"
+          ></app-com-radio>
 
-        @if (!form.get('experience.thisSeries.firstTime')?.valid &&
-        form.get('experience.thisSeries.firstTime')?.touched && formTouched) {
-        <div class="error mgt-10">
-          <img src="/assets/error_icon.svg" alt="error icon" />
-          <p class="error__text">กรุณาเลือกตัวเลือก</p>
+          @if (!form.get('experience.thisSeries.firstTime')?.valid &&
+          form.get('experience.thisSeries.firstTime')?.touched && formTouched) {
+          <div class="error mgt-10">
+            <img src="/assets/error_icon.svg" alt="error icon" />
+            <p class="error__text">กรุณาเลือกตัวเลือก</p>
+          </div>
+          }
         </div>
-        }
       </div>
       <!-- Collapse 1 -->
       @if (isThisSeriesFirstTime !== true) {
@@ -44,14 +46,23 @@
                 controlName="ordinalNumber"
                 width="7.2rem"
               ></app-com-input-number>
-              @if (!thisSeriesHistoryFormGroup.get('ordinalNumber')?.valid &&
+
+              @if(!thisSeriesHistoryFormGroup.get('ordinalNumber')?.valid &&
               thisSeriesHistoryFormGroup.get('ordinalNumber')?.touched &&
-              formTouched) {
+              formTouched) { @if (
+              thisSeriesHistoryFormGroup.get("ordinalNumber")?.errors?.['min'])
+              {
+              <div class="error mgt-10">
+                <img src="/assets/error_icon.svg" alt="error icon" />
+                <p class="error__text">กรุณาระบุครั้งที่ให้ถูกต้อง</p>
+              </div>
+              } @else {
               <div class="error mgt-10">
                 <img src="/assets/error_icon.svg" alt="error icon" />
                 <p class="error__text">กรุณาระบุครั้งที่</p>
               </div>
-              }
+
+              } }
             </div>
           </div>
           <div class="eventCount__item-16">
@@ -141,13 +152,13 @@
             {
             <div class="error mgt-10">
               <img src="/assets/error_icon.svg" alt="error icon" />
-              <p class="error__text">กรุณาเลือกปี</p>
+              <p class="error__text">กรุณาระบุปี</p>
             </div>
             } @else {
             <div class="error mgt-10">
               <img src="/assets/error_icon.svg" alt="error icon" />
               <p class="error__text">
-                {{ currentYear + 543 }} - {{ currentYear - 3 + 543 }}
+                {{ currentYear + 543 }} - {{ minHistoryYear + 543 }}
               </p>
             </div>
             } }
@@ -199,9 +210,9 @@
 
     <div class="section">
       <h3 class="section__header section__header--with-ask">
-        4.2 นอกจากการจัดกิจกรรมนี้ ท่านมีประสบการณ์จัดงานวิ่งอื่น ๆ หรือไม่*
+        4.2 นอกจากการจัดกิจกรรมนี้ ท่านมีประสบการณ์จัดงานวิ่งอื่น ๆ หรือไม่
       </h3>
-      <div>
+      <div class="pdl-20">
         <app-com-radio
           id="otherSeries.doneBefore"
           [options]="hasOtherRunEventExperience"
@@ -247,7 +258,7 @@
             @if(getOtherSeriesCompletedFormGroup(item).get('year')) {
             <div class="error mgt-10">
               <img src="/assets/error_icon.svg" alt="error icon" />
-              <p class="error__text">กรุณาเลือกปี</p>
+              <p class="error__text">กรุณาระบุปี</p>
             </div>
             } @else {
             <div class="error mgt-10">

@@ -46,6 +46,8 @@ export class ExperienceComponent implements OnInit {
   private readonly scroller: ViewportScroller = inject(ViewportScroller);
   private readonly dateService: DateService = inject(DateService);
 
+  protected readonly minHistoryYear = 2010;
+
   protected formTouched = false;
   private readonly thirtyDaysMonths = [4, 6, 9, 11];
   private febLeap: RadioOption[] = [];
@@ -184,11 +186,18 @@ export class ExperienceComponent implements OnInit {
 
   private generateOtherSeriesHistoryFormGroup(): FormGroup {
     return new FormGroup({
+      ordinalNumber: new FormControl(null, [
+        Validators.required,
+        Validators.min(2),
+      ]),
+      year: new FormControl(null, [Validators.required]),
+      month: new FormControl(null, Validators.required),
+      day: new FormControl(null, Validators.required),
       completed1: new FormGroup({
         year: new FormControl(null, [
           Validators.required,
           Validators.max(this.currentYear + 543),
-          Validators.min(this.currentYear - 3 + 543),
+          Validators.min(this.minHistoryYear + 543),
         ]),
         name: new FormControl(null, Validators.required),
         participant: new FormControl(null, [
@@ -199,7 +208,7 @@ export class ExperienceComponent implements OnInit {
       completed2: new FormGroup({
         year: new FormControl(null, [
           Validators.max(this.currentYear + 543),
-          Validators.min(this.currentYear - 3 + 543),
+          Validators.min(this.minHistoryYear + 543),
         ]),
         name: new FormControl(null),
         participant: new FormControl(null, [Validators.min(0)]),
@@ -207,7 +216,7 @@ export class ExperienceComponent implements OnInit {
       completed3: new FormGroup({
         year: new FormControl(null, [
           Validators.max(this.currentYear + 543),
-          Validators.min(this.currentYear - 3 + 543),
+          Validators.min(this.minHistoryYear + 543),
         ]),
         name: new FormControl(null),
         participant: new FormControl(null, [Validators.min(0)]),
@@ -217,8 +226,11 @@ export class ExperienceComponent implements OnInit {
 
   private generateHistoryFormGroup(): FormGroup {
     return new FormGroup({
-      ordinalNumber: new FormControl(null, Validators.required),
-      year: new FormControl(null, Validators.required),
+      ordinalNumber: new FormControl(null, [
+        Validators.required,
+        Validators.min(2),
+      ]),
+      year: new FormControl(null, [Validators.required]),
       month: new FormControl(null, Validators.required),
       day: new FormControl(null, Validators.required),
       completed1: new FormGroup({
@@ -330,7 +342,8 @@ export class ExperienceComponent implements OnInit {
   private getYearsOptions() {
     const currentYear = this.dateService.getCurrentYear();
     const years = [];
-    for (let y = currentYear; y >= currentYear - 3; y--) {
+    const minYear = this.minHistoryYear;
+    for (let y = currentYear; y >= minYear; y--) {
       years.push({
         id: y,
         value: y,
