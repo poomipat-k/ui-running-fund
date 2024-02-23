@@ -255,7 +255,8 @@
             @if (!getOtherSeriesCompletedFormGroup(item).get('year')?.valid &&
             getOtherSeriesCompletedFormGroup(item).get('year')?.touched &&
             formTouched) {
-            @if(getOtherSeriesCompletedFormGroup(item).get('year')) {
+            @if(getOtherSeriesCompletedFormGroup(item).get('year')?.errors?.['required'])
+            {
             <div class="error mgt-10">
               <img src="/assets/error_icon.svg" alt="error icon" />
               <p class="error__text">กรุณาระบุปี</p>
@@ -264,7 +265,7 @@
             <div class="error mgt-10">
               <img src="/assets/error_icon.svg" alt="error icon" />
               <p class="error__text">
-                {{ currentYear + 543 }} - {{ currentYear - 3 + 543 }}
+                {{ currentYear + 543 }} - {{ minHistoryYear + 543 }}
               </p>
             </div>
             } }

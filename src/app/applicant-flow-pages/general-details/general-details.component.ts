@@ -1,6 +1,7 @@
 import { CommonModule, ViewportScroller } from '@angular/common';
 import { Component, Input, OnDestroy, OnInit, inject } from '@angular/core';
 import {
+  AbstractControl,
   FormArray,
   FormControl,
   FormGroup,
@@ -324,12 +325,12 @@ export class GeneralDetailsComponent implements OnInit, OnDestroy {
     );
   }
 
-  private addRequiredValidator(formControl: FormControl) {
+  private addRequiredValidator(formControl: AbstractControl<any, any>) {
     formControl.addValidators(Validators.required);
     formControl.updateValueAndValidity({ emitEvent: false });
   }
 
-  private clearFormControl(formControl: FormControl) {
+  private clearFormControl(formControl: AbstractControl<any, any>) {
     formControl.clearValidators();
     formControl.reset(null, { emitEvent: false });
     formControl.updateValueAndValidity({ emitEvent: false });

@@ -1,7 +1,13 @@
 import { animate, style, transition, trigger } from '@angular/animations';
 import { ViewportScroller } from '@angular/common';
-import { Component, Input, OnInit, inject } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Component, Input, OnDestroy, OnInit, inject } from '@angular/core';
+import {
+  AbstractControl,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
+import { Subscription } from 'rxjs';
 import { InputNumberComponent } from '../../components/input-number/input-number.component';
 import { InputTextComponent } from '../../components/input-text/input-text.component';
 import { RadioComponent } from '../../components/radio/radio.component';
@@ -14,6 +20,7 @@ import {
   days31,
   months,
 } from '../../shared/constants/date-objects';
+import { HistoryCompleted } from '../../shared/models/history-completed';
 import { RadioOption } from '../../shared/models/radio-option';
 @Component({
   selector: 'app-applicant-experience',
@@ -39,7 +46,7 @@ import { RadioOption } from '../../shared/models/radio-option';
     ]),
   ],
 })
-export class ExperienceComponent implements OnInit {
+export class ExperienceComponent implements OnInit, OnDestroy {
   @Input() form: FormGroup;
   @Input() enableScroll = false;
 
@@ -124,6 +131,8 @@ export class ExperienceComponent implements OnInit {
     return this.form.get('experience.otherSeries.doneBefore')?.value;
   }
 
+  private readonly subs: Subscription[] = [];
+
   constructor() {
     this.onYearOrMonthChanged = this.onYearOrMonthChanged.bind(this);
     this.onThisSeriesFirstTimeChanged =
@@ -139,6 +148,29 @@ export class ExperienceComponent implements OnInit {
     this.febLeap = days29;
     this.thirtyDays = days30;
     this.thirtyOneDays = days31;
+
+    const thisSeriesCompleted2 = this.form.get(
+      'experience.thisSeries.history.completed2'
+    ) as FormGroup;
+    const thisSeriesCompleted3 = this.form.get(
+      'experience.thisSeries.history.completed3'
+    ) as FormGroup;
+    const otherSeriesCompleted2 = this.form.get(
+      'experience.otherSeries.history.completed2'
+    ) as FormGroup;
+    const otherSeriesCompleted3 = this.form.get(
+      'experience.otherSeries.history.completed3'
+    ) as FormGroup;
+    [
+      thisSeriesCompleted2,
+      thisSeriesCompleted3,
+      otherSeriesCompleted2,
+      otherSeriesCompleted3,
+    ].forEach((group) => this.addRequiredValidatorToCompletedRow(group));
+  }
+
+  ngOnDestroy(): void {
+    this.subs.forEach((s) => s.unsubscribe());
   }
 
   public validToGoNext(): boolean {
@@ -153,7 +185,7 @@ export class ExperienceComponent implements OnInit {
   }
 
   getThisSeriesCompletedFormGroup(item: number): FormGroup {
-    return this.thisSeriesHistoryFormGroup.get('completed' + item) as FormGroup;
+    return this.thisSeriesHistoryFormGroup.get(`completed${item}`) as FormGroup;
   }
 
   getOtherSeriesCompletedFormGroup(item: number): FormGroup {
@@ -351,5 +383,33 @@ export class ExperienceComponent implements OnInit {
       });
     }
     this.yearOptions = years;
+  }
+
+  private addRequiredValidatorToCompletedRow(fromGroup: FormGroup) {
+    if (fromGroup) {
+      this.subs.push(
+        fromGroup.valueChanges.subscribe((completed: HistoryCompleted) => {
+          if (completed.year || completed.name || completed.participant) {
+            for (const [_, control] of Object.entries(fromGroup.controls)) {
+              this.addRequiredValidator(control);
+            }
+          } else {
+            for (const [_, control] of Object.entries(fromGroup.controls)) {
+              this.removeRequiredValidator(control);
+            }
+          }
+        })
+      );
+    }
+  }
+
+  private addRequiredValidator(formControl: AbstractControl<any, any>) {
+    formControl.addValidators(Validators.required);
+    formControl.updateValueAndValidity({ emitEvent: false });
+  }
+
+  private removeRequiredValidator(formControl: AbstractControl<any, any>) {
+    formControl.removeValidators(Validators.required);
+    formControl.updateValueAndValidity({ emitEvent: false });
   }
 }
