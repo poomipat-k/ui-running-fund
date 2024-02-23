@@ -147,7 +147,7 @@ export class ApplicantFlowPagesComponent implements OnInit, OnDestroy {
     this.initForm();
     this.loadApplicantSelfScoreCriteria();
     // Change page
-    this.currentStep = 4;
+    this.currentStep = 5;
 
     this.subToUploadFileSubjects();
   }
@@ -530,7 +530,6 @@ export class ApplicantFlowPagesComponent implements OnInit, OnDestroy {
 
     if (this.currentStep === this.progressBarSteps.length) {
       if (this.form.valid && !this.form.disabled) {
-        this.apiLoading = true;
         this.submitForm();
         console.log('===nextPage', this.form.value);
       } else {
@@ -614,6 +613,7 @@ export class ApplicantFlowPagesComponent implements OnInit, OnDestroy {
   }
 
   submitForm() {
+    this.apiLoading = true;
     // console.log('===SUBMIT this.form', this.form);
     const formData = new FormData();
     if (this.collaborationFiles) {
@@ -680,24 +680,25 @@ export class ApplicantFlowPagesComponent implements OnInit, OnDestroy {
         )
         .subscribe({
           next: (result) => {
+            this.apiLoading = false;
             if (result) {
               this.form.disable();
               this.showSuccessPopup = true;
               setTimeout(() => {
                 this.showSuccessPopup = false;
-                this.incrementStep();
+                // this.incrementStep();
               }, 2000);
             }
           },
           error: (err) => {
             console.error(err);
+            this.apiLoading = false;
             this.showErrorPopup = true;
             setTimeout(() => {
               this.showErrorPopup = false;
             }, 2000);
           },
           complete: () => {
-            console.log('===complete api, set loading to false');
             this.apiLoading = false;
           },
         })
