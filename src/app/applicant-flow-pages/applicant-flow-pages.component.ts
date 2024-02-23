@@ -147,7 +147,7 @@ export class ApplicantFlowPagesComponent implements OnInit, OnDestroy {
     this.initForm();
     this.loadApplicantSelfScoreCriteria();
     // Change page
-    this.currentStep = 5;
+    this.currentStep = 4;
 
     this.subToUploadFileSubjects();
   }
@@ -659,11 +659,13 @@ export class ApplicantFlowPagesComponent implements OnInit, OnDestroy {
           concatMap((screenshotFiles) => {
             console.log('===screenshotFiles', screenshotFiles);
             if (screenshotFiles.length === 0) {
+              // TODO
               // throw new Error('screenshotFiles is empty');
             }
             for (let i = 0; i < screenshotFiles.length; i++) {
               // CollaborationFiles is an optional
               if (i !== 0 && !screenshotFiles[i]) {
+                // TODO
                 // throw new Error(
                 //   'ไม่สามารถสร้าง screenshot เพื่ออัพโหลดแบบฟอร์มได้'
                 // );
@@ -682,10 +684,12 @@ export class ApplicantFlowPagesComponent implements OnInit, OnDestroy {
           next: (result) => {
             this.apiLoading = false;
             if (result) {
-              this.form.disable();
+              // TODO
+              // this.form.disable();
               this.showSuccessPopup = true;
               setTimeout(() => {
                 this.showSuccessPopup = false;
+                // TODO
                 // this.incrementStep();
               }, 2000);
             }
@@ -704,6 +708,8 @@ export class ApplicantFlowPagesComponent implements OnInit, OnDestroy {
         })
     );
   }
+
+  private interceptFormDataBeforeSubmit() {}
 
   prevPage() {
     if (this.currentStep > 0) {
