@@ -166,7 +166,7 @@ export class ExperienceComponent implements OnInit, OnDestroy {
       thisSeriesCompleted3,
       otherSeriesCompleted2,
       otherSeriesCompleted3,
-    ].forEach((group) => this.addRequiredValidatorToCompletedRow(group));
+    ].forEach((group) => this.manageRequiredValidatorOfCompletedRow(group));
   }
 
   ngOnDestroy(): void {
@@ -202,6 +202,16 @@ export class ExperienceComponent implements OnInit, OnDestroy {
     if (!this.thisSeriesFormGroup.get('history')) {
       const historyFormGroup = this.generateHistoryFormGroup();
       this.thisSeriesFormGroup.addControl('history', historyFormGroup);
+      // Add subscription to add Validators.required once some field in completed row is not null
+      const thisSeriesCompleted2 = this.form.get(
+        'experience.thisSeries.history.completed2'
+      ) as FormGroup;
+      const thisSeriesCompleted3 = this.form.get(
+        'experience.thisSeries.history.completed3'
+      ) as FormGroup;
+      [thisSeriesCompleted2, thisSeriesCompleted3].forEach((group) =>
+        this.manageRequiredValidatorOfCompletedRow(group)
+      );
     }
   }
 
@@ -213,18 +223,21 @@ export class ExperienceComponent implements OnInit, OnDestroy {
     if (!this.otherSeriesFormGroup.get('history')) {
       const historyFormGroup = this.generateOtherSeriesHistoryFormGroup();
       this.otherSeriesFormGroup.addControl('history', historyFormGroup);
+      // Add subscription to add Validators.required once some field in completed row is not null
+      const otherSeriesCompleted2 = this.form.get(
+        'experience.otherSeries.history.completed2'
+      ) as FormGroup;
+      const otherSeriesCompleted3 = this.form.get(
+        'experience.otherSeries.history.completed3'
+      ) as FormGroup;
+      [otherSeriesCompleted2, otherSeriesCompleted3].forEach((group) =>
+        this.manageRequiredValidatorOfCompletedRow(group)
+      );
     }
   }
 
   private generateOtherSeriesHistoryFormGroup(): FormGroup {
     return new FormGroup({
-      ordinalNumber: new FormControl(null, [
-        Validators.required,
-        Validators.min(2),
-      ]),
-      year: new FormControl(null, [Validators.required]),
-      month: new FormControl(null, Validators.required),
-      day: new FormControl(null, Validators.required),
       completed1: new FormGroup({
         year: new FormControl(null, [
           Validators.required,
@@ -385,7 +398,7 @@ export class ExperienceComponent implements OnInit, OnDestroy {
     this.yearOptions = years;
   }
 
-  private addRequiredValidatorToCompletedRow(fromGroup: FormGroup) {
+  private manageRequiredValidatorOfCompletedRow(fromGroup: FormGroup) {
     if (fromGroup) {
       this.subs.push(
         fromGroup.valueChanges.subscribe((completed: HistoryCompleted) => {
