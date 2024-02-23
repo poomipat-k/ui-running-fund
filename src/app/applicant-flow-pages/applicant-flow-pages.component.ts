@@ -16,6 +16,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { Router } from '@angular/router';
+import { cloneDeep } from 'lodash-es';
 import { BehaviorSubject, Subscription, concatMap, from } from 'rxjs';
 
 import html2canvas from 'html2canvas';
@@ -612,6 +613,33 @@ export class ApplicantFlowPagesComponent implements OnInit, OnDestroy {
     this.collaborationFilesSubject.next([]);
   }
 
+  private getSubmitFormData() {
+    const data = cloneDeep(this.form.value);
+    const thisHistory = data.experience.thisSeries?.history;
+    const otherHistory = data.experience.otherSeries?.history;
+    if (thisHistory?.completed1?.year) {
+      thisHistory.completed1.year = thisHistory.completed1.year - 543;
+    }
+    if (thisHistory?.completed2?.year) {
+      thisHistory.completed2.year = thisHistory.completed2.year - 543;
+    }
+    if (thisHistory?.completed3?.year) {
+      thisHistory.completed3.year = thisHistory.completed3.year - 543;
+    }
+    if (otherHistory?.completed1?.year) {
+      otherHistory.completed1.year = otherHistory.completed1.year - 543;
+    }
+    if (otherHistory?.completed2?.year) {
+      otherHistory.completed2.year = otherHistory.completed2.year - 543;
+    }
+    if (otherHistory?.completed3?.year) {
+      otherHistory.completed3.year = otherHistory.completed3.year - 543;
+    }
+    console.log('===cloneData');
+    console.log(data);
+    return data;
+  }
+
   submitForm() {
     this.apiLoading = true;
     // console.log('===SUBMIT this.form', this.form);
@@ -676,7 +704,9 @@ export class ApplicantFlowPagesComponent implements OnInit, OnDestroy {
             console.log('====FORM VALUE ====');
             console.log(this.form.value);
 
-            formData.append('form', JSON.stringify(this.form.value));
+            // formData.append('form', JSON.stringify(this.form.value));
+            formData.append('form', JSON.stringify(this.getSubmitFormData()));
+
             return this.projectService.addProject(formData);
           })
         )
