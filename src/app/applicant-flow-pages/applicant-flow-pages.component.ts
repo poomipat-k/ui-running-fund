@@ -137,6 +137,7 @@ export class ApplicantFlowPagesComponent implements OnInit, OnDestroy {
   protected currentStep = 0;
 
   protected applicantSelfScoreCriteria: ApplicantCriteria[] = [];
+  protected devModeOn = false;
 
   constructor() {
     this.incrementStep = this.incrementStep.bind(this);
@@ -148,7 +149,8 @@ export class ApplicantFlowPagesComponent implements OnInit, OnDestroy {
     this.initForm();
     this.loadApplicantSelfScoreCriteria();
     // Change page
-    this.currentStep = 4;
+    this.currentStep = 1;
+    this.devModeOn = true;
 
     this.subToUploadFileSubjects();
   }
@@ -642,7 +644,6 @@ export class ApplicantFlowPagesComponent implements OnInit, OnDestroy {
 
   submitForm() {
     this.apiLoading = true;
-    // console.log('===SUBMIT this.form', this.form);
     const formData = new FormData();
     if (this.collaborationFiles) {
       for (let i = 0; i < this.collaborationFiles.length; i++) {
@@ -687,16 +688,14 @@ export class ApplicantFlowPagesComponent implements OnInit, OnDestroy {
           concatMap((screenshotFiles) => {
             console.log('===screenshotFiles', screenshotFiles);
             if (screenshotFiles.length === 0) {
-              // TODO
-              // throw new Error('screenshotFiles is empty');
+              throw new Error('screenshotFiles is empty');
             }
             for (let i = 0; i < screenshotFiles.length; i++) {
               // CollaborationFiles is an optional
               if (i !== 0 && !screenshotFiles[i]) {
-                // TODO
-                // throw new Error(
-                //   'ไม่สามารถสร้าง screenshot เพื่ออัพโหลดแบบฟอร์มได้'
-                // );
+                throw new Error(
+                  'ไม่สามารถสร้าง screenshot เพื่ออัพโหลดแบบฟอร์มได้'
+                );
               }
               formData.append('screenshotFiles', screenshotFiles[i]);
             }
@@ -704,7 +703,6 @@ export class ApplicantFlowPagesComponent implements OnInit, OnDestroy {
             console.log('====FORM VALUE ====');
             console.log(this.form.value);
 
-            // formData.append('form', JSON.stringify(this.form.value));
             formData.append('form', JSON.stringify(this.getSubmitFormData()));
 
             return this.projectService.addProject(formData);
@@ -714,7 +712,7 @@ export class ApplicantFlowPagesComponent implements OnInit, OnDestroy {
           next: (result) => {
             this.apiLoading = false;
             if (result) {
-              // TODO
+              // TODO: uncomment this
               // this.form.disable();
               this.showSuccessPopup = true;
               setTimeout(() => {
@@ -738,8 +736,6 @@ export class ApplicantFlowPagesComponent implements OnInit, OnDestroy {
         })
     );
   }
-
-  private interceptFormDataBeforeSubmit() {}
 
   prevPage() {
     if (this.currentStep > 0) {

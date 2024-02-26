@@ -36,6 +36,7 @@ export class PlanAndDetailsComponent {
   @Input() form: FormGroup;
   @Input() enableScroll = false;
   @Input() criteria: ApplicantCriteria[] = [];
+  @Input() devModeOn = false;
 
   @ViewChild('capture1') captureTarget1: ElementRef;
   @ViewChild('capture2') captureTarget2: ElementRef;

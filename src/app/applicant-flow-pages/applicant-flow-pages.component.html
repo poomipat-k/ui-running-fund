@@ -36,15 +36,17 @@
       ></app-applicant-collaborate>
       } @case (1) {
       <app-applicant-general-details
+        #generalDetailsComponent
         [form]="form"
         [enableScroll]="true"
-        #generalDetailsComponent
+        [devModeOn]="devModeOn"
       ></app-applicant-general-details>
       } @case (2) {
       <app-applicant-contact
         #contactComponent
         [form]="form"
         [enableScroll]="true"
+        [devModeOn]="devModeOn"
       ></app-applicant-contact>
       } @case (3) {
       <app-applicant-plan-and-details
@@ -52,6 +54,7 @@
         [form]="form"
         [enableScroll]="true"
         [criteria]="applicantSelfScoreCriteria"
+        [devModeOn]="devModeOn"
       >
       </app-applicant-plan-and-details>
       } @case(4) {
@@ -59,6 +62,7 @@
         #experienceComponent
         [form]="form"
         [enableScroll]="true"
+        [devModeOn]="devModeOn"
       >
       </app-applicant-experience>
       } @case(5) {
@@ -66,6 +70,7 @@
         #fundRequestComponent
         [form]="form"
         [enableScroll]="true"
+        [devModeOn]="devModeOn"
       >
       </app-applicant-fund-request>
       }@case (6) {

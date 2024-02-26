@@ -49,6 +49,7 @@ import { RadioOption } from '../../shared/models/radio-option';
 export class ExperienceComponent implements OnInit, OnDestroy {
   @Input() form: FormGroup;
   @Input() enableScroll = false;
+  @Input() devModeOn = false;
 
   private readonly scroller: ViewportScroller = inject(ViewportScroller);
   private readonly dateService: DateService = inject(DateService);

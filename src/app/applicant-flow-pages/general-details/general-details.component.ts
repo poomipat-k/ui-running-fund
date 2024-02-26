@@ -45,6 +45,7 @@ import { RadioOption } from '../../shared/models/radio-option';
 export class GeneralDetailsComponent implements OnInit, OnDestroy {
   @Input() form: FormGroup;
   @Input() enableScroll = false;
+  @Input() devModeOn = false;
 
   protected formTouched = false;
   private readonly scroller: ViewportScroller = inject(ViewportScroller);
@@ -274,6 +275,64 @@ export class GeneralDetailsComponent implements OnInit, OnDestroy {
       this.getPostcodeBySubdistrictId(subdistrictId);
     }
 
+    const provinceControl = this.form.get(
+      'general.address.provinceId'
+    ) as FormControl;
+    const districtControl = this.form.get(
+      'general.address.districtId'
+    ) as FormControl;
+    const subdistrictControl = this.form.get(
+      'general.address.subdistrictId'
+    ) as FormControl;
+
+    this.subs.push(
+      provinceControl.valueChanges.subscribe((provinceId) => {
+        console.log('===provinceId', provinceId);
+        if (provinceId) {
+          this.getDistrictsByProvinceId(provinceId);
+        }
+      })
+    );
+
+    this.subs.push(
+      districtControl.valueChanges.subscribe((districtId) => {
+        console.log('===districtId', districtId);
+        if (districtId) {
+          this.getSubdistrictsByDistrictId(districtId);
+        }
+      })
+    );
+
+    this.subs.push(
+      districtControl.valueChanges.subscribe((districtId) => {
+        console.log('===districtId', districtId);
+        if (districtId) {
+          this.getSubdistrictsByDistrictId(districtId);
+        }
+      })
+    );
+
+    this.subs.push(
+      subdistrictControl.valueChanges.subscribe((subdistrict) => {
+        console.log('===subdistrict', subdistrict);
+        if (subdistrict) {
+          this.getPostcodeBySubdistrictId(subdistrict);
+        }
+      })
+    );
+
+    // this.addressFormGroup.valueChanges.subscribe((result) => {
+    //   if (result.provinceId) {
+    //     this.getDistrictsByProvinceId(result.provinceId);
+    //   }
+    //   if (result.districtId) {
+    //     this.getSubdistrictsByDistrictId(result.districtId);
+    //   }
+    //   if (result.subdistrictId) {
+    //     this.getPostcodeBySubdistrictId(result.subdistrictId);
+    //   }
+    // });
+
     this.manageDistanceFeeValidator();
   }
 
@@ -363,24 +422,21 @@ export class GeneralDetailsComponent implements OnInit, OnDestroy {
     this.categoryFormGroup.removeControl('otherType');
   }
 
+  // Event when user change in UI
   onProvinceChanged() {
-    this.addressFormGroup.patchValue({ districtId: null, subdistrictId: null });
-    const provinceId = this.form.value.general.address.provinceId;
-    this.getDistrictsByProvinceId(provinceId);
+    this.addressFormGroup.patchValue({
+      districtId: null,
+      subdistrictId: null,
+      postcodeId: null,
+    });
   }
 
   onDistrictChanged() {
-    // Clear subdistrict
-    this.addressFormGroup.patchValue({ subdistrictId: null });
-    const districtId = this.form.value.general.address.districtId;
-    this.getSubdistrictsByDistrictId(districtId);
+    this.addressFormGroup.patchValue({ subdistrictId: null, postcodeId: null });
   }
 
   onSubdistrictChanged() {
-    // Clear postcode
     this.addressFormGroup.patchValue({ postcodeId: null });
-    const subdistrictId = this.form.value.general.address.subdistrictId;
-    this.getPostcodeBySubdistrictId(subdistrictId);
   }
 
   onYearOrMonthChanged() {
@@ -404,6 +460,7 @@ export class GeneralDetailsComponent implements OnInit, OnDestroy {
   }
 
   private getDistrictsByProvinceId(provinceId: number) {
+    console.log('==provinceId', provinceId);
     this.subs.push(
       this.addressService
         .getDistrictsByProvinceId(provinceId)
@@ -568,7 +625,7 @@ export class GeneralDetailsComponent implements OnInit, OnDestroy {
   // TODO: remove this func for dev purpose
   patchForm() {
     this.generalFormGroup.patchValue({
-      projectName: 'พี่อุิ๊กระบี่',
+      projectName: 'Test_กระบี่รัน',
       eventDate: {
         year: 2024,
         month: 2,
@@ -579,7 +636,11 @@ export class GeneralDetailsComponent implements OnInit, OnDestroy {
         toMinute: 2,
       },
       address: {
-        address: 'พี่อุิ๊กระบี่',
+        address: 'Test กระบี่ ลำพูน',
+        provinceId: 1,
+        districtId: 1,
+        subdistrictId: 1,
+        postcodeId: 1,
       },
       startPoint: 'x',
       finishPoint: 'y',
@@ -591,6 +652,43 @@ export class GeneralDetailsComponent implements OnInit, OnDestroy {
             other: false,
           },
         },
+        distanceAndFee: [
+          {
+            checked: true,
+            dynamic: false,
+            type: 'fun',
+            display: 'Fun run (ระยะทางไม่เกิน 10 km)',
+            fee: 300,
+          },
+          {
+            checked: true,
+            dynamic: false,
+            type: 'mini',
+            display: 'Mini Marathon (ระยะทาง 10 km)',
+            fee: 500,
+          },
+          {
+            checked: false,
+            dynamic: false,
+            type: 'half',
+            display: 'Half Marathon (ระยะทาง 21.1 km)',
+            fee: null,
+          },
+          {
+            checked: false,
+            dynamic: false,
+            type: 'full',
+            display: 'Marathon (ระยะทาง 42.195 km)',
+            fee: null,
+          },
+          {
+            checked: false,
+            dynamic: true,
+            type: null,
+            display: 'อื่น ๆ (โปรดระบุ)',
+            fee: null,
+          },
+        ],
         vip: false,
       },
       expectedParticipants: '>=5501',

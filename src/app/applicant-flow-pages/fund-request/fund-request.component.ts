@@ -31,6 +31,8 @@ import { RadioOption } from '../../shared/models/radio-option';
 export class FundRequestComponent {
   @Input() form: FormGroup;
   @Input() enableScroll = false;
+  @Input() devModeOn = false;
+
   protected formTouched = false;
 
   private readonly scroller: ViewportScroller = inject(ViewportScroller);

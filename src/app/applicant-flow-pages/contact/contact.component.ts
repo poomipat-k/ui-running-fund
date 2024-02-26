@@ -29,6 +29,7 @@ import { RadioOption } from '../../shared/models/radio-option';
 export class ContactComponent implements OnInit {
   @Input() form: FormGroup;
   @Input() enableScroll = false;
+  @Input() devModeOn = false;
 
   private readonly addressService: AddressService = inject(AddressService);
 
