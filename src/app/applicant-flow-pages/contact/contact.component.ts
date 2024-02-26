@@ -432,4 +432,51 @@ export class ContactComponent implements OnInit {
     this.scroller.setOffset([0, 100]);
     this.scroller.scrollToAnchor(id);
   }
+
+  patchForm() {
+    const group = this.form.get('contact') as FormGroup;
+    group.patchValue({
+      projectHead: {
+        prefix: 'Mr',
+        firstName: 'A',
+        lastName: 'B',
+        organizationPosition: 'software eng',
+        eventPosition: 'Judge',
+      },
+      projectManager: {
+        sameAsProjectHead: true,
+        prefix: 'Mr',
+        firstName: 'A',
+        lastName: 'B',
+        organizationPosition: 'software eng',
+        eventPosition: 'Judge',
+      },
+      projectCoordinator: {
+        sameAsProjectHead: true,
+        sameAsProjectManager: false,
+        prefix: 'Mr',
+        firstName: 'A',
+        lastName: 'B',
+        organizationPosition: 'software eng',
+        eventPosition: 'Judge',
+        address: {
+          address: 'A',
+          provinceId: 3,
+          districtId: 59,
+          subdistrictId: 235,
+          postcodeId: 246,
+        },
+        email: 'test@test.com',
+        lineId: '@aabb',
+        phoneNumber: '0902029423',
+      },
+      raceDirector: {
+        who: 'projectHead',
+      },
+      organization: {
+        type: 'civil_society',
+        name: 'NGO',
+      },
+    });
+  }
 }
