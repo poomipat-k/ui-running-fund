@@ -149,7 +149,7 @@ export class ApplicantFlowPagesComponent implements OnInit, OnDestroy {
     this.initForm();
     this.loadApplicantSelfScoreCriteria();
     // Change page
-    this.currentStep = 2;
+    this.currentStep = 3;
     this.devModeOn = true;
 
     this.subToUploadFileSubjects();
