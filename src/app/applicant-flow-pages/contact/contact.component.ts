@@ -1,5 +1,5 @@
 import { CommonModule, ViewportScroller } from '@angular/common';
-import { Component, Input, OnInit, inject } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit, inject } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { CheckboxComponent } from '../../components/checkbox/checkbox.component';
@@ -26,7 +26,7 @@ import { RadioOption } from '../../shared/models/radio-option';
   templateUrl: './contact.component.html',
   styleUrl: './contact.component.scss',
 })
-export class ContactComponent implements OnInit {
+export class ContactComponent implements OnInit, OnDestroy {
   @Input() form: FormGroup;
   @Input() enableScroll = false;
   @Input() devModeOn = false;
@@ -167,6 +167,7 @@ export class ContactComponent implements OnInit {
     const subdistrictId =
       this.form.value?.contact?.projectCoordinator?.address?.subdistrictId;
 
+    // load address data when init
     if (provinceId) {
       this.getDistrictsByProvinceId(provinceId);
     }
@@ -176,6 +177,43 @@ export class ContactComponent implements OnInit {
     if (subdistrictId) {
       this.getPostcodeBySubdistrictId(subdistrictId);
     }
+
+    // load address data when some field changed
+    const provinceControl = this.form.get(
+      'contact.projectCoordinator.address.provinceId'
+    ) as FormControl;
+    const districtControl = this.form.get(
+      'contact.projectCoordinator.address.districtId'
+    ) as FormControl;
+    const subdistrictControl = this.form.get(
+      'contact.projectCoordinator.address.subdistrictId'
+    ) as FormControl;
+
+    this.subs.push(
+      provinceControl.valueChanges.subscribe((provinceId) => {
+        if (provinceId) {
+          this.getDistrictsByProvinceId(provinceId);
+        }
+      })
+    );
+    this.subs.push(
+      districtControl.valueChanges.subscribe((districtId) => {
+        if (districtId) {
+          this.getSubdistrictsByDistrictId(districtId);
+        }
+      })
+    );
+    this.subs.push(
+      subdistrictControl.valueChanges.subscribe((subdistrict) => {
+        if (subdistrict) {
+          this.getPostcodeBySubdistrictId(subdistrict);
+        }
+      })
+    );
+  }
+
+  ngOnDestroy(): void {
+    this.subs.forEach((s) => s.unsubscribe());
   }
 
   public validToGoNext(): boolean {
@@ -220,26 +258,19 @@ export class ContactComponent implements OnInit {
     this.coordinatorAddressFormGroup.patchValue({
       districtId: null,
       subdistrictId: null,
+      postcodeId: null,
     });
-    const provinceId =
-      this.form.value.contact.projectCoordinator.address.provinceId;
-    this.getDistrictsByProvinceId(provinceId);
   }
 
   onDistrictChanged() {
-    // Clear subdistrict
-    this.coordinatorAddressFormGroup.patchValue({ subdistrictId: null });
-    const districtId =
-      this.form.value.contact.projectCoordinator.address.districtId;
-    this.getSubdistrictsByDistrictId(districtId);
+    this.coordinatorAddressFormGroup.patchValue({
+      subdistrictId: null,
+      postcodeId: null,
+    });
   }
 
   onSubdistrictChanged() {
-    // Clear postcode
     this.coordinatorAddressFormGroup.patchValue({ postcodeId: null });
-    const subdistrictId =
-      this.form.value.contact.projectCoordinator.address.subdistrictId;
-    this.getPostcodeBySubdistrictId(subdistrictId);
   }
 
   protected onProjectManagerSameAsProjectHeadChanged() {
