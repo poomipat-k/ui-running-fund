@@ -318,7 +318,7 @@ export class ExperienceComponent implements OnInit, OnDestroy {
 
     const fromGroup = this.form.get('experience') as FormGroup;
     const errorId = this.getFirstErrorIdWithPrefix(fromGroup, '');
-    console.log('===errorId', errorId);
+    console.error('errorId', errorId);
     if (errorId && this.enableScroll) {
       this.scrollToId(errorId);
     }
@@ -425,5 +425,19 @@ export class ExperienceComponent implements OnInit, OnDestroy {
   private removeRequiredValidator(formControl: AbstractControl<any, any>) {
     formControl.removeValidators(Validators.required);
     formControl.updateValueAndValidity({ emitEvent: false });
+  }
+
+  protected patchForm() {
+    const group = this.form.get('experience') as FormGroup;
+    group.patchValue({
+      thisSeries: {
+        firstTime: true,
+      },
+      otherSeries: {
+        doneBefore: false,
+      },
+    });
+    this.onThisSeriesFirstTimeChanged();
+    this.onDoneOtherSeriesBeforeChanged();
   }
 }
