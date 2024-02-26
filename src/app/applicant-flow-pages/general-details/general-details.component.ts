@@ -287,51 +287,25 @@ export class GeneralDetailsComponent implements OnInit, OnDestroy {
 
     this.subs.push(
       provinceControl.valueChanges.subscribe((provinceId) => {
-        console.log('===provinceId', provinceId);
         if (provinceId) {
           this.getDistrictsByProvinceId(provinceId);
         }
       })
     );
-
     this.subs.push(
       districtControl.valueChanges.subscribe((districtId) => {
-        console.log('===districtId', districtId);
         if (districtId) {
           this.getSubdistrictsByDistrictId(districtId);
         }
       })
     );
-
-    this.subs.push(
-      districtControl.valueChanges.subscribe((districtId) => {
-        console.log('===districtId', districtId);
-        if (districtId) {
-          this.getSubdistrictsByDistrictId(districtId);
-        }
-      })
-    );
-
     this.subs.push(
       subdistrictControl.valueChanges.subscribe((subdistrict) => {
-        console.log('===subdistrict', subdistrict);
         if (subdistrict) {
           this.getPostcodeBySubdistrictId(subdistrict);
         }
       })
     );
-
-    // this.addressFormGroup.valueChanges.subscribe((result) => {
-    //   if (result.provinceId) {
-    //     this.getDistrictsByProvinceId(result.provinceId);
-    //   }
-    //   if (result.districtId) {
-    //     this.getSubdistrictsByDistrictId(result.districtId);
-    //   }
-    //   if (result.subdistrictId) {
-    //     this.getPostcodeBySubdistrictId(result.subdistrictId);
-    //   }
-    // });
 
     this.manageDistanceFeeValidator();
   }
