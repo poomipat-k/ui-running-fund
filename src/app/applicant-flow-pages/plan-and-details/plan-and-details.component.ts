@@ -41,6 +41,9 @@ export class PlanAndDetailsComponent {
   @ViewChild('capture1') captureTarget1: ElementRef;
   @ViewChild('capture2') captureTarget2: ElementRef;
   @ViewChild('capture3') captureTarget3: ElementRef;
+  @ViewChild('capture4') captureTarget4: ElementRef;
+  @ViewChild('capture5') captureTarget5: ElementRef;
+  @ViewChild('capture6') captureTarget6: ElementRef;
 
   private readonly scroller: ViewportScroller = inject(ViewportScroller);
 
@@ -394,6 +397,9 @@ export class PlanAndDetailsComponent {
       this.captureTarget1.nativeElement,
       this.captureTarget2.nativeElement,
       this.captureTarget3.nativeElement,
+      this.captureTarget4.nativeElement,
+      this.captureTarget5.nativeElement,
+      this.captureTarget6.nativeElement,
     ];
   }
 

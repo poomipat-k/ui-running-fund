@@ -5,261 +5,190 @@
   </h2>
 
   <div class="section-container">
-    <div #capture1>
-      <!-- 3.1 Start -->
-      <div class="section">
-        <h3 class="section__header">
-          3.1 ระบุรายละเอียด<u>ความเป็นมาและวัตถุประสงค์</u>ของการจัดการแข่งขัน
-        </h3>
-        <div class="section-content gap-20">
-          <div>
-            <h4 class="section__sub-header--no-asterisk" id="background">
-              3.1.1 รายละเอียดความเป็นมา
-            </h4>
-            <div class="mgt-8">
-              <app-com-textarea
-                [form]="detailsFormGroup"
-                controlName="background"
-                placeholder="ระบุรายละเอียด..."
-                width="73.9rem"
-                height="25.7rem"
-              ></app-com-textarea>
-
-              @if (!form.get('details.background')?.valid &&
-              form.get('details.background')?.touched && formTouched) {
-              <div class="error mgt-10">
-                <img src="/assets/error_icon.svg" alt="error icon" />
-                <p class="error__text">กรูณาระบุรายละเอียด</p>
-              </div>
-              }
-            </div>
-          </div>
-
-          <div>
-            <h4 class="section__sub-header--no-asterisk">
-              3.1.2 วัตถุประสงค์ของการจัดกิจกรรม
-            </h4>
-            <div class="mgt-8" id="objective">
-              <app-com-textarea
-                [form]="detailsFormGroup"
-                controlName="objective"
-                placeholder="ระบุรายละเอียด..."
-                width="73.9rem"
-                height="25.7rem"
-              ></app-com-textarea>
-
-              @if (!form.get('details.objective')?.valid &&
-              form.get('details.objective')?.touched && formTouched) {
-              <div class="error mgt-10">
-                <img src="/assets/error_icon.svg" alt="error icon" />
-                <p class="error__text">กรูณาระบุรายละเอียด</p>
-              </div>
-              }
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- 3.2 Start -->
-      <div class="section">
-        <h3 class="section__header section__header--no-asterisk">
-          3.2
-          โครงการมี<u>ช่องทางการสื่อสาร</u>เพื่อแจ้งรายละเอียดของกิจกรรมให้กับนักวิ่งหรือผู้ที่สนใจเข้าร่วมในรูปแบบใดบ้าง
-          <p class="section__header--remark">(เลือกทุกข้อที่มีการดำเนินการ)</p>
-        </h3>
-
-        <div class="sub-block">
-          <h4 class="section__sub-header pdl-20">
-            3.2.1 สื่อสารผ่านช่องทางสื่อสังคมออนไลน์ (Social Media)
+    <!-- 3.1 Start -->
+    <div class="section">
+      <h3 class="section__header">
+        3.1 ระบุรายละเอียด<u>ความเป็นมาและวัตถุประสงค์</u>ของการจัดการแข่งขัน
+      </h3>
+      <div class="section-content gap-20">
+        <div #capture1>
+          <h4 class="section__sub-header--no-asterisk" id="background">
+            3.1.1 รายละเอียดความเป็นมา
           </h4>
-          <div class="section-content" id="marketing.online.available">
-            <div class="online pdl-4">
-              <app-com-checkbox
-                [form]="onlineAvailableFormGroup"
-                controlName="facebook"
-                display="Facebook โปรดระบุชื่อเพจ"
-                gap="8px"
-                fontSize="16px"
-                [onChanged]="onHasFacebookChanged"
-              >
-              </app-com-checkbox>
-              @if (hasFacebook) {
-              <div class="pdl-30">
-                <app-com-input-text
-                  id="marketing.online.howTo.facebook"
-                  placeholder="โปรดระบุชื่อเพจ"
-                  [form]="onlineHowToFormGroup"
-                  controlName="facebook"
-                  width="48.1rem"
-                ></app-com-input-text>
-                @if (!facebookHowToControl?.valid &&
-                facebookHowToControl?.touched && formTouched) {
-                @if(facebookHowToControl?.errors &&
-                facebookHowToControl?.errors?.['required']) {
-                <div class="error mgt-10">
-                  <img src="/assets/error_icon.svg" alt="error icon" />
-                  <p class="error__text">โปรดระบุชื่อเพจ</p>
-                </div>
-                } @else {
-                <div class="error mgt-10">
-                  <img src="/assets/error_icon.svg" alt="error icon" />
-                  <p class="error__text">กรุณาตรวจสอบข้อมูลให้ถูกต้อง</p>
-                </div>
-                } }
-              </div>
-              }
-            </div>
+          <div class="mgt-8">
+            <app-com-textarea
+              [form]="detailsFormGroup"
+              controlName="background"
+              placeholder="ระบุรายละเอียด..."
+              width="73.9rem"
+              height="25.7rem"
+            ></app-com-textarea>
 
-            <div class="online pdl-4">
-              <app-com-checkbox
-                [form]="onlineAvailableFormGroup"
-                controlName="website"
-                display="เว็บไซต์ โปรดแนบลิงก์ของเว็บไซต์"
-                gap="8px"
-                fontSize="16px"
-                [onChanged]="onHasWebsiteChanged"
-              >
-              </app-com-checkbox>
-              @if (hasWebsite) {
-              <div class="pdl-30">
-                <app-com-input-text
-                  id="marketing.online.howTo.website"
-                  placeholder="โปรดแนบลิงก์ของเว็บไซต์"
-                  [form]="onlineHowToFormGroup"
-                  controlName="website"
-                  width="48.1rem"
-                ></app-com-input-text>
-                @if (!onlineHowToFormGroup.get('website')?.valid &&
-                onlineHowToFormGroup.get('website')?.touched && formTouched) {
-                <div class="error mgt-10">
-                  <img src="/assets/error_icon.svg" alt="error icon" />
-                  <p class="error__text">โปรดแนบลิงก์ของเว็บไซต์</p>
-                </div>
-                }
-              </div>
-              }
-            </div>
-
-            <div class="online pdl-4">
-              <app-com-checkbox
-                [form]="onlineAvailableFormGroup"
-                controlName="onlinePage"
-                display="ฝากประชาสัมพันธ์ในเพจวิ่งออนไลน์ โปรดยกตัวอย่าง"
-                gap="8px"
-                fontSize="16px"
-                [onChanged]="onHasOnlinePageChanged"
-              >
-              </app-com-checkbox>
-              @if (hasOnlinePage) {
-              <div class="pdl-30">
-                <app-com-input-text
-                  id="marketing.online.howTo.onlinePage"
-                  placeholder="โปรดยกตัวอย่าง"
-                  [form]="onlineHowToFormGroup"
-                  controlName="onlinePage"
-                  width="48.1rem"
-                ></app-com-input-text>
-                @if (!onlineHowToFormGroup.get('onlinePage')?.valid &&
-                onlineHowToFormGroup.get('onlinePage')?.touched && formTouched)
-                {
-                <div class="error mgt-10">
-                  <img src="/assets/error_icon.svg" alt="error icon" />
-                  <p class="error__text">โปรดยกตัวอย่าง</p>
-                </div>
-                }
-              </div>
-              }
-            </div>
-
-            <div class="online pdl-4">
-              <app-com-checkbox
-                [form]="onlineAvailableFormGroup"
-                controlName="other"
-                display="ช่องทางออนไลน์อื่น ๆ ระบุ"
-                gap="8px"
-                fontSize="16px"
-                [onChanged]="onHasOnlineOtherChanged"
-              >
-              </app-com-checkbox>
-              @if (hasOnlineOther) {
-              <div class="pdl-30">
-                <app-com-input-text
-                  id="marketing.online.howTo.other"
-                  placeholder="โปรดระบุ"
-                  [form]="onlineHowToFormGroup"
-                  controlName="other"
-                  width="48.1rem"
-                ></app-com-input-text>
-                @if (!onlineHowToFormGroup.get('other')?.valid &&
-                onlineHowToFormGroup.get('other')?.touched && formTouched) {
-                <div class="error mgt-10">
-                  <img src="/assets/error_icon.svg" alt="error icon" />
-                  <p class="error__text">โปรดระบุ</p>
-                </div>
-                }
-              </div>
-              }
-            </div>
-            @if (!onlineAvailableFormGroup.valid &&
-            onlineAvailableFormGroup.touched && formTouched) {
-            <div class="error">
+            @if (!form.get('details.background')?.valid &&
+            form.get('details.background')?.touched && formTouched) {
+            <div class="error mgt-10">
               <img src="/assets/error_icon.svg" alt="error icon" />
-              <p class="error__text">สามารถเลือกได้หลายข้อ</p>
+              <p class="error__text">กรูณาระบุรายละเอียด</p>
             </div>
             }
           </div>
         </div>
 
-        <div class="sub-block">
-          <h4 class="section__sub-header pdl-20">
-            3.2.2 สื่อสารผ่านบุคคล และ/หรือช่องทางอื่น ๆ ที่ไม่ใช้อินเทอร์เน็ต
-            (Offline)
+        <div #capture2>
+          <h4 class="section__sub-header--no-asterisk">
+            3.1.2 วัตถุประสงค์ของการจัดกิจกรรม
           </h4>
-          <div class="section-content" id="marketing.offline.available">
-            <div class="offline">
-              @for (item of offlineAvailableOptions; track item.id) {
-              <div id="marketing.offline.available" class="pdl-4">
-                @if (item.onChanged) {
-                <app-com-checkbox
-                  [form]="offlineAvailableFormGroup"
-                  [controlName]="item.controlName"
-                  [innerHTML]="item.display"
-                  gap="8px"
-                  fontSize="16px"
-                  [onChanged]="item.onChanged"
-                >
-                </app-com-checkbox>
-                } @else {
-                <app-com-checkbox
-                  [form]="offlineAvailableFormGroup"
-                  [controlName]="item.controlName"
-                  [innerHTML]="item.display"
-                  gap="8px"
-                  fontSize="16px"
-                >
-                </app-com-checkbox>
-                }
-              </div>
-              } @if(!offlineAvailableFormGroup.valid &&
-              offlineAvailableFormGroup.touched && formTouched) {
-              <div class="error pdl-28">
+          <div class="mgt-8" id="objective">
+            <app-com-textarea
+              [form]="detailsFormGroup"
+              controlName="objective"
+              placeholder="ระบุรายละเอียด..."
+              width="73.9rem"
+              height="25.7rem"
+            ></app-com-textarea>
+
+            @if (!form.get('details.objective')?.valid &&
+            form.get('details.objective')?.touched && formTouched) {
+            <div class="error mgt-10">
+              <img src="/assets/error_icon.svg" alt="error icon" />
+              <p class="error__text">กรูณาระบุรายละเอียด</p>
+            </div>
+            }
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 3.2 Start -->
+    <div class="section" #capture3>
+      <h3 class="section__header section__header--no-asterisk">
+        3.2
+        โครงการมี<u>ช่องทางการสื่อสาร</u>เพื่อแจ้งรายละเอียดของกิจกรรมให้กับนักวิ่งหรือผู้ที่สนใจเข้าร่วมในรูปแบบใดบ้าง
+        <p class="section__header--remark">(เลือกทุกข้อที่มีการดำเนินการ)</p>
+      </h3>
+
+      <div class="sub-block">
+        <h4 class="section__sub-header pdl-20">
+          3.2.1 สื่อสารผ่านช่องทางสื่อสังคมออนไลน์ (Social Media)
+        </h4>
+        <div class="section-content" id="marketing.online.available">
+          <div class="online pdl-4">
+            <app-com-checkbox
+              [form]="onlineAvailableFormGroup"
+              controlName="facebook"
+              display="Facebook โปรดระบุชื่อเพจ"
+              gap="8px"
+              fontSize="16px"
+              [onChanged]="onHasFacebookChanged"
+            >
+            </app-com-checkbox>
+            @if (hasFacebook) {
+            <div class="pdl-30">
+              <app-com-input-text
+                id="marketing.online.howTo.facebook"
+                placeholder="โปรดระบุชื่อเพจ"
+                [form]="onlineHowToFormGroup"
+                controlName="facebook"
+                width="48.1rem"
+              ></app-com-input-text>
+              @if (!facebookHowToControl?.valid && facebookHowToControl?.touched
+              && formTouched) { @if(facebookHowToControl?.errors &&
+              facebookHowToControl?.errors?.['required']) {
+              <div class="error mgt-10">
                 <img src="/assets/error_icon.svg" alt="error icon" />
-                <p class="error__text">สามารถเลือกได้หลายข้อ</p>
+                <p class="error__text">โปรดระบุชื่อเพจ</p>
+              </div>
+              } @else {
+              <div class="error mgt-10">
+                <img src="/assets/error_icon.svg" alt="error icon" />
+                <p class="error__text">กรุณาตรวจสอบข้อมูลให้ถูกต้อง</p>
+              </div>
+              } }
+            </div>
+            }
+          </div>
+
+          <div class="online pdl-4">
+            <app-com-checkbox
+              [form]="onlineAvailableFormGroup"
+              controlName="website"
+              display="เว็บไซต์ โปรดแนบลิงก์ของเว็บไซต์"
+              gap="8px"
+              fontSize="16px"
+              [onChanged]="onHasWebsiteChanged"
+            >
+            </app-com-checkbox>
+            @if (hasWebsite) {
+            <div class="pdl-30">
+              <app-com-input-text
+                id="marketing.online.howTo.website"
+                placeholder="โปรดแนบลิงก์ของเว็บไซต์"
+                [form]="onlineHowToFormGroup"
+                controlName="website"
+                width="48.1rem"
+              ></app-com-input-text>
+              @if (!onlineHowToFormGroup.get('website')?.valid &&
+              onlineHowToFormGroup.get('website')?.touched && formTouched) {
+              <div class="error mgt-10">
+                <img src="/assets/error_icon.svg" alt="error icon" />
+                <p class="error__text">โปรดแนบลิงก์ของเว็บไซต์</p>
               </div>
               }
             </div>
-            @if (hasOfflineAddition) {
+            }
+          </div>
+
+          <div class="online pdl-4">
+            <app-com-checkbox
+              [form]="onlineAvailableFormGroup"
+              controlName="onlinePage"
+              display="ฝากประชาสัมพันธ์ในเพจวิ่งออนไลน์ โปรดยกตัวอย่าง"
+              gap="8px"
+              fontSize="16px"
+              [onChanged]="onHasOnlinePageChanged"
+            >
+            </app-com-checkbox>
+            @if (hasOnlinePage) {
             <div class="pdl-30">
               <app-com-input-text
-                id="marketing.offline.addition"
-                placeholder="โปรดระบุ"
-                [form]="offlineFormGroup"
-                controlName="addition"
-                width="47.4rem"
+                id="marketing.online.howTo.onlinePage"
+                placeholder="โปรดยกตัวอย่าง"
+                [form]="onlineHowToFormGroup"
+                controlName="onlinePage"
+                width="48.1rem"
               ></app-com-input-text>
+              @if (!onlineHowToFormGroup.get('onlinePage')?.valid &&
+              onlineHowToFormGroup.get('onlinePage')?.touched && formTouched) {
+              <div class="error mgt-10">
+                <img src="/assets/error_icon.svg" alt="error icon" />
+                <p class="error__text">โปรดยกตัวอย่าง</p>
+              </div>
+              }
+            </div>
+            }
+          </div>
 
-              @if (!offlineFormGroup.get('addition')?.valid &&
-              offlineFormGroup.get('addition')?.touched && formTouched) {
+          <div class="online pdl-4">
+            <app-com-checkbox
+              [form]="onlineAvailableFormGroup"
+              controlName="other"
+              display="ช่องทางออนไลน์อื่น ๆ ระบุ"
+              gap="8px"
+              fontSize="16px"
+              [onChanged]="onHasOnlineOtherChanged"
+            >
+            </app-com-checkbox>
+            @if (hasOnlineOther) {
+            <div class="pdl-30">
+              <app-com-input-text
+                id="marketing.online.howTo.other"
+                placeholder="โปรดระบุ"
+                [form]="onlineHowToFormGroup"
+                controlName="other"
+                width="48.1rem"
+              ></app-com-input-text>
+              @if (!onlineHowToFormGroup.get('other')?.valid &&
+              onlineHowToFormGroup.get('other')?.touched && formTouched) {
               <div class="error mgt-10">
                 <img src="/assets/error_icon.svg" alt="error icon" />
                 <p class="error__text">โปรดระบุ</p>
@@ -268,10 +197,77 @@
             </div>
             }
           </div>
+          @if (!onlineAvailableFormGroup.valid &&
+          onlineAvailableFormGroup.touched && formTouched) {
+          <div class="error">
+            <img src="/assets/error_icon.svg" alt="error icon" />
+            <p class="error__text">สามารถเลือกได้หลายข้อ</p>
+          </div>
+          }
+        </div>
+      </div>
+
+      <div class="sub-block">
+        <h4 class="section__sub-header pdl-20">
+          3.2.2 สื่อสารผ่านบุคคล และ/หรือช่องทางอื่น ๆ ที่ไม่ใช้อินเทอร์เน็ต
+          (Offline)
+        </h4>
+        <div class="section-content" id="marketing.offline.available">
+          <div class="offline">
+            @for (item of offlineAvailableOptions; track item.id) {
+            <div id="marketing.offline.available" class="pdl-4">
+              @if (item.onChanged) {
+              <app-com-checkbox
+                [form]="offlineAvailableFormGroup"
+                [controlName]="item.controlName"
+                [innerHTML]="item.display"
+                gap="8px"
+                fontSize="16px"
+                [onChanged]="item.onChanged"
+              >
+              </app-com-checkbox>
+              } @else {
+              <app-com-checkbox
+                [form]="offlineAvailableFormGroup"
+                [controlName]="item.controlName"
+                [innerHTML]="item.display"
+                gap="8px"
+                fontSize="16px"
+              >
+              </app-com-checkbox>
+              }
+            </div>
+            } @if(!offlineAvailableFormGroup.valid &&
+            offlineAvailableFormGroup.touched && formTouched) {
+            <div class="error pdl-28">
+              <img src="/assets/error_icon.svg" alt="error icon" />
+              <p class="error__text">สามารถเลือกได้หลายข้อ</p>
+            </div>
+            }
+          </div>
+          @if (hasOfflineAddition) {
+          <div class="pdl-30">
+            <app-com-input-text
+              id="marketing.offline.addition"
+              placeholder="โปรดระบุ"
+              [form]="offlineFormGroup"
+              controlName="addition"
+              width="47.4rem"
+            ></app-com-input-text>
+
+            @if (!offlineFormGroup.get('addition')?.valid &&
+            offlineFormGroup.get('addition')?.touched && formTouched) {
+            <div class="error mgt-10">
+              <img src="/assets/error_icon.svg" alt="error icon" />
+              <p class="error__text">โปรดระบุ</p>
+            </div>
+            }
+          </div>
+          }
         </div>
       </div>
     </div>
-    <div #capture2>
+    <div #capture4>
       <!-- 3.3 Start -->
       <div class="section section--gap-24">
         <h3 class="section__header section__header--no-asterisk">
@@ -322,327 +318,330 @@
         </div>
       </div>
     </div>
-    <div #capture3>
-      <!-- 3.4 Start -->
-      <div class="section">
-        <h3
-          class="section__header section__header--no-asterisk"
-          id="safety.ready"
-        >
-          3.4
-          โครงการมีแผนการจัดการใดบ้างที่เกี่ยวข้องกับการดูแลความปลอดภัยทางสุขภาพของนักวิ่ง
-          <span class="section__header--remark">
-            (เลือกทุกข้อที่มีการดำเนินการ)</span
+    <div>
+      <div #capture5>
+        <!-- 3.4 Start -->
+        <div class="section">
+          <h3
+            class="section__header section__header--no-asterisk"
+            id="safety.ready"
           >
-        </h3>
-        <div class="section-content">
-          <div class="safety">
-            @for (item of safetyOptions; track item.id) {
-            <div class="pdl-4">
-              @if (item.onChanged) {
-              <div class="aed">
-                <div class="pdt-9">
-                  <app-com-checkbox
-                    [form]="safetyReadyFormGroup"
-                    [controlName]="item.controlName"
-                    [innerHTML]="item.display"
-                    gap="8px"
-                    fontSize="16px"
-                    [onChanged]="item.onChanged"
-                  >
-                  </app-com-checkbox>
-                </div>
-                @if (hasAed && item.controlName === 'aed') {
-                <div class="aed__inner">
-                  <p class="aed__text">จำนวน</p>
-                  <div>
-                    <app-com-input-number
-                      id="safety.aedCount"
-                      placeholder="ระบุจำนวน"
-                      [form]="safetyFormGroup"
-                      controlName="aedCount"
-                      width="18.9rem"
-                    ></app-com-input-number>
-                    @if(!safetyFormGroup.get('aedCount')?.valid &&
-                    safetyFormGroup.get('aedCount')?.touched && formTouched) {
-                    <div class="error pdl-28">
-                      <img src="/assets/error_icon.svg" alt="error icon" />
-                      <p class="error__text">กรุณาระบุจำนวณ</p>
-                    </div>
-                    }
+            3.4
+            โครงการมีแผนการจัดการใดบ้างที่เกี่ยวข้องกับการดูแลความปลอดภัยทางสุขภาพของนักวิ่ง
+            <span class="section__header--remark">
+              (เลือกทุกข้อที่มีการดำเนินการ)</span
+            >
+          </h3>
+          <div class="section-content">
+            <div class="safety">
+              @for (item of safetyOptions; track item.id) {
+              <div class="pdl-4">
+                @if (item.onChanged) {
+                <div class="aed">
+                  <div class="pdt-9">
+                    <app-com-checkbox
+                      [form]="safetyReadyFormGroup"
+                      [controlName]="item.controlName"
+                      [innerHTML]="item.display"
+                      gap="8px"
+                      fontSize="16px"
+                      [onChanged]="item.onChanged"
+                    >
+                    </app-com-checkbox>
                   </div>
-                  <p class="aed__text">เครื่อง</p>
+                  @if (hasAed && item.controlName === 'aed') {
+                  <div class="aed__inner">
+                    <p class="aed__text">จำนวน</p>
+                    <div>
+                      <app-com-input-number
+                        id="safety.aedCount"
+                        placeholder="ระบุจำนวน"
+                        [form]="safetyFormGroup"
+                        controlName="aedCount"
+                        width="18.9rem"
+                      ></app-com-input-number>
+                      @if(!safetyFormGroup.get('aedCount')?.valid &&
+                      safetyFormGroup.get('aedCount')?.touched && formTouched) {
+                      <div class="error pdl-28">
+                        <img src="/assets/error_icon.svg" alt="error icon" />
+                        <p class="error__text">กรุณาระบุจำนวณ</p>
+                      </div>
+                      }
+                    </div>
+                    <p class="aed__text">เครื่อง</p>
+                  </div>
+                  }
+                </div>
+                } @else {
+                <app-com-checkbox
+                  [form]="safetyReadyFormGroup"
+                  [controlName]="item.controlName"
+                  [innerHTML]="item.display"
+                  gap="8px"
+                  fontSize="16px"
+                >
+                </app-com-checkbox>
+                }
+              </div>
+              } @if(!safetyReadyFormGroup.valid && safetyReadyFormGroup.touched
+              && formTouched) {
+              <div class="error pdl-28">
+                <img src="/assets/error_icon.svg" alt="error icon" />
+                <p class="error__text">สามารถเลือกได้หลายข้อ</p>
+              </div>
+              }
+            </div>
+            @if (isOtherTypeSafety) {
+            <div class="pdl-30">
+              <app-com-input-text
+                id="safety.addition"
+                placeholder="โปรดระบุรายละเอียด"
+                [form]="safetyFormGroup"
+                controlName="addition"
+                width="55.8rem"
+              ></app-com-input-text>
+
+              @if (!safetyFormGroup.get('addition')?.valid &&
+              safetyFormGroup.get('addition')?.touched && formTouched) {
+              <div class="error mgt-10">
+                <img src="/assets/error_icon.svg" alt="error icon" />
+                <p class="error__text">โปรดระบุ</p>
+              </div>
+              }
+            </div>
+            }
+          </div>
+        </div>
+        <!-- 3.5 Start -->
+        <div class="section">
+          <h3 class="section__header">
+            3.5 โครงการมีการวัดระยะทางวิ่งและการจัดการจราจรอย่างไร
+          </h3>
+          <!-- 3.5.1 -->
+          <div class="measurement-section">
+            <div class="measurement-section__header">
+              <h4>
+                3.5.1 เส้นทาง
+                <span class="measurement-section__header--light"
+                  >(เส้นทางที่มีการวัดระยะสำหรับการวิ่งทุกประเภท)</span
+                >
+              </h4>
+              <p class="measurement-section__warning">
+                โปรดเตรียมเอกสารเกี่ยวกับเส้นทางการวิ่งเพื่อใช้แนบไฟล์ในส่วนที่
+                6
+              </p>
+            </div>
+          </div>
+          <!-- 3.5.2 Start -->
+          <div class="measurement-section">
+            <div class="measurement-section__header">
+              <h4 id="route.measurement">
+                3.5.2 การวัดระยะทาง
+                <span class="measurement-section__header--light"
+                  >(เลือกทุกข้อที่มีการดำเนินการ)</span
+                >
+              </h4>
+            </div>
+            <div class="measurement-section__form">
+              @for (item of measurementOptions; track item.id) {
+              <div class="pdl-4">
+                @if (item.onChanged) {
+                <app-com-checkbox
+                  [form]="measurementFormGroup"
+                  [controlName]="item.controlName"
+                  [display]="item.display"
+                  gap="8px"
+                  fontSize="16px"
+                  [onChanged]="item.onChanged"
+                ></app-com-checkbox>
+                } @else {
+                <app-com-checkbox
+                  [form]="measurementFormGroup"
+                  [controlName]="item.controlName"
+                  [display]="item.display"
+                  gap="8px"
+                  fontSize="16px"
+                ></app-com-checkbox>
+                }
+              </div>
+
+              } @if (!form.get('details.route.measurement')?.valid &&
+              form.get('details.route.measurement')?.touched && formTouched) {
+              <div class="error pdl-28">
+                <img src="/assets/error_icon.svg" alt="error icon" />
+                <p class="error__text">สามารถเลือกได้หลายข้อ</p>
+              </div>
+              } @if (isSelfMeasured) {
+              <div class="pdl-30">
+                <app-com-input-text
+                  id="route.tool"
+                  placeholder="โปรดระบุเครื่องมือ"
+                  [form]="routeFormGroup"
+                  controlName="tool"
+                  width="40.5rem"
+                ></app-com-input-text>
+
+                @if (!form.get('details.route.tool')?.valid &&
+                form.get('details.route.tool')?.touched && formTouched) {
+                <div class="error mgt-10">
+                  <img src="/assets/error_icon.svg" alt="error icon" />
+                  <p class="error__text">โปรดระบุเครื่องมือ</p>
                 </div>
                 }
               </div>
-              } @else {
-              <app-com-checkbox
-                [form]="safetyReadyFormGroup"
-                [controlName]="item.controlName"
-                [innerHTML]="item.display"
-                gap="8px"
-                fontSize="16px"
-              >
-              </app-com-checkbox>
               }
             </div>
-            } @if(!safetyReadyFormGroup.valid && safetyReadyFormGroup.touched &&
-            formTouched) {
-            <div class="error pdl-28">
-              <img src="/assets/error_icon.svg" alt="error icon" />
-              <p class="error__text">สามารถเลือกได้หลายข้อ</p>
+          </div>
+          <!-- 3.5.3 Start -->
+          <div class="measurement-section">
+            <div class="measurement-section__header">
+              <h4 id="route.trafficManagement">
+                3.5.3 การจัดการจราจร
+                <span class="measurement-section__header--light"
+                  >(เลือกทุกข้อที่มีการดำเนินการ)</span
+                >
+              </h4>
             </div>
-            }
-          </div>
-          @if (isOtherTypeSafety) {
-          <div class="pdl-30">
-            <app-com-input-text
-              id="safety.addition"
-              placeholder="โปรดระบุรายละเอียด"
-              [form]="safetyFormGroup"
-              controlName="addition"
-              width="55.8rem"
-            ></app-com-input-text>
-
-            @if (!safetyFormGroup.get('addition')?.valid &&
-            safetyFormGroup.get('addition')?.touched && formTouched) {
-            <div class="error mgt-10">
-              <img src="/assets/error_icon.svg" alt="error icon" />
-              <p class="error__text">โปรดระบุ</p>
-            </div>
-            }
-          </div>
-          }
-        </div>
-      </div>
-      <!-- 3.5 Start -->
-      <div class="section">
-        <h3 class="section__header">
-          3.5 โครงการมีการวัดระยะทางวิ่งและการจัดการจราจรอย่างไร
-        </h3>
-        <!-- 3.5.1 -->
-        <div class="measurement-section">
-          <div class="measurement-section__header">
-            <h4>
-              3.5.1 เส้นทาง
-              <span class="measurement-section__header--light"
-                >(เส้นทางที่มีการวัดระยะสำหรับการวิ่งทุกประเภท)</span
-              >
-            </h4>
-            <p class="measurement-section__warning">
-              โปรดเตรียมเอกสารเกี่ยวกับเส้นทางการวิ่งเพื่อใช้แนบไฟล์ในส่วนที่ 6
-            </p>
-          </div>
-        </div>
-        <!-- 3.5.2 Start -->
-        <div class="measurement-section">
-          <div class="measurement-section__header">
-            <h4 id="route.measurement">
-              3.5.2 การวัดระยะทาง
-              <span class="measurement-section__header--light"
-                >(เลือกทุกข้อที่มีการดำเนินการ)</span
-              >
-            </h4>
-          </div>
-          <div class="measurement-section__form">
-            @for (item of measurementOptions; track item.id) {
-            <div class="pdl-4">
-              @if (item.onChanged) {
-              <app-com-checkbox
-                [form]="measurementFormGroup"
-                [controlName]="item.controlName"
-                [display]="item.display"
-                gap="8px"
-                fontSize="16px"
-                [onChanged]="item.onChanged"
-              ></app-com-checkbox>
-              } @else {
-              <app-com-checkbox
-                [form]="measurementFormGroup"
-                [controlName]="item.controlName"
-                [display]="item.display"
-                gap="8px"
-                fontSize="16px"
-              ></app-com-checkbox>
+            <div class="measurement-section__form">
+              @for (item of trafficManagementOptions; track item.id) {
+              <div class="pdl-4">
+                <app-com-checkbox
+                  [form]="trafficManagementFormGroup"
+                  [controlName]="item.controlName"
+                  [innerHTML]="item.display"
+                  gap="8px"
+                  fontSize="16px"
+                >
+                </app-com-checkbox>
+              </div>
+              } @if (!trafficManagementFormGroup.valid &&
+              trafficManagementFormGroup.touched && formTouched) {
+              <div class="error pdl-28">
+                <img src="/assets/error_icon.svg" alt="error icon" />
+                <p class="error__text">สามารถเลือกได้หลายข้อ</p>
+              </div>
               }
             </div>
-
-            } @if (!form.get('details.route.measurement')?.valid &&
-            form.get('details.route.measurement')?.touched && formTouched) {
-            <div class="error pdl-28">
-              <img src="/assets/error_icon.svg" alt="error icon" />
-              <p class="error__text">สามารถเลือกได้หลายข้อ</p>
+          </div>
+        </div>
+        <!-- 3.6 Start -->
+        <div class="section">
+          <h3
+            id="judge.type"
+            class="section__header section__header--no-asterisk"
+          >
+            3.6 <u>ระบบตัดสิน</u>ผลของการจัดกิจกรรมของการแข่งขันเป็นรูปแบบใด
+            <span class="section__header--remark">(เลือกตอบเพียง 1 ข้อ)</span>
+          </h3>
+          <div class="section-content">
+            <div>
+              <app-com-radio
+                [form]="judgeFormGroup"
+                [options]="judgeTypeOptions"
+                controlName="type"
+                fontSize="16px"
+                gap="8px"
+                [onChanged]="onJudgementTypeChanged"
+              ></app-com-radio>
+              @if (!judgeFormGroup.get('type')?.valid &&
+              judgeFormGroup.get('type')?.touched && formTouched) {
+              <div class="error pdl-28">
+                <img src="/assets/error_icon.svg" alt="error icon" />
+                <p class="error__text">กรุณาเลือกระบบตัดสินของการแข่งขัน</p>
+              </div>
+              }
             </div>
-            } @if (isSelfMeasured) {
+            @if (isOtherJudgementType) {
             <div class="pdl-30">
               <app-com-input-text
-                id="route.tool"
-                placeholder="โปรดระบุเครื่องมือ"
-                [form]="routeFormGroup"
-                controlName="tool"
-                width="40.5rem"
+                id="judge.otherType"
+                placeholder="โปรดระบุรายละเอียด"
+                [form]="judgeFormGroup"
+                controlName="otherType"
+                width="50.5rem"
               ></app-com-input-text>
 
-              @if (!form.get('details.route.tool')?.valid &&
-              form.get('details.route.tool')?.touched && formTouched) {
+              @if (!judgeFormGroup.get('otherType')?.valid &&
+              judgeFormGroup.get('otherType')?.touched && formTouched) {
               <div class="error mgt-10">
                 <img src="/assets/error_icon.svg" alt="error icon" />
-                <p class="error__text">โปรดระบุเครื่องมือ</p>
+                <p class="error__text">โปรดระบุรายละเอียด</p>
               </div>
               }
             </div>
             }
           </div>
         </div>
-        <!-- 3.5.3 Start -->
-        <div class="measurement-section">
-          <div class="measurement-section__header">
-            <h4 id="route.trafficManagement">
-              3.5.3 การจัดการจราจร
-              <span class="measurement-section__header--light"
-                >(เลือกทุกข้อที่มีการดำเนินการ)</span
-              >
-            </h4>
-          </div>
-          <div class="measurement-section__form">
-            @for (item of trafficManagementOptions; track item.id) {
-            <div class="pdl-4">
-              <app-com-checkbox
-                [form]="trafficManagementFormGroup"
-                [controlName]="item.controlName"
-                [innerHTML]="item.display"
-                gap="8px"
-                fontSize="16px"
-              >
-              </app-com-checkbox>
-            </div>
-            } @if (!trafficManagementFormGroup.valid &&
-            trafficManagementFormGroup.touched && formTouched) {
-            <div class="error pdl-28">
-              <img src="/assets/error_icon.svg" alt="error icon" />
-              <p class="error__text">สามารถเลือกได้หลายข้อ</p>
-            </div>
-            }
-          </div>
-        </div>
-      </div>
-      <!-- 3.6 Start -->
-      <div class="section">
-        <h3
-          id="judge.type"
-          class="section__header section__header--no-asterisk"
-        >
-          3.6 <u>ระบบตัดสิน</u>ผลของการจัดกิจกรรมของการแข่งขันเป็นรูปแบบใด
-          <span class="section__header--remark">(เลือกตอบเพียง 1 ข้อ)</span>
-        </h3>
-        <div class="section-content">
-          <div>
-            <app-com-radio
-              [form]="judgeFormGroup"
-              [options]="judgeTypeOptions"
-              controlName="type"
-              fontSize="16px"
-              gap="8px"
-              [onChanged]="onJudgementTypeChanged"
-            ></app-com-radio>
-            @if (!judgeFormGroup.get('type')?.valid &&
-            judgeFormGroup.get('type')?.touched && formTouched) {
-            <div class="error pdl-28">
-              <img src="/assets/error_icon.svg" alt="error icon" />
-              <p class="error__text">กรุณาเลือกระบบตัดสินของการแข่งขัน</p>
-            </div>
-            }
-          </div>
-          @if (isOtherJudgementType) {
-          <div class="pdl-30">
-            <app-com-input-text
-              id="judge.otherType"
-              placeholder="โปรดระบุรายละเอียด"
-              [form]="judgeFormGroup"
-              controlName="otherType"
-              width="50.5rem"
-            ></app-com-input-text>
-
-            @if (!judgeFormGroup.get('otherType')?.valid &&
-            judgeFormGroup.get('otherType')?.touched && formTouched) {
-            <div class="error mgt-10">
-              <img src="/assets/error_icon.svg" alt="error icon" />
-              <p class="error__text">โปรดระบุรายละเอียด</p>
-            </div>
-            }
-          </div>
-          }
-        </div>
-      </div>
-      <!-- 3.7 Start -->
-      <div class="section">
-        <h3
-          id="support.organization"
-          class="section__header section__header--no-asterisk"
-        >
-          3.7 ในการจัดกิจกรรมครั้งนี้
-          มีหน่วยงานระดับพื้นที่ใดบ้างที่ร่วมสนับสนุน
-          <span class="section__header--remark">
-            (เลือกทุกข้อที่มีการดำเนินการ)</span
+        <!-- 3.7 Start -->
+        <div class="section">
+          <h3
+            id="support.organization"
+            class="section__header section__header--no-asterisk"
           >
-        </h3>
-        <div class="section-content">
-          <div class="support">
-            @for (item of supportOrganizationOptions; track item.id) {
-            <div class="pdl-4">
-              @if (item.onChanged) {
-              <app-com-checkbox
-                [form]="supportOrganizationFormGroup"
-                [controlName]="item.controlName"
-                [innerHTML]="item.display"
-                gap="8px"
-                fontSize="16px"
-                [onChanged]="item.onChanged"
-              >
-              </app-com-checkbox>
-              } @else {
-              <app-com-checkbox
-                [form]="supportOrganizationFormGroup"
-                [controlName]="item.controlName"
-                [innerHTML]="item.display"
-                gap="8px"
-                fontSize="16px"
-              >
-              </app-com-checkbox>
+            3.7 ในการจัดกิจกรรมครั้งนี้
+            มีหน่วยงานระดับพื้นที่ใดบ้างที่ร่วมสนับสนุน
+            <span class="section__header--remark">
+              (เลือกทุกข้อที่มีการดำเนินการ)</span
+            >
+          </h3>
+          <div class="section-content">
+            <div class="support">
+              @for (item of supportOrganizationOptions; track item.id) {
+              <div class="pdl-4">
+                @if (item.onChanged) {
+                <app-com-checkbox
+                  [form]="supportOrganizationFormGroup"
+                  [controlName]="item.controlName"
+                  [innerHTML]="item.display"
+                  gap="8px"
+                  fontSize="16px"
+                  [onChanged]="item.onChanged"
+                >
+                </app-com-checkbox>
+                } @else {
+                <app-com-checkbox
+                  [form]="supportOrganizationFormGroup"
+                  [controlName]="item.controlName"
+                  [innerHTML]="item.display"
+                  gap="8px"
+                  fontSize="16px"
+                >
+                </app-com-checkbox>
+                }
+              </div>
+              } @if(!supportOrganizationFormGroup.valid &&
+              supportOrganizationFormGroup.touched && formTouched) {
+              <div class="error pdl-28">
+                <img src="/assets/error_icon.svg" alt="error icon" />
+                <p class="error__text">สามารถเลือกได้หลายข้อ</p>
+              </div>
               }
             </div>
-            } @if(!supportOrganizationFormGroup.valid &&
-            supportOrganizationFormGroup.touched && formTouched) {
-            <div class="error pdl-28">
-              <img src="/assets/error_icon.svg" alt="error icon" />
-              <p class="error__text">สามารถเลือกได้หลายข้อ</p>
-            </div>
-            }
-          </div>
-          @if (hasOtherSupportOrganization) {
-          <div class="pdl-30">
-            <app-com-input-text
-              id="support.addition"
-              placeholder="โปรดระบุ"
-              [form]="supportFormGroup"
-              controlName="addition"
-              width="39.3rem"
-            ></app-com-input-text>
+            @if (hasOtherSupportOrganization) {
+            <div class="pdl-30">
+              <app-com-input-text
+                id="support.addition"
+                placeholder="โปรดระบุ"
+                [form]="supportFormGroup"
+                controlName="addition"
+                width="39.3rem"
+              ></app-com-input-text>
 
-            @if (!supportFormGroup.get('addition')?.valid &&
-            supportFormGroup.get('addition')?.touched && formTouched) {
-            <div class="error mgt-10">
-              <img src="/assets/error_icon.svg" alt="error icon" />
-              <p class="error__text">โปรดระบุ</p>
+              @if (!supportFormGroup.get('addition')?.valid &&
+              supportFormGroup.get('addition')?.touched && formTouched) {
+              <div class="error mgt-10">
+                <img src="/assets/error_icon.svg" alt="error icon" />
+                <p class="error__text">โปรดระบุ</p>
+              </div>
+              }
             </div>
             }
           </div>
-          }
         </div>
       </div>
 
       <!-- 3.8 Start -->
-      <div class="section">
+      <div class="section" #capture6>
         <h3 class="section__header" id="feedback">
           3.8 โครงการมีวิธีการประเมินผลความสำเร็จ/
           รับฟังประเด็นท้าทายจากการจัดงานอย่างไรบ้าง
