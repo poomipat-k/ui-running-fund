@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { Subscription, concatMap } from 'rxjs';
@@ -19,7 +18,7 @@ import { User } from '../shared/models/user';
 @Component({
   selector: 'app-dashboard-reviewer',
   standalone: true,
-  imports: [CommonModule, RouterModule, TableComponent, FilterComponent],
+  imports: [RouterModule, TableComponent, FilterComponent],
   templateUrl: './dashboard-reviewer.component.html',
   styleUrl: './dashboard-reviewer.component.scss',
 })

@@ -3,4 +3,26 @@
     <img src="/assets/add_icon.svg" alt="add icon" />
     <div>สร้างใบขอทุนสนับสนุน</div>
   </button>
+
+  <div class="dashboard dashboard__container">
+    <div class="dashboard__header-container">
+      <h1 class="dashboard__header-text">โครงการที่ขอทุนสนับสนุน</h1>
+    </div>
+    <div class="dashboard__toolbar">
+      <p class="dashboard__toolbar-count">ทั้งหมด {{ data.length }} โครงการ</p>
+      <app-com-filter
+        [filterOptions]="filterOptions"
+        (selectedFilter)="onSortFilterChanged($event)"
+      ></app-com-filter>
+    </div>
+    <div>
+      <app-com-table
+        [columns]="columns"
+        [data]="data"
+        emptyText="ไม่มีโครงการ ณ ขณะนี้"
+        [rowClickable]="true"
+        (rowClicked)="onTableRowClicked($event)"
+      ></app-com-table>
+    </div>
+  </div>
 </div>
