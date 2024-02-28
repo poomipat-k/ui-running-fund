@@ -155,6 +155,14 @@ $cell-height: 7.2rem;
     }
   }
 
+  &-applicantStatus {
+    width: 17.8rem;
+    padding: 1.2rem 1.6rem;
+    @media only screen and (min-width: $bp1) {
+      padding: 1.2rem 2.4rem;
+    }
+  }
+
   &-reviewDate {
     width: 17.6rem;
     padding: 1.2rem 1.6rem;

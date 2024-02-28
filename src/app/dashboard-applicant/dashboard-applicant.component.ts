@@ -8,7 +8,6 @@ import { DateService } from '../services/date.service';
 import { ProjectService } from '../services/project.service';
 import { ThemeService } from '../services/theme.service';
 import { BackgroundColor } from '../shared/enums/background-color';
-import { BadgeType } from '../shared/enums/badge-type';
 import { ColumnTypeEnum } from '../shared/enums/column-type';
 import { FilterOption } from '../shared/models/filter-option';
 import { TableCell } from '../shared/models/table-cell';
@@ -47,7 +46,7 @@ export class DashboardApplicantComponent implements OnInit, OnDestroy {
     },
     {
       name: 'สถานะการกลั่นกรอง',
-      class: 'col-status',
+      class: 'col-applicantStatus',
       type: ColumnTypeEnum.Badge,
     },
     {
@@ -115,9 +114,7 @@ export class DashboardApplicantComponent implements OnInit, OnDestroy {
               },
 
               {
-                display: row.projectStatus
-                  ? BadgeType.Reviewed
-                  : BadgeType.PendingReview,
+                display: row.projectStatus,
                 value: row.projectStatus,
               },
               {
