@@ -125,11 +125,11 @@ $cell-height: 7.2rem;
   }
 
   &-applyDate {
-    width: 17.6rem;
+    width: 12.8rem;
     padding: 1.2rem 1.6rem;
     @media only screen and (min-width: $bp1) {
       padding: 1.2rem 2.4rem;
-      width: 21rem;
+      width: 16rem;
     }
   }
 
@@ -142,7 +142,6 @@ $cell-height: 7.2rem;
 
   &-download {
     width: 9.9rem;
-    // Small screen
     @media only screen and (min-width: $bp1) {
       width: 14.3rem;
     }
@@ -162,6 +161,24 @@ $cell-height: 7.2rem;
     @media only screen and (min-width: $bp1) {
       padding: 1.2rem 2.4rem;
       width: 21rem;
+    }
+  }
+
+  &-updateDate {
+    width: 13.2rem;
+    padding: 1.2rem 1.6rem;
+    @media only screen and (min-width: $bp1) {
+      padding: 1.2rem 2.4rem;
+      width: 16rem;
+    }
+  }
+
+  &-adminComment {
+    width: 20rem;
+    padding: 1.2rem 1.6rem;
+    @media only screen and (min-width: $bp1) {
+      padding: 1.2rem 2.4rem;
+      width: 20rem;
     }
   }
 

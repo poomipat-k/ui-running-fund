@@ -1,10 +1,14 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { FilterComponent } from '../components/filter/filter.component';
 import { TableComponent } from '../components/table/table.component';
+import { DateService } from '../services/date.service';
+import { ProjectService } from '../services/project.service';
 import { ThemeService } from '../services/theme.service';
 import { BackgroundColor } from '../shared/enums/background-color';
+import { BadgeType } from '../shared/enums/badge-type';
 import { ColumnTypeEnum } from '../shared/enums/column-type';
 import { FilterOption } from '../shared/models/filter-option';
 import { TableCell } from '../shared/models/table-cell';
@@ -17,9 +21,12 @@ import { TableColumn } from '../shared/models/table-column';
   templateUrl: './dashboard-applicant.component.html',
   styleUrl: './dashboard-applicant.component.scss',
 })
-export class DashboardApplicantComponent implements OnInit {
+export class DashboardApplicantComponent implements OnInit, OnDestroy {
   private readonly routerService: Router = inject(Router);
   private readonly themeService: ThemeService = inject(ThemeService);
+  private readonly projectService: ProjectService = inject(ProjectService);
+  private readonly subs: Subscription[] = [];
+  private readonly dateService: DateService = inject(DateService);
 
   protected data: TableCell[][] = [];
 
@@ -46,10 +53,11 @@ export class DashboardApplicantComponent implements OnInit {
     {
       name: 'วันที่แก้ไขล่าสุด',
       format: 'datetime',
-      class: 'col-reviewDate',
+      class: 'col-updateDate',
     },
     {
       name: 'ข้อเสนอแนะ',
+      class: 'col-adminComment',
     },
   ];
 
@@ -77,6 +85,57 @@ export class DashboardApplicantComponent implements OnInit {
 
   ngOnInit(): void {
     this.themeService.changeBackgroundColor(BackgroundColor.white);
+    this.loadApplicantDashboard();
+  }
+
+  ngOnDestroy(): void {
+    this.subs.forEach((s) => s.unsubscribe());
+  }
+
+  private loadApplicantDashboard() {
+    this.subs.push(
+      this.projectService.getApplicantDashboard().subscribe((dashboardRows) => {
+        console.log('==dashboardRows', dashboardRows);
+        if (dashboardRows) {
+          const data = dashboardRows.map((row) => {
+            return [
+              {
+                display: row.projectCode,
+                value: row.projectCode,
+              },
+              {
+                display: this.dateService.dateToStringWithShortMonth(
+                  row.projectCreatedAt
+                ),
+                value: row.projectCreatedAt,
+              },
+              {
+                display: row.projectName,
+                value: row.projectName,
+              },
+
+              {
+                display: row.projectStatus
+                  ? BadgeType.Reviewed
+                  : BadgeType.PendingReview,
+                value: row.projectStatus,
+              },
+              {
+                display: this.dateService.dateToStringWithShortMonth(
+                  row.projectUpdatedAt
+                ),
+                value: row.projectUpdatedAt,
+              },
+              {
+                display: row.adminComment,
+                value: row.adminComment,
+              },
+            ];
+          });
+          this.data = data;
+        }
+      })
+    );
   }
 
   onCreateProjectClicked() {

@@ -137,7 +137,7 @@ export class DashboardReviewerComponent {
                   value: row.projectCode,
                 },
                 {
-                  display: this.dateService.dateToStringWithLongMonth(
+                  display: this.dateService.dateToStringWithShortMonth(
                     row.projectCreatedAt
                   ),
                   value: row.projectCreatedAt,
@@ -157,7 +157,7 @@ export class DashboardReviewerComponent {
                   value: row.reviewId,
                 },
                 {
-                  display: this.dateService.dateToStringWithLongMonth(
+                  display: this.dateService.dateToStringWithShortMonth(
                     row.reviewedAt
                   ),
                   value: row.reviewedAt,

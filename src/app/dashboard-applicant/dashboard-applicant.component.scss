@@ -2,7 +2,10 @@
 @import "../app.component.scss";
 
 .container {
-  padding: 6rem 12.2rem 16.2rem 12.2rem;
+  padding: 6rem 7.9rem 8.7rem 7.9rem;
+  @media only screen and (min-width: $bp1) {
+    padding: 6rem 12.2rem 8.7rem 12.2rem;
+  }
 }
 
 .button {
