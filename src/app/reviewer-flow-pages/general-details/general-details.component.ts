@@ -24,26 +24,45 @@ export class GeneralDetailsComponent {
 
   private readonly dateService: DateService = inject(DateService);
 
-  protected projectTypeCheckBox = [
-    {
-      id: 1,
+  protected _projectDistances: any = {
+    fun: {
       display: 'Fun Run',
-      value: 'fun_run',
-      name: 'fun_run',
+      value: 'fun',
       checked: false,
+      dynamic: false,
     },
-    { id: 2, display: '<5km', value: '5km', name: '5km', checked: false },
-    { id: 3, display: '<10km', value: '10km', name: '10km', checked: true },
-    { id: 4, display: '<20km', value: '20km', name: '20km', checked: true },
-    { id: 5, display: '<42km', value: '42km', name: '42km', checked: false },
-    {
-      id: 6,
-      display: 'Others',
-      value: 'others',
-      name: 'others',
+    mini: { display: '10km', value: 'mini', checked: false, dynamic: false },
+    half: { display: '21.1km', value: 'half', checked: false, dynamic: false },
+    full: {
+      display: '42.195km',
+      value: 'full',
       checked: false,
+      dynamic: false,
     },
-  ];
+  };
+
+  get distancesCheckbox() {
+    const checkedDistances = this.apiData.distances || [];
+    checkedDistances.forEach((item) => {
+      if (item.dynamic) {
+        this._projectDistances[item.type] = {
+          display: item.type,
+          value: item.type,
+          checked: true,
+          dynamic: true,
+        };
+      } else if (this._projectDistances[item.type]) {
+        this._projectDistances[item.type].checked = true;
+      }
+    });
+    const checkboxList = Object.keys(this._projectDistances).map((key) => ({
+      display: this._projectDistances[key].display,
+      value: this._projectDistances[key].value,
+      checked: this._projectDistances[key].checked,
+      dynamic: this._projectDistances[key].dynamic,
+    }));
+    return checkboxList;
+  }
 
   protected readonly expectedParticipantsOptionsMap: { [key: string]: string } =
     {

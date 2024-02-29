@@ -58,17 +58,30 @@
     <div class="details__row">
       <label class="bold-text">ประเภทงานวิ่ง</label>
       <div class="checkbox-container ml-30">
-        @for (item of projectTypeCheckBox; track item.id) {
-        <div class="checkbox-container">
+        <div class="checkbox-container__row">
+          @for (item of distancesCheckbox; track $index) { @if (!item.dynamic) {
           <app-com-checkbox-view
-            [name]="item.name"
+            [name]="item.value"
             [display]="item.display"
             [value]="item.value"
             [disabled]="true"
             [checked]="item.checked"
           ></app-com-checkbox-view>
+
+          } }
         </div>
-        }
+        <div class="checkbox-container__row">
+          @for (item of distancesCheckbox; track $index) { @if (item.dynamic) {
+          <app-com-checkbox-view
+            [name]="item.value"
+            [display]="item.display"
+            [value]="item.value"
+            [disabled]="true"
+            [checked]="item.checked"
+          ></app-com-checkbox-view>
+
+          } }
+        </div>
       </div>
     </div>
 
