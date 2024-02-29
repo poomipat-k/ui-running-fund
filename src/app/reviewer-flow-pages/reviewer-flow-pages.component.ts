@@ -105,6 +105,7 @@ export class ReviewerFlowPagesComponent implements OnInit, OnDestroy {
     this.themeService.changeBackgroundColor(BackgroundColor.gray);
     this.initForm();
     this.prepareData();
+    this.pageIndex = 2;
   }
 
   ngOnDestroy(): void {
@@ -209,6 +210,19 @@ export class ReviewerFlowPagesComponent implements OnInit, OnDestroy {
             data.projectCode = result.projectCode;
             data.projectCreatedAt = result.projectCreatedAt;
             data.projectName = result.projectName;
+            data.projectHeadPrefix = result.projectHeadPrefix;
+            data.projectHeadFirstName = result.projectHeadFirstName;
+            data.projectHeadLastName = result.projectHeadLastName;
+            data.fromDate = result.fromDate;
+            data.toDate = result.toDate;
+            data.address = result.address;
+            data.provinceName = result.provinceName;
+            data.districtName = result.districtName;
+            data.subdistrictName = result.subdistrictName;
+            data.distances = result.distances;
+            data.expectedParticipants = result.expectedParticipants;
+            data.collaborated = result.collaborated;
+
             data.reviewId = result.reviewId;
             data.reviewedAt = result.reviewedAt;
             data.isInterestedPerson = result.isInterestedPerson;
@@ -233,6 +247,7 @@ export class ReviewerFlowPagesComponent implements OnInit, OnDestroy {
             this.apiData = data;
 
             this.patchFormData(result);
+            console.log('===apiData', data);
           }
         })
     );
