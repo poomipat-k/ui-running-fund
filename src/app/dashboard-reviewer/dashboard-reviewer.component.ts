@@ -156,7 +156,7 @@ export class DashboardReviewerComponent {
                     this.subs.push(
                       this.s3Service
                         .getAttachmentsPresigned(
-                          `${row.projectCode}/zip/${row.projectCode}_attachments.zip`,
+                          `${row.projectCode}/zip/${row.projectCode}_เอกสารแนบ.zip`,
                           row.userId
                         )
                         .subscribe((result) => {

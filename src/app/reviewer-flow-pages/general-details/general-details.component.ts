@@ -142,7 +142,7 @@ export class GeneralDetailsComponent implements OnDestroy {
     this.subs.push(
       this.s3Service
         .getAttachmentsPresigned(
-          `${this.apiData.projectCode}/zip/${this.apiData.projectCode}_collaboration.zip`,
+          `${this.apiData.projectCode}/zip/${this.apiData.projectCode}_หนังสือนำส่ง.zip`,
           this.apiData.userId
         )
         .subscribe((result) => {
