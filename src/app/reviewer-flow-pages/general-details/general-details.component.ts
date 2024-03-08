@@ -1,9 +1,11 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input, inject } from '@angular/core';
+import { Component, Input, OnDestroy, inject } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
+import { Subscription } from 'rxjs';
 import { CheckboxViewComponent } from '../../components/checkbox-view/checkbox-view.component';
 import { RadioViewComponent } from '../../components/radio-view/radio-view.component';
 import { DateService } from '../../services/date.service';
+import { S3Service } from '../../services/s3.service';
 import { RadioOption } from '../../shared/models/radio-option';
 import { ReviewerProjectDetails } from '../../shared/models/reviewer-project-details';
 
@@ -19,10 +21,13 @@ import { ReviewerProjectDetails } from '../../shared/models/reviewer-project-det
   templateUrl: './general-details.component.html',
   styleUrls: ['./general-details.component.scss'],
 })
-export class GeneralDetailsComponent {
+export class GeneralDetailsComponent implements OnDestroy {
   @Input() apiData: ReviewerProjectDetails;
 
+  private readonly subs: Subscription[] = [];
+
   private readonly dateService: DateService = inject(DateService);
+  private readonly s3Service: S3Service = inject(S3Service);
 
   protected _projectDistances: any = {
     fun: {
@@ -126,6 +131,26 @@ export class GeneralDetailsComponent {
     return (
       this.expectedParticipantsOptionsMap[this.apiData.expectedParticipants] ||
       ''
+    );
+  }
+
+  ngOnDestroy(): void {
+    this.subs.forEach((s) => s.unsubscribe());
+  }
+
+  onDownloadLinkClicked() {
+    this.subs.push(
+      this.s3Service
+        .getAttachmentsPresigned(
+          `${this.apiData.projectCode}/zip/${this.apiData.projectCode}_collaboration.zip`,
+          this.apiData.userId
+        )
+        .subscribe((result) => {
+          if (result?.URL) {
+            // Open the return s3 presigned url
+            window.open(result.URL);
+          }
+        })
     );
   }
 }

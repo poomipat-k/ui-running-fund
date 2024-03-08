@@ -205,6 +205,7 @@ export class ReviewerFlowPagesComponent implements OnInit, OnDestroy {
         .subscribe((result) => {
           const data = new ReviewerProjectDetails();
           if (result) {
+            data.userId = result.userId;
             data.projectId = result.projectId;
             data.projectHistoryId = result.projectHistoryId;
             data.projectCode = result.projectCode;

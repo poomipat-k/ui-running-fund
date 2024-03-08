@@ -3,6 +3,7 @@ import { ReviewDetails } from './review-details';
 import { ReviewerImprovement } from './review-improvement';
 
 export class ReviewerProjectDetails {
+  userId: number;
   projectId: number;
   projectHistoryId: number;
   projectCode: string;

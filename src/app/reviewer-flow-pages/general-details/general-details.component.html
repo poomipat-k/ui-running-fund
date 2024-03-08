@@ -107,7 +107,7 @@
           [selectedValue]="apiData.collaborated"
         ></app-com-radio-view>
         @if (apiData.collaborated) {
-        <a href="https://google.com" class="collab__link" target="_blank"
+        <a class="collab__link" (click)="onDownloadLinkClicked()"
           >ดาวน์โหลดหนังสือนำส่ง</a
         >
         }
