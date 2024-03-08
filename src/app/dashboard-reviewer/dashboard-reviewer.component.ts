@@ -147,7 +147,7 @@ export class DashboardReviewerComponent {
                   value: row.projectName,
                 },
                 {
-                  display: row.downloadLink,
+                  display: row.downloadLink, // Todo: here
                   value: row.downloadLink,
                 },
                 {

@@ -1,4 +1,5 @@
 import { Routes } from '@angular/router';
+import { ApplicantProjectDetailsComponent } from './applicant-project-details/applicant-project-details.component';
 import { EmailActivateSuccessComponent } from './email-activate-success/email-activate-success.component';
 import { ForgotPasswordEmailSentComponent } from './forgot-password-email-sent/forgot-password-email-sent.component';
 import { HomeComponent } from './home/home.component';
@@ -6,6 +7,7 @@ import { LoginComponent } from './login/login.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { ResetPasswordSuccessComponent } from './reset-password-success/reset-password-success.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
+import { applicantAuthGuard } from './shared/guard/applicant-auth.guard';
 import { authGuard } from './shared/guard/auth.guard';
 import { reviewerAuthGuard } from './shared/guard/reviewer-auth.guard';
 import { SignupSuccessComponent } from './signup-success/signup-success.component';
@@ -23,7 +25,7 @@ const routeConfig: Routes = [
         (mod) => mod.ApplicantFlowPagesComponent
       ),
     title: 'Create a proposal',
-    canActivate: [authGuard],
+    canActivate: [applicantAuthGuard],
   },
   {
     path: 'dashboard',
@@ -41,6 +43,11 @@ const routeConfig: Routes = [
         (mod) => mod.ReviewerFlowPagesComponent
       ),
     canActivate: [reviewerAuthGuard],
+  },
+  {
+    path: 'project/applicant/:projectCode',
+    component: ApplicantProjectDetailsComponent,
+    canActivate: [applicantAuthGuard],
   },
   {
     path: 'login',
