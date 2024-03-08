@@ -69,18 +69,42 @@ export class DashboardApplicantComponent implements OnInit, OnDestroy {
     },
     {
       id: 2,
-      display: 'ใหม่ - เก่า',
+      display: 'วันที่สร้าง ใหม่ - เก่า',
       name: 'วันที่สร้าง',
       order: 'DESC',
     },
-    { id: 3, display: 'เก่า - ใหม่', name: 'วันที่สร้าง', order: 'ASC' },
+    {
+      id: 3,
+      display: 'วันที่สร้าง เก่า - ใหม่',
+      name: 'วันที่สร้าง',
+      order: 'ASC',
+    },
     {
       id: 4,
+      display: 'วันที่แก้ไขล่าสุด ใหม่ - เก่า',
+      name: 'วันที่แก้ไขล่าสุด',
+      order: 'DESC',
+    },
+    {
+      id: 5,
+      display: 'วันที่แก้ไขล่าสุด เก่า - ใหม่',
+      name: 'วันที่แก้ไขล่าสุด',
+      order: 'ASC',
+    },
+    {
+      id: 6,
       display: 'สถานะการกลั่นกรอง',
       name: 'priority',
       order: 'ASC',
     },
   ];
+
+  private statusOrder: { [key: string]: number } = {
+    Reviewing: 1,
+    Revise: 2,
+    Approved: 3,
+    NotApproved: 4,
+  };
 
   ngOnInit(): void {
     this.themeService.changeBackgroundColor(BackgroundColor.white);
@@ -166,9 +190,11 @@ export class DashboardApplicantComponent implements OnInit, OnDestroy {
     data.sort((a, b) => {
       const aDate = new Date(a[createdIndex].value);
       const bDate = new Date(b[createdIndex].value);
+      const aVal = a[statusIndex].value;
+      const bVal = b[statusIndex].value;
       return (
-        a[statusIndex].display.localeCompare(b[statusIndex].display) ||
-        this.dateCompareAsc(aDate, bDate)
+        this.statusOrder[aVal] - this.statusOrder[bVal] ||
+        this.dateCompareAsc(bDate, aDate)
       );
     });
   }

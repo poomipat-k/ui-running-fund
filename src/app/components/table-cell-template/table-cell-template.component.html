@@ -8,8 +8,8 @@
 <ng-container *ngTemplateOutlet="badgeReviewing"></ng-container>
 }@else if(cellValue === "Approved") {
 <ng-container *ngTemplateOutlet="badgeApproved"></ng-container>
-}@else if(cellValue === "RevisedRequired") {
-<ng-container *ngTemplateOutlet="badgeRevisedRequired"></ng-container>
+}@else if(cellValue === "Revise") {
+<ng-container *ngTemplateOutlet="badgeRevise"></ng-container>
 }@else if(cellValue === "NotApproved") {
 <ng-container *ngTemplateOutlet="badgeNotApproved"></ng-container>
 } } @default { <ng-container *ngTemplateOutlet="text"></ng-container>} }
@@ -76,12 +76,12 @@
   </div>
 </ng-template>
 
-<ng-template #badgeRevisedRequired>
-  <div class="badge__container badge__container--revisedRequired">
+<ng-template #badgeRevise>
+  <div class="badge__container badge__container--revise">
     <div class="badge__icon-container">
       <img src="assets/corner-up-left.svg" alt="corner-up-left" />
     </div>
-    <p class="badge__text badge__text--revisedRequired">มีการแก้ไข</p>
+    <p class="badge__text badge__text--revise">มีการแก้ไข</p>
   </div>
 </ng-template>
 
