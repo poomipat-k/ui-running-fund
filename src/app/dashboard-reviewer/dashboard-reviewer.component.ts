@@ -5,6 +5,7 @@ import { FilterComponent } from '../components/filter/filter.component';
 import { TableComponent } from '../components/table/table.component';
 import { DateService } from '../services/date.service';
 import { ProjectService } from '../services/project.service';
+import { S3Service } from '../services/s3.service';
 import { ThemeService } from '../services/theme.service';
 import { BackgroundColor } from '../shared/enums/background-color';
 import { BadgeType } from '../shared/enums/badge-type';
@@ -27,6 +28,7 @@ export class DashboardReviewerComponent {
   private readonly projectService: ProjectService = inject(ProjectService);
 
   private readonly themeService: ThemeService = inject(ThemeService);
+  private readonly s3Service: S3Service = inject(S3Service);
 
   private reviewPeriod: ReviewPeriod;
 
@@ -131,6 +133,7 @@ export class DashboardReviewerComponent {
         .subscribe((result) => {
           if (result) {
             const newData = result.map((row) => {
+              console.log('===row', row);
               return [
                 {
                   display: row.projectCode,
@@ -146,9 +149,14 @@ export class DashboardReviewerComponent {
                   display: row.projectName,
                   value: row.projectName,
                 },
+                // {
+                //   display: row.downloadLink, // Todo: here
+                //   value: row.downloadLink,
+                // },
                 {
-                  display: row.downloadLink, // Todo: here
-                  value: row.downloadLink,
+                  display: 'https://youtube.com',
+                  value: 'https://youtube.com',
+                  onClick: this.onDownloadClick.bind(this),
                 },
                 {
                   display: row.reviewId
@@ -166,6 +174,22 @@ export class DashboardReviewerComponent {
             });
             this.sortByStatusCreatedAt(newData);
             this.data = newData;
+          }
+        })
+    );
+  }
+
+  onDownloadClick(e: MouseEvent) {
+    console.log('===fromDashboard', e);
+    e.stopPropagation();
+
+    this.subs.push(
+      this.s3Service
+        .getAttachmentsPresigned('MAR67_0801/zip/attachments.zip', 3)
+        .subscribe((result) => {
+          console.log('==result', result);
+          if (result?.URL) {
+            window.open(result.URL);
           }
         })
     );

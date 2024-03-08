@@ -22,11 +22,12 @@
 
 <ng-template #downloadIcon>
   @if (cellValue) {
+  <!-- (click)="onDownloadIconClicked($event)" -->
+  <!-- [href]="cellValue" -->
+  <!-- target="_blank" -->
   <a
-    [href]="cellValue"
-    target="_blank"
     class="icon--link"
-    (click)="onDownloadIconClicked($event)"
+    (click)="_onClick($event)"
     (mouseenter)="onMouseEnterDownloadLink()"
     (mouseleave)="onMouseLeaveDownloadLink()"
     (mousedown)="onMouseDownDownloadLink()"
