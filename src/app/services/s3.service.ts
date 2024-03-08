@@ -11,7 +11,7 @@ export class S3Service {
   private readonly http: HttpClient = inject(HttpClient);
   constructor() {}
 
-  getAttachmentsPresigned(path: string, userId: number) {
+  getAttachmentsPresigned(path: string, userId?: number) {
     return this.http
       .post<any>(`${this.baseApiUrl}/s3/presigned`, {
         path,

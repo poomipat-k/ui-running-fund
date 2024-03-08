@@ -133,7 +133,6 @@ export class DashboardReviewerComponent {
         .subscribe((result) => {
           if (result) {
             const newData = result.map((row) => {
-              console.log('===row', row);
               return [
                 {
                   display: row.projectCode,
@@ -149,14 +148,25 @@ export class DashboardReviewerComponent {
                   display: row.projectName,
                   value: row.projectName,
                 },
-                // {
-                //   display: row.downloadLink, // Todo: here
-                //   value: row.downloadLink,
-                // },
                 {
-                  display: 'https://youtube.com',
-                  value: 'https://youtube.com',
-                  onClick: this.onDownloadClick.bind(this),
+                  display: 'ok', // anything not '' will work
+                  value: 'ok', // anything not '' will work
+                  onClick: (e: MouseEvent) => {
+                    e.stopPropagation();
+                    this.subs.push(
+                      this.s3Service
+                        .getAttachmentsPresigned(
+                          `${row.projectCode}/zip/${row.projectCode}_attachments.zip`,
+                          row.userId
+                        )
+                        .subscribe((result) => {
+                          if (result?.URL) {
+                            // Open the return s3 presigned url
+                            window.open(result.URL);
+                          }
+                        })
+                    );
+                  },
                 },
                 {
                   display: row.reviewId
@@ -174,22 +184,6 @@ export class DashboardReviewerComponent {
             });
             this.sortByStatusCreatedAt(newData);
             this.data = newData;
-          }
-        })
-    );
-  }
-
-  onDownloadClick(e: MouseEvent) {
-    console.log('===fromDashboard', e);
-    e.stopPropagation();
-
-    this.subs.push(
-      this.s3Service
-        .getAttachmentsPresigned('MAR67_0801/zip/attachments.zip', 3)
-        .subscribe((result) => {
-          console.log('==result', result);
-          if (result?.URL) {
-            window.open(result.URL);
           }
         })
     );
