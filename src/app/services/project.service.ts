@@ -5,6 +5,7 @@ import { Observable, catchError, throwError } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { ApplicantCriteria } from '../shared/models/applicant-criteria';
 import { ApplicantDashboardRow } from '../shared/models/applicant-dashboard-row';
+import { ApplicantDetailsItem } from '../shared/models/applicant-details-item';
 import { ReviewCriteria } from '../shared/models/review-criteria';
 import { ReviewPeriod } from '../shared/models/review-period';
 import { ReviewerDashboardRow } from '../shared/models/reviewer-dashboard-row';
@@ -40,6 +41,16 @@ export class ProjectService {
         fromDate,
         toDate,
       })
+      .pipe(catchError(this.handleError));
+  }
+
+  getApplicantProjectDetails(
+    projectCode: string
+  ): Observable<ApplicantDetailsItem[]> {
+    return this.http
+      .get<ApplicantDetailsItem[]>(
+        `${this.baseApiUrl}/applicant/project/details/${projectCode}`
+      )
       .pipe(catchError(this.handleError));
   }
 

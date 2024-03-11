@@ -2,7 +2,66 @@
   <div class="index">
     <span class="index__prefix">หน้าแรก</span>
     <span class="index__prefix">/</span>
-    <span class="index__code"> {{ projectCode }}</span>
+    <span class="index__code"> {{ pathDisplay }}</span>
   </div>
-  <p>Hello</p>
+
+  <div class="section">
+    <h1 class="section__header">{{ pathDisplay }}</h1>
+    <div class="hr mgt-25 mgb-42"></div>
+
+    <div class="review__container">
+      <app-com-button (click)="onDownloadClick()">
+        <div class="button-content">
+          <div>โหลดเอกสาร</div>
+          <svg
+            width="16"
+            height="16"
+            viewBox="0 0 16 16"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M8 12L3 7L4.4 5.55L7 8.15V0H9V8.15L11.6 5.55L13 7L8 12ZM2 16C1.45 16 0.979167 15.8042 0.5875 15.4125C0.195833 15.0208 0 14.55 0 14V11H2V14H14V11H16V14C16 14.55 15.8042 15.0208 15.4125 15.4125C15.0208 15.8042 14.55 16 14 16H2Z"
+              fill="#344054"
+              [ngClass]="{
+                'button-icon': true,
+                'button-content__hover': downloadButtonAction === 'hover',
+                'button-content__active': downloadButtonAction === 'active'
+              }"
+            />
+          </svg>
+        </div>
+      </app-com-button>
+      <!-- <button>โหลดเอกสาร</button> -->
+      <!-- Status -->
+      <div>
+        <h3>สถานะการดำเนินการ</h3>
+        <p>ยังไม่ได้กลั่นกรอง</p>
+      </div>
+
+      <!-- Review history -->
+      <div>
+        <h3>ประวัติการทำการ</h3>
+        <div>
+          <p>ดูผลการกลั่นกรอง 1</p>
+        </div>
+      </div>
+
+      <!-- Review Date -->
+      <div>
+        <h3>วันที่ทำการ</h3>
+        <div>
+          <p>01-01-2023</p>
+        </div>
+      </div>
+
+      <!-- Score -->
+      <div>
+        <h3>คะแนน</h3>
+        <div>
+          <p>80</p>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

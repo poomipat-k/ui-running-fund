@@ -1,7 +1,8 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
-import { catchError, throwError } from 'rxjs';
+import { Observable, catchError, throwError } from 'rxjs';
 import { environment } from '../../environments/environment';
+import { Presigned } from '../shared/models/presigned-url';
 
 @Injectable({
   providedIn: 'root',
@@ -11,7 +12,10 @@ export class S3Service {
   private readonly http: HttpClient = inject(HttpClient);
   constructor() {}
 
-  getAttachmentsPresigned(path: string, userId?: number) {
+  getAttachmentsPresigned(
+    path: string,
+    userId?: number
+  ): Observable<Presigned> {
     return this.http
       .post<any>(`${this.baseApiUrl}/s3/presigned`, {
         path,
