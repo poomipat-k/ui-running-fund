@@ -10,6 +10,7 @@ import { ReviewCriteria } from '../shared/models/review-criteria';
 import { ReviewPeriod } from '../shared/models/review-period';
 import { ReviewerDashboardRow } from '../shared/models/reviewer-dashboard-row';
 import { ReviewerProjectDetails } from '../shared/models/reviewer-project-details';
+import { S3ObjectMetadata } from '../shared/models/s3-object-metadata';
 
 @Injectable({
   providedIn: 'root',
@@ -85,6 +86,18 @@ export class ProjectService {
       .get<ReviewCriteria[]>(
         `${this.baseApiUrl}/review/criteria/${criteriaVersion}`
       )
+      .pipe(catchError(this.handleError));
+  }
+
+  listApplicantFiles(
+    projectCode: string,
+    createdBy?: number
+  ): Observable<S3ObjectMetadata[]> {
+    return this.http
+      .post<S3ObjectMetadata[]>(`${this.baseApiUrl}/s3/objects`, {
+        prefix: projectCode,
+        createdBy: createdBy,
+      })
       .pipe(catchError(this.handleError));
   }
 

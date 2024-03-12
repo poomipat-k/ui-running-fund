@@ -10,7 +10,7 @@
     <div class="hr mgt-25 mgb-42"></div>
 
     <div class="review__container">
-      <app-com-button (click)="onDownloadClick()">
+      <app-com-button (click)="onDownloadFormZipClick()">
         <div class="button-content">
           <div>โหลดเอกสาร</div>
           <svg
@@ -32,34 +32,70 @@
           </svg>
         </div>
       </app-com-button>
-      <!-- <button>โหลดเอกสาร</button> -->
       <!-- Status -->
-      <div>
-        <h3>สถานะการดำเนินการ</h3>
-        <p>ยังไม่ได้กลั่นกรอง</p>
+      <div class="status mgl-56">
+        <h3 class="header">สถานะการดำเนินการ</h3>
+        <app-table-cell-template
+          [cellType]="statusCellType"
+          cellValue="PendingReview"
+        ></app-table-cell-template>
       </div>
 
       <!-- Review history -->
-      <div>
-        <h3>ประวัติการทำการ</h3>
-        <div>
-          <p>ดูผลการกลั่นกรอง 1</p>
+      <div class="history mgl-80 flex-1">
+        <h3 class="header">ประวัติการทำการ</h3>
+        <div class="details">
+          @for (item of data; track $index) {
+          <a class="details-row underline">{{
+            "ดูผลการกลั่นกรอง" + ($index + 1)
+          }}</a>
+          }
         </div>
       </div>
-
       <!-- Review Date -->
-      <div>
-        <h3>วันที่ทำการ</h3>
+      <div class="reviewedAt mgl-124">
+        <h3 class="header">วันที่ทำการ</h3>
         <div>
-          <p>01-01-2023</p>
+          @for (item of data; track $index) {
+          <p class="details-row">{{ getDisplayDate(item.reviewedAt) }}</p>
+          }
         </div>
       </div>
 
       <!-- Score -->
-      <div>
-        <h3>คะแนน</h3>
+      <div class="score mgl-139">
+        <h3 class="header">คะแนน</h3>
         <div>
-          <p>80</p>
+          @for (item of data; track $index) {
+          <p class="details-row text-center">{{ item.sumScore }}</p>
+          }
+        </div>
+      </div>
+    </div>
+
+    <div class="hr mgt-69"></div>
+
+    <div class="mgt-25">
+      <h3 class="header">เอกสารที่เกี่ยวข้อง</h3>
+      <div class="attachments mgt-7">
+        <div class="attachments__row">
+          <div class="attachments__folder">
+            <p class="attachments__text">หนังสือนำส่งข้อเสนอโครงการ</p>
+          </div>
+          <div class="attachments__fileAndDate">
+            @for (item of s3ObjectItems.collaboration; track $index) {
+            <div class="attachments__fileAndDate-row">
+              <p class="attachments__text">{{ item.display }}</p>
+              <div class="attachments__fileAndDate-textWithIcon">
+                <p class="attachments__text">{{ item.lastModified }}</p>
+                <img
+                  src="/assets/download_file_icon.svg"
+                  alt="download file icon"
+                />
+              </div>
+            </div>
+            }
+          </div>
         </div>
       </div>
     </div>
