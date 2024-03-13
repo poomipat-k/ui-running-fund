@@ -434,7 +434,6 @@ export class GeneralDetailsComponent implements OnInit, OnDestroy {
   }
 
   private getDistrictsByProvinceId(provinceId: number) {
-    console.log('==provinceId', provinceId);
     this.subs.push(
       this.addressService
         .getDistrictsByProvinceId(provinceId)
@@ -559,7 +558,6 @@ export class GeneralDetailsComponent implements OnInit, OnDestroy {
     const generalFormGroup = this.form.get('general') as FormGroup;
     // const errorId = this.getFirstErrorId(generalFormGroup);
     const errorId = this.getFirstErrorIdWithPrefix(generalFormGroup, '');
-    console.log('===errorId', errorId);
     if (errorId && this.enableScroll) {
       this.scrollToId(errorId);
     }

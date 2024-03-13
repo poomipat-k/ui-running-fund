@@ -118,7 +118,6 @@ export class DashboardApplicantComponent implements OnInit, OnDestroy {
   private loadApplicantDashboard() {
     this.subs.push(
       this.projectService.getApplicantDashboard().subscribe((dashboardRows) => {
-        console.log('==dashboardRows', dashboardRows);
         if (dashboardRows) {
           const data = dashboardRows.map((row) => {
             return [

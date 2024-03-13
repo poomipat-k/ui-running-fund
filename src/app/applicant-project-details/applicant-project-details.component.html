@@ -45,11 +45,11 @@
       <div class="history mgl-80 flex-1">
         <h3 class="header">ประวัติการทำการ</h3>
         <div class="details">
-          @for (item of data; track $index) {
+          @for (item of data; track $index) { @if (item.reviewId) {
           <a class="details-row underline">{{
             "ดูผลการกลั่นกรอง" + ($index + 1)
           }}</a>
-          }
+          } }
         </div>
       </div>
       <!-- Review Date -->
@@ -77,13 +77,15 @@
 
     <div class="mgt-25">
       <h3 class="header">เอกสารที่เกี่ยวข้อง</h3>
+      <!-- Attachments -->
       <div class="attachments mgt-7">
+        @for (group of attachmentGroupNames; track $index) {
         <div class="attachments__row">
           <div class="attachments__folder">
-            <p class="attachments__text">หนังสือนำส่งข้อเสนอโครงการ</p>
+            <p class="attachments__text">{{ group.topic }}</p>
           </div>
           <div class="attachments__fileAndDate">
-            @for (item of s3ObjectItems.collaboration; track $index) {
+            @for (item of s3ObjectItems[group.key]; track $index) {
             <div class="attachments__fileAndDate-row">
               <p class="attachments__text">{{ item.display }}</p>
               <div class="attachments__fileAndDate-textWithIcon">
@@ -91,6 +93,35 @@
                 <img
                   src="/assets/download_file_icon.svg"
                   alt="download file icon"
+                  (click)="onDownloadItemClick(item.key)"
+                />
+              </div>
+            </div>
+            }
+          </div>
+        </div>
+        }
+      </div>
+      <!-- END Attachments -->
+    </div>
+
+    <div class="mgt-35">
+      <h3 class="header">
+        เอกสารอื่นๆ<span class="header__light">เช่น Final Report ฯลฯ</span>
+      </h3>
+      <!-- Addition -->
+      <div class="attachments mgt-6">
+        <div class="attachments__row">
+          <div class="attachments__fileAndDate">
+            @for (item of s3ObjectItems.addition; track $index) {
+            <div class="attachments__fileAndDate-row">
+              <p class="attachments__text">{{ item.display }}</p>
+              <div class="attachments__fileAndDate-textWithIcon">
+                <p class="attachments__text">{{ item.lastModified }}</p>
+                <img
+                  src="/assets/download_file_icon.svg"
+                  alt="download file icon"
+                  (click)="onDownloadItemClick(item.key)"
                 />
               </div>
             </div>
@@ -98,6 +129,70 @@
           </div>
         </div>
       </div>
+      <!-- END Addition -->
+    </div>
+
+    <div class="summary__container mgt-70">
+      <h2 class="summary__header">การอนุมัติโครงการ</h2>
+      <div class="summary__status">
+        <p class="summary__text">สภานะ:</p>
+        @if (data[0]) { @if (data[0].projectStatus === 'Approved') {
+        <p class="summary__status__text summary__status__approved">
+          ผ่านการอนุมัติ
+        </p>
+        } @else if (data[0].projectStatus === "NotApproved") {
+        <p class="summary__status__text summary__status__notApproved">
+          ไม่ผ่านการอนุมัติ
+        </p>
+        } @else {
+        <p class="summary__status__text summary__status__reviewing">
+          อยู่ในขั้นตอนการพิจารณา
+        </p>
+        } }
+      </div>
+      @if (!editMode) {
+      <div class="summary__table">
+        <div class="summary__table__col">
+          <p class="summary__text">คะแนนรวม</p>
+          <p class="summary__money__text">{{ adminScore }}</p>
+        </div>
+        <div class="summary__table__col">
+          <p class="summary__text">จำนวนเงินทุน</p>
+          <div class="summary__money">
+            <p class="summary__money__text">{{ approvedFund }}</p>
+            @if (data[0] && data[0].fundApprovedAmount) {
+            <p class="summary__money__text">บาท</p>
+            }
+          </div>
+        </div>
+      </div>
+      }
+    </div>
+
+    <!-- REMARK -->
+    @if (!editMode) {
+    <div class="mgt-43">
+      <h3 class="remark__header">หมายเหตุ</h3>
+      <p class="remark__content mgt-11">
+        {{ adminComment }}
+      </p>
+    </div>
+    }
+
+    <div class="button__container mgt-48">
+      @if (editMode) {
+      <button class="button button--next">บันทึก</button>
+      <button class="button button--cancel" (click)="changeToViewMode()">
+        ยกเลิก
+      </button>
+      } @else {
+      <button class="button button--next" (click)="changeToEditMode()">
+        แก้ไข
+      </button>
+      <button class="button button--cancel" (click)="onBackToDashboard()">
+        กลับ
+      </button>
+      }
     </div>
   </div>
 </div>

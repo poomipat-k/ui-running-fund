@@ -183,7 +183,6 @@ export class FundRequestComponent {
 
     const fromGroup = this.form.get('fund') as FormGroup;
     const errorId = this.getFirstErrorIdWithPrefix(fromGroup, '');
-    console.log('===errorId', errorId);
     if (errorId && this.enableScroll) {
       this.scrollToId(errorId);
     }

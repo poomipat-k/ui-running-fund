@@ -2,6 +2,7 @@ import { Component, Input, OnDestroy, OnInit, inject } from '@angular/core';
 import { Subscription } from 'rxjs';
 
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
 import { ButtonComponent } from '../components/button/button/button.component';
 import { TableCellTemplateComponent } from '../components/table-cell-template/table-cell-template.component';
 import { ProjectService } from '../services/project.service';
@@ -26,8 +27,14 @@ export class ApplicantProjectDetailsComponent implements OnInit, OnDestroy {
   private readonly themeService: ThemeService = inject(ThemeService);
   private readonly projectService: ProjectService = inject(ProjectService);
   private readonly s3Service: S3Service = inject(S3Service);
+  private readonly router: Router = inject(Router);
   private readonly subs: Subscription[] = [];
 
+  private numberFormatter = Intl.NumberFormat();
+
+  protected data: ApplicantDetailsItem[] = [];
+
+  protected editMode = false;
   protected pathDisplay = '';
   protected downloadButtonAction = '';
 
@@ -38,15 +45,57 @@ export class ApplicantProjectDetailsComponent implements OnInit, OnDestroy {
     route: S3ObjectMetadata[];
     eventMap: S3ObjectMetadata[];
     eventDetails: S3ObjectMetadata[];
+    // additional files
+    addition: S3ObjectMetadata[];
+    // to satisfy ts in .html file
+    [key: string]: S3ObjectMetadata[];
   } = {
     collaboration: [],
     marketing: [],
     route: [],
     eventMap: [],
     eventDetails: [],
+    addition: [],
   };
 
-  protected data: ApplicantDetailsItem[] = [];
+  protected readonly attachmentGroupNames = [
+    {
+      topic: 'หนังสือนำส่งข้อเสนอโครงการ',
+      key: 'collaboration',
+    },
+    {
+      topic: '6.1 ป้ายประชาสัมพันธ์งาน',
+      key: 'marketing',
+    },
+    {
+      topic: '6.2 เส้นทาง',
+      key: 'route',
+    },
+    {
+      topic: '6.3 แผนผังบริเวณ',
+      key: 'eventMap',
+    },
+    {
+      topic: '6.4 รายละเอียดการจัดงาน',
+      key: 'eventDetails',
+    },
+  ];
+
+  get adminScore(): string {
+    return this.data?.[0]?.adminScore?.toString() || '-';
+  }
+
+  get approvedFund(): string {
+    const amount = this.data?.[0]?.fundApprovedAmount || 0;
+    if (amount > 0) {
+      return this.numberFormatter.format(amount);
+    }
+    return '-';
+  }
+
+  get adminComment(): string {
+    return this.data?.[0]?.adminComment || '';
+  }
 
   ngOnInit(): void {
     this.themeService.changeBackgroundColor(BackgroundColor.gray);
@@ -67,6 +116,9 @@ export class ApplicantProjectDetailsComponent implements OnInit, OnDestroy {
           if (result && result.length > 0) {
             this.pathDisplay = `${this.projectCode} ${result[0].projectName}`;
             this.data = result;
+          } else {
+            console.error(`project ${this.projectCode} does not existx`);
+            this.router.navigate(['/dashboard']);
           }
         })
     );
@@ -98,9 +150,10 @@ export class ApplicantProjectDetailsComponent implements OnInit, OnDestroy {
               s3ObjectList,
               'เอกสารแนบ/กำหนดการการจัดกิจกรรม'
             );
-            //
-
-            console.log('==this.s3ObjectItems', this.s3ObjectItems);
+            this.s3ObjectItems.addition = this.filterFileByType(
+              s3ObjectList,
+              'addition'
+            );
           }
         })
     );
@@ -136,7 +189,27 @@ export class ApplicantProjectDetailsComponent implements OnInit, OnDestroy {
     );
   }
 
-  protected getDisplayDate(dateStr: string) {
+  onDownloadItemClick(objectKey: string) {
+    const split = objectKey.split(`/${this.projectCode}/`);
+    if (!split || split.length === 0) {
+      return;
+    }
+    const prefix = split[split.length - 1];
+    this.subs.push(
+      this.s3Service
+        .getAttachmentsPresigned(`${this.projectCode}/${prefix}`)
+        .subscribe((result) => {
+          if (result?.URL) {
+            window.open(result.URL);
+          }
+        })
+    );
+  }
+
+  getDisplayDate(dateStr: string): string {
+    if (!dateStr) {
+      return '';
+    }
     const date = new Date(dateStr);
     const local = date.toLocaleDateString('en-US', {
       timeZone: 'Asia/bangkok',
@@ -145,5 +218,17 @@ export class ApplicantProjectDetailsComponent implements OnInit, OnDestroy {
       .split('/')
       .map((x) => x.padStart(2, '0'))
       .join('-');
+  }
+
+  changeToEditMode() {
+    this.editMode = true;
+  }
+
+  changeToViewMode() {
+    this.editMode = false;
+  }
+
+  onBackToDashboard() {
+    this.router.navigate(['/dashboard']);
   }
 }

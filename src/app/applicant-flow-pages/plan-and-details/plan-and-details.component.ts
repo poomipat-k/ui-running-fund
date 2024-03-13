@@ -504,7 +504,6 @@ export class PlanAndDetailsComponent {
 
     const fromGroup = this.form.get('details') as FormGroup;
     const errorId = this.getFirstErrorIdWithPrefix(fromGroup, '');
-    console.log('===errorId', errorId);
     if (errorId && this.enableScroll) {
       this.scrollToId(errorId);
     }

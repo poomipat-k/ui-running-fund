@@ -248,7 +248,6 @@ export class ReviewerFlowPagesComponent implements OnInit, OnDestroy {
             this.apiData = data;
 
             this.patchFormData(result);
-            console.log('===apiData', data);
           }
         })
     );

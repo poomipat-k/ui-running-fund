@@ -3,7 +3,10 @@ export class ApplicantDetailsItem {
   userId: number;
   projectName: string;
   projectStatus: string;
-  reviewedId: number;
+  adminScore: number;
+  fundApprovedAmount: number;
+  adminComment: string;
+  reviewId: number;
   reviewedAt: string;
   sumScore: number;
 

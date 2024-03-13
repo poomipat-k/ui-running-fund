@@ -357,7 +357,6 @@ export class ContactComponent implements OnInit, OnDestroy {
 
     const fromGroup = this.form.get('contact') as FormGroup;
     const errorId = this.getFirstErrorIdWithPrefix(fromGroup, '');
-    console.log('===errorId', errorId);
     if (errorId && this.enableScroll) {
       this.scrollToId(errorId);
     }
