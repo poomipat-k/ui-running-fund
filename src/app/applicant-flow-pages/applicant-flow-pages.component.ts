@@ -637,8 +637,6 @@ export class ApplicantFlowPagesComponent implements OnInit, OnDestroy {
     if (otherHistory?.completed3?.year) {
       otherHistory.completed3.year = otherHistory.completed3.year - 543;
     }
-    console.log('===cloneData');
-    console.log(data);
     return data;
   }
 
@@ -686,7 +684,6 @@ export class ApplicantFlowPagesComponent implements OnInit, OnDestroy {
       )
         .pipe(
           concatMap((screenshotFiles) => {
-            console.log('===screenshotFiles', screenshotFiles);
             if (screenshotFiles.length === 0) {
               throw new Error('screenshotFiles is empty');
             }
@@ -699,9 +696,6 @@ export class ApplicantFlowPagesComponent implements OnInit, OnDestroy {
               }
               formData.append('screenshotFiles', screenshotFiles[i]);
             }
-
-            console.log('====FORM VALUE ====');
-            console.log(this.form.value);
 
             formData.append('form', JSON.stringify(this.getSubmitFormData()));
 
@@ -717,7 +711,7 @@ export class ApplicantFlowPagesComponent implements OnInit, OnDestroy {
               this.showSuccessPopup = true;
               setTimeout(() => {
                 this.showSuccessPopup = false;
-                // TODO
+                // TODO: uncomment this
                 // this.incrementStep();
               }, 2000);
             }

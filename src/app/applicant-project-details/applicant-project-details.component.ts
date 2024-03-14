@@ -1,10 +1,13 @@
 import { Component, Input, OnDestroy, OnInit, inject } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { BehaviorSubject, Subscription } from 'rxjs';
 
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { ButtonComponent } from '../components/button/button/button.component';
+import { ErrorPopupComponent } from '../components/error-popup/error-popup.component';
+import { SuccessPopupComponent } from '../components/success-popup/success-popup.component';
 import { TableCellTemplateComponent } from '../components/table-cell-template/table-cell-template.component';
+import { UploadButtonComponent } from '../components/upload-button/upload-button.component';
 import { ProjectService } from '../services/project.service';
 import { S3Service } from '../services/s3.service';
 import { ThemeService } from '../services/theme.service';
@@ -16,7 +19,14 @@ import { S3ObjectMetadata } from '../shared/models/s3-object-metadata';
 @Component({
   selector: 'app-applicant-project-details',
   standalone: true,
-  imports: [ButtonComponent, CommonModule, TableCellTemplateComponent],
+  imports: [
+    ButtonComponent,
+    CommonModule,
+    TableCellTemplateComponent,
+    UploadButtonComponent,
+    SuccessPopupComponent,
+    ErrorPopupComponent,
+  ],
   templateUrl: './applicant-project-details.component.html',
   styleUrl: './applicant-project-details.component.scss',
 })
@@ -30,9 +40,15 @@ export class ApplicantProjectDetailsComponent implements OnInit, OnDestroy {
   private readonly router: Router = inject(Router);
   private readonly subs: Subscription[] = [];
 
+  protected showSuccessPopup = false;
+  protected showErrorPopup = false;
+
   private numberFormatter = Intl.NumberFormat();
 
   protected data: ApplicantDetailsItem[] = [];
+
+  protected additionFiles: File[] = [];
+  protected additionFilesSubject = new BehaviorSubject<File[]>([]);
 
   protected editMode = false;
   protected pathDisplay = '';
@@ -101,10 +117,21 @@ export class ApplicantProjectDetailsComponent implements OnInit, OnDestroy {
     this.themeService.changeBackgroundColor(BackgroundColor.gray);
     this.loadProjectDetails();
     this.loadProjectFiles();
+
+    this.subToSelectedFilesChanged();
   }
 
   ngOnDestroy(): void {
     this.subs.forEach((s) => s.unsubscribe());
+  }
+
+  private subToSelectedFilesChanged() {
+    this.subs.push(
+      this.additionFilesSubject.subscribe((files) => {
+        console.log('===files', files);
+        this.additionFiles = files;
+      })
+    );
   }
 
   loadProjectDetails() {
@@ -117,7 +144,7 @@ export class ApplicantProjectDetailsComponent implements OnInit, OnDestroy {
             this.pathDisplay = `${this.projectCode} ${result[0].projectName}`;
             this.data = result;
           } else {
-            console.error(`project ${this.projectCode} does not existx`);
+            console.error(`project ${this.projectCode} does not exist`);
             this.router.navigate(['/dashboard']);
           }
         })
@@ -225,10 +252,48 @@ export class ApplicantProjectDetailsComponent implements OnInit, OnDestroy {
   }
 
   changeToViewMode() {
+    this.additionFilesSubject.next([]);
     this.editMode = false;
   }
 
   onBackToDashboard() {
     this.router.navigate(['/dashboard']);
+  }
+
+  onConfirmUpload() {
+    console.log('===[onConfirmUpload]');
+    console.log('===this.additionFiles', this.additionFiles);
+    const body = {
+      projectCode: this.projectCode,
+    };
+    const formData = new FormData();
+    formData.append('form', JSON.stringify(body));
+    if (this.additionFiles) {
+      for (let i = 0; i < this.additionFiles.length; i++) {
+        formData.append('additionFiles', this.additionFiles[i]);
+      }
+    }
+
+    this.subs.push(
+      this.projectService.addAdditionalFiles(formData).subscribe({
+        next: (result) => {
+          console.log('===result', result);
+          if (result?.success) {
+            this.showSuccessPopup = true;
+            setTimeout(() => {
+              this.showSuccessPopup = false;
+              this.changeToViewMode();
+            }, 2000);
+          }
+        },
+        error: (err) => {
+          console.error(err);
+          this.showErrorPopup = true;
+          setTimeout(() => {
+            this.showErrorPopup = false;
+          }, 2000);
+        },
+      })
+    );
   }
 }

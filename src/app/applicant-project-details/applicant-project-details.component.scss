@@ -336,6 +336,19 @@
   }
 }
 
+.popup {
+  position: absolute;
+  top: 50vh;
+  left: 50%;
+  transform: translateX(-50%);
+
+  &--show {
+    visibility: visible; /* Show the snackbar */
+    -webkit-animation: fadein 0.5s, fadeout 0.5s 1.5s;
+    animation: fadein 0.5s, fadeout 0.5s 1.5s;
+  }
+}
+
 .mgt {
   &-6 {
     margin-top: 6px;
@@ -347,6 +360,10 @@
 
   &-11 {
     margin-top: 1.1rem;
+  }
+
+  &-16 {
+    margin-top: 1.6rem;
   }
 
   &-25 {

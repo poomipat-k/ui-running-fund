@@ -109,6 +109,15 @@
       <h3 class="header">
         เอกสารอื่นๆ<span class="header__light">เช่น Final Report ฯลฯ</span>
       </h3>
+      <!-- Upload file button -->
+      @if (editMode) {
+      <div class="mgt-16">
+        <app-com-upload-button
+          [filesSubject]="additionFilesSubject"
+        ></app-com-upload-button>
+      </div>
+      }
+
       <!-- Addition -->
       <div class="attachments mgt-6">
         <div class="attachments__row">
@@ -181,7 +190,9 @@
 
     <div class="button__container mgt-48">
       @if (editMode) {
-      <button class="button button--next">บันทึก</button>
+      <button class="button button--next" (click)="onConfirmUpload()">
+        บันทึก
+      </button>
       <button class="button button--cancel" (click)="changeToViewMode()">
         ยกเลิก
       </button>
@@ -196,3 +207,16 @@
     </div>
   </div>
 </div>
+
+@if (showSuccessPopup) {
+<div [ngClass]="{ popup: true, 'popup--show': showSuccessPopup }">
+  <app-com-success-popup
+    displayText="อัพโหลดไฟล์สำเร็จ"
+  ></app-com-success-popup>
+</div>
+} @else if (showErrorPopup) {
+<div [ngClass]="{ popup: true, 'popup--show': showSuccessPopup }">
+  <app-com-error-popup displayText="อัพโหลดไฟล์ไม่สำเร็จ โปรดลองอีกครั้ง">
+  </app-com-error-popup>
+</div>
+}
