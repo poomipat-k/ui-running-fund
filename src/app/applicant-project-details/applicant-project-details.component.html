@@ -190,7 +190,11 @@
 
     <div class="button__container mgt-48">
       @if (editMode) {
-      <button class="button button--next" (click)="onConfirmUpload()">
+      <button
+        class="button button--next"
+        (click)="onConfirmUpload()"
+        [disabled]="additionFiles.length === 0"
+      >
         บันทึก
       </button>
       <button class="button button--cancel" (click)="changeToViewMode()">

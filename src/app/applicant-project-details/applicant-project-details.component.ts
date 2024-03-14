@@ -128,7 +128,6 @@ export class ApplicantProjectDetailsComponent implements OnInit, OnDestroy {
   private subToSelectedFilesChanged() {
     this.subs.push(
       this.additionFilesSubject.subscribe((files) => {
-        console.log('===files', files);
         this.additionFiles = files;
       })
     );
@@ -261,8 +260,6 @@ export class ApplicantProjectDetailsComponent implements OnInit, OnDestroy {
   }
 
   onConfirmUpload() {
-    console.log('===[onConfirmUpload]');
-    console.log('===this.additionFiles', this.additionFiles);
     const body = {
       projectCode: this.projectCode,
     };
@@ -277,7 +274,6 @@ export class ApplicantProjectDetailsComponent implements OnInit, OnDestroy {
     this.subs.push(
       this.projectService.addAdditionalFiles(formData).subscribe({
         next: (result) => {
-          console.log('===result', result);
           if (result?.success) {
             this.displaySuccessPopup();
             setTimeout(() => {

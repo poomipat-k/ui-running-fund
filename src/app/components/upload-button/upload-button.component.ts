@@ -1,4 +1,11 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  Input,
+  OnDestroy,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { BehaviorSubject, Subscription } from 'rxjs';
 
 @Component({
@@ -9,6 +16,7 @@ import { BehaviorSubject, Subscription } from 'rxjs';
   styleUrl: './upload-button.component.scss',
 })
 export class UploadButtonComponent implements OnInit, OnDestroy {
+  @ViewChild('fileUpload') fileButton: ElementRef;
   // Required to function
   @Input() filesSubject: BehaviorSubject<File[]>;
 
@@ -57,6 +65,19 @@ export class UploadButtonComponent implements OnInit, OnDestroy {
     if (this.filesSubject) {
       const newFiles = this.files.filter((f) => f.name !== file.name);
       this.filesSubject.next(newFiles);
+
+      if (this.fileButton.nativeElement?.files) {
+        const dt = new DataTransfer();
+        const files = this.fileButton.nativeElement.files;
+
+        for (let i = 0; i < files.length; i++) {
+          const f = files[i];
+          if (file.name !== f.name) {
+            dt.items.add(f);
+          }
+        }
+        this.fileButton.nativeElement.files = dt.files;
+      }
     }
   }
 }
