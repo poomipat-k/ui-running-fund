@@ -206,17 +206,17 @@
       }
     </div>
   </div>
-</div>
 
-@if (showSuccessPopup) {
-<div [ngClass]="{ popup: true, 'popup--show': showSuccessPopup }">
-  <app-com-success-popup
-    displayText="อัพโหลดไฟล์สำเร็จ"
-  ></app-com-success-popup>
+  @if (showSuccessPopup) {
+  <div [ngClass]="{ popup: true, 'popup--show': showSuccessPopup }">
+    <app-com-success-popup
+      displayText="อัพโหลดไฟล์สำเร็จ"
+    ></app-com-success-popup>
+  </div>
+  } @else if (showErrorPopup) {
+  <div [ngClass]="{ popup: true, 'popup--show': showSuccessPopup }">
+    <app-com-error-popup displayText="อัพโหลดไฟล์ไม่สำเร็จ โปรดลองอีกครั้ง">
+    </app-com-error-popup>
+  </div>
+  }
 </div>
-} @else if (showErrorPopup) {
-<div [ngClass]="{ popup: true, 'popup--show': showSuccessPopup }">
-  <app-com-error-popup displayText="อัพโหลดไฟล์ไม่สำเร็จ โปรดลองอีกครั้ง">
-  </app-com-error-popup>
-</div>
-}

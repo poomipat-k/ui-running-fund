@@ -279,21 +279,37 @@ export class ApplicantProjectDetailsComponent implements OnInit, OnDestroy {
         next: (result) => {
           console.log('===result', result);
           if (result?.success) {
-            this.showSuccessPopup = true;
+            this.displaySuccessPopup();
             setTimeout(() => {
-              this.showSuccessPopup = false;
+              this.closeSuccessPopup();
               this.changeToViewMode();
             }, 2000);
           }
         },
         error: (err) => {
           console.error(err);
-          this.showErrorPopup = true;
+          this.displayErrorPopup();
           setTimeout(() => {
-            this.showErrorPopup = false;
+            this.closeErrorPopup();
           }, 2000);
         },
       })
     );
+  }
+
+  private displaySuccessPopup() {
+    this.showSuccessPopup = true;
+  }
+
+  private closeSuccessPopup() {
+    this.showSuccessPopup = false;
+  }
+
+  private displayErrorPopup() {
+    this.showErrorPopup = true;
+  }
+
+  private closeErrorPopup() {
+    this.showErrorPopup = false;
   }
 }

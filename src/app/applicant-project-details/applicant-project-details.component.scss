@@ -336,19 +336,6 @@
   }
 }
 
-.popup {
-  position: absolute;
-  top: 50vh;
-  left: 50%;
-  transform: translateX(-50%);
-
-  &--show {
-    visibility: visible; /* Show the snackbar */
-    -webkit-animation: fadein 0.5s, fadeout 0.5s 1.5s;
-    animation: fadein 0.5s, fadeout 0.5s 1.5s;
-  }
-}
-
 .mgt {
   &-6 {
     margin-top: 6px;
@@ -426,4 +413,17 @@
 
 .text-center {
   text-align: center;
+}
+
+.popup {
+  position: absolute;
+  bottom: -16rem;
+  left: 50%;
+  transform: translateX(-50%);
+
+  &--show {
+    visibility: visible; /* Show the snackbar */
+    -webkit-animation: fadein 0.5s, fadeout 0.5s 1.5s;
+    animation: fadein 0.5s, fadeout 0.5s 1.5s;
+  }
 }
