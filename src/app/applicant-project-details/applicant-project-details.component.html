@@ -37,7 +37,7 @@
         <h3 class="header">สถานะการดำเนินการ</h3>
         <app-table-cell-template
           [cellType]="statusCellType"
-          cellValue="PendingReview"
+          [cellValue]="projectStatus"
         ></app-table-cell-template>
       </div>
 
@@ -193,7 +193,7 @@
       <button
         class="button button--next"
         (click)="onConfirmUpload()"
-        [disabled]="additionFiles.length === 0"
+        [disabled]="additionFiles.length === 0 || projectStatus !== 'Revise'"
       >
         บันทึก
       </button>
@@ -201,7 +201,11 @@
         ยกเลิก
       </button>
       } @else {
-      <button class="button button--next" (click)="changeToEditMode()">
+      <button
+        class="button button--next"
+        (click)="changeToEditMode()"
+        [disabled]="projectStatus !== 'Revise'"
+      >
         แก้ไข
       </button>
       <button class="button button--cancel" (click)="onBackToDashboard()">

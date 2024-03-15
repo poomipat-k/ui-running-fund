@@ -113,6 +113,9 @@ export class ApplicantProjectDetailsComponent implements OnInit, OnDestroy {
   get adminComment(): string {
     return this.data?.[0]?.adminComment || '';
   }
+  get projectStatus(): string {
+    return this.data?.[0]?.projectStatus || '';
+  }
 
   ngOnInit(): void {
     this.themeService.changeBackgroundColor(BackgroundColor.gray);
@@ -280,6 +283,7 @@ export class ApplicantProjectDetailsComponent implements OnInit, OnDestroy {
       this.projectService.addAdditionalFiles(formData).subscribe({
         next: (result) => {
           if (result?.success) {
+            this.loadProjectFiles();
             this.displaySuccessPopup();
             setTimeout(() => {
               this.closeSuccessPopup();
