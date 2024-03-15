@@ -67,7 +67,6 @@ export class ProjectService {
     projectCode: string,
     reviewerId?: number
   ): Observable<ReviewerProjectDetails> {
-    console.log('===reviewerId', reviewerId);
     return this.http
       .post<ReviewerProjectDetails>(
         `${this.baseApiUrl}/project/review/${projectCode}`,

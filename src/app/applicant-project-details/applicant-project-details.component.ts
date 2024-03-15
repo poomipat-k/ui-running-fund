@@ -142,7 +142,6 @@ export class ApplicantProjectDetailsComponent implements OnInit, OnDestroy {
       this.projectService
         .getApplicantProjectDetails(this.projectCode)
         .subscribe((result) => {
-          console.log('===result1', result);
           if (result && result.length > 0) {
             this.pathDisplay = `${this.projectCode} ${result[0].projectName}`;
             this.data = result;

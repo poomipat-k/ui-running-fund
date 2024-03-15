@@ -74,6 +74,7 @@ export class ReviewerFlowPagesComponent implements OnInit, OnDestroy {
   protected pageIndex = 1;
   protected maxPageIndex = 5; // submit page
   protected reviewerFullName = '';
+  protected devModeOn = true;
 
   private currentUser: User;
 

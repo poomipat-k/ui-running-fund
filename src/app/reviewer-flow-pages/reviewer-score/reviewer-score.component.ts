@@ -25,6 +25,7 @@ import { criteriaGroup } from '../data/criteria-group';
 export class ReviewerScoreComponent implements OnInit {
   @Input() form: FormGroup;
   @Input() criteriaList: ReviewCriteria[] = [];
+  @Input() devModeOn = false;
 
   private readonly scroller: ViewportScroller = inject(ViewportScroller);
 

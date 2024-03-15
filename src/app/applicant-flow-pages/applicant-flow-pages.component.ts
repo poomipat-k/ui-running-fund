@@ -534,16 +534,13 @@ export class ApplicantFlowPagesComponent implements OnInit, OnDestroy {
     if (this.currentStep === this.progressBarSteps.length) {
       if (this.form.valid && !this.form.disabled) {
         this.submitForm();
-        console.log('===nextPage', this.form.value);
       } else {
         console.error('FORM IS NOT VALID!');
-        console.log(this.form.value);
       }
       return;
     }
 
     if (this.currentStep === 0 && this.collaborateComponent.validToGoNext()) {
-      console.log('===nextPage', this.form.value);
       this.capture(
         this.currentStep,
         [this.captureTarget.nativeElement],
@@ -553,7 +550,6 @@ export class ApplicantFlowPagesComponent implements OnInit, OnDestroy {
       this.currentStep === 1 &&
       this.generalDetailsComponent.validToGoNext()
     ) {
-      console.log('===nextPage', this.form.value);
       this.capture(
         this.currentStep,
         [this.captureTarget.nativeElement],
@@ -563,7 +559,6 @@ export class ApplicantFlowPagesComponent implements OnInit, OnDestroy {
       this.currentStep === 2 &&
       this.contactComponent.validToGoNext()
     ) {
-      console.log('===nextPage', this.form.value);
       this.capture(
         this.currentStep,
         [this.captureTarget.nativeElement],
@@ -573,7 +568,6 @@ export class ApplicantFlowPagesComponent implements OnInit, OnDestroy {
       this.currentStep === 3 &&
       this.planAndDetailsComponent.validToGoNext()
     ) {
-      console.log('===nextPage', this.form.value);
       this.capture(
         this.currentStep,
         this.planAndDetailsComponent.getCaptureElementRefs(),
@@ -583,7 +577,6 @@ export class ApplicantFlowPagesComponent implements OnInit, OnDestroy {
       this.currentStep === 4 &&
       this.experienceComponent.validToGoNext()
     ) {
-      console.log('===nextPage', this.form);
       this.capture(
         this.currentStep,
         [this.captureTarget.nativeElement],
@@ -593,7 +586,6 @@ export class ApplicantFlowPagesComponent implements OnInit, OnDestroy {
       this.currentStep === 5 &&
       this.fundRequestComponent.validToGoNext()
     ) {
-      console.log('===nextPage', this.form.value);
       this.capture(
         this.currentStep,
         [this.captureTarget.nativeElement],
@@ -603,10 +595,9 @@ export class ApplicantFlowPagesComponent implements OnInit, OnDestroy {
       this.currentStep === 6 &&
       this.attachmentComponent.validToGoNext()
     ) {
-      console.log('===nextPage', this.form.value);
       this.incrementStep();
     } else {
-      console.log('==error form', this.form);
+      console.error('form is not valid, form:', this.form);
     }
   }
 
@@ -707,12 +698,12 @@ export class ApplicantFlowPagesComponent implements OnInit, OnDestroy {
             this.apiLoading = false;
             if (result) {
               // TODO: uncomment this
-              // this.form.disable();
+              this.form.disable();
               this.showSuccessPopup = true;
               setTimeout(() => {
                 this.showSuccessPopup = false;
                 // TODO: uncomment this
-                // this.incrementStep();
+                this.incrementStep();
               }, 2000);
             }
           },
@@ -801,7 +792,6 @@ export class ApplicantFlowPagesComponent implements OnInit, OnDestroy {
         if (callbackFn) {
           callbackFn();
         }
-        console.log('===this.screenshots', this.screenshots);
       },
       complete: () => {
         this.screenshotService.changeCapturingStateTo(false);

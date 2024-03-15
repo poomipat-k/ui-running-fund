@@ -78,10 +78,11 @@
           }
         </div>
       </div>
+      @if (devModeOn) {
       <button [ngClass]="{ hide: form.disabled }" (click)="fillAll()">
         Fill all
       </button>
-      @if (form.value?.review?.reviewSummary === 'to_be_revised' ) {
+      } @if (form.value?.review?.reviewSummary === 'to_be_revised' ) {
       <div id="improvement" class="improvement">
         <div class="improvement__text">
           โครงการควรจะต้องมีการปรับแก้ไขเพิ่มเติมรายละเอียดให้มีความเหมาะสม
