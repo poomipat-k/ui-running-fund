@@ -7,6 +7,7 @@ export class ApplicantDetailsItem {
   fundApprovedAmount: number;
   adminComment: string;
   reviewId: number;
+  reviewerId: number;
   reviewedAt: string;
   sumScore: number;
 

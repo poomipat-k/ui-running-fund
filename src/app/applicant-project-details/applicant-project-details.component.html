@@ -46,7 +46,7 @@
         <h3 class="header">ประวัติการทำการ</h3>
         <div class="details">
           @for (item of data; track $index) { @if (item.reviewId) {
-          <a class="details-row underline">{{
+          <a class="details-row navLink" [routerLink]="getReviewerPath(item)">{{
             "ดูผลการกลั่นกรอง" + ($index + 1)
           }}</a>
           } }

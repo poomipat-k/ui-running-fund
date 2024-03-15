@@ -1,5 +1,4 @@
 import { Routes } from '@angular/router';
-import { ApplicantProjectDetailsComponent } from './applicant-project-details/applicant-project-details.component';
 import { EmailActivateSuccessComponent } from './email-activate-success/email-activate-success.component';
 import { ForgotPasswordEmailSentComponent } from './forgot-password-email-sent/forgot-password-email-sent.component';
 import { HomeComponent } from './home/home.component';
@@ -46,7 +45,18 @@ const routeConfig: Routes = [
   },
   {
     path: 'project/applicant/:projectCode',
-    component: ApplicantProjectDetailsComponent,
+    loadComponent: () =>
+      import(
+        './applicant-project-details/applicant-project-details.component'
+      ).then((mod) => mod.ApplicantProjectDetailsComponent),
+    canActivate: [applicantAuthGuard],
+  },
+  {
+    path: 'project/applicant/review-details/:projectCode/:reviewerId',
+    loadComponent: () =>
+      import('./reviewer-flow-pages/reviewer-flow-pages.component').then(
+        (mod) => mod.ReviewerFlowPagesComponent
+      ),
     canActivate: [applicantAuthGuard],
   },
   {

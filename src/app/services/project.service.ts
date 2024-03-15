@@ -64,11 +64,16 @@ export class ProjectService {
   }
 
   getProjectDetailsForReviewer(
-    projectCode: string
+    projectCode: string,
+    reviewerId?: number
   ): Observable<ReviewerProjectDetails> {
+    console.log('===reviewerId', reviewerId);
     return this.http
-      .get<ReviewerProjectDetails>(
-        `${this.baseApiUrl}/project/review/${projectCode}`
+      .post<ReviewerProjectDetails>(
+        `${this.baseApiUrl}/project/review/${projectCode}`,
+        {
+          reviewerId,
+        }
       )
       .pipe(catchError(this.handleError));
   }

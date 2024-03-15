@@ -2,7 +2,7 @@ import { Component, Input, OnDestroy, OnInit, inject } from '@angular/core';
 import { BehaviorSubject, Subscription } from 'rxjs';
 
 import { CommonModule } from '@angular/common';
-import { Router } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { ButtonComponent } from '../components/button/button/button.component';
 import { ErrorPopupComponent } from '../components/error-popup/error-popup.component';
 import { SuccessPopupComponent } from '../components/success-popup/success-popup.component';
@@ -26,6 +26,7 @@ import { S3ObjectMetadata } from '../shared/models/s3-object-metadata';
     UploadButtonComponent,
     SuccessPopupComponent,
     ErrorPopupComponent,
+    RouterModule,
   ],
   templateUrl: './applicant-project-details.component.html',
   styleUrl: './applicant-project-details.component.scss',
@@ -148,6 +149,10 @@ export class ApplicantProjectDetailsComponent implements OnInit, OnDestroy {
           }
         })
     );
+  }
+
+  getReviewerPath(item: ApplicantDetailsItem) {
+    return `/project/applicant/review-details/${this.projectCode}/${item.reviewerId}`;
   }
 
   loadProjectFiles() {

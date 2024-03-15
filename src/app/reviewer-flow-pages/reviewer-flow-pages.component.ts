@@ -64,6 +64,7 @@ export class ReviewerFlowPagesComponent implements OnInit, OnDestroy {
   reviewerScoreComponent: ReviewerScoreComponent;
   // url params
   @Input() projectCode: string;
+  @Input() reviewerId: number;
 
   protected showSuccessPopup = false;
   protected showErrorPopup = false;
@@ -72,6 +73,8 @@ export class ReviewerFlowPagesComponent implements OnInit, OnDestroy {
   protected apiData: ReviewerProjectDetails = new ReviewerProjectDetails();
   protected pageIndex = 1;
   protected maxPageIndex = 5; // submit page
+  protected reviewerFullName = '';
+
   private currentUser: User;
 
   // Services
@@ -96,7 +99,10 @@ export class ReviewerFlowPagesComponent implements OnInit, OnDestroy {
     if (!this.currentUser) {
       return '';
     }
-    return `${this.currentUser.firstName} ${this.currentUser.lastName}`;
+    if (this.currentUser.userRole === 'reviewer') {
+      return `${this.currentUser.firstName} ${this.currentUser.lastName}`;
+    }
+    return this.reviewerFullName;
   }
 
   constructor() {}
@@ -105,11 +111,21 @@ export class ReviewerFlowPagesComponent implements OnInit, OnDestroy {
     this.themeService.changeBackgroundColor(BackgroundColor.gray);
     this.initForm();
     this.prepareData();
-    // this.pageIndex = 2;
+    if (this.reviewerId) {
+      this.getReviewerFullName();
+    }
   }
 
   ngOnDestroy(): void {
     this.subs.forEach((s) => s.unsubscribe());
+  }
+
+  private getReviewerFullName() {
+    this.subs.push(
+      this.userService.getUserFullName(this.reviewerId).subscribe((result) => {
+        this.reviewerFullName = `${result.firstName} ${result.lastName}`;
+      })
+    );
   }
 
   private initForm() {
@@ -198,7 +214,8 @@ export class ReviewerFlowPagesComponent implements OnInit, OnDestroy {
             this.addScoreFormControls(criteriaList);
             this.currentUser = user;
             return this.projectService.getProjectDetailsForReviewer(
-              this.projectCode
+              this.projectCode,
+              +this.reviewerId
             );
           })
         )

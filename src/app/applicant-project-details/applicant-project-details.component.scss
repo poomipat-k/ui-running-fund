@@ -51,6 +51,7 @@
 .review {
   &__container {
     display: flex;
+    padding-right: 7rem;
   }
 }
 
@@ -406,9 +407,10 @@
   flex: 1;
 }
 
-.underline {
+.navLink {
   cursor: pointer;
   text-decoration: underline;
+  color: #000;
 }
 
 .text-center {
