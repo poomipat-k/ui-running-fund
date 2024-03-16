@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { Subscription, concatMap } from 'rxjs';
@@ -6,6 +5,7 @@ import { FilterComponent } from '../components/filter/filter.component';
 import { TableComponent } from '../components/table/table.component';
 import { DateService } from '../services/date.service';
 import { ProjectService } from '../services/project.service';
+import { S3Service } from '../services/s3.service';
 import { ThemeService } from '../services/theme.service';
 import { BackgroundColor } from '../shared/enums/background-color';
 import { BadgeType } from '../shared/enums/badge-type';
@@ -19,7 +19,7 @@ import { User } from '../shared/models/user';
 @Component({
   selector: 'app-dashboard-reviewer',
   standalone: true,
-  imports: [CommonModule, RouterModule, TableComponent, FilterComponent],
+  imports: [RouterModule, TableComponent, FilterComponent],
   templateUrl: './dashboard-reviewer.component.html',
   styleUrl: './dashboard-reviewer.component.scss',
 })
@@ -28,6 +28,7 @@ export class DashboardReviewerComponent {
   private readonly projectService: ProjectService = inject(ProjectService);
 
   private readonly themeService: ThemeService = inject(ThemeService);
+  private readonly s3Service: S3Service = inject(S3Service);
 
   private reviewPeriod: ReviewPeriod;
 
@@ -138,7 +139,7 @@ export class DashboardReviewerComponent {
                   value: row.projectCode,
                 },
                 {
-                  display: this.dateService.dateToStringWithLongMonth(
+                  display: this.dateService.dateToStringWithShortMonth(
                     row.projectCreatedAt
                   ),
                   value: row.projectCreatedAt,
@@ -148,8 +149,24 @@ export class DashboardReviewerComponent {
                   value: row.projectName,
                 },
                 {
-                  display: row.downloadLink,
-                  value: row.downloadLink,
+                  display: 'ok', // anything not '' will work
+                  value: 'ok', // anything not '' will work
+                  onClick: (e: MouseEvent) => {
+                    e.stopPropagation();
+                    this.subs.push(
+                      this.s3Service
+                        .getAttachmentsPresigned(
+                          `${row.projectCode}/zip/${row.projectCode}_เอกสารแนบ.zip`,
+                          row.userId
+                        )
+                        .subscribe((result) => {
+                          if (result?.URL) {
+                            // Open the return s3 presigned url
+                            window.open(result.URL);
+                          }
+                        })
+                    );
+                  },
                 },
                 {
                   display: row.reviewId
@@ -158,7 +175,7 @@ export class DashboardReviewerComponent {
                   value: row.reviewId,
                 },
                 {
-                  display: this.dateService.dateToStringWithLongMonth(
+                  display: this.dateService.dateToStringWithShortMonth(
                     row.reviewedAt
                   ),
                   value: row.reviewedAt,

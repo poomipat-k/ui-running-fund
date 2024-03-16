@@ -1,0 +1,132 @@
+<div>
+  <h2 class="header">
+    <span class="header--orange">ส่วนที่ 6</span>
+    เอกสารแนบ
+  </h2>
+
+  <div class="section-container">
+    <div class="section">
+      <h3 class="section__header section__header--with-ask">
+        6.1 ป้ายประชาสัมพันธ์กิจกรรม
+      </h3>
+      <div class="uploadBox">
+        <div>
+          <app-com-upload-button
+            id="marketing"
+            [filesSubject]="marketingSubject"
+          ></app-com-upload-button>
+          @if (marketingCount === 0 && marketingUploadButtonTouched) {
+          <div class="error">
+            <img src="/assets/error_icon.svg" alt="error icon" />
+            <p class="error__text">กรุณาอัพโหลดไฟล์</p>
+          </div>
+          }
+        </div>
+        <div class="uploadBox__example">
+          <a
+            class="uploadBox__link"
+            target="_blank"
+            href="https://running-fund-static-store.s3.ap-southeast-1.amazonaws.com/static/example_%E0%B8%9B%E0%B9%89%E0%B8%B2%E0%B8%A2%E0%B8%9B%E0%B8%A3%E0%B8%B0%E0%B8%8A%E0%B8%B2%E0%B8%AA%E0%B8%B1%E0%B8%A1%E0%B8%9E%E0%B8%B1%E0%B8%99%E0%B8%98%E0%B9%8C%E0%B8%87%E0%B8%B2%E0%B8%99.pdf"
+            >กดเพื่อดูตัวอย่างไฟล์</a
+          >
+          <p class="uploadBox__text">
+            แนะนำไฟล์ประเภท PDF, JPG ขนาดไม่เกิน 25 MB
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <h3 class="section__header section__header--with-ask">
+        6.2 เส้นทางจุดเริ่มต้นถึงจุดสิ้นสุด และเส้นทางวิ่งในทุกระยะ
+      </h3>
+      <div class="uploadBox">
+        <div>
+          <app-com-upload-button
+            id="route"
+            [filesSubject]="routeSubject"
+          ></app-com-upload-button>
+          @if (routeCount === 0 && routeUploadButtonTouched) {
+          <div class="error">
+            <img src="/assets/error_icon.svg" alt="error icon" />
+            <p class="error__text">กรุณาอัพโหลดไฟล์</p>
+          </div>
+          }
+        </div>
+        <div class="uploadBox__example">
+          <a
+            class="uploadBox__link"
+            target="_blank"
+            href="https://running-fund-static-store.s3.ap-southeast-1.amazonaws.com/static/example_%E0%B9%80%E0%B8%AA%E0%B9%89%E0%B8%99%E0%B8%97%E0%B8%B2%E0%B8%87%E0%B8%88%E0%B8%B8%E0%B8%94%E0%B9%80%E0%B8%A3%E0%B8%B4%E0%B9%88%E0%B8%A1%E0%B8%95%E0%B9%89%E0%B8%99%E0%B8%96%E0%B8%B6%E0%B8%87%E0%B8%88%E0%B8%B8%E0%B8%94%E0%B8%AA%E0%B8%B4%E0%B9%89%E0%B8%99%E0%B8%AA%E0%B8%B8%E0%B8%94+%E0%B9%81%E0%B8%A5%E0%B8%B0%E0%B9%80%E0%B8%AA%E0%B9%89%E0%B8%99%E0%B8%97%E0%B8%B2%E0%B8%87%E0%B8%A7%E0%B8%B4%E0%B9%88%E0%B8%87%E0%B9%83%E0%B8%99%E0%B8%97%E0%B8%B8%E0%B8%81%E0%B8%A3%E0%B8%B0%E0%B8%A2%E0%B8%B0.pdf"
+            >กดเพื่อดูตัวอย่างไฟล์</a
+          >
+          <p class="uploadBox__text">
+            แนะนำไฟล์ประเภท PDF, JPG ขนาดไม่เกิน 25 MB
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <h3 class="section__header section__header--with-ask">
+        6.3 แผนผังบริเวณการจัดงาน
+      </h3>
+      <div class="uploadBox">
+        <div>
+          <app-com-upload-button
+            id="eventMap"
+            [filesSubject]="eventMapSubject"
+          ></app-com-upload-button>
+          @if (eventMapCount === 0 && eventMapUploadButtonTouched) {
+          <div class="error">
+            <img src="/assets/error_icon.svg" alt="error icon" />
+            <p class="error__text">กรุณาอัพโหลดไฟล์</p>
+          </div>
+          }
+        </div>
+        <div class="uploadBox__example">
+          <a
+            class="uploadBox__link"
+            target="_blank"
+            href="https://running-fund-static-store.s3.ap-southeast-1.amazonaws.com/static/example_%E0%B9%81%E0%B8%9C%E0%B8%99%E0%B8%9C%E0%B8%B1%E0%B8%87%E0%B8%9A%E0%B8%A3%E0%B8%B4%E0%B9%80%E0%B8%A7%E0%B8%93%E0%B8%81%E0%B8%B2%E0%B8%A3%E0%B8%88%E0%B8%B1%E0%B8%94%E0%B8%87%E0%B8%B2%E0%B8%99.pdf"
+            >กดเพื่อดูตัวอย่างไฟล์</a
+          >
+          <p class="uploadBox__text">
+            แนะนำไฟล์ประเภท PDF, JPG ขนาดไม่เกิน 25 MB
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <h3 class="section__header section__header--with-ask">
+        6.4 รายละเอียดจัดการกิจกรรม
+      </h3>
+      <div class="uploadBox">
+        <div>
+          <app-com-upload-button
+            id="eventDetails"
+            [filesSubject]="eventDetailsSubject"
+          ></app-com-upload-button>
+          @if (eventDetailsCount === 0 && eventDetailsUploadButtonTouched) {
+          <div class="error">
+            <img src="/assets/error_icon.svg" alt="error icon" />
+            <p class="error__text">กรุณาอัพโหลดไฟล์</p>
+          </div>
+          }
+        </div>
+        <div class="uploadBox__example">
+          <a
+            class="uploadBox__link"
+            target="_blank"
+            href="https://running-fund-static-store.s3.ap-southeast-1.amazonaws.com/static/example_%E0%B8%81%E0%B8%B3%E0%B8%AB%E0%B8%99%E0%B8%94%E0%B8%81%E0%B8%B2%E0%B8%A3%E0%B8%88%E0%B8%B1%E0%B8%94%E0%B8%87%E0%B8%B2%E0%B8%99.pdf"
+            >กดเพื่อดูตัวอย่างไฟล์</a
+          >
+          <p class="uploadBox__text">
+            แนะนำไฟล์ประเภท PDF, JPG ขนาดไม่เกิน 25 MB
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

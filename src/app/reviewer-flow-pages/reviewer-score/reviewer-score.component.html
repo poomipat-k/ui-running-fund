@@ -37,15 +37,16 @@
         c.groupNumber === group.id) {
         <div class="question__box" [id]="buildControlName(c)">
           <p [innerHTML]="buildQuestionText(c)" class="question__text"></p>
-          <app-com-radio
-            [form]="reviewFormControlGroup"
-            [options]="scoreOptions"
-            groupName="scores"
-            [controlName]="buildControlName(c)"
-            radioStyle="review-3a"
-            direction="horizontal"
-            [disabled]="form.disabled"
-          ></app-com-radio>
+          <div class="mt-10">
+            <app-com-radio
+              [form]="scoresFormGroup"
+              [options]="scoreOptions"
+              [controlName]="buildControlName(c)"
+              radioStyle="review-3a"
+              direction="horizontal"
+              [disabled]="form.disabled"
+            ></app-com-radio>
+          </div>
           @if (!form.get(buildFormAccessName(c))?.valid &&
           form.get(buildFormAccessName(c))?.touched ) {
           <div class="error mt-10">
@@ -61,9 +62,8 @@
         <div class="main__group">7. สรุปความเห็น</div>
         <div class="question__box--summary" id="reviewSummary">
           <app-com-radio
-            [form]="form"
+            [form]="reviewFormControlGroup"
             [options]="summaryDropdownOptions"
-            groupName="review"
             controlName="reviewSummary"
             radioStyle="review-3b"
             [onChanged]="onSummaryRadioChanged"
@@ -78,10 +78,11 @@
           }
         </div>
       </div>
+      @if (devModeOn) {
       <button [ngClass]="{ hide: form.disabled }" (click)="fillAll()">
         Fill all
       </button>
-      @if (form.value?.review?.reviewSummary === 'to_be_revised' ) {
+      } @if (form.value?.review?.reviewSummary === 'to_be_revised' ) {
       <div id="improvement" class="improvement">
         <div class="improvement__text">
           โครงการควรจะต้องมีการปรับแก้ไขเพิ่มเติมรายละเอียดให้มีความเหมาะสม
@@ -92,11 +93,9 @@
           <div class="improvement__checkbox">
             <app-com-checkbox
               [display]="item.display"
-              [form]="reviewFormControlGroup"
-              groupName="improvement"
+              [form]="improvementFormGroup"
               [controlName]="item.controlName"
               [disabled]="form.disabled"
-              fontSize="small"
             ></app-com-checkbox>
           </div>
           }

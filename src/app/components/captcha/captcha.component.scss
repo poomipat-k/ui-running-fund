@@ -111,7 +111,6 @@
   /* Special styling for WebKit/Blink */
   &::-webkit-slider-thumb {
     -webkit-appearance: none;
-    // border: 1px solid #667085;
     height: 4.4rem;
     width: 4.4rem;
     border-radius: 4px;
@@ -150,7 +149,6 @@
 
   /* All the same stuff for IE */
   &::-ms-thumb {
-    // border: 1px solid #667085;
     height: 4.4rem;
     width: 4.4rem;
     border-radius: 4px;

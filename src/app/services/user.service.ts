@@ -25,6 +25,12 @@ export class UserService {
       .pipe(catchError(this.handleError));
   }
 
+  public getUserFullName(userId: number): Observable<any> {
+    return this.http
+      .get<User>(`${this.baseApiUrl}/user/full-name/${userId}`)
+      .pipe(catchError(this.handleError));
+  }
+
   public getCurrentInMemoryUser(): User {
     return this.loggedInUser;
   }

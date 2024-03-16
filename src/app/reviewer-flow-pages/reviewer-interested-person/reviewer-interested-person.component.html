@@ -53,13 +53,13 @@
       <!-- Radio -->
       <div class="mt-14">
         <app-com-radio
-          [form]="form"
+          [form]="ipFormGroup"
           [options]="interestedPersonOptions"
-          groupName="ip"
-          [controlName]="'isInterestedPerson'"
+          controlName="isInterestedPerson"
           radioStyle="review-1a"
           [onChanged]="onInterestedPersonChanged"
           [disabled]="form.disabled"
+          gap="8px"
         ></app-com-radio>
         <!-- Error Text non selected on Submit -->
         @if (showError1) {
@@ -73,10 +73,9 @@
         </p>
         <div class="ml-30">
           <app-com-radio
-            [form]="form"
+            [form]="ipFormGroup"
             [options]="interestedPersonTypeOptions"
-            groupName="ip"
-            [controlName]="'interestedPersonType'"
+            controlName="interestedPersonType"
             radioStyle="review-1b"
             [disabled]="form.disabled"
           ></app-com-radio>

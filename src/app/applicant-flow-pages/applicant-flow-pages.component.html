@@ -1,5 +1,163 @@
-<div class="mainContainer">
+<div class="mainContainer" #captureTarget>
   <h1 class="header__mainText">
     แบบฟอร์มข้อเสนอโครงการสนับสนุนทุนอุปถัมภ์งานเดิน-วิ่งเพื่อสุขภาพ
   </h1>
+  <div class="mgt-29">
+    <app-com-progress-bar-steps
+      [steps]="progressBarSteps"
+      [currentStep]="currentStep"
+      [maxStep]="progressBarSteps.length"
+    ></app-com-progress-bar-steps>
+  </div>
+
+  <div
+    [ngClass]="{
+      contentContainer: true,
+      'contentContainer--0': currentStep === 0,
+      'contentContainer--1': currentStep === 1,
+      'contentContainer--2': currentStep === 2,
+      'contentContainer--3': currentStep === 3,
+      'contentContainer--4': currentStep === 4,
+      'contentContainer--5': currentStep === 5,
+      'contentContainer--6': currentStep === 6,
+      'contentContainer--7': currentStep === 7,
+      'contentContainer--8': currentStep === 8
+    }"
+  >
+    <form [formGroup]="form">
+      @switch (currentStep) { @case (0) {
+      <app-applicant-collaborate
+        #collaborateComponent
+        [form]="form"
+        [selectedFilesCount]="collaborationFiles.length || 0"
+        [uploadButtonTouched]="collaborationUploadButtonTouched"
+        (clearSelectedFiles)="clearSelectedFiles()"
+        [filesSubject]="collaborationFilesSubject"
+      ></app-applicant-collaborate>
+      } @case (1) {
+      <app-applicant-general-details
+        #generalDetailsComponent
+        [form]="form"
+        [enableScroll]="true"
+        [devModeOn]="devModeOn"
+      ></app-applicant-general-details>
+      } @case (2) {
+      <app-applicant-contact
+        #contactComponent
+        [form]="form"
+        [enableScroll]="true"
+        [devModeOn]="devModeOn"
+      ></app-applicant-contact>
+      } @case (3) {
+      <app-applicant-plan-and-details
+        #planAndDetailsComponent
+        [form]="form"
+        [enableScroll]="true"
+        [criteria]="applicantSelfScoreCriteria"
+        [devModeOn]="devModeOn"
+      >
+      </app-applicant-plan-and-details>
+      } @case(4) {
+      <app-applicant-experience
+        #experienceComponent
+        [form]="form"
+        [enableScroll]="true"
+        [devModeOn]="devModeOn"
+      >
+      </app-applicant-experience>
+      } @case(5) {
+      <app-applicant-fund-request
+        #fundRequestComponent
+        [form]="form"
+        [enableScroll]="true"
+        [devModeOn]="devModeOn"
+      >
+      </app-applicant-fund-request>
+      }@case (6) {
+      <app-applicant-attachment
+        #attachmentComponent
+        [form]="form"
+        [enableScroll]="true"
+        [marketingSubject]="marketingFilesSubject"
+        [routeSubject]="routeFilesSubject"
+        [eventMapSubject]="eventMapFilesSubject"
+        [eventDetailsSubject]="eventDetailsFilesSubject"
+        [marketingCount]="marketingFiles.length || 0"
+        [routeCount]="routeFiles.length || 0"
+        [eventMapCount]="eventMapFiles.length || 0"
+        [eventDetailsCount]="eventDetailsFiles.length || 0"
+        [marketingUploadButtonTouched]="marketingUploadButtonTouched"
+        [routeUploadButtonTouched]="routeUploadButtonTouched"
+        [eventMapUploadButtonTouched]="eventMapUploadButtonTouched"
+        [eventDetailsUploadButtonTouched]="eventDetailsUploadButtonTouched"
+      >
+      </app-applicant-attachment>
+      }@case (7) {
+      <app-applicant-confirmation></app-applicant-confirmation>
+      }@case(8) {
+      <app-applicant-success></app-applicant-success>
+      } }
+    </form>
+
+    <div
+      [ngClass]="{
+        button__container: true,
+        'mgt-5': currentStep === 0,
+        'mgt-43': currentStep === 1,
+        'mgt-20': currentStep === 2,
+        'mgt-48': currentStep === 3,
+        'mgt-84': currentStep === 4,
+        'mgt-46': currentStep === 5 || currentStep === 6,
+        'mgt-36': currentStep === 7,
+        'mgt-27': currentStep === 8
+      }"
+    >
+      @if (currentStep === 0) {
+      <button class="button button--cancel" (click)="prevPage()">ยกเลิก</button>
+      } @else if (currentStep <= 7) {
+      <button class="button button--cancel" (click)="prevPage()">
+        <img
+          src="/assets/arrow_back.svg"
+          alt="arrow back"
+          class="button--cancel-icon"
+        />
+        <div>ก่อนหน้า</div>
+      </button>
+      } @if (currentStep < 7) {
+      <button class="button button--next" (click)="nextPage()">
+        ถัดไป
+        <div class="button--next-icon">
+          <app-com-svg-arrow-forward></app-com-svg-arrow-forward>
+        </div>
+      </button>
+      } @else if (currentStep === 7){
+      <button
+        class="button button--next"
+        (click)="nextPage()"
+        [disabled]="form.disabled"
+      >
+        ยืนยันการส่ง
+      </button>
+      } @else {
+      <button class="button button--next" (click)="redirectToHomePage()">
+        กลับสู่หน้าหลัก
+      </button>
+      }
+    </div>
+  </div>
+
+  @if (showSuccessPopup) {
+  <div [ngClass]="{ popup: true, 'popup--show': showSuccessPopup }">
+    <app-com-success-popup displayText="รีวิวเรียบร้อย"></app-com-success-popup>
+  </div>
+  } @else if (showErrorPopup) {
+  <div [ngClass]="{ popup: true, 'popup--show': showSuccessPopup }">
+    <app-com-error-popup displayText="รีวิวไม่สำเร็จ โปรดลองอีกครั้ง">
+    </app-com-error-popup>
+  </div>
+  }
 </div>
+
+@if (apiLoading) {
+<span class="loader"></span>
+}

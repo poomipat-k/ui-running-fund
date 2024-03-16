@@ -1,0 +1,608 @@
+<div>
+  <h2 class="header">
+    <span class="header--orange">ส่วนที่ 1</span> ข้อมูลพื้นฐานโครงการ
+  </h2>
+
+  <div class="section-container">
+    <div class="section">
+      <h3 class="section__header">1.1 ชื่อโครงการ/งานวิ่งเพื่อสุขภาพ</h3>
+      <div class="section-content">
+        <div>
+          <app-com-input-text
+            id="projectName"
+            placeholder="ชื่อโครงการ"
+            width="67rem"
+            controlName="projectName"
+            [form]="generalFormGroup"
+          ></app-com-input-text>
+          @if (!form.get('general.projectName')?.valid &&
+          form.get('general.projectName')?.touched && formTouched) {
+          <div class="error mgt-10">
+            <img src="/assets/error_icon.svg" alt="error icon" />
+            <p class="error__text">กรุณากรอกชื่อโครงการ</p>
+          </div>
+          }
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <h3 class="section__header">1.2 วันที่จัดกิจกรรม</h3>
+      <div class="section-content">
+        <div class="eventDate__line">
+          <p class="eventDate__line-label">วันที่</p>
+          <div class="eventDate__line--group">
+            <div>
+              <app-com-select-dropdown
+                id="eventDate.year"
+                [form]="eventDateFormGroup"
+                [items]="yearOptions"
+                placeholder="ปี"
+                width="10.5rem"
+                controlName="year"
+                [onChange]="onYearOrMonthChanged"
+              ></app-com-select-dropdown>
+              @if (!form.get('general.eventDate.year')?.valid &&
+              form.get('general.eventDate.year')?.touched && formTouched) {
+              <div class="error mgt-10">
+                <img src="/assets/error_icon.svg" alt="error icon" />
+                <p class="error__text">กรุณาเลือกปี</p>
+              </div>
+              }
+            </div>
+
+            <div>
+              <app-com-select-dropdown
+                id="eventDate.month"
+                [form]="eventDateFormGroup"
+                [items]="monthOptions"
+                placeholder="เดือน"
+                width="15.3rem"
+                controlName="month"
+                [onChange]="onYearOrMonthChanged"
+              ></app-com-select-dropdown>
+              @if (!form.get('general.eventDate.month')?.valid &&
+              form.get('general.eventDate.month')?.touched && formTouched) {
+              <div class="error mgt-10">
+                <img src="/assets/error_icon.svg" alt="error icon" />
+                <p class="error__text">กรุณาเลือกเดือน</p>
+              </div>
+              }
+            </div>
+
+            <div>
+              <app-com-select-dropdown
+                id="eventDate.day"
+                [form]="eventDateFormGroup"
+                [items]="daysInMonthOptions"
+                placeholder="วันที่"
+                width="9rem"
+                controlName="day"
+                [disabled]="dayDropdownDisabled"
+                emptyMessage="กรุณาเลือกปีและวัน"
+              ></app-com-select-dropdown>
+              @if (!form.get('general.eventDate.day')?.valid &&
+              form.get('general.eventDate.day')?.touched && formTouched) {
+              <div class="error mgt-10">
+                <img src="/assets/error_icon.svg" alt="error icon" />
+                <p class="error__text">กรุณาเลือกวันที่</p>
+              </div>
+              }
+            </div>
+          </div>
+        </div>
+
+        <div class="eventDate__time-container">
+          <div class="eventDate__line">
+            <p class="eventDate__line-label">เวลา</p>
+            <div class="eventDate__line--group">
+              <div class="eventDate__with-colon">
+                <div>
+                  <app-com-select-dropdown
+                    id="eventDate.fromHour"
+                    [form]="eventDateFormGroup"
+                    [items]="hourOptions"
+                    placeholder="ชั่วโมง"
+                    width="9rem"
+                    controlName="fromHour"
+                  ></app-com-select-dropdown>
+                  @if (!form.get('general.eventDate.fromHour')?.valid &&
+                  form.get('general.eventDate.fromHour')?.touched &&
+                  formTouched) {
+                  <div class="error mgt-10">
+                    <img src="/assets/error_icon.svg" alt="error icon" />
+                    <p class="error__text">กรุณาเลือกชั่วโมง</p>
+                  </div>
+                  }
+                </div>
+                <div class="eventDate__colon">:</div>
+                <div>
+                  <app-com-select-dropdown
+                    id="eventDate.fromMinute"
+                    [form]="eventDateFormGroup"
+                    [items]="minuteOptions"
+                    placeholder="นาที"
+                    width="9rem"
+                    controlName="fromMinute"
+                  ></app-com-select-dropdown>
+                  @if (!form.get('general.eventDate.fromMinute')?.valid &&
+                  form.get('general.eventDate.fromMinute')?.touched &&
+                  formTouched) {
+                  <div class="error mgt-10">
+                    <img src="/assets/error_icon.svg" alt="error icon" />
+                    <p class="error__text">กรุณาเลือกนาที</p>
+                  </div>
+                  }
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="eventDate__line">
+            <p class="eventDate__line-label">ถึงเวลา</p>
+            <div class="eventDate__line--group">
+              <div class="eventDate__with-colon">
+                <div>
+                  <app-com-select-dropdown
+                    id="eventDate.toHour"
+                    [form]="eventDateFormGroup"
+                    [items]="hourOptions"
+                    placeholder="ชั่วโมง"
+                    width="9rem"
+                    controlName="toHour"
+                  ></app-com-select-dropdown>
+                  @if (!form.get('general.eventDate.toHour')?.valid &&
+                  form.get('general.eventDate.toHour')?.touched && formTouched)
+                  {
+                  <div class="error mgt-10">
+                    <img src="/assets/error_icon.svg" alt="error icon" />
+                    <p class="error__text">กรุณาเลือกชั่วโมง</p>
+                  </div>
+                  }
+                </div>
+                <div class="eventDate__colon">:</div>
+                <div>
+                  <app-com-select-dropdown
+                    id="eventDate.toMinute"
+                    [form]="eventDateFormGroup"
+                    [items]="minuteOptions"
+                    placeholder="นาที"
+                    width="9rem"
+                    controlName="toMinute"
+                  ></app-com-select-dropdown>
+                  @if (!form.get('general.eventDate.toMinute')?.valid &&
+                  form.get('general.eventDate.toMinute')?.touched &&
+                  formTouched) {
+                  <div class="error mgt-10">
+                    <img src="/assets/error_icon.svg" alt="error icon" />
+                    <p class="error__text">กรุณาเลือกนาที</p>
+                  </div>
+                  }
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <h3 class="section__header">
+        1.3 สถานที่จัดกิจกรรม
+        <span class="section__header--light"
+          >(สถานที่จัดส่วนอำนวยการต่าง ๆ ควรเป็นสถานที่สำคัญในชุมชน เช่น
+          โรงเรียน วัด)</span
+        >
+      </h3>
+      <div class="section-content">
+        <div class="address__line">
+          <label class="address__label">ชื่อสถานที่</label>
+          <div>
+            <app-com-input-text
+              id="address.address"
+              placeholder="สถานที่"
+              width="32rem"
+              controlName="address"
+              [form]="addressFormGroup"
+            ></app-com-input-text>
+            @if (!form.get('general.address.address')?.valid &&
+            form.get('general.address.address')?.touched && formTouched) {
+            <div class="error mgt-10">
+              <img src="/assets/error_icon.svg" alt="error icon" />
+              <p class="error__text">กรุณากรอกสถานที่</p>
+            </div>
+            }
+          </div>
+        </div>
+        <div class="address__line">
+          <label class="address__label">จังหวัด</label>
+          <div>
+            <app-com-select-dropdown
+              id="address.provinceId"
+              [form]="addressFormGroup"
+              [items]="provinceOptions"
+              placeholder="จังหวัด"
+              width="32rem"
+              controlName="provinceId"
+              [onChange]="onProvinceChanged"
+            ></app-com-select-dropdown>
+            @if (!form.get('general.address.provinceId')?.valid &&
+            form.get('general.address.provinceId')?.touched && formTouched) {
+            <div class="error mgt-10">
+              <img src="/assets/error_icon.svg" alt="error icon" />
+              <p class="error__text">กรุณาเลือกจังหวัด</p>
+            </div>
+            }
+          </div>
+        </div>
+
+        <div class="address__line">
+          <label class="address__label">อำเภอ/เขต</label>
+          <div>
+            <app-com-select-dropdown
+              id="address.districtId"
+              [form]="addressFormGroup"
+              [items]="districtOptions"
+              placeholder="อำเภอ/เขต"
+              width="32rem"
+              controlName="districtId"
+              [onChange]="onDistrictChanged"
+              [disabled]="!form.value.general.address.provinceId"
+            ></app-com-select-dropdown>
+            @if (!form.get('general.address.districtId')?.valid &&
+            form.get('general.address.districtId')?.touched && formTouched) {
+            <div class="error mgt-10">
+              <img src="/assets/error_icon.svg" alt="error icon" />
+              <p class="error__text">กรุณาเลือกอำเภอ/เขต</p>
+            </div>
+            }
+          </div>
+        </div>
+
+        <div class="address__line">
+          <label class="address__label">ตำบล/แขวง</label>
+          <div>
+            <app-com-select-dropdown
+              id="address.subdistrictId"
+              [form]="addressFormGroup"
+              [items]="subdistrictOptions"
+              placeholder="ตำบล/แขวง"
+              width="32rem"
+              controlName="subdistrictId"
+              [onChange]="onSubdistrictChanged"
+              [disabled]="!form.value.general.address.districtId"
+            ></app-com-select-dropdown>
+            @if (!form.get('general.address.subdistrictId')?.valid &&
+            form.get('general.address.subdistrictId')?.touched && formTouched) {
+            <div class="error mgt-10">
+              <img src="/assets/error_icon.svg" alt="error icon" />
+              <p class="error__text">กรุณาเลือกตำบล/แขวง</p>
+            </div>
+            }
+          </div>
+        </div>
+
+        <div class="address__line">
+          <label class="address__label">รหัสไปรษณีย์</label>
+          <div>
+            <app-com-select-dropdown
+              id="address.postcodeId"
+              [form]="addressFormGroup"
+              [items]="postcodeOptions"
+              placeholder="รหัสไปรษณีย์"
+              width="32rem"
+              controlName="postcodeId"
+              [disabled]="!form.value.general.address.subdistrictId"
+            ></app-com-select-dropdown>
+            @if (!form.get('general.address.postcodeId')?.valid &&
+            form.get('general.address.postcodeId')?.touched && formTouched) {
+            <div class="error mgt-10">
+              <img src="/assets/error_icon.svg" alt="error icon" />
+              <p class="error__text">กรุณารหัสไปรษณีย์</p>
+            </div>
+            }
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <h3 class="section__header">1.4 เส้นทางที่ใช้สำหรับจัดกิจกรรม</h3>
+      <div class="section-content">
+        <div class="route">
+          <label for="startPoint" class="route__label route__start-label"
+            >จุด Start</label
+          >
+          <div>
+            <app-com-input-text
+              id="startPoint"
+              placeholder="จุด Start"
+              width="32rem"
+              controlName="startPoint"
+              [form]="generalFormGroup"
+            ></app-com-input-text>
+            @if (!form.get('general.startPoint')?.valid &&
+            form.get('general.startPoint')?.touched && formTouched) {
+            <div class="error mgt-10">
+              <img src="/assets/error_icon.svg" alt="error icon" />
+              <p class="error__text">กรุณากรอกจุด Start</p>
+            </div>
+            }
+          </div>
+        </div>
+        <div class="route">
+          <label for="finishPoint" class="route__label width-129"
+            >จุด Finish (ถ้าเป็นจุดเดียวกัน ให้ระบุ “จุดเดิม”)</label
+          >
+          <div>
+            <app-com-input-text
+              id="finishPoint"
+              placeholder="จุด Finish"
+              width="32rem"
+              controlName="finishPoint"
+              [form]="generalFormGroup"
+            ></app-com-input-text>
+            @if (!form.get('general.finishPoint')?.valid &&
+            form.get('general.finishPoint')?.touched && formTouched) {
+            <div class="error mgt-10">
+              <img src="/assets/error_icon.svg" alt="error icon" />
+              <p class="error__text">กรุณากรอกจุด Finish</p>
+            </div>
+            }
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section section--wider-gap">
+      <h3 class="section__header">
+        1.5 ประเภทกิจกรรมและอัตราค่าสมัคร
+        <span class="section__header--light"
+          >(โปรดเลือกทุกระยะทางทีโครงการของท่านจัดกิจกรรม)
+        </span>
+      </h3>
+      <div class="eventDetails">
+        <div class="subgroup" id="eventDetails.category.available">
+          <h4 class="subgroup__header">1.5.1 ประเภทการจัดกิจกรรม</h4>
+          <div class="subgroup__checkbox pdl-20">
+            <app-com-checkbox
+              [form]="categoryAvailableFormGroup"
+              controlName="roadRace"
+              display="วิ่งถนน (Road Race)"
+              gap="8px"
+              fontSize="16px"
+            >
+            </app-com-checkbox>
+            <app-com-checkbox
+              [form]="categoryAvailableFormGroup"
+              controlName="trailRunning"
+              display="Trail Running (การวิ่งตามภูมิประเทศ)"
+              gap="8px"
+              fontSize="16px"
+            >
+            </app-com-checkbox>
+            <app-com-checkbox
+              [form]="categoryAvailableFormGroup"
+              controlName="other"
+              display="อื่น ๆ (โปรดระบุ)"
+              gap="8px"
+              fontSize="16px"
+              [onChanged]="onOtherEventTypeChanged"
+            >
+            </app-com-checkbox>
+
+            @if (!categoryAvailableFormGroup.valid &&
+            categoryAvailableFormGroup.touched && formTouched) {
+            <div class="error">
+              <img src="/assets/error_icon.svg" alt="error icon" />
+              <p class="error__text">สามารถเลือกได้หลายข้อ</p>
+            </div>
+            } @if (hasOtherEventType) {
+            <div class="pdl-28">
+              <app-com-input-text
+                id="eventDetails.category.otherType"
+                [form]="categoryFormGroup"
+                placeholder="ระบุประเภทอื่น ๆ"
+                width="40.1rem"
+                controlName="otherType"
+              ></app-com-input-text>
+              @if (!categoryFormGroup.get('otherType')?.valid &&
+              categoryFormGroup.get('otherType')?.touched && formTouched) {
+              <div class="error mgt-10">
+                <img src="/assets/error_icon.svg" alt="error icon" />
+                <p class="error__text">โปรดระบุประเภทอื่น ๆ</p>
+              </div>
+              }
+            </div>
+            }
+          </div>
+        </div>
+        <!-- 1.5.2 -->
+        <div class="subgroup">
+          <h4 class="subgroup__header" id="eventDetails.distanceAndFee">
+            1.5.2 ระยะทางและอัตราค่าสมัคร
+          </h4>
+          <div class="subgroup__checkbox pdl-20">
+            @for (group of distanceAndFeeFormArray.controls; track $index) {
+            <div
+              [ngClass]="{
+                distance__line: true,
+                'width-587': !group.value.dynamic,
+                'distance__line--space-between': !group.value.dynamic,
+                'distance__line--other': group.value.dynamic
+              }"
+            >
+              <div class="pdt-10">
+                <app-com-checkbox
+                  [form]="getDistanceFormGroup($index)"
+                  controlName="checked"
+                  [display]="group.value.display"
+                  gap="8px"
+                  fontSize="16px"
+                >
+                </app-com-checkbox>
+              </div>
+
+              @if (group.value.dynamic) {
+              <div>
+                <app-com-input-text
+                  [id]="getDistanceRowId($index, 'type')"
+                  placeholder="ระบุประเภทอื่นๆ"
+                  [form]="getDistanceFormGroup($index)"
+                  controlName="type"
+                  width="31.3rem"
+                ></app-com-input-text>
+                @if(!getDistanceFormGroup($index).get('type')?.valid &&
+                getDistanceFormGroup($index).get('type')?.touched &&
+                getDistanceFormGroup($index).get('type')?.enabled &&
+                formTouched) {
+                <div class="error mgt-10">
+                  <img src="/assets/error_icon.svg" alt="error icon" />
+                  <p class="error__text">กรุณาระบุประเภท</p>
+                </div>
+                }
+              </div>
+              }
+
+              <div class="distance__fee">
+                <p class="distance__text">ค่าสมัคร</p>
+                <div>
+                  <div>
+                    <app-com-input-number
+                      [id]="getDistanceRowId($index, 'fee')"
+                      placeholder="ค่าสมัคร"
+                      [form]="getDistanceFormGroup($index)"
+                      controlName="fee"
+                      width="18.9rem"
+                    ></app-com-input-number>
+                  </div>
+                  @if(!getDistanceFormGroup($index).get('fee')?.valid &&
+                  getDistanceFormGroup($index).get('fee')?.touched &&
+                  getDistanceFormGroup($index).get('fee')?.enabled &&
+                  formTouched) {
+                  <div class="error mgt-10">
+                    <img src="/assets/error_icon.svg" alt="error icon" />
+                    <p class="error__text">กรุณาระบุค่าสมัคร</p>
+                  </div>
+                  }
+                </div>
+                <p class="distance__text">บาท</p>
+              </div>
+
+              @if (group.value.dynamic) {
+              <img
+                class="removeButton"
+                src="/assets/close_icon_bg_gray.svg"
+                alt="close icon"
+                (click)="removeDistance($index)"
+                draggable="false"
+              />
+              }
+            </div>
+            } @if(distanceAndFeeFormArray.errors &&
+            distanceAndFeeFormArray.touched && formTouched) {
+            <div class="error mgt-10">
+              <img src="/assets/error_icon.svg" alt="error icon" />
+              <p class="error__text">สามารถเลือกได้หลายข้อ</p>
+            </div>
+            }
+          </div>
+          <button
+            class="addButton mgl-20"
+            (click)="addDistance()"
+            [disabled]="disableAddDistance"
+          >
+            + เพิ่ม
+          </button>
+        </div>
+        <!-- 1.5.2 End -->
+        <div class="subgroup">
+          <h4 class="subgroup__header">1.5.3 การจัดประเภท VIP</h4>
+          <div class="pdl-20">
+            <app-com-radio
+              id="eventDetails.vip"
+              [form]="eventDetailsFormGroup"
+              [options]="vipOptions"
+              controlName="vip"
+              gap="1rem"
+            >
+            </app-com-radio>
+            @if (!eventDetailsFormGroup.get('vip')?.valid &&
+            eventDetailsFormGroup.get('vip')?.touched && formTouched) {
+            <div class="error">
+              <img src="/assets/error_icon.svg" alt="error icon" />
+              <p class="error__text">กรุณาเลือกตัวเลือก</p>
+            </div>
+            }
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section section--wider-gap">
+      <h3 class="section__header">
+        1.6 จำนวนผู้เข้าร่วมที่คาดหวัง
+        <span class="section__header--light">(เลือกตอบเพียง 1ข้อ)</span>
+      </h3>
+      <div class="section-content">
+        <app-com-radio
+          id="expectedParticipants"
+          [form]="generalFormGroup"
+          [options]="expectedParticipantsOptions"
+          controlName="expectedParticipants"
+          gap="1rem"
+        ></app-com-radio>
+        @if (!form.get('general.expectedParticipants')?.valid &&
+        form.get('general.expectedParticipants')?.touched && formTouched) {
+        <div class="error">
+          <img src="/assets/error_icon.svg" alt="error icon" />
+          <p class="error__text">กรุณาเลือกจำนวนผู้เข้าร่วมที่คาดหวัง</p>
+        </div>
+        }
+      </div>
+    </div>
+
+    <div class="section section--wider-gap">
+      <h3 class="section__header">
+        1.7 การจัดกิจกรรมครั้งนี้ใช้บริษัทจัดงาน (Organizer) หรือไม่
+        <span class="section__header--light">(เลือกตอบเพียง 1 ข้อ)</span>
+      </h3>
+      <div class="section-content">
+        <app-com-radio
+          id="hasOrganizer"
+          [form]="generalFormGroup"
+          [options]="hasOrganizerOptions"
+          controlName="hasOrganizer"
+          gap="1rem"
+          [onChanged]="onHasOrganizerChanged"
+        ></app-com-radio>
+        @if (!form.get('general.hasOrganizer')?.valid &&
+        form.get('general.hasOrganizer')?.touched && formTouched) {
+        <div class="error">
+          <img src="/assets/error_icon.svg" alt="error icon" />
+          <p class="error__text">กรุณาเลือกคำตอบ</p>
+        </div>
+        } @if (form.value.general.hasOrganizer) {
+        <app-com-input-text
+          id="organizerName"
+          [form]="generalFormGroup"
+          placeholder="ชื่อบริษัทจัดงาน"
+          controlName="organizerName"
+          width="43.3rem"
+          margin="0 0 0 2rem"
+        ></app-com-input-text>
+        @if (!form.get('general.organizerName')?.valid &&
+        form.get('general.organizerName')?.touched && formTouched) {
+        <div class="error mgl-20">
+          <img src="/assets/error_icon.svg" alt="error icon" />
+          <p class="error__text">กรุณากรอกชื่อบริษัทจัดงาน</p>
+        </div>
+        } }
+      </div>
+    </div>
+  </div>
+</div>
+
+@if (devModeOn) {
+<button [style]="{ padding: '3rem' }" (click)="patchForm()">patchForm</button>
+}

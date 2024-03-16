@@ -25,12 +25,13 @@
   </div>
   <div class="container__item--2">
     <div class="header">ความเห็นโดยรวมและข้อเสนอแนะเพิ่มเติมอื่น ๆ (ถ้ามี)</div>
-    <div [formGroup]="form">
-      <textarea
-        formControlName="comment"
-        class="textarea"
+    <div>
+      <app-com-textarea
+        [form]="form"
+        controlName="comment"
         placeholder="ระบุความคิดเห็นและข้อเสนอแนะ"
-      ></textarea>
+        height="15.8rem"
+      ></app-com-textarea>
     </div>
   </div>
 </div>

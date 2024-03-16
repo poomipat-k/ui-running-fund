@@ -1,9 +1,9 @@
 @if (displayModal) {
 <div
+  #modal
   class="container"
   (keyup)="onKeyUp($event)"
   tabindex="0"
-  #modal
   [ngStyle]="customContainer"
 >
   <ng-content></ng-content>

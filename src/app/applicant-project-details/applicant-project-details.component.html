@@ -1,0 +1,230 @@
+<div class="container">
+  <div class="index">
+    <a class="index__prefix" routerLink="/dashboard">หน้าแรก</a>
+    <span class="index__prefix">/</span>
+    <span class="index__code"> {{ pathDisplay }}</span>
+  </div>
+
+  <div class="section">
+    <h1 class="section__header">{{ pathDisplay }}</h1>
+    <div class="hr mgt-25 mgb-42"></div>
+
+    <div class="review__container">
+      <app-com-button (click)="onDownloadFormZipClick()">
+        <div class="button-content">
+          <div>โหลดเอกสาร</div>
+          <svg
+            width="16"
+            height="16"
+            viewBox="0 0 16 16"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M8 12L3 7L4.4 5.55L7 8.15V0H9V8.15L11.6 5.55L13 7L8 12ZM2 16C1.45 16 0.979167 15.8042 0.5875 15.4125C0.195833 15.0208 0 14.55 0 14V11H2V14H14V11H16V14C16 14.55 15.8042 15.0208 15.4125 15.4125C15.0208 15.8042 14.55 16 14 16H2Z"
+              fill="#344054"
+              [ngClass]="{
+                'button-icon': true,
+                'button-content__hover': downloadButtonAction === 'hover',
+                'button-content__active': downloadButtonAction === 'active'
+              }"
+            />
+          </svg>
+        </div>
+      </app-com-button>
+      <!-- Status -->
+      <div class="status mgl-56">
+        <h3 class="header">สถานะการดำเนินการ</h3>
+        <app-table-cell-template
+          [cellType]="statusCellType"
+          [cellValue]="projectStatus"
+        ></app-table-cell-template>
+      </div>
+
+      <!-- Review history -->
+      <div class="history mgl-80 flex-1">
+        <h3 class="header">ประวัติการทำการ</h3>
+        <div class="details">
+          @for (item of data; track $index) { @if (item.reviewId) {
+          <a class="details-row navLink" [routerLink]="getReviewerPath(item)">{{
+            "ดูผลการกลั่นกรอง" + ($index + 1)
+          }}</a>
+          } }
+        </div>
+      </div>
+      <!-- Review Date -->
+      <div class="reviewedAt mgl-124">
+        <h3 class="header">วันที่ทำการ</h3>
+        <div>
+          @for (item of data; track $index) {
+          <p class="details-row">{{ getDisplayDate(item.reviewedAt) }}</p>
+          }
+        </div>
+      </div>
+
+      <!-- Score -->
+      <div class="score mgl-139">
+        <h3 class="header">คะแนน</h3>
+        <div>
+          @for (item of data; track $index) {
+          <p class="details-row text-center">{{ item.sumScore }}</p>
+          }
+        </div>
+      </div>
+    </div>
+
+    <div class="hr mgt-69"></div>
+
+    <div class="mgt-25">
+      <h3 class="header">เอกสารที่เกี่ยวข้อง</h3>
+      <!-- Attachments -->
+      <div class="attachments mgt-7">
+        @for (group of attachmentGroupNames; track $index) {
+        <div class="attachments__row">
+          <div class="attachments__folder">
+            <p class="attachments__text">{{ group.topic }}</p>
+          </div>
+          <div class="attachments__fileAndDate">
+            @for (item of s3ObjectItems[group.key]; track $index) {
+            <div class="attachments__fileAndDate-row">
+              <p class="attachments__text">{{ item.display }}</p>
+              <div class="attachments__fileAndDate-textWithIcon">
+                <p class="attachments__text">{{ item.lastModified }}</p>
+                <img
+                  src="/assets/download_file_icon.svg"
+                  alt="download file icon"
+                  (click)="onDownloadItemClick(item.key)"
+                />
+              </div>
+            </div>
+            }
+          </div>
+        </div>
+        }
+      </div>
+      <!-- END Attachments -->
+    </div>
+
+    <div class="mgt-35">
+      <h3 class="header">
+        เอกสารอื่นๆ<span class="header__light">เช่น Final Report ฯลฯ</span>
+      </h3>
+      <!-- Upload file button -->
+      @if (editMode) {
+      <div class="mgt-16">
+        <app-com-upload-button
+          [filesSubject]="additionFilesSubject"
+        ></app-com-upload-button>
+      </div>
+      }
+
+      <!-- Addition -->
+      <div class="attachments mgt-6">
+        <div class="attachments__row">
+          <div class="attachments__fileAndDate">
+            @for (item of s3ObjectItems.addition; track $index) {
+            <div class="attachments__fileAndDate-row">
+              <p class="attachments__text">{{ item.display }}</p>
+              <div class="attachments__fileAndDate-textWithIcon">
+                <p class="attachments__text">{{ item.lastModified }}</p>
+                <img
+                  src="/assets/download_file_icon.svg"
+                  alt="download file icon"
+                  (click)="onDownloadItemClick(item.key)"
+                />
+              </div>
+            </div>
+            }
+          </div>
+        </div>
+      </div>
+      <!-- END Addition -->
+    </div>
+
+    <div class="summary__container mgt-70">
+      <h2 class="summary__header">การอนุมัติโครงการ</h2>
+      <div class="summary__status">
+        <p class="summary__text">สภานะ:</p>
+        @if (data[0]) { @if (data[0].projectStatus === 'Approved') {
+        <p class="summary__status__text summary__status__approved">
+          ผ่านการอนุมัติ
+        </p>
+        } @else if (data[0].projectStatus === "NotApproved") {
+        <p class="summary__status__text summary__status__notApproved">
+          ไม่ผ่านการอนุมัติ
+        </p>
+        } @else {
+        <p class="summary__status__text summary__status__reviewing">
+          อยู่ในขั้นตอนการพิจารณา
+        </p>
+        } }
+      </div>
+      @if (!editMode) {
+      <div class="summary__table">
+        <div class="summary__table__col">
+          <p class="summary__text">คะแนนรวม</p>
+          <p class="summary__money__text">{{ adminScore }}</p>
+        </div>
+        <div class="summary__table__col">
+          <p class="summary__text">จำนวนเงินทุน</p>
+          <div class="summary__money">
+            <p class="summary__money__text">{{ approvedFund }}</p>
+            @if (data[0] && data[0].fundApprovedAmount) {
+            <p class="summary__money__text">บาท</p>
+            }
+          </div>
+        </div>
+      </div>
+      }
+    </div>
+
+    <!-- REMARK -->
+    @if (!editMode) {
+    <div class="mgt-43">
+      <h3 class="remark__header">หมายเหตุ</h3>
+      <p class="remark__content mgt-11">
+        {{ adminComment }}
+      </p>
+    </div>
+    }
+
+    <div class="button__container mgt-48">
+      @if (editMode) {
+      <button
+        class="button button--next"
+        (click)="onConfirmUpload()"
+        [disabled]="additionFiles.length === 0 || projectStatus !== 'Revise'"
+      >
+        บันทึก
+      </button>
+      <button class="button button--cancel" (click)="changeToViewMode()">
+        ยกเลิก
+      </button>
+      } @else {
+      <button
+        class="button button--next"
+        (click)="changeToEditMode()"
+        [disabled]="projectStatus !== 'Revise'"
+      >
+        แก้ไข
+      </button>
+      <button class="button button--cancel" (click)="onBackToDashboard()">
+        กลับ
+      </button>
+      }
+    </div>
+  </div>
+
+  @if (showSuccessPopup) {
+  <div [ngClass]="{ popup: true, 'popup--show': showSuccessPopup }">
+    <app-com-success-popup
+      displayText="อัพโหลดไฟล์สำเร็จ"
+    ></app-com-success-popup>
+  </div>
+  } @else if (showErrorPopup) {
+  <div [ngClass]="{ popup: true, 'popup--show': showSuccessPopup }">
+    <app-com-error-popup displayText="อัพโหลดไฟล์ไม่สำเร็จ โปรดลองอีกครั้ง">
+    </app-com-error-popup>
+  </div>
+  }
+</div>

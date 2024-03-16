@@ -1,0 +1,238 @@
+@import "../../../styles.scss";
+
+.header {
+  color: $black;
+  font-family: $custom-font;
+  font-size: 2rem;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+
+  margin-bottom: 3.2rem;
+
+  &--orange {
+    color: #fb6514;
+  }
+}
+
+.section-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  padding-bottom: 3rem;
+
+  &__header {
+    color: $black;
+    font-family: $custom-font-looped;
+    font-size: 1.6rem;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+
+    padding: 1rem 2rem;
+    background-color: #f2edeb;
+
+    &::after {
+      content: "*";
+      color: #c4320a;
+    }
+  }
+
+  &-content {
+    padding-left: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.4rem;
+  }
+
+  &__hidable {
+    padding-left: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.4rem;
+    opacity: 1;
+    transition: opacity 300ms ease-out, max-height 300ms ease-out;
+    max-height: 26rem; // Need to be a little higher than actual for smooth animation
+    z-index: 0;
+
+    &--hide {
+      z-index: -1;
+      opacity: 0;
+      max-height: 0;
+
+      transition: opacity 300ms ease-out, max-height 300ms ease-out;
+    }
+  }
+}
+
+.address {
+  &__line {
+    display: flex;
+    justify-content: space-between;
+    width: 43.3rem;
+  }
+
+  &__label {
+    color: $black;
+    font-family: $custom-font-looped;
+    font-size: 1.6rem;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    padding-top: 9px;
+  }
+}
+
+.importantText {
+  color: #ec4a0a;
+  font-family: $custom-font-looped;
+  font-size: 1.6rem;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+}
+
+.projectHead {
+  &__line {
+    display: flex;
+    gap: 1.4rem;
+  }
+
+  &__item {
+    display: flex;
+    gap: 8px;
+  }
+}
+
+.projectManager {
+  &__line {
+    display: flex;
+    gap: 1.4rem;
+  }
+
+  &__item {
+    display: flex;
+    gap: 8px;
+  }
+}
+
+.projectCoordinator {
+  &__line {
+    display: flex;
+    gap: 1.4rem;
+  }
+
+  &__item {
+    display: flex;
+    gap: 8px;
+  }
+
+  &__line-important {
+    display: flex;
+    gap: 0;
+  }
+}
+
+.projectDirector {
+  &__header {
+    font-family: $custom-font-looped;
+    font-size: 1.6rem;
+    line-height: 2.6rem;
+    color: $black;
+    cursor: default;
+    &--bold {
+      font-weight: 500;
+      &::before {
+        content: "*";
+        color: #ec4a0a;
+      }
+    }
+
+    &--light {
+      font-weight: 400;
+    }
+  }
+}
+
+label {
+  padding-top: 9px;
+  color: $black;
+  font-family: $custom-font-looped;
+  font-size: 1.6rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+
+.error {
+  display: flex;
+  font-family: $custom-font-looped;
+  font-size: 1.3rem;
+  font-weight: 400;
+  line-height: normal;
+  color: #ec4a0a;
+
+  &__text {
+    margin-left: 4px;
+  }
+}
+
+.textarea {
+  resize: none;
+  width: 100%;
+  height: 15.8rem;
+  border-radius: 8px;
+  padding: 1rem 2rem;
+  text-align: left;
+  box-sizing: border-box;
+
+  border: 1px solid #d0d5dd;
+  box-shadow: 0px 1px 2px 0px rgba(16, 24, 40, 0.05);
+  background-color: #fff;
+
+  font-family: $custom-font-looped;
+  font-size: 1.6rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  color: #101828;
+
+  &:disabled {
+    cursor: not-allowed;
+    color: #667085;
+  }
+
+  &::placeholder {
+    color: #667085;
+  }
+
+  &:focus-visible {
+    outline: none;
+    border: 1px solid #d9dbe1;
+    box-shadow: 0px 0px 0px 4px #eaecf1, 0px 1px 2px 0px rgba(16, 24, 40, 0.05);
+  }
+}
+
+.mgt {
+  &-10 {
+    margin-top: 10px;
+  }
+}
+
+.width {
+  &-177 {
+    width: 17.7rem;
+  }
+}
+
+.flex {
+  &-1 {
+    flex: 1;
+  }
+}

@@ -4,9 +4,18 @@
 <ng-container *ngTemplateOutlet="badgeReviewed"></ng-container>
 } @else if(cellValue === 'PendingReview') {
 <ng-container *ngTemplateOutlet="badgePendingReview"></ng-container>
+} @else if(cellValue === "Reviewing") {
+<ng-container *ngTemplateOutlet="badgeReviewing"></ng-container>
+}@else if(cellValue === "Approved") {
+<ng-container *ngTemplateOutlet="badgeApproved"></ng-container>
+}@else if(cellValue === "Revise") {
+<ng-container *ngTemplateOutlet="badgeRevise"></ng-container>
+}@else if(cellValue === "NotApproved") {
+<ng-container *ngTemplateOutlet="badgeNotApproved"></ng-container>
 } } @default { <ng-container *ngTemplateOutlet="text"></ng-container>} }
 
 <!-- Cell Templates -->
+
 <ng-template #text>
   <div [ngClass]="{ bold: bold }">{{ cellValue }}</div>
 </ng-template>
@@ -14,10 +23,8 @@
 <ng-template #downloadIcon>
   @if (cellValue) {
   <a
-    [href]="cellValue"
-    target="_blank"
     class="icon--link"
-    (click)="onDownloadIconClicked($event)"
+    (click)="_onClick($event)"
     (mouseenter)="onMouseEnterDownloadLink()"
     (mouseleave)="onMouseLeaveDownloadLink()"
     (mousedown)="onMouseDownDownloadLink()"
@@ -47,5 +54,42 @@
       <app-com-svg-check></app-com-svg-check>
     </div>
     <p class="badge__text badge__text--reviewed">กลั่นกรองเรียบร้อย</p>
+  </div>
+</ng-template>
+
+<!-- Applicant dashboard badge -->
+<ng-template #badgeReviewing>
+  <div class="badge__container badge__container--reviewing">
+    <div class="dot__container">
+      <div class="dot__icon"></div>
+    </div>
+    <p class="badge__text badge__text--reviewing">อยู่ในการพิจารณา</p>
+  </div>
+</ng-template>
+
+<ng-template #badgeApproved>
+  <div class="badge__container badge__container--approved">
+    <div class="badge__icon-container">
+      <app-com-svg-check></app-com-svg-check>
+    </div>
+    <p class="badge__text badge__text--approved">ผ่านการอนุมัติ</p>
+  </div>
+</ng-template>
+
+<ng-template #badgeRevise>
+  <div class="badge__container badge__container--revise">
+    <div class="badge__icon-container">
+      <img src="assets/corner-up-left.svg" alt="corner-up-left" />
+    </div>
+    <p class="badge__text badge__text--revise">มีการแก้ไข</p>
+  </div>
+</ng-template>
+
+<ng-template #badgeNotApproved>
+  <div class="badge__container badge__container--notApproved">
+    <div class="badge__icon-container">
+      <img src="assets/x.svg" alt="close icon" />
+    </div>
+    <p class="badge__text badge__text--notApproved">ไม่ผ่านการอนุมัติ</p>
   </div>
 </ng-template>

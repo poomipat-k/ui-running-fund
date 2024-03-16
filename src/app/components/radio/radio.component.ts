@@ -12,13 +12,14 @@ import { RadioOption } from '../../shared/models/radio-option';
 })
 export class RadioComponent implements OnInit {
   @Input() form: FormGroup;
-  @Input() groupName: string;
   @Input() controlName = '';
   @Input() options: RadioOption[] = [];
   @Input() onChanged: () => void;
   @Input() radioStyle = 'review-1a';
   @Input() direction = 'vertical';
   @Input() disabled = false;
+  @Input() fontSize = '18px';
+  @Input() gap = '0px';
 
   get labelClasses(): string[] {
     const classes = ['radio__container'];

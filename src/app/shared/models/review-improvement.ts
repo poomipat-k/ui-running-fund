@@ -1,5 +1,3 @@
-import { ReviewDetails } from './review-details';
-
 export class ReviewerImprovement {
   benefit?: boolean;
   experienceAndReliability?: boolean;

@@ -7,6 +7,7 @@
   position: absolute;
   opacity: 0;
   cursor: pointer;
+  display: none;
 
   &--disabled {
     cursor: not-allowed;
@@ -41,7 +42,7 @@
     font-style: normal;
     font-weight: 400;
     line-height: normal;
-    color: $gray700;
+    color: $black;
 
     cursor: pointer;
     -webkit-user-select: none;
@@ -119,9 +120,13 @@
 
 .horizontal {
   display: flex;
-  margin-top: 1rem;
 
   &__3a {
     margin-left: 2.7rem;
   }
+}
+
+.vertical {
+  display: flex;
+  flex-direction: column;
 }

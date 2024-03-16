@@ -24,7 +24,7 @@
   font-style: normal;
   font-weight: 500;
   line-height: 3.6rem;
-  color: $gray700;
+  color: $black;
 }
 
 .icon {
@@ -40,42 +40,6 @@
   line-height: 3.6rem;
   text-align: center;
   color: #fff;
-}
-
-.textarea {
-  resize: none;
-  width: 100%;
-  height: 15.8rem;
-  border-radius: 8px;
-  padding: 1rem 2rem;
-  text-align: left;
-  box-sizing: border-box;
-
-  border: 0.5px solid rgba(28, 27, 31, 0.97);
-
-  font-family: $custom-font-looped;
-  font-size: 1.8rem;
-  font-style: normal;
-  font-weight: 400;
-  line-height: normal;
-  color: $gray700;
-
-  &:disabled {
-    cursor: not-allowed;
-  }
-
-  &::placeholder {
-    font-family: $custom-font-looped;
-    font-size: 1.8rem;
-    font-style: normal;
-    font-weight: 400;
-    line-height: normal;
-    color: #667085;
-  }
-
-  &:focus-visible {
-    outline: none;
-  }
 }
 
 .hr {

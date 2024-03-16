@@ -1,45 +1,12 @@
 @if (form) {
 <div [formGroup]="form">
-  @if (groupName) {
   <label
     [ngClass]="{
       checkbox__label: true,
       'font-size-small': fontSize === 'small',
       'cursor-not-allow': disabled
     }"
-    [formGroupName]="groupName"
-  >
-    <input
-      type="checkbox"
-      [value]="value"
-      [ngClass]="{ checkbox__box: true, 'cursor-not-allow': disabled }"
-      [formControlName]="controlName"
-    />{{ display }}
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      width="14"
-      height="15"
-      viewBox="0 0 14 15"
-      fill="none"
-      class="checkbox__mark"
-    >
-      <path
-        d="M11.6666 4L5.24992 10.4167L2.33325 7.5"
-        stroke="#344054"
-        stroke-width="2"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        class="checkbox__path"
-      />
-    </svg>
-  </label>
-  } @else {
-  <label
-    [ngClass]="{
-      checkbox__label: true,
-      'font-size-small': fontSize === 'small',
-      'cursor-not-allow': disabled
-    }"
+    [ngStyle]="{ gap: gap, fontSize: fontSize }"
   >
     <input
       type="checkbox"
@@ -47,7 +14,15 @@
       [ngClass]="{ checkbox__box: true, 'cursor-not-allow': disabled }"
       [checked]="checked"
       [formControlName]="controlName"
-    />{{ display }}
+      (change)="_onChanged()"
+    />
+
+    @if (innerHTML) {
+    <span [innerHTML]="innerHTML"></span>
+    } @else {
+    {{ display }}
+    }
+
     <svg
       xmlns="http://www.w3.org/2000/svg"
       width="14"
@@ -66,7 +41,6 @@
       />
     </svg>
   </label>
-  }
 </div>
 
 } @else {
@@ -76,6 +50,7 @@
     'font-size-small': fontSize === 'small',
     'cursor-not-allow': disabled
   }"
+  [ngStyle]="{ gap: gap, fontSize: fontSize }"
 >
   <input
     type="checkbox"
@@ -84,7 +59,12 @@
     [disabled]="disabled"
     [ngClass]="{ checkbox__box: true, 'cursor-not-allow': disabled }"
     [checked]="checked"
-  />{{ display }}
+  />
+  @if (innerHTML) {
+    <span [innerHTML]="innerHTML"></span>
+    } @else {
+    {{ display }}
+    }
   <svg
     xmlns="http://www.w3.org/2000/svg"
     width="14"

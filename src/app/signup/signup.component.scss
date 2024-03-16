@@ -18,7 +18,7 @@
 }
 
 .header {
-  color: $gray700;
+  color: $black;
   text-align: center;
   font-family: $custom-font;
   font-size: 3.2rem;
@@ -34,7 +34,7 @@
     }
   }
   &__label {
-    color: $gray700;
+    color: $black;
     font-family: $custom-font;
     font-size: 1.4rem;
     font-weight: 400;
@@ -83,7 +83,7 @@
   font-weight: 600;
   line-height: normal;
   text-align: center;
-  color: $gray700;
+  color: $black;
   width: 100%;
 
   background-color: #feb273;
@@ -109,7 +109,7 @@
     font-style: normal;
     font-weight: 400;
     line-height: normal;
-    color: $gray700;
+    color: $black;
 
     -webkit-user-select: none;
     -moz-user-select: none;
@@ -214,7 +214,7 @@ input[type="checkbox"] {
   justify-content: center;
 
   &__text {
-    color: $gray700;
+    color: $black;
     font-family: $custom-font;
     font-size: 1.6rem;
     font-style: normal;

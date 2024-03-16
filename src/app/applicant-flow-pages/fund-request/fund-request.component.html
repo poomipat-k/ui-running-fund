@@ -1,0 +1,240 @@
+<div>
+  <h2 class="header">
+    <span class="header--orange">ส่วนที่ 5</span>
+    ความต้องการขอรับการสนับสนุน
+  </h2>
+</div>
+
+<div class="section-container">
+  <div class="section">
+    <h3 class="section__header section__header--with-ask">
+      5.1 งบประมาณในภาพรวมและการสนับสนุนจากแหล่งอื่น
+    </h3>
+    <div class="section-content">
+      <div class="line">
+        <label class="line__label width-239 mgr-59">
+          <p>โปรดระบุจำนวนงบประมาณ</p>
+          <p>จัดงานทั้งหมด(เช่น 300,000 บาท)</p>
+        </label>
+        <div class="total">
+          <div>
+            <app-com-input-number
+              id="budget.total"
+              placeholder="โปรดระบุเป็นตัวเลข"
+              [form]="budgetFormGroup"
+              controlName="total"
+              width="17.3rem"
+            ></app-com-input-number>
+            @if (!form.get('fund.budget.total')?.valid &&
+            form.get('fund.budget.total')?.touched && formTouched) {
+            <div class="error mgt-10">
+              <img src="/assets/error_icon.svg" alt="error icon" />
+              <p class="error__text">กรุณาระบุงบประมาณ</p>
+            </div>
+            }
+          </div>
+          <p class="total__unit">บาท</p>
+        </div>
+      </div>
+      <div class="line">
+        <label class="line__label width-239 mgr-59">
+          <p>โปรดระบุหน่วยงาน/องค์กร</p>
+          <p>ที่ให้การสนับสนุนการจัดงานครั้งนี้</p>
+        </label>
+        <div>
+          <app-com-textarea
+            id="budget.supportOrganization"
+            [form]="budgetFormGroup"
+            controlName="supportOrganization"
+            placeholder="แหล่งงบประมาณ"
+            width="49.5rem"
+            height="10.5rem"
+          ></app-com-textarea>
+          @if (!budgetFormGroup.get('supportOrganization')?.valid &&
+          budgetFormGroup.get('supportOrganization')?.touched && formTouched) {
+          <div class="error mgt-10">
+            <img src="/assets/error_icon.svg" alt="error icon" />
+            <p class="error__text">กรุณาระบุแหล่งงบประมาณ</p>
+          </div>
+          }
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <h3 class="section__header section__header--with-ask">
+      5.2 ความต้องการการสนับสนุนจากสสส. และสมาพันธ์ฯ
+      <span class="section__header--remark">(ตอบได้มากกว่า 1 ข้อ)</span>
+    </h3>
+    <div class="section-content gap-10" id="request.type">
+      <!-- FUND -->
+      <div class="fund">
+        <app-com-checkbox
+          [form]="requestTypeFormGroup"
+          controlName="fund"
+          display="งบประมาณ"
+          gap="8px"
+          fontSize="16px"
+          [onChanged]="onNeedFundChanged"
+        >
+        </app-com-checkbox>
+        @if (needFund) {
+        <div class="fund__amount">
+          <app-com-radio
+            id="request.details.fundAmount"
+            [form]="requestDetailsFormGroup"
+            controlName="fundAmount"
+            [options]="fundAmountOptions"
+            fontSize="16px"
+            direction="horizontal"
+          >
+          </app-com-radio>
+          @if (!requestDetailsFormGroup.get('fundAmount')?.valid &&
+          requestDetailsFormGroup.get('fundAmount')?.touched && formTouched) {
+          <div class="error mgt-10">
+            <img src="/assets/error_icon.svg" alt="error icon" />
+            <p class="error__text">กรุณาระบุงบประมาณ</p>
+          </div>
+          }
+        </div>
+        }
+      </div>
+      <!-- BIB -->
+      <div class="line">
+        <div [ngClass]="{ line__checkbox: needBib }">
+          <app-com-checkbox
+            [form]="requestTypeFormGroup"
+            controlName="bib"
+            display="เบอร์วิ่ง (BIB) จำนวน"
+            gap="8px"
+            fontSize="16px"
+            [onChanged]="onNeedBibChanged"
+          >
+          </app-com-checkbox>
+        </div>
+        @if (needBib) {
+        <div>
+          <app-com-input-number
+            id="request.details.bibAmount"
+            placeholder="โปรดระบุเป็นตัวเลข"
+            [form]="requestDetailsFormGroup"
+            controlName="bibAmount"
+            width="19.3rem"
+          >
+          </app-com-input-number>
+          @if (!requestDetailsFormGroup.get('bibAmount')?.valid &&
+          requestDetailsFormGroup.get('bibAmount')?.touched && formTouched) {
+          <div class="error mgt-10">
+            <img src="/assets/error_icon.svg" alt="error icon" />
+            <p class="error__text">กรุณาระบุจำนวน bib</p>
+          </div>
+          }
+        </div>
+        <p class="line__unit">ใบ</p>
+        }
+      </div>
+      <!-- PR -->
+      <div class="line">
+        <div [ngClass]="{ line__checkbox: needBib }">
+          <app-com-checkbox
+            [form]="requestTypeFormGroup"
+            controlName="pr"
+            display="การประชาสัมพันธ์กิจกรรม และการรับสมัคร"
+            gap="8px"
+            fontSize="16px"
+          >
+          </app-com-checkbox>
+        </div>
+      </div>
+      <!-- SEMINAR -->
+      <div class="line">
+        <div [ngClass]="{ line__checkbox: needSeminar }">
+          <app-com-checkbox
+            [form]="requestTypeFormGroup"
+            controlName="seminar"
+            display="การอบรม/การพัฒนาศักยภาพ หัวข้อเรื่อง"
+            gap="8px"
+            fontSize="16px"
+            [onChanged]="onNeedSeminarChanged"
+          >
+          </app-com-checkbox>
+        </div>
+        @if (needSeminar) {
+        <div>
+          <app-com-input-text
+            id="request.details.seminar"
+            placeholder="โปรดระบุหัวข้อ"
+            [form]="requestDetailsFormGroup"
+            controlName="seminar"
+            width="37.4rem"
+          >
+          </app-com-input-text>
+          @if (!requestDetailsFormGroup.get('seminar')?.valid &&
+          requestDetailsFormGroup.get('seminar')?.touched && formTouched) {
+          <div class="error mgt-10">
+            <img src="/assets/error_icon.svg" alt="error icon" />
+            <p class="error__text">กรุณาระบุหัวข้อ</p>
+          </div>
+          }
+        </div>
+        }
+      </div>
+      <!-- OTHER -->
+      <div class="line">
+        <div [ngClass]="{ line__checkbox: needOther }">
+          <app-com-checkbox
+            [form]="requestTypeFormGroup"
+            controlName="other"
+            display="อื่น ๆ โปรดระบุ"
+            gap="8px"
+            fontSize="16px"
+            [onChanged]="onNeedOtherChanged"
+          >
+          </app-com-checkbox>
+        </div>
+
+        @if (needOther) {
+        <div>
+          <app-com-input-text
+            id="request.details.other"
+            placeholder="โปรดระบุหัวข้อ"
+            [form]="requestDetailsFormGroup"
+            controlName="other"
+            width="55.8rem"
+          >
+          </app-com-input-text>
+          @if (!requestDetailsFormGroup.get('other')?.valid &&
+          requestDetailsFormGroup.get('other')?.touched && formTouched) {
+          <div class="error mgt-10">
+            <img src="/assets/error_icon.svg" alt="error icon" />
+            <p class="error__text">กรุณาระบุหัวข้อ</p>
+          </div>
+          }
+        </div>
+        }
+      </div>
+
+      @if (!form.get('fund.request.type')?.valid &&
+      form.get('fund.request.type')?.touched && formTouched
+      &&errorAtLeastOneRequired) {
+      <div class="error">
+        <img src="/assets/error_icon.svg" alt="error icon" />
+        <p class="error__text">สามารถเลือกได้หลายข้อ</p>
+      </div>
+      }
+    </div>
+  </div>
+</div>
+<div class="remark">
+  <p>
+    <span class="remark__red">หมายเหตุ:</span>
+    การเลือกงบประมาณที่ต้องการเป็นเพียงการประเมินความต้องการที่ประสงค์ขอรับการสนับสนุนทุนอุปถัมภ์ในเบื้องต้นเท่านั้น
+    ทั้งนี้การอนุมัติจำนวนงบประมาณที่จะสนับสนุนยังคงขึ้นอยู่กับมติในที่ประชุมคณะกรรมการพิจารณาโครงการเดิน-วิ่งเพื่อสุขภาพ
+    สสส. ที่จะประเมินภาพรวมและรายละเอียดของข้อเสนอโครงการแต่ละส่วน
+  </p>
+</div>
+
+@if (devModeOn) {
+<button [style]="{ padding: '3rem' }" (click)="patchForm()">patchForm</button>
+}

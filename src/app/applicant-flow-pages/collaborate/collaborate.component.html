@@ -1,0 +1,52 @@
+<div>
+  <h2 class="header">
+    การประสานงานกับเครือข่ายสมาพันธ์เดิน-วิ่งเพื่อสุขภาพไทยภาค
+  </h2>
+  <div class="main mgt-31">
+    <h3 class="main__name">
+      โครงการมีการประสานงานกับเครือข่ายสมาพันธ์เดิน-วิ่งเพื่อสุขภาพไทยภาค
+      และมีหนังสือนำส่ง
+    </h3>
+    <div class="main__radioBox">
+      <app-com-radio
+        [form]="form"
+        controlName="collaborated"
+        [options]="radioOptions"
+        radioStyle="review-3b"
+        [onChanged]="onCollaborateChanged"
+        fontSize="16px"
+      ></app-com-radio>
+      @if (showCollaborationError) {
+      <div class="error mgl-28">
+        <img src="/assets/error_icon.svg" alt="error icon" />
+        <p class="error__text">กรุณาเลือกตัวเลือก</p>
+      </div>
+      }
+    </div>
+    <div class="main__uploadBox">
+      <app-com-upload-button
+        [filesSubject]="filesSubject"
+        [disabled]="uploadButtonDisabled"
+      ></app-com-upload-button>
+
+      @if (errorWrongFilesUpload && uploadButtonTouched) {
+      <div class="error mgl-28">
+        <img src="/assets/error_icon.svg" alt="error icon" />
+        <p class="error__text">กรุณาอัพโหลดหนังสือนำส่ง</p>
+      </div>
+      }
+
+      <div class="main__exampleBox">
+        <a
+          class="main__uploadExampleLink"
+          href="https://running-fund-static-store.s3.ap-southeast-1.amazonaws.com/static/example_%E0%B8%AB%E0%B8%99%E0%B8%B1%E0%B8%87%E0%B8%AA%E0%B8%B7%E0%B8%AD%E0%B8%A2%E0%B8%B7%E0%B8%99%E0%B8%A2%E0%B8%B1%E0%B8%99%E0%B8%88%E0%B8%B2%E0%B8%81%E0%B9%80%E0%B8%84%E0%B8%A3%E0%B8%B7%E0%B8%AD%E0%B8%82%E0%B9%88%E0%B8%B2%E0%B8%A2%E0%B8%AA%E0%B8%A1%E0%B8%B2%E0%B8%9E%E0%B8%B1%E0%B8%99%E0%B8%98%E0%B9%8C%E0%B8%A0%E0%B8%B2%E0%B8%84%E0%B8%AF.pdf"
+          target="_blank"
+          >กดเพื่อดูตัวอย่างไฟล์
+        </a>
+        <p class="main__uploadLabel">
+          แนบหนังสือนำส่ง (PDF, JPG ขนาดไม่เกิน 25 MB)
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
