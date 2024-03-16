@@ -1,7 +1,6 @@
 import { CommonModule, ViewportScroller } from '@angular/common';
 import { Component, Input, OnInit, inject } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { DomSanitizer } from '@angular/platform-browser';
 
 import { CheckboxComponent } from '../../components/checkbox/checkbox.component';
 import { RadioComponent } from '../../components/radio/radio.component';
@@ -26,6 +25,7 @@ import { criteriaGroup } from '../data/criteria-group';
 export class ReviewerScoreComponent implements OnInit {
   @Input() form: FormGroup;
   @Input() criteriaList: ReviewCriteria[] = [];
+  @Input() devModeOn = false;
 
   private readonly scroller: ViewportScroller = inject(ViewportScroller);
 
@@ -81,38 +81,32 @@ export class ReviewerScoreComponent implements OnInit {
     {
       id: 1,
       display: 'คุณภาพข้อเสนอโครงการ',
-      value: 'project_quality',
       controlName: 'projectQuality',
     },
     {
       id: 2,
       display: 'มาตรฐานการจัดงานวิ่งเพื่อสุขภาพ',
-      value: 'project_standard',
       controlName: 'projectStandard',
     },
     {
       id: 3,
       display:
         'แนวทางและภาพลักษณ์ที่สอดคล้องสำนักงานกองทุนสนับสนุนการสร้างเสริมสุขภาพ (สสส.)',
-      value: 'vision_and_image',
       controlName: 'visionAndImage',
     },
     {
       id: 4,
       display: 'ประโยชน์ของการนำเสนอองค์กร สสส. ในการสนับสนุนทุนอุปถัมภ์',
-      value: 'benefit',
       controlName: 'benefit',
     },
     {
       id: 5,
       display: 'ความน่าเชื่อถือและประสบการณ์การจัดงาน',
-      value: 'experience_and_reliability',
       controlName: 'experienceAndReliability',
     },
     {
       id: 6,
       display: 'งบประมาณที่ขอรับการสนับสนุน และผลที่คาดว่าจะได้รับ',
-      value: 'fund_and_output',
       controlName: 'fundAndOutput',
     },
   ];
@@ -121,7 +115,17 @@ export class ReviewerScoreComponent implements OnInit {
     return this.form.get('review') as FormGroup;
   }
 
-  constructor() {}
+  get scoresFormGroup(): FormGroup {
+    return this.form.get('review.scores') as FormGroup;
+  }
+
+  get improvementFormGroup(): FormGroup {
+    return this.form.get('review.improvement') as FormGroup;
+  }
+
+  constructor() {
+    this.onSummaryRadioChanged = this.onSummaryRadioChanged.bind(this);
+  }
 
   ngOnInit(): void {
     this.groupHeaders = criteriaGroup;
@@ -218,8 +222,6 @@ export class ReviewerScoreComponent implements OnInit {
     }
     return scoreGroup?.valid ?? false;
   }
-
-  protected readonly sanitizer: DomSanitizer = inject(DomSanitizer);
 
   protected buildQuestionText(criteria: ReviewCriteria): string {
     return `${criteria.groupNumber}.${criteria.inGroupNumber} ${criteria.displayText}`;

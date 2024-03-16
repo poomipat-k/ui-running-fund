@@ -1,9 +1,13 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnDestroy, inject } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
+import { Subscription } from 'rxjs';
 import { CheckboxViewComponent } from '../../components/checkbox-view/checkbox-view.component';
 import { RadioViewComponent } from '../../components/radio-view/radio-view.component';
+import { DateService } from '../../services/date.service';
+import { S3Service } from '../../services/s3.service';
 import { RadioOption } from '../../shared/models/radio-option';
+import { ReviewerProjectDetails } from '../../shared/models/reviewer-project-details';
 
 @Component({
   selector: 'app-review-general-details',
@@ -17,38 +21,64 @@ import { RadioOption } from '../../shared/models/radio-option';
   templateUrl: './general-details.component.html',
   styleUrls: ['./general-details.component.scss'],
 })
-export class GeneralDetailsComponent {
-  @Input() projectName = '';
-  @Input() projectCode = '';
-  @Input() hadReceivedFundValue = false;
+export class GeneralDetailsComponent implements OnDestroy {
+  @Input() apiData: ReviewerProjectDetails;
 
-  protected projectLeader = 'นายขอทุน สนับสนุน';
-  protected projectLocation = 'กาดหลวง เชียงใหม่';
-  protected projectStartDate = '20 ธันวาคม 2566 เวลา 05:00 น. - 10:00 น.';
+  private readonly subs: Subscription[] = [];
 
-  protected projectTypeCheckBox = [
-    {
-      id: 1,
+  private readonly dateService: DateService = inject(DateService);
+  private readonly s3Service: S3Service = inject(S3Service);
+
+  protected _projectDistances: any = {
+    fun: {
       display: 'Fun Run',
-      value: 'fun_run',
-      name: 'fun_run',
+      value: 'fun',
       checked: false,
+      dynamic: false,
     },
-    { id: 2, display: '<5km', value: '5km', name: '5km', checked: false },
-    { id: 3, display: '<10km', value: '10km', name: '10km', checked: true },
-    { id: 4, display: '<20km', value: '20km', name: '20km', checked: true },
-    { id: 5, display: '<42km', value: '42km', name: '42km', checked: false },
-    {
-      id: 6,
-      display: 'Others',
-      value: 'others',
-      name: 'others',
+    mini: { display: '10km', value: 'mini', checked: false, dynamic: false },
+    half: { display: '21.1km', value: 'half', checked: false, dynamic: false },
+    full: {
+      display: '42.195km',
+      value: 'full',
       checked: false,
+      dynamic: false,
     },
-  ];
+  };
 
-  protected expectedRunner = '1,000 คน';
-  protected targetGroup = 'วัยรุ่นและผู้ใหญ่';
+  get distancesCheckbox() {
+    const checkedDistances = this.apiData.distances || [];
+    checkedDistances.forEach((item) => {
+      if (item.dynamic) {
+        this._projectDistances[item.type] = {
+          display: item.type,
+          value: item.type,
+          checked: true,
+          dynamic: true,
+        };
+      } else if (this._projectDistances[item.type]) {
+        this._projectDistances[item.type].checked = true;
+      }
+    });
+    const checkboxList = Object.keys(this._projectDistances).map((key) => ({
+      display: this._projectDistances[key].display,
+      value: this._projectDistances[key].value,
+      checked: this._projectDistances[key].checked,
+      dynamic: this._projectDistances[key].dynamic,
+    }));
+    return checkboxList;
+  }
+
+  protected readonly expectedParticipantsOptionsMap: { [key: string]: string } =
+    {
+      '<=500': 'ต่ำกว่า 500 คน',
+      '501-1500': '501 - 1,500 คน',
+      '1501-2500': '1,501 - 2,500 คน',
+      '2501-3500': '2,501 - 3,500 คน',
+      '3501-4500': '3,501 - 4,500 คน',
+      '4501-5500': '4,501 - 5,500 คน',
+      '>=5501': '5,501 คนขึ้นไป',
+    };
 
   protected hadReceivedFundOptions: RadioOption[] = [
     {
@@ -62,4 +92,65 @@ export class GeneralDetailsComponent {
       value: true,
     },
   ];
+
+  get projectHeadFullName(): string {
+    if (!this.apiData) return '';
+    return `${this.apiData.projectHeadPrefix}${this.apiData.projectHeadFirstName} ${this.apiData.projectHeadLastName}`;
+  }
+
+  get eventDate(): string {
+    if (!this.apiData) return '';
+    const from = this.apiData.fromDate;
+    const to = this.apiData.toDate;
+    const fromDate = new Date(from);
+    const toDate = new Date(to);
+    if (!from || !to) {
+      return '';
+    }
+    return `${this.dateService.dateToStringWithLongMonth(from)} เวลา ${fromDate
+      ?.getHours()
+      ?.toString()
+      ?.padStart(2, '0')}:${fromDate
+      ?.getMinutes()
+      ?.toString()
+      ?.padStart(2, '0')} น. - ${toDate
+      ?.getHours()
+      ?.toString()
+      ?.padStart(2, '0')}:${toDate
+      .getMinutes()
+      ?.toString()
+      ?.padStart(2, '0')} น.`;
+  }
+
+  get eventAddress(): string {
+    return `${this.apiData.address} ${this.apiData.subdistrictName} ${this.apiData.districtName} ${this.apiData.provinceName}`;
+  }
+
+  get expectedParticipantsDisplay(): string {
+    if (!this.apiData.expectedParticipants) return '';
+    return (
+      this.expectedParticipantsOptionsMap[this.apiData.expectedParticipants] ||
+      ''
+    );
+  }
+
+  ngOnDestroy(): void {
+    this.subs.forEach((s) => s.unsubscribe());
+  }
+
+  onDownloadLinkClicked() {
+    this.subs.push(
+      this.s3Service
+        .getAttachmentsPresigned(
+          `${this.apiData.projectCode}/zip/${this.apiData.projectCode}_หนังสือนำส่ง.zip`,
+          this.apiData.userId
+        )
+        .subscribe((result) => {
+          if (result?.URL) {
+            // Open the return s3 presigned url
+            window.open(result.URL);
+          }
+        })
+    );
+  }
 }

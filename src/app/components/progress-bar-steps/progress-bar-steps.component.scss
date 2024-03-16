@@ -1,0 +1,72 @@
+@import "../../../styles.scss";
+
+.container {
+  display: flex;
+}
+
+.step {
+  text-align: center;
+  color: #fff;
+  font-family: $custom-font;
+  font-size: 2.4rem;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 4.4rem;
+  width: 4.4rem;
+  height: 4.4rem;
+  background-color: #d0d0d0;
+  border-radius: 50%;
+  margin: auto;
+  position: relative;
+  z-index: 2;
+
+  transition: background-color 500ms;
+
+  &-box {
+    flex: 1;
+    position: relative;
+
+    &::before {
+      display: block;
+      content: "";
+      position: relative;
+      height: 5px;
+      width: 100%;
+      background-color: #d0d0d0;
+      transform: translateX(-50%);
+      top: 2.5rem;
+
+      transition: background-color 500ms;
+    }
+
+    &:first-child::before {
+      content: none;
+    }
+  }
+
+  &__detail {
+    color: $black;
+    font-family: $custom-font;
+    font-size: 1.4rem;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    text-align: center;
+  }
+}
+
+.mgb {
+  &-9 {
+    margin-bottom: 9px;
+  }
+}
+
+.active {
+  background-color: #fd853a;
+  transition: background-color 500ms;
+}
+
+.progress-bar-active::before {
+  background-color: #fb6514;
+  transition: background-color 500ms;
+}

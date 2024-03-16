@@ -1,5 +1,5 @@
-import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'app-com-checkbox-view',
@@ -14,4 +14,8 @@ export class CheckboxViewComponent {
   @Input() display: string;
   @Input() disabled = false;
   @Input() checked = false;
+  @Input() gap = '1.4rem';
+  @Input() fontSize = '2rem';
+
+  onChanged(_e: any) {}
 }

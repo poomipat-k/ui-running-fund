@@ -10,7 +10,7 @@
       <input
         type="text"
         class="textbox pdl-3 ml-28"
-        [value]="projectName"
+        [value]="apiData.projectName"
         [disabled]="true"
       />
     </div>
@@ -20,7 +20,7 @@
       <input
         type="text"
         class="textbox ml-14"
-        [value]="projectCode"
+        [value]="apiData.projectCode"
         [disabled]="true"
       />
     </div>
@@ -30,7 +30,7 @@
       <input
         type="text"
         class="textbox ml-22"
-        [value]="projectLeader"
+        [value]="projectHeadFullName"
         [disabled]="true"
       />
     </div>
@@ -40,7 +40,7 @@
       <input
         type="text"
         class="textbox ml-22"
-        [value]="projectStartDate"
+        [value]="eventDate"
         [disabled]="true"
       />
     </div>
@@ -50,7 +50,7 @@
       <input
         type="text"
         class="textbox ml-17"
-        [value]="projectLocation"
+        [value]="eventAddress"
         [disabled]="true"
       />
     </div>
@@ -58,17 +58,30 @@
     <div class="details__row">
       <label class="bold-text">ประเภทงานวิ่ง</label>
       <div class="checkbox-container ml-30">
-        @for (item of projectTypeCheckBox; track item.id) {
-        <div class="checkbox-container">
+        <div class="checkbox-container__row">
+          @for (item of distancesCheckbox; track $index) { @if (!item.dynamic) {
           <app-com-checkbox-view
-            [name]="item.name"
+            [name]="item.value"
             [display]="item.display"
             [value]="item.value"
             [disabled]="true"
             [checked]="item.checked"
           ></app-com-checkbox-view>
+
+          } }
         </div>
-        }
+        <div class="checkbox-container__row">
+          @for (item of distancesCheckbox; track $index) { @if (item.dynamic) {
+          <app-com-checkbox-view
+            [name]="item.value"
+            [display]="item.display"
+            [value]="item.value"
+            [disabled]="true"
+            [checked]="item.checked"
+          ></app-com-checkbox-view>
+
+          } }
+        </div>
       </div>
     </div>
 
@@ -77,17 +90,7 @@
       <input
         type="text"
         class="textbox ml-17"
-        [value]="expectedRunner"
-        [disabled]="true"
-      />
-    </div>
-
-    <div class="details__row">
-      <label class="bold-text">กลุ่มเป้าหมาย</label>
-      <input
-        type="text"
-        class="textbox ml-17"
-        [value]="targetGroup"
+        [value]="expectedParticipantsDisplay"
         [disabled]="true"
       />
     </div>
@@ -101,10 +104,10 @@
           [options]="hadReceivedFundOptions"
           radioStyle="review-2a"
           [disabled]="true"
-          [selectedValue]="hadReceivedFundValue"
+          [selectedValue]="apiData.collaborated"
         ></app-com-radio-view>
-        @if (hadReceivedFundValue) {
-        <a href="https://google.com" class="collab__link" target="_blank"
+        @if (apiData.collaborated) {
+        <a class="collab__link" (click)="onDownloadLinkClicked()"
           >ดาวน์โหลดหนังสือนำส่ง</a
         >
         }

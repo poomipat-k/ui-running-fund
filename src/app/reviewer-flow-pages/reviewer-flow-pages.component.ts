@@ -64,6 +64,7 @@ export class ReviewerFlowPagesComponent implements OnInit, OnDestroy {
   reviewerScoreComponent: ReviewerScoreComponent;
   // url params
   @Input() projectCode: string;
+  @Input() reviewerId: number;
 
   protected showSuccessPopup = false;
   protected showErrorPopup = false;
@@ -72,6 +73,9 @@ export class ReviewerFlowPagesComponent implements OnInit, OnDestroy {
   protected apiData: ReviewerProjectDetails = new ReviewerProjectDetails();
   protected pageIndex = 1;
   protected maxPageIndex = 5; // submit page
+  protected reviewerFullName = '';
+  protected devModeOn = true;
+
   private currentUser: User;
 
   // Services
@@ -96,7 +100,10 @@ export class ReviewerFlowPagesComponent implements OnInit, OnDestroy {
     if (!this.currentUser) {
       return '';
     }
-    return `${this.currentUser.firstName} ${this.currentUser.lastName}`;
+    if (this.currentUser.userRole === 'reviewer') {
+      return `${this.currentUser.firstName} ${this.currentUser.lastName}`;
+    }
+    return this.reviewerFullName;
   }
 
   constructor() {}
@@ -105,10 +112,21 @@ export class ReviewerFlowPagesComponent implements OnInit, OnDestroy {
     this.themeService.changeBackgroundColor(BackgroundColor.gray);
     this.initForm();
     this.prepareData();
+    if (this.reviewerId) {
+      this.getReviewerFullName();
+    }
   }
 
   ngOnDestroy(): void {
     this.subs.forEach((s) => s.unsubscribe());
+  }
+
+  private getReviewerFullName() {
+    this.subs.push(
+      this.userService.getUserFullName(this.reviewerId).subscribe((result) => {
+        this.reviewerFullName = `${result.firstName} ${result.lastName}`;
+      })
+    );
   }
 
   private initForm() {
@@ -116,6 +134,7 @@ export class ReviewerFlowPagesComponent implements OnInit, OnDestroy {
       projectHistoryId: new FormControl(null, Validators.required),
       ip: new FormGroup({
         isInterestedPerson: new FormControl(null, Validators.required),
+        // interestedPersonType: new FormControl(null, Validators.required) will be added when isInterestedPerson value is true
       }),
       review: new FormGroup({
         reviewSummary: new FormControl(null, Validators.required),
@@ -196,18 +215,33 @@ export class ReviewerFlowPagesComponent implements OnInit, OnDestroy {
             this.addScoreFormControls(criteriaList);
             this.currentUser = user;
             return this.projectService.getProjectDetailsForReviewer(
-              this.projectCode
+              this.projectCode,
+              +this.reviewerId
             );
           })
         )
         .subscribe((result) => {
           const data = new ReviewerProjectDetails();
           if (result) {
+            data.userId = result.userId;
             data.projectId = result.projectId;
             data.projectHistoryId = result.projectHistoryId;
             data.projectCode = result.projectCode;
             data.projectCreatedAt = result.projectCreatedAt;
             data.projectName = result.projectName;
+            data.projectHeadPrefix = result.projectHeadPrefix;
+            data.projectHeadFirstName = result.projectHeadFirstName;
+            data.projectHeadLastName = result.projectHeadLastName;
+            data.fromDate = result.fromDate;
+            data.toDate = result.toDate;
+            data.address = result.address;
+            data.provinceName = result.provinceName;
+            data.districtName = result.districtName;
+            data.subdistrictName = result.subdistrictName;
+            data.distances = result.distances;
+            data.expectedParticipants = result.expectedParticipants;
+            data.collaborated = result.collaborated;
+
             data.reviewId = result.reviewId;
             data.reviewedAt = result.reviewedAt;
             data.isInterestedPerson = result.isInterestedPerson;

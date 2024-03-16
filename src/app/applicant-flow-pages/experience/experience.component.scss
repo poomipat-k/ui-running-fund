@@ -1,0 +1,155 @@
+@import "../../../styles.scss";
+
+.header {
+  color: $black;
+  font-family: $custom-font;
+  font-size: 2rem;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+
+  margin-bottom: 3.2rem;
+
+  &--orange {
+    color: #fb6514;
+  }
+}
+
+.section-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  padding-bottom: 3rem;
+
+  &--gap-24 {
+    gap: 2.4rem;
+  }
+
+  &__header {
+    color: $black;
+    font-family: $custom-font-looped;
+    font-size: 1.6rem;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+
+    padding: 1rem 2rem;
+    background-color: #f2edeb;
+
+    &--with-ask::after {
+      content: "*";
+      color: #c4320a;
+      font-weight: 500;
+    }
+
+    &--remark {
+      font-weight: 400;
+
+      &-with-ask::after {
+        content: "*";
+        color: #c4320a;
+        font-weight: 500;
+      }
+    }
+  }
+
+  &-content {
+    padding-left: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.4rem;
+  }
+
+  &__hidable {
+    padding-left: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+}
+
+.history {
+  &__item {
+    display: flex;
+    gap: 1rem;
+    padding-left: 2rem;
+    &:not(:last-child) {
+      border-bottom: 1px solid #cfd6e4;
+      padding-bottom: 2rem;
+    }
+  }
+}
+
+.label {
+  color: $black;
+  font-family: "IBM Plex Sans Thai Looped";
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+
+  padding-top: 9px;
+
+  &-500 {
+    font-weight: 500;
+  }
+
+  &--2 {
+    color: $black;
+    font-family: $custom-font-looped;
+    font-size: 1.6rem;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+
+    &--light {
+      font-weight: 400;
+    }
+  }
+}
+
+.eventCount {
+  display: flex;
+  gap: 3rem;
+
+  &__item-16 {
+    display: flex;
+    gap: 1.6rem;
+  }
+
+  &__latest {
+    display: flex;
+    gap: 1rem;
+  }
+}
+
+.error {
+  display: flex;
+  font-family: $custom-font-looped;
+  font-size: 1.3rem;
+  font-weight: 400;
+  line-height: normal;
+  color: #ec4a0a;
+
+  &__text {
+    margin-left: 4px;
+  }
+}
+
+.mgt {
+  &-10 {
+    margin-top: 1rem;
+  }
+}
+
+.pdl {
+  &-20 {
+    padding-left: 2rem;
+  }
+}

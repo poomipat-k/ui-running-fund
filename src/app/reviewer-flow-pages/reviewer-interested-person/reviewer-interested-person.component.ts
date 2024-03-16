@@ -61,7 +61,14 @@ export class ReviewerInterestedPerson implements OnInit {
       (this.form.get('ip.interestedPersonType')?.touched ?? false)
     );
   }
-  constructor() {}
+
+  get ipFormGroup(): FormGroup {
+    return this.form.get('ip') as FormGroup;
+  }
+
+  constructor() {
+    this.onInterestedPersonChanged = this.onInterestedPersonChanged.bind(this);
+  }
 
   ngOnInit(): void {}
 

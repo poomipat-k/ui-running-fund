@@ -22,6 +22,10 @@ export class DateService {
     });
   }
 
+  getCurrentYear(): number {
+    return new Date().getFullYear();
+  }
+
   private transformDateString(
     dateString: string,
     options?: Intl.DateTimeFormatOptions

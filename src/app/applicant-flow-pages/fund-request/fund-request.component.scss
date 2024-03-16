@@ -1,0 +1,173 @@
+@import "../../../styles.scss";
+
+.header {
+  color: $black;
+  font-family: $custom-font;
+  font-size: 2rem;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+
+  margin-bottom: 3.2rem;
+
+  &--orange {
+    color: #fb6514;
+  }
+}
+
+.section-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  padding-bottom: 3rem;
+
+  &__header {
+    color: $black;
+    font-family: $custom-font-looped;
+    font-size: 1.6rem;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+
+    padding: 1rem 2rem;
+    background-color: #f2edeb;
+
+    &--with-ask::after {
+      content: "*";
+      color: #c4320a;
+      font-weight: 500;
+    }
+
+    &--remark {
+      font-weight: 400;
+
+      &-with-ask::after {
+        content: "*";
+        color: #c4320a;
+        font-weight: 500;
+      }
+    }
+  }
+
+  &-content {
+    padding-left: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.4rem;
+  }
+}
+
+.line {
+  display: flex;
+
+  &__label {
+    color: $black;
+    font-family: $custom-font-looped;
+    font-size: 1.6rem;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+  }
+}
+
+.total {
+  display: flex;
+  gap: 1rem;
+
+  &__unit {
+    color: $black;
+    font-family: $custom-font-looped;
+    font-size: 1.6rem;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    padding-top: 9px;
+  }
+}
+
+.error {
+  display: flex;
+  font-family: $custom-font-looped;
+  font-size: 1.3rem;
+  font-weight: 400;
+  line-height: normal;
+  color: #ec4a0a;
+
+  &__text {
+    margin-left: 4px;
+  }
+}
+
+.fund {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+
+  &__amount {
+    padding-left: 3rem;
+  }
+}
+
+.line {
+  display: flex;
+  gap: 8px;
+
+  &__checkbox {
+    padding-top: 9px;
+  }
+
+  &__unit {
+    padding-top: 9px;
+    color: $black;
+    font-family: $custom-font-looped;
+    font-size: 1.6rem;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+  }
+}
+
+.remark {
+  color: $black;
+  font-family: $custom-font-looped;
+  font-size: 1.6rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 2.8rem;
+  padding-left: 1.7rem;
+
+  &__red {
+    font-weight: 500;
+    color: #ec4a0a;
+  }
+}
+
+.gap {
+  &-10 {
+    gap: 1rem;
+  }
+}
+
+.mgt {
+  &-10 {
+    margin-top: 1rem;
+  }
+}
+
+.mgr {
+  &-59 {
+    margin-right: 5.9rem;
+  }
+}
+
+.width {
+  &-239 {
+    width: 23.9rem;
+  }
+}

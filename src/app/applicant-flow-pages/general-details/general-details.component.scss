@@ -1,0 +1,290 @@
+@import "../../../styles.scss";
+
+.header {
+  color: $black;
+  font-family: $custom-font;
+  font-size: 2rem;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+
+  margin-bottom: 3.2rem;
+
+  &--orange {
+    color: #fb6514;
+  }
+}
+
+.section-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  padding-bottom: 3rem;
+
+  &--wider-gap {
+    gap: 2.4rem;
+  }
+
+  &__header {
+    color: $black;
+    font-family: $custom-font-looped;
+    font-size: 1.6rem;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+
+    padding: 1rem 2rem;
+    background-color: #f2edeb;
+
+    &::after {
+      content: "*";
+      color: #c4320a;
+    }
+
+    &--light {
+      font-weight: 400;
+    }
+  }
+
+  &-content {
+    padding-left: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.4rem;
+  }
+}
+
+.eventDate {
+  &__time-container {
+    display: flex;
+    gap: 1.4rem;
+  }
+
+  &__with-colon {
+    display: flex;
+    gap: 1rem;
+  }
+
+  &__colon {
+    color: $black;
+    font-family: $custom-font-looped;
+    font-size: 1.6rem;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    padding-top: 1rem;
+  }
+
+  &__line {
+    display: flex;
+    gap: 2.4rem;
+
+    &-label {
+      color: $black;
+      font-family: $custom-font-looped;
+      font-size: 1.6rem;
+      font-style: normal;
+      font-weight: 400;
+      line-height: normal;
+      padding-top: 1rem;
+    }
+
+    &--group {
+      display: flex;
+      gap: 1rem;
+    }
+  }
+}
+
+.address {
+  &__line {
+    display: flex;
+    justify-content: space-between;
+    width: 43.3rem;
+  }
+
+  &__label {
+    color: $black;
+    font-family: $custom-font-looped;
+    font-size: 1.6rem;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    padding-top: 9px;
+  }
+}
+
+.route {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  min-height: 4.4rem;
+  width: 47.8rem;
+
+  &__label {
+    color: $black;
+    font-family: $custom-font-looped;
+    font-size: 1.6rem;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+  }
+
+  &__start-label {
+    align-self: flex-start;
+    padding-top: 9px;
+  }
+}
+.error {
+  display: flex;
+  font-family: $custom-font-looped;
+  font-size: 1.3rem;
+  font-weight: 400;
+  line-height: normal;
+  color: #ec4a0a;
+
+  &__text {
+    margin-left: 4px;
+  }
+}
+
+.eventDetails {
+  display: flex;
+  flex-direction: column;
+  gap: 2.4rem;
+  padding-left: 2rem;
+}
+
+.subgroup {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+
+  &__header {
+    font-family: $custom-font-looped;
+    font-weight: 400;
+    font-size: 1.6rem;
+    line-height: 2.6rem;
+    color: #000;
+  }
+
+  &__checkbox {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+}
+
+.distance {
+  &__line {
+    display: flex;
+
+    &--other {
+      gap: 1rem;
+    }
+
+    &--space-between {
+      justify-content: space-between;
+    }
+  }
+
+  &__fee {
+    display: flex;
+    gap: 8px;
+  }
+
+  &__text {
+    font-family: $custom-font-looped;
+    font-weight: 400;
+    font-size: 1.6rem;
+    line-height: 2.6rem;
+    padding-top: 9px;
+  }
+}
+
+.removeButton {
+  outline: none;
+  border: none;
+  cursor: pointer;
+  background-color: transparent;
+  width: 3.6rem;
+  height: 3.6rem;
+  margin-top: 5px;
+
+  &:hover {
+    transform: scale(1.1);
+  }
+}
+
+.addButton {
+  outline: none;
+  border: none;
+  cursor: pointer;
+  background-color: transparent;
+
+  width: 10.1rem;
+
+  font-family: $custom-font-looped;
+  font-size: 1.6rem;
+  line-height: normal;
+  font-weight: 400;
+  text-decoration: underline;
+  color: #2e3192;
+
+  &:hover {
+    transform: scale(1.1);
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+
+    &:hover {
+      transform: scale(1);
+    }
+  }
+}
+
+.width {
+  &-587 {
+    width: 58.7rem;
+  }
+}
+
+.pdt {
+  &-10 {
+    padding-top: 1rem;
+  }
+}
+
+.pdl {
+  &-20 {
+    padding-left: 2rem;
+  }
+  &-28 {
+    padding-left: 2.8rem;
+  }
+}
+
+.width {
+  &-129 {
+    width: 12.9rem;
+  }
+}
+
+.mgl {
+  &-20 {
+    margin-left: 2rem;
+  }
+}
+
+.mgt {
+  &-10 {
+    margin-top: 10px;
+  }
+}

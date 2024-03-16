@@ -1,0 +1,14 @@
+@if (capturing) {
+<div class="capture" [style]="{ width: width, margin: margin }">
+  {{ captureDisplay }}
+</div>
+} @else {<ng-container [formGroup]="form">
+  <input
+    type="text"
+    class="input"
+    [placeholder]="placeholder"
+    [style]="{ width: width, margin: margin }"
+    [formControlName]="controlName"
+  />
+</ng-container>
+}

@@ -34,6 +34,7 @@
         <app-table-cell-template
           [cellType]="columns[$index].type"
           [cellValue]="cell.display"
+          [onClick]="cell.onClick"
           [bold]="cell.className === 'bold'"
         ></app-table-cell-template>
       </td>

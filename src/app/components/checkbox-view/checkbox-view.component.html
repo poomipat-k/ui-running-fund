@@ -1,4 +1,7 @@
-<label [ngClass]="{ checkbox__label: true, 'cursor-not-allow': disabled }">
+<label
+  [ngClass]="{ checkbox__label: true, 'cursor-not-allow': disabled }"
+  [ngStyle]="{ gap: gap, fontSize: fontSize }"
+>
   <input
     type="checkbox"
     [name]="name"
@@ -6,6 +9,7 @@
     [disabled]="disabled"
     [ngClass]="{ checkbox__box: true, 'cursor-not-allow': disabled }"
     [checked]="checked"
+    (change)="onChanged($event)"
   />{{ display }}
   <svg
     xmlns="http://www.w3.org/2000/svg"
