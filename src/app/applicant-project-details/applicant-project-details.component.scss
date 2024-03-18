@@ -64,24 +64,6 @@
   gap: 5px;
 }
 
-.history {
-  display: flex;
-  flex-direction: column;
-  gap: 1.3rem;
-}
-
-.reviewedAt {
-  display: flex;
-  flex-direction: column;
-  gap: 1.3rem;
-}
-
-.score {
-  display: flex;
-  flex-direction: column;
-  gap: 1.3rem;
-}
-
 .details {
   display: flex;
   flex-direction: column;
@@ -93,6 +75,18 @@
     font-size: 1.8rem;
     line-height: 3rem;
   }
+}
+
+.overview-table {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.row {
+  display: flex;
+  flex: 1;
+  // justify-content: space-evenly;
 }
 
 .attachments {
@@ -396,18 +390,24 @@
   &-80 {
     margin-left: 8rem;
   }
-
-  &-124 {
-    margin-left: 12.4rem;
-  }
-
-  &-139 {
-    margin-left: 13.9rem;
-  }
 }
 
-.flex-1 {
-  flex: 1;
+.flex {
+  &-1 {
+    flex: 1;
+  }
+
+  &-basis {
+    &-history {
+      flex: 1;
+    }
+    &-date {
+      flex: 0 0 18rem;
+    }
+    &-score {
+      flex: 0 0 10rem;
+    }
+  }
 }
 
 .navLink {

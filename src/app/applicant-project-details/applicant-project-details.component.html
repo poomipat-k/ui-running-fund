@@ -41,35 +41,29 @@
         ></app-table-cell-template>
       </div>
 
-      <!-- Review history -->
-      <div class="history mgl-80 flex-1">
-        <h3 class="header">ประวัติการทำการ</h3>
-        <div class="details">
-          @for (item of data; track $index) { @if (item.reviewId) {
-          <a class="details-row navLink" [routerLink]="getReviewerPath(item)">{{
-            "ดูผลการกลั่นกรอง" + ($index + 1)
-          }}</a>
-          } }
+      <div class="overview-table mgl-80 flex-1">
+        <div class="row">
+          <h3 class="header flex-basis-history">ประวัติการทำการ</h3>
+          <h3 class="header flex-basis-date">วันที่ทำการ</h3>
+          <h3 class="header flex-basis-score text-center">คะแนน</h3>
         </div>
-      </div>
-      <!-- Review Date -->
-      <div class="reviewedAt mgl-124">
-        <h3 class="header">วันที่ทำการ</h3>
-        <div>
-          @for (item of data; track $index) {
-          <p class="details-row">{{ getDisplayDate(item.reviewedAt) }}</p>
-          }
-        </div>
-      </div>
+        @for (item of data; track $index) {
+        <div class="row">
+          <a
+            class="details-row navLink flex-basis-history"
+            [routerLink]="getReviewerPath(item)"
+            >{{ "ดูผลการกลั่นกรอง" + ($index + 1) }}</a
+          >
 
-      <!-- Score -->
-      <div class="score mgl-139">
-        <h3 class="header">คะแนน</h3>
-        <div>
-          @for (item of data; track $index) {
-          <p class="details-row text-center">{{ item.sumScore }}</p>
-          }
+          <p class="details-row flex-basis-date">
+            {{ getDisplayDate(item.reviewedAt) }}
+          </p>
+
+          <p class="details-row text-center flex-basis-score">
+            {{ item.sumScore }}
+          </p>
         </div>
+        }
       </div>
     </div>
 

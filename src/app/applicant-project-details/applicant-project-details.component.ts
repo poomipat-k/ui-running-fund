@@ -189,7 +189,7 @@ export class ApplicantProjectDetailsComponent implements OnInit, OnDestroy {
   }
 
   getReviewerPath(item: ApplicantDetailsItem) {
-    return `/project/applicant/review-details/${this.projectCode}/${item.reviewerId}`;
+    return `/applicant/project/review-details/${this.projectCode}/${item.reviewerId}`;
   }
 
   loadProjectFiles() {
