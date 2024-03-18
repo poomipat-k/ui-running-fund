@@ -141,6 +141,8 @@
       <!-- END Addition -->
     </div>
 
+    @if (currentUser.userRole === 'applicant') {
+    <!-- Applicant view START -->
     <div class="summary__container mgt-70">
       <h2 class="summary__header">การอนุมัติโครงการ</h2>
       <div class="summary__status">
@@ -213,6 +215,20 @@
       </button>
       }
     </div>
+    <!-- Applicant view END -->
+    } @else if (currentUser.userRole === 'admin') {
+    <div>
+      <div>
+        <app-com-radio
+          [form]="form"
+          controlName="approveStatus"
+          [options]="radioOptions"
+          radioStyle="review-3b"
+          fontSize="18px"
+        ></app-com-radio>
+      </div>
+    </div>
+    }
   </div>
 
   @if (showSuccessPopup) {

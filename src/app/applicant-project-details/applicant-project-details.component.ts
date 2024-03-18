@@ -2,19 +2,24 @@ import { Component, Input, OnDestroy, OnInit, inject } from '@angular/core';
 import { BehaviorSubject, Subscription } from 'rxjs';
 
 import { CommonModule } from '@angular/common';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
 import { ButtonComponent } from '../components/button/button/button.component';
 import { ErrorPopupComponent } from '../components/error-popup/error-popup.component';
+import { RadioComponent } from '../components/radio/radio.component';
 import { SuccessPopupComponent } from '../components/success-popup/success-popup.component';
 import { TableCellTemplateComponent } from '../components/table-cell-template/table-cell-template.component';
 import { UploadButtonComponent } from '../components/upload-button/upload-button.component';
 import { ProjectService } from '../services/project.service';
 import { S3Service } from '../services/s3.service';
 import { ThemeService } from '../services/theme.service';
+import { UserService } from '../services/user.service';
 import { BackgroundColor } from '../shared/enums/background-color';
 import { ColumnTypeEnum } from '../shared/enums/column-type';
 import { ApplicantDetailsItem } from '../shared/models/applicant-details-item';
+import { RadioOption } from '../shared/models/radio-option';
 import { S3ObjectMetadata } from '../shared/models/s3-object-metadata';
+import { User } from '../shared/models/user';
 
 @Component({
   selector: 'app-applicant-project-details',
@@ -27,6 +32,7 @@ import { S3ObjectMetadata } from '../shared/models/s3-object-metadata';
     SuccessPopupComponent,
     ErrorPopupComponent,
     RouterModule,
+    RadioComponent,
   ],
   templateUrl: './applicant-project-details.component.html',
   styleUrl: './applicant-project-details.component.scss',
@@ -35,11 +41,16 @@ export class ApplicantProjectDetailsComponent implements OnInit, OnDestroy {
   // url params
   @Input() projectCode: string;
 
+  protected currentUser: User;
+
   private readonly themeService: ThemeService = inject(ThemeService);
   private readonly projectService: ProjectService = inject(ProjectService);
   private readonly s3Service: S3Service = inject(S3Service);
   private readonly router: Router = inject(Router);
+  private readonly userService: UserService = inject(UserService);
   private readonly subs: Subscription[] = [];
+
+  protected form: FormGroup;
 
   protected showSuccessPopup = false;
   protected showErrorPopup = false;
@@ -74,6 +85,12 @@ export class ApplicantProjectDetailsComponent implements OnInit, OnDestroy {
     eventDetails: [],
     addition: [],
   };
+
+  protected radioOptions: RadioOption[] = [
+    { id: 1, value: 'AdminReviewing', display: 'อยู่ในขั้นพิจารณา' },
+    { id: 2, value: 'AdminApproved', display: 'ผ่านการอนุมัติ' },
+    { id: 3, value: 'AdminNotApproved', display: 'ไม่ผ่านการอนุมัติ' },
+  ];
 
   protected readonly attachmentGroupNames = [
     {
@@ -123,10 +140,28 @@ export class ApplicantProjectDetailsComponent implements OnInit, OnDestroy {
     this.loadProjectFiles();
 
     this.subToSelectedFilesChanged();
+    // for admin
+
+    this.subs.push(
+      this.userService.currentUserSubject$.subscribe((user) => {
+        if (user?.id > 0) {
+          this.currentUser = user;
+          if (user.userRole === 'admin') {
+            this.initForm();
+          }
+        }
+      })
+    );
   }
 
   ngOnDestroy(): void {
     this.subs.forEach((s) => s.unsubscribe());
+  }
+
+  private initForm() {
+    this.form = new FormGroup({
+      approveStatus: new FormControl(null, Validators.required),
+    });
   }
 
   private subToSelectedFilesChanged() {

@@ -164,7 +164,7 @@ export class DashboardApplicantComponent implements OnInit, OnDestroy {
 
   onTableRowClicked(row: TableCell[]) {
     if (row.length > 0) {
-      this.routerService.navigate(['project', 'applicant', row[0].value]);
+      this.routerService.navigate(['applicant', 'project', row[0].value]);
     }
   }
 

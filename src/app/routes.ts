@@ -6,6 +6,7 @@ import { LoginComponent } from './login/login.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { ResetPasswordSuccessComponent } from './reset-password-success/reset-password-success.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
+import { adminAuthGuard } from './shared/guard/admin-auth.guard';
 import { applicantAuthGuard } from './shared/guard/applicant-auth.guard';
 import { authGuard } from './shared/guard/auth.guard';
 import { reviewerAuthGuard } from './shared/guard/reviewer-auth.guard';
@@ -44,12 +45,20 @@ const routeConfig: Routes = [
     canActivate: [reviewerAuthGuard],
   },
   {
-    path: 'project/applicant/:projectCode',
+    path: 'applicant/project/:projectCode',
     loadComponent: () =>
       import(
         './applicant-project-details/applicant-project-details.component'
       ).then((mod) => mod.ApplicantProjectDetailsComponent),
     canActivate: [applicantAuthGuard],
+  },
+  {
+    path: 'admin/project/:projectCode',
+    loadComponent: () =>
+      import(
+        './applicant-project-details/applicant-project-details.component'
+      ).then((mod) => mod.ApplicantProjectDetailsComponent),
+    canActivate: [adminAuthGuard],
   },
   {
     path: 'project/applicant/review-details/:projectCode/:reviewerId',
