@@ -177,6 +177,7 @@ export class ApplicantProjectDetailsComponent implements OnInit, OnDestroy {
       this.projectService
         .getApplicantProjectDetails(this.projectCode)
         .subscribe((result) => {
+          console.log('==result', result);
           if (result && result.length > 0) {
             this.pathDisplay = `${this.projectCode} ${result[0].projectName}`;
             this.data = result;
@@ -189,7 +190,12 @@ export class ApplicantProjectDetailsComponent implements OnInit, OnDestroy {
   }
 
   getReviewerPath(item: ApplicantDetailsItem) {
-    return `/applicant/project/review-details/${this.projectCode}/${item.reviewerId}`;
+    if (this.currentUser.userRole === 'admin') {
+      return `/admin/project/review-details/${this.projectCode}/${item.reviewerId}`;
+    } else if (this.currentUser.userRole === 'applicant') {
+      return `/applicant/project/review-details/${this.projectCode}/${item.reviewerId}`;
+    }
+    return '';
   }
 
   loadProjectFiles() {

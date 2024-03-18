@@ -69,6 +69,14 @@ const routeConfig: Routes = [
     canActivate: [applicantAuthGuard],
   },
   {
+    path: 'admin/project/review-details/:projectCode/:reviewerId',
+    loadComponent: () =>
+      import('./reviewer-flow-pages/reviewer-flow-pages.component').then(
+        (mod) => mod.ReviewerFlowPagesComponent
+      ),
+    canActivate: [adminAuthGuard],
+  },
+  {
     path: 'login',
     component: LoginComponent,
     title: 'Login',
