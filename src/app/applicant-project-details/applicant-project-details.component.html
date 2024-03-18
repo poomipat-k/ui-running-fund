@@ -39,6 +39,17 @@
           [cellType]="statusCellType"
           [cellValue]="projectStatus"
         ></app-table-cell-template>
+
+        @if (isAdmin) {
+        <app-com-select-dropdown
+          id="provinceId"
+          [form]="form"
+          [items]="projectStatusOptions"
+          placeholder="ABC"
+          width="20rem"
+          controlName="projectStatus"
+        ></app-com-select-dropdown>
+        }
       </div>
 
       <div class="overview-table mgl-80 flex-1">
@@ -49,11 +60,11 @@
         </div>
         @for (item of data; track $index) {
         <div class="row">
-          <a
-            class="details-row navLink flex-basis-history"
-            [routerLink]="getReviewerPath(item)"
-            >{{ "ดูผลการกลั่นกรอง" + ($index + 1) }}</a
-          >
+          <div class="details-row flex-basis-history">
+            <a class="navLink" [routerLink]="getReviewerPath(item)">{{
+              "ดูผลการกลั่นกรอง" + ($index + 1)
+            }}</a>
+          </div>
 
           <p class="details-row flex-basis-date">
             {{ getDisplayDate(item.reviewedAt) }}

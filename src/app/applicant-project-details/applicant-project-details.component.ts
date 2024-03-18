@@ -7,6 +7,7 @@ import { Router, RouterModule } from '@angular/router';
 import { ButtonComponent } from '../components/button/button/button.component';
 import { ErrorPopupComponent } from '../components/error-popup/error-popup.component';
 import { RadioComponent } from '../components/radio/radio.component';
+import { SelectDropdownComponent } from '../components/select-dropdown/select-dropdown.component';
 import { SuccessPopupComponent } from '../components/success-popup/success-popup.component';
 import { TableCellTemplateComponent } from '../components/table-cell-template/table-cell-template.component';
 import { UploadButtonComponent } from '../components/upload-button/upload-button.component';
@@ -33,6 +34,7 @@ import { User } from '../shared/models/user';
     ErrorPopupComponent,
     RouterModule,
     RadioComponent,
+    SelectDropdownComponent,
   ],
   templateUrl: './applicant-project-details.component.html',
   styleUrl: './applicant-project-details.component.scss',
@@ -86,6 +88,24 @@ export class ApplicantProjectDetailsComponent implements OnInit, OnDestroy {
     addition: [],
   };
 
+  protected projectStatusOptions: RadioOption[] = [
+    {
+      id: 1,
+      value: 'Reviewing',
+      display: 'Reviewing',
+    },
+    {
+      id: 2,
+      value: 'Revise',
+      display: 'Revise',
+    },
+    {
+      id: 3,
+      value: 'Approved',
+      display: 'Approved',
+    },
+  ];
+
   protected radioOptions: RadioOption[] = [
     { id: 1, value: 'AdminReviewing', display: 'อยู่ในขั้นพิจารณา' },
     { id: 2, value: 'AdminApproved', display: 'ผ่านการอนุมัติ' },
@@ -134,6 +154,10 @@ export class ApplicantProjectDetailsComponent implements OnInit, OnDestroy {
     return this.data?.[0]?.projectStatus || '';
   }
 
+  get isAdmin(): boolean {
+    return this.currentUser?.userRole === 'admin';
+  }
+
   ngOnInit(): void {
     this.themeService.changeBackgroundColor(BackgroundColor.gray);
     this.loadProjectDetails();
@@ -161,6 +185,7 @@ export class ApplicantProjectDetailsComponent implements OnInit, OnDestroy {
   private initForm() {
     this.form = new FormGroup({
       approveStatus: new FormControl(null, Validators.required),
+      projectStatus: new FormControl(null, Validators.required),
     });
   }
 
@@ -177,7 +202,6 @@ export class ApplicantProjectDetailsComponent implements OnInit, OnDestroy {
       this.projectService
         .getApplicantProjectDetails(this.projectCode)
         .subscribe((result) => {
-          console.log('==result', result);
           if (result && result.length > 0) {
             this.pathDisplay = `${this.projectCode} ${result[0].projectName}`;
             this.data = result;
