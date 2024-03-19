@@ -35,20 +35,20 @@
       <!-- Status -->
       <div class="status mgl-56">
         <h3 class="header">สถานะการดำเนินการ</h3>
+
         <app-table-cell-template
           [cellType]="statusCellType"
           [cellValue]="projectStatus"
         ></app-table-cell-template>
 
         @if (isAdmin) {
-        <app-com-select-dropdown
-          id="provinceId"
+        <app-com-select-dropdown-template
           [form]="form"
-          [items]="projectStatusOptions"
-          placeholder="ABC"
-          width="20rem"
           controlName="projectStatus"
-        ></app-com-select-dropdown>
+          [items]="projectStatusOptions"
+          [defaultValue]="projectStatus"
+          dropdownWidth="19.6rem"
+        ></app-com-select-dropdown-template>
         }
       </div>
 
@@ -227,7 +227,7 @@
         <app-com-radio
           [form]="form"
           controlName="approveStatus"
-          [options]="radioOptions"
+          [options]="adminStatusOptions"
           radioStyle="review-3b"
           fontSize="18px"
         ></app-com-radio>

@@ -7,7 +7,7 @@ import { Router, RouterModule } from '@angular/router';
 import { ButtonComponent } from '../components/button/button/button.component';
 import { ErrorPopupComponent } from '../components/error-popup/error-popup.component';
 import { RadioComponent } from '../components/radio/radio.component';
-import { SelectDropdownComponent } from '../components/select-dropdown/select-dropdown.component';
+import { SelectDropdownTemplateComponent } from '../components/select-dropdown-template/select-dropdown-template.component';
 import { SuccessPopupComponent } from '../components/success-popup/success-popup.component';
 import { TableCellTemplateComponent } from '../components/table-cell-template/table-cell-template.component';
 import { UploadButtonComponent } from '../components/upload-button/upload-button.component';
@@ -34,7 +34,7 @@ import { User } from '../shared/models/user';
     ErrorPopupComponent,
     RouterModule,
     RadioComponent,
-    SelectDropdownComponent,
+    SelectDropdownTemplateComponent,
   ],
   templateUrl: './applicant-project-details.component.html',
   styleUrl: './applicant-project-details.component.scss',
@@ -106,7 +106,7 @@ export class ApplicantProjectDetailsComponent implements OnInit, OnDestroy {
     },
   ];
 
-  protected radioOptions: RadioOption[] = [
+  protected adminStatusOptions: RadioOption[] = [
     { id: 1, value: 'AdminReviewing', display: 'อยู่ในขั้นพิจารณา' },
     { id: 2, value: 'AdminApproved', display: 'ผ่านการอนุมัติ' },
     { id: 3, value: 'AdminNotApproved', display: 'ไม่ผ่านการอนุมัติ' },

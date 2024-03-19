@@ -6,11 +6,11 @@
 <ng-container *ngTemplateOutlet="badgePendingReview"></ng-container>
 } @else if(cellValue === "Reviewing") {
 <ng-container *ngTemplateOutlet="badgeReviewing"></ng-container>
-}@else if(cellValue === "Approved") {
+} @else if(cellValue === "Approved") {
 <ng-container *ngTemplateOutlet="badgeApproved"></ng-container>
-}@else if(cellValue === "Revise") {
+} @else if(cellValue === "Revise") {
 <ng-container *ngTemplateOutlet="badgeRevise"></ng-container>
-}@else if(cellValue === "NotApproved") {
+} @else if(cellValue === "NotApproved") {
 <ng-container *ngTemplateOutlet="badgeNotApproved"></ng-container>
 } } @default { <ng-container *ngTemplateOutlet="text"></ng-container>} }
 
