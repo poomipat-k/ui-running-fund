@@ -156,8 +156,16 @@ export class ApplicantProjectDetailsComponent implements OnInit, OnDestroy {
     return this.data?.[0]?.projectStatus || '';
   }
 
+  get projectCreatedBy(): number {
+    return this.data?.[0]?.userId || 0;
+  }
+
   get isAdmin(): boolean {
     return this.currentUser?.userRole === 'admin';
+  }
+
+  get isApplicant(): boolean {
+    return this.currentUser?.userRole === 'applicant';
   }
 
   ngOnInit(): void {
@@ -203,7 +211,7 @@ export class ApplicantProjectDetailsComponent implements OnInit, OnDestroy {
     this.subs.push(
       this.projectService
         .getApplicantProjectDetails(this.projectCode)
-        .subscribe((result) => {
+        .subscribe((result: ApplicantDetailsItem[]) => {
           if (result && result.length > 0) {
             this.pathDisplay = `${this.projectCode} ${result[0].projectName}`;
             this.data = result;
@@ -276,17 +284,32 @@ export class ApplicantProjectDetailsComponent implements OnInit, OnDestroy {
   }
 
   onDownloadFormZipClick() {
-    this.subs.push(
-      this.s3Service
-        .getAttachmentsPresigned(
-          `${this.projectCode}/zip/${this.projectCode}_แบบฟอร์ม.zip`
-        )
-        .subscribe((result) => {
-          if (result?.URL) {
-            window.open(result.URL);
-          }
-        })
-    );
+    if (this.isApplicant) {
+      this.subs.push(
+        this.s3Service
+          .getAttachmentsPresigned(
+            `${this.projectCode}/zip/${this.projectCode}_แบบฟอร์ม.zip`
+          )
+          .subscribe((result) => {
+            if (result?.URL) {
+              window.open(result.URL);
+            }
+          })
+      );
+    } else {
+      this.subs.push(
+        this.s3Service
+          .getAttachmentsPresigned(
+            `${this.projectCode}/zip/${this.projectCode}_แบบฟอร์ม.zip`,
+            this.projectCreatedBy
+          )
+          .subscribe((result) => {
+            if (result?.URL) {
+              window.open(result.URL);
+            }
+          })
+      );
+    }
   }
 
   onDownloadItemClick(objectKey: string) {
@@ -295,15 +318,30 @@ export class ApplicantProjectDetailsComponent implements OnInit, OnDestroy {
       return;
     }
     const prefix = split[split.length - 1];
-    this.subs.push(
-      this.s3Service
-        .getAttachmentsPresigned(`${this.projectCode}/${prefix}`)
-        .subscribe((result) => {
-          if (result?.URL) {
-            window.open(result.URL);
-          }
-        })
-    );
+    if (this.isApplicant) {
+      this.subs.push(
+        this.s3Service
+          .getAttachmentsPresigned(`${this.projectCode}/${prefix}`)
+          .subscribe((result) => {
+            if (result?.URL) {
+              window.open(result.URL);
+            }
+          })
+      );
+    } else {
+      this.subs.push(
+        this.s3Service
+          .getAttachmentsPresigned(
+            `${this.projectCode}/${prefix}`,
+            this.projectCreatedBy
+          )
+          .subscribe((result) => {
+            if (result?.URL) {
+              window.open(result.URL);
+            }
+          })
+      );
+    }
   }
 
   getDisplayDate(dateStr: string): string {
