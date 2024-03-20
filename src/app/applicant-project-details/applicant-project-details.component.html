@@ -36,12 +36,7 @@
       <div class="status mgl-56">
         <h3 class="header">สถานะการดำเนินการ</h3>
 
-        <app-table-cell-template
-          [cellType]="statusCellType"
-          [cellValue]="projectStatus"
-        ></app-table-cell-template>
-
-        @if (isAdmin) {
+        @if (isAdmin && adminEditMode) {
         <app-com-select-dropdown-template
           [form]="form"
           controlName="projectStatus"
@@ -49,6 +44,11 @@
           [defaultValue]="projectStatus"
           dropdownWidth="19.6rem"
         ></app-com-select-dropdown-template>
+        } @else {
+        <app-table-cell-template
+          [cellType]="statusCellType"
+          [cellValue]="projectStatus"
+        ></app-table-cell-template>
         }
       </div>
 
@@ -115,7 +115,7 @@
         เอกสารอื่นๆ<span class="header__light">เช่น Final Report ฯลฯ</span>
       </h3>
       <!-- Upload file button -->
-      @if (editMode) {
+      @if (applicantEditMode) {
       <div class="mgt-16">
         <app-com-upload-button
           [filesSubject]="additionFilesSubject"
@@ -166,7 +166,7 @@
         </p>
         } }
       </div>
-      @if (!editMode) {
+      @if (!applicantEditMode) {
       <div class="summary__table">
         <div class="summary__table__col">
           <p class="summary__text">คะแนนรวม</p>
@@ -186,7 +186,7 @@
     </div>
 
     <!-- REMARK -->
-    @if (!editMode) {
+    @if (!applicantEditMode) {
     <div class="mgt-43">
       <h3 class="remark__header">หมายเหตุ</h3>
       <p class="remark__content mgt-11">
@@ -196,7 +196,7 @@
     }
 
     <div class="button__container mgt-48">
-      @if (editMode) {
+      @if (applicantEditMode) {
       <button
         class="button button--next"
         (click)="onConfirmUpload()"
@@ -204,13 +204,16 @@
       >
         บันทึก
       </button>
-      <button class="button button--cancel" (click)="changeToViewMode()">
+      <button
+        class="button button--cancel"
+        (click)="changeToApplicantViewMode()"
+      >
         ยกเลิก
       </button>
       } @else {
       <button
         class="button button--next"
-        (click)="changeToEditMode()"
+        (click)="changeToApplicantEditMode()"
         [disabled]="projectStatus !== 'Revise'"
       >
         แก้ไข
@@ -221,7 +224,7 @@
       }
     </div>
     <!-- Applicant view END -->
-    } @else if (currentUser.userRole === 'admin') {
+    } @else if (isAdmin) {
     <div>
       <div>
         <app-com-radio

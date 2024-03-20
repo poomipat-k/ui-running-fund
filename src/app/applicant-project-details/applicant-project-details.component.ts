@@ -64,7 +64,9 @@ export class ApplicantProjectDetailsComponent implements OnInit, OnDestroy {
   protected additionFiles: File[] = [];
   protected additionFilesSubject = new BehaviorSubject<File[]>([]);
 
-  protected editMode = false;
+  protected applicantEditMode = false;
+  protected adminEditMode = false;
+
   protected pathDisplay = '';
   protected downloadButtonAction = '';
 
@@ -318,13 +320,13 @@ export class ApplicantProjectDetailsComponent implements OnInit, OnDestroy {
       .join('-');
   }
 
-  changeToEditMode() {
-    this.editMode = true;
+  changeToApplicantEditMode() {
+    this.applicantEditMode = true;
   }
 
-  changeToViewMode() {
+  changeToApplicantViewMode() {
     this.additionFilesSubject.next([]);
-    this.editMode = false;
+    this.applicantEditMode = false;
   }
 
   onBackToDashboard() {
@@ -351,7 +353,7 @@ export class ApplicantProjectDetailsComponent implements OnInit, OnDestroy {
             this.displaySuccessPopup();
             setTimeout(() => {
               this.closeSuccessPopup();
-              this.changeToViewMode();
+              this.changeToApplicantViewMode();
             }, 2000);
           }
         },
