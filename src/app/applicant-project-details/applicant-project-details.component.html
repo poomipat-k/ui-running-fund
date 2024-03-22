@@ -146,12 +146,12 @@
       <!-- END Addition -->
     </div>
 
-    @if (currentUser.userRole === 'applicant') {
+    @if (isApplicant) {
     <!-- Applicant view START -->
     <div class="summary__container mgt-70">
       <h2 class="summary__header">การอนุมัติโครงการ</h2>
       <div class="summary__status">
-        <p class="summary__text">สภานะ:</p>
+        <p class="summary__text">สถานะ:</p>
         @if (data[0]) { @if (data[0].projectStatus === 'Approved') {
         <p class="summary__status__text summary__status__approved">
           ผ่านการอนุมัติ
@@ -225,16 +225,60 @@
     </div>
     <!-- Applicant view END -->
     } @else if (isAdmin) {
-    <div>
+    <div class="summary__container mgt-70">
+      <h2 class="summary__header">การอนุมัติโครงการ</h2>
       <div>
         <app-com-radio
           [form]="form"
-          controlName="approveStatus"
+          controlName="projectStatus"
           [options]="adminStatusOptions"
-          radioStyle="review-3b"
           fontSize="18px"
+          direction="horizontal"
+          [disabled]="!adminEditMode"
         ></app-com-radio>
       </div>
+      @if (!adminEditMode) {
+      <div class="summary__table">
+        <div class="summary__table__col">
+          <p class="summary__text">คะแนนรวม</p>
+          <p class="summary__money__text">{{ adminScore }}</p>
+        </div>
+        <div class="summary__table__col">
+          <p class="summary__text">จำนวนเงินทุน</p>
+          <div class="summary__money">
+            <p class="summary__money__text">{{ approvedFund }}</p>
+            @if (data[0] && data[0].fundApprovedAmount) {
+            <p class="summary__money__text">บาท</p>
+            }
+          </div>
+        </div>
+      </div>
+      }
+
+      <div class="mgt-18">
+        <h3 class="remark__header">หมายเหตุ</h3>
+        <p class="remark__content mgt-11">
+          {{ adminComment }}
+        </p>
+      </div>
+    </div>
+
+    <div class="button__container mgt-48">
+      @if (adminEditMode) {
+      <button class="button button--next" (click)="onAdminSubmitForm()">
+        บันทึก
+      </button>
+      <button class="button button--cancel" (click)="changeToAdminViewMode()">
+        ยกเลิก
+      </button>
+      } @else {
+      <button class="button button--next" (click)="changeToAdminEditMode()">
+        แก้ไข
+      </button>
+      <button class="button button--cancel" (click)="onBackToDashboard()">
+        กลับ
+      </button>
+      }
     </div>
     }
   </div>

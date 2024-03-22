@@ -170,12 +170,6 @@ export class ApplicantProjectDetailsComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.themeService.changeBackgroundColor(BackgroundColor.gray);
-    this.loadProjectDetails();
-    this.loadProjectFiles();
-
-    this.subToSelectedFilesChanged();
-    // for admin
-
     this.subs.push(
       this.userService.currentUserSubject$.subscribe((user) => {
         if (user?.id > 0) {
@@ -186,6 +180,11 @@ export class ApplicantProjectDetailsComponent implements OnInit, OnDestroy {
         }
       })
     );
+
+    this.loadProjectDetails();
+    this.loadProjectFiles();
+
+    this.subToSelectedFilesChanged();
   }
 
   ngOnDestroy(): void {
@@ -194,9 +193,18 @@ export class ApplicantProjectDetailsComponent implements OnInit, OnDestroy {
 
   private initForm() {
     this.form = new FormGroup({
-      approveStatus: new FormControl(null, Validators.required),
-      projectStatus: new FormControl(null, Validators.required),
+      approveStatus: new FormControl(
+        null,
+        // { value: null, disabled: !this.adminEditMode },
+        Validators.required
+      ),
+      projectStatus: new FormControl(
+        null,
+        // { value: null, disabled: !this.adminEditMode },
+        Validators.required
+      ),
     });
+    this.form.disable();
   }
 
   private subToSelectedFilesChanged() {
@@ -212,6 +220,7 @@ export class ApplicantProjectDetailsComponent implements OnInit, OnDestroy {
       this.projectService
         .getApplicantProjectDetails(this.projectCode)
         .subscribe((result: ApplicantDetailsItem[]) => {
+          console.log('===result', result);
           if (result && result.length > 0) {
             this.pathDisplay = `${this.projectCode} ${result[0].projectName}`;
             this.data = result;
@@ -367,8 +376,28 @@ export class ApplicantProjectDetailsComponent implements OnInit, OnDestroy {
     this.applicantEditMode = false;
   }
 
+  changeToAdminEditMode() {
+    this.adminEditMode = true;
+    this.form.enable();
+  }
+
+  changeToAdminViewMode() {
+    this.adminEditMode = false;
+    if (this.data?.[0]) {
+      console.log('==this.data?.[0]', this.data?.[0]);
+      this.form.patchValue({
+        projectStatus: this.data[0].projectStatus,
+      });
+    }
+    this.form.disable();
+  }
+
   onBackToDashboard() {
     this.router.navigate(['/dashboard']);
+  }
+
+  onAdminSubmitForm() {
+    console.log('===onAdminSubmitForm form', this.form);
   }
 
   onConfirmUpload() {
