@@ -292,12 +292,12 @@ export class ApplicantProjectDetailsComponent implements OnInit, OnDestroy {
       });
   }
 
-  onDownloadFormZipClick() {
+  onDownloadFormPdfClicked() {
     if (this.isApplicant) {
       this.subs.push(
         this.s3Service
           .getAttachmentsPresigned(
-            `${this.projectCode}/zip/${this.projectCode}_แบบฟอร์ม.zip`
+            `${this.projectCode}/${this.projectCode}_แบบฟอร์ม.pdf`
           )
           .subscribe((result) => {
             if (result?.URL) {
@@ -309,7 +309,7 @@ export class ApplicantProjectDetailsComponent implements OnInit, OnDestroy {
       this.subs.push(
         this.s3Service
           .getAttachmentsPresigned(
-            `${this.projectCode}/zip/${this.projectCode}_แบบฟอร์ม.zip`,
+            `${this.projectCode}/zip/${this.projectCode}_แบบฟอร์ม.pdf`,
             this.projectCreatedBy
           )
           .subscribe((result) => {
