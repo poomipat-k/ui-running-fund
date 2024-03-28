@@ -61,9 +61,15 @@
         @for (item of data; track $index) {
         <div class="row">
           <div class="details-row flex-basis-history">
+            @if (isAdmin && item.reviewId) {
             <a class="navLink" [routerLink]="getReviewerPath(item)">{{
               "ดูผลการกลั่นกรอง" + ($index + 1)
             }}</a>
+            } @else if (isApplicant && item.reviewId) {
+            <p>
+              {{ "ดูผลการกลั่นกรอง" + ($index + 1) }}
+            </p>
+            }
           </div>
 
           <p class="details-row flex-basis-date">

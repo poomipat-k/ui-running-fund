@@ -224,6 +224,7 @@ export class ApplicantProjectDetailsComponent implements OnInit, OnDestroy {
           if (result && result.length > 0) {
             this.pathDisplay = `${this.projectCode} ${result[0].projectName}`;
             this.data = result;
+            console.log('===this.data', this.data);
           } else {
             console.error(`project ${this.projectCode} does not exist`);
             this.router.navigate(['/dashboard']);
