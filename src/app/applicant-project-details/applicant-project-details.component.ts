@@ -152,7 +152,7 @@ export class ApplicantProjectDetailsComponent implements OnInit, OnDestroy {
   }
 
   get adminComment(): string {
-    return this.data?.[0]?.adminComment || '';
+    return this.data?.[0]?.adminComment || '-';
   }
   get projectStatus(): string {
     return this.data?.[0]?.projectStatus || '';

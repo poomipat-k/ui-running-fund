@@ -1,9 +1,13 @@
 @switch (cellType) { @case ('DownloadIcon') {
 <ng-container *ngTemplateOutlet="downloadIcon"></ng-container>
-} @case ('Badge') { @if (cellValue === 'Reviewed') {
+} @case ('Badge') {
+<!-- Badge -->
+<!-- Reviewer -->
+@if (cellValue === 'Reviewed') {
 <ng-container *ngTemplateOutlet="badgeReviewed"></ng-container>
 } @else if(cellValue === 'PendingReview') {
 <ng-container *ngTemplateOutlet="badgePendingReview"></ng-container>
+<!-- Reviewer -->
 } @else if(cellValue === "Reviewing") {
 <ng-container *ngTemplateOutlet="badgeReviewing"></ng-container>
 } @else if(cellValue === "Approved") {
