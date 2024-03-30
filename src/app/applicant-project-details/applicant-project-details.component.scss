@@ -54,7 +54,6 @@
 .review {
   &__container {
     display: flex;
-    padding-right: 7rem;
   }
 }
 
@@ -77,6 +76,29 @@
   }
 }
 
+.otherFiles {
+  display: flex;
+  gap: 1.1rem;
+  align-items: center;
+
+  &__downloadLink {
+    display: flex;
+    align-items: center;
+    padding: 1rem;
+    gap: 7px;
+    cursor: pointer;
+  }
+
+  &__text {
+    font-family: $inter;
+    font-weight: 400;
+    font-size: 1.8rem;
+    line-height: 2.2rem;
+    text-decoration: underline;
+    color: #000;
+  }
+}
+
 .overview-table {
   display: flex;
   flex-direction: column;
@@ -86,7 +108,10 @@
 .row {
   display: flex;
   flex: 1;
-  // justify-content: space-evenly;
+
+  &--applicant {
+    justify-content: space-around;
+  }
 }
 
 .attachments {
@@ -171,15 +196,6 @@
   font-size: 2rem;
   line-height: 3.3rem;
   font-weight: 600;
-
-  &__light {
-    font-family: $custom-font;
-    font-weight: 400;
-    font-size: 1.8rem;
-    line-height: 3rem;
-    color: #000;
-    margin-left: 1.1rem;
-  }
 }
 
 .summary {
@@ -434,5 +450,14 @@
     visibility: visible; /* Show the snackbar */
     -webkit-animation: fadein 0.5s, fadeout 0.5s 1.5s;
     animation: fadein 0.5s, fadeout 0.5s 1.5s;
+  }
+}
+
+.pdr {
+  &-48 {
+    padding-right: 4.8rem;
+  }
+  &-70 {
+    padding-right: 7rem;
   }
 }

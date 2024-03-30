@@ -1,6 +1,6 @@
 export const environment = {
-  production: false,
-  apiUrl: 'http://localhost:8080/api/v1',
+  production: false, // not sure
+  apiUrl: 'http://api.poomipat.net:8080/api/v1',
   reviewCriteriaVersion: 1,
   exampleFiles: {
     reportTemplate:

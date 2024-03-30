@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { BehaviorSubject } from 'rxjs';
+import { environment } from '../../../environments/environment';
 import { RadioComponent } from '../../components/radio/radio.component';
 import { UploadButtonComponent } from '../../components/upload-button/upload-button.component';
 import { RadioOption } from '../../shared/models/radio-option';
@@ -19,6 +20,8 @@ export class CollaborateComponent {
   @Input() filesSubject: BehaviorSubject<File[]>;
 
   @Output() clearSelectedFiles = new EventEmitter();
+
+  protected collaborationExampleUrl = environment.exampleFiles.collaboration;
 
   // Getters
   get uploadButtonDisabled(): boolean {

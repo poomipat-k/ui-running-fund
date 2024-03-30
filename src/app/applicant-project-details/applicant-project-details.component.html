@@ -9,7 +9,13 @@
     <h1 class="section__header">{{ pathDisplay }}</h1>
     <div class="hr mgt-25 mgb-42"></div>
 
-    <div class="review__container">
+    <div
+      [ngClass]="{
+        review__container: true,
+        'pdr-48': isApplicant,
+        'pdr-70': isAdmin
+      }"
+    >
       <app-com-button (click)="onDownloadFormPdfClicked()">
         <div class="button-content">
           <div>โหลดเอกสาร</div>
@@ -32,8 +38,8 @@
           </svg>
         </div>
       </app-com-button>
-      <!-- Status -->
       <div class="status mgl-56">
+        <!-- Status -->
         <h3 class="header">สถานะการดำเนินการ</h3>
 
         @if (isAdmin && adminEditMode) {
@@ -52,6 +58,29 @@
         }
       </div>
 
+      <!-- Review history start -->
+      @if (isApplicant) {
+      <div class="overview-table flex-1">
+        <div class="row row--applicant">
+          <h3 class="header">ประวัติการทำการ</h3>
+          <h3 class="header">วันที่ทำการ</h3>
+        </div>
+        @for (item of data; track $index) {
+        <div class="row row--applicant">
+          <div class="details-row">
+            @if (item.reviewId) {
+            <p>
+              {{ "ดูผลการกลั่นกรอง" + ($index + 1) }}
+            </p>
+            }
+          </div>
+          <p class="details-row">
+            {{ getDisplayDate(item.reviewedAt) }}
+          </p>
+        </div>
+        }
+      </div>
+      } @else if (isAdmin) {
       <div class="overview-table mgl-80 flex-1">
         <div class="row">
           <h3 class="header flex-basis-history">ประวัติการทำการ</h3>
@@ -61,14 +90,10 @@
         @for (item of data; track $index) {
         <div class="row">
           <div class="details-row flex-basis-history">
-            @if (isAdmin && item.reviewId) {
+            @if ( item.reviewId) {
             <a class="navLink" [routerLink]="getReviewerPath(item)">{{
               "ดูผลการกลั่นกรอง" + ($index + 1)
             }}</a>
-            } @else if (isApplicant && item.reviewId) {
-            <p>
-              {{ "ดูผลการกลั่นกรอง" + ($index + 1) }}
-            </p>
             }
           </div>
 
@@ -82,6 +107,8 @@
         </div>
         }
       </div>
+      }
+      <!-- Review history end -->
     </div>
 
     <div class="hr mgt-69"></div>
@@ -117,9 +144,31 @@
     </div>
 
     <div class="mgt-35">
-      <h3 class="header">
-        เอกสารอื่นๆ<span class="header__light">เช่น Final Report ฯลฯ</span>
-      </h3>
+      <div class="otherFiles">
+        <h3 class="header">เอกสารรายงานฉบับสมบูรณ์โครงการ</h3>
+        <div class="otherFiles__downloadLink">
+          <svg
+            width="16"
+            height="16"
+            viewBox="0 0 16 16"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M8 12L3 7L4.4 5.55L7 8.15V0H9V8.15L11.6 5.55L13 7L8 12ZM2 16C1.45 16 0.979167 15.8042 0.5875 15.4125C0.195833 15.0208 0 14.55 0 14V11H2V14H14V11H16V14C16 14.55 15.8042 15.0208 15.4125 15.4125C15.0208 15.8042 14.55 16 14 16H2Z"
+              fill="#344054"
+              [ngClass]="{
+                'button-icon': true,
+                'button-content__hover': downloadButtonAction === 'hover',
+                'button-content__active': downloadButtonAction === 'active'
+              }"
+            />
+          </svg>
+          <a class="otherFiles__text" target="_blank" [href]="reportTemplateUrl"
+            >ดาวน์โหลดแบบฟอร์มรายงานฉบับสมบูรณ์</a
+          >
+        </div>
+      </div>
       <!-- Upload file button -->
       @if (applicantEditMode) {
       <div class="mgt-16">
@@ -174,10 +223,6 @@
       </div>
       @if (!applicantEditMode) {
       <div class="summary__table">
-        <div class="summary__table__col">
-          <p class="summary__text">คะแนนรวม</p>
-          <p class="summary__money__text">{{ adminScore }}</p>
-        </div>
         <div class="summary__table__col">
           <p class="summary__text">จำนวนเงินทุน</p>
           <div class="summary__money">

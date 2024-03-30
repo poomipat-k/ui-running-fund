@@ -4,6 +4,7 @@ import { BehaviorSubject, Subscription } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
+import { environment } from '../../environments/environment';
 import { ButtonComponent } from '../components/button/button/button.component';
 import { ErrorPopupComponent } from '../components/error-popup/error-popup.component';
 import { RadioComponent } from '../components/radio/radio.component';
@@ -69,6 +70,7 @@ export class ApplicantProjectDetailsComponent implements OnInit, OnDestroy {
 
   protected pathDisplay = '';
   protected downloadButtonAction = '';
+  protected reportTemplateUrl = environment.exampleFiles.reportTemplate;
 
   protected statusCellType = ColumnTypeEnum.Badge;
   protected s3ObjectItems: {
