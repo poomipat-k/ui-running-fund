@@ -194,15 +194,17 @@
                 />
               </div>
             </div>
-            }
+            @if ($index !== s3ObjectItems.addition.length - 1) {
+            <div class="hr"></div>
+            } }
           </div>
         </div>
       </div>
       <!-- END Addition -->
     </div>
 
-    @if (isApplicant) {
     <!-- Applicant view START -->
+    @if (isApplicant) {
     <div class="summary__container mgt-70">
       <h2 class="summary__header">การอนุมัติโครงการ</h2>
       <div class="summary__status">
@@ -235,16 +237,6 @@
       </div>
       }
     </div>
-
-    <!-- REMARK -->
-    @if (!applicantEditMode) {
-    <div class="mgt-43">
-      <h3 class="remark__header">หมายเหตุ</h3>
-      <p class="remark__content mgt-11">
-        {{ adminComment }}
-      </p>
-    </div>
-    }
 
     <div class="button__container mgt-48">
       @if (applicantEditMode) {
