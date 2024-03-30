@@ -2,6 +2,7 @@ import { ViewportScroller } from '@angular/common';
 import { Component, Input, inject } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { BehaviorSubject } from 'rxjs';
+import { environment } from '../../../environments/environment';
 import { UploadButtonComponent } from '../../components/upload-button/upload-button.component';
 
 @Component({
@@ -29,6 +30,11 @@ export class AttachmentComponent {
   @Input() routeUploadButtonTouched = false;
   @Input() eventMapUploadButtonTouched = false;
   @Input() eventDetailsUploadButtonTouched = false;
+
+  protected exampleMarketing = environment.exampleFiles.marketing;
+  protected exampleRoute = environment.exampleFiles.route;
+  protected exampleEventMap = environment.exampleFiles.eventMap;
+  protected exampleEventDetails = environment.exampleFiles.eventDetails;
 
   private readonly scroller: ViewportScroller = inject(ViewportScroller);
 
