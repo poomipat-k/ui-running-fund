@@ -633,12 +633,12 @@ export class ApplicantFlowPagesComponent implements OnInit, OnDestroy {
           this.apiLoading = false;
           if (result) {
             // TODO: uncomment this
-            // this.form.disable();
+            this.form.disable();
             this.showSuccessPopup = true;
             setTimeout(() => {
               this.showSuccessPopup = false;
               // TODO: uncomment this
-              // this.incrementStep();
+              this.incrementStep();
             }, 2000);
           }
         },
