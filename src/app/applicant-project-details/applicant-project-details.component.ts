@@ -7,10 +7,12 @@ import { Router, RouterModule } from '@angular/router';
 import { environment } from '../../environments/environment';
 import { ButtonComponent } from '../components/button/button/button.component';
 import { ErrorPopupComponent } from '../components/error-popup/error-popup.component';
+import { InputNumberComponent } from '../components/input-number/input-number.component';
 import { RadioComponent } from '../components/radio/radio.component';
 import { SelectDropdownTemplateComponent } from '../components/select-dropdown-template/select-dropdown-template.component';
 import { SuccessPopupComponent } from '../components/success-popup/success-popup.component';
 import { TableCellTemplateComponent } from '../components/table-cell-template/table-cell-template.component';
+import { TextareaComponent } from '../components/textarea/textarea.component';
 import { UploadButtonComponent } from '../components/upload-button/upload-button.component';
 import { ProjectService } from '../services/project.service';
 import { S3Service } from '../services/s3.service';
@@ -36,6 +38,8 @@ import { User } from '../shared/models/user';
     RouterModule,
     RadioComponent,
     SelectDropdownTemplateComponent,
+    InputNumberComponent,
+    TextareaComponent,
   ],
   templateUrl: './applicant-project-details.component.html',
   styleUrl: './applicant-project-details.component.scss',
@@ -92,7 +96,17 @@ export class ApplicantProjectDetailsComponent implements OnInit, OnDestroy {
     addition: [],
   };
 
-  protected projectStatusOptions: RadioOption[] = [
+  protected readonly statusOrder = {
+    Reviewing: 1,
+    Reviewed: 2,
+    Revise: 3,
+    NotApproved: 4,
+    Approved: 5,
+    Start: 6,
+    Completed: 7,
+  };
+
+  protected projectStatusSecondaryOptions: RadioOption[] = [
     {
       id: 1,
       value: 'Reviewing',
@@ -110,10 +124,10 @@ export class ApplicantProjectDetailsComponent implements OnInit, OnDestroy {
     },
   ];
 
-  protected adminStatusOptions: RadioOption[] = [
-    { id: 1, value: 'AdminReviewing', display: 'อยู่ในขั้นพิจารณา' },
-    { id: 2, value: 'AdminApproved', display: 'ผ่านการอนุมัติ' },
-    { id: 3, value: 'AdminNotApproved', display: 'ไม่ผ่านการอนุมัติ' },
+  protected projectStatusPrimaryOptions: RadioOption[] = [
+    { id: 1, value: 'CurrentBeforeApprove', display: 'อยู่ในขั้นพิจารณา' },
+    { id: 2, value: 'Approved', display: 'ผ่านการอนุมัติ' },
+    { id: 3, value: 'NotApproved', display: 'ไม่ผ่านการอนุมัติ' },
   ];
 
   protected readonly attachmentGroupNames = [
@@ -195,16 +209,11 @@ export class ApplicantProjectDetailsComponent implements OnInit, OnDestroy {
 
   private initForm() {
     this.form = new FormGroup({
-      approveStatus: new FormControl(
-        null,
-        // { value: null, disabled: !this.adminEditMode },
-        Validators.required
-      ),
-      projectStatus: new FormControl(
-        null,
-        // { value: null, disabled: !this.adminEditMode },
-        Validators.required
-      ),
+      projectStatusPrimary: new FormControl(null, Validators.required),
+      projectStatusSecondary: new FormControl(null, Validators.required),
+      sumScore: new FormControl(null),
+      approvedFund: new FormControl(null),
+      remark: new FormControl(null),
     });
     this.form.disable();
   }
@@ -226,7 +235,7 @@ export class ApplicantProjectDetailsComponent implements OnInit, OnDestroy {
           if (result && result.length > 0) {
             this.pathDisplay = `${this.projectCode} ${result[0].projectName}`;
             this.data = result;
-            console.log('===this.data', this.data);
+            // this.form.patchValue({});
           } else {
             console.error(`project ${this.projectCode} does not exist`);
             this.router.navigate(['/dashboard']);
@@ -312,7 +321,7 @@ export class ApplicantProjectDetailsComponent implements OnInit, OnDestroy {
       this.subs.push(
         this.s3Service
           .getAttachmentsPresigned(
-            `${this.projectCode}/zip/${this.projectCode}_แบบฟอร์ม.pdf`,
+            `${this.projectCode}/${this.projectCode}_แบบฟอร์ม.pdf`,
             this.projectCreatedBy
           )
           .subscribe((result) => {

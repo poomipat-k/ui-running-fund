@@ -45,8 +45,8 @@
         @if (isAdmin && adminEditMode) {
         <app-com-select-dropdown-template
           [form]="form"
-          controlName="projectStatus"
-          [items]="projectStatusOptions"
+          controlName="projectStatusSecondary"
+          [items]="projectStatusSecondaryOptions"
           [defaultValue]="projectStatus"
           dropdownWidth="19.6rem"
         ></app-com-select-dropdown-template>
@@ -207,7 +207,7 @@
     @if (isApplicant) {
     <div class="summary__container mgt-70">
       <h2 class="summary__header">การอนุมัติโครงการ</h2>
-      <div class="summary__status">
+      <div class="summary__status mgt-11">
         <p class="summary__text">สถานะ:</p>
         @if (data[0]) { @if (data[0].projectStatus === 'Approved') {
         <p class="summary__status__text summary__status__approved">
@@ -224,10 +224,10 @@
         } }
       </div>
       @if (!applicantEditMode) {
-      <div class="summary__table">
+      <div class="summary__table mgt-21">
         <div class="summary__table__col">
           <p class="summary__text">จำนวนเงินทุน</p>
-          <div class="summary__money">
+          <div class="summary__money mgt-11">
             <p class="summary__money__text">{{ approvedFund }}</p>
             @if (data[0] && data[0].fundApprovedAmount) {
             <p class="summary__money__text">บาท</p>
@@ -240,9 +240,9 @@
 
     <!-- REMARK -->
     @if (!applicantEditMode) {
-    <div class="mgt-43">
+    <div class="mgt-33">
       <h3 class="remark__header">หมายเหตุ</h3>
-      <p class="remark__content mgt-11">
+      <p class="remark__content mgt-21">
         {{ adminComment }}
       </p>
     </div>
@@ -280,25 +280,65 @@
     } @else if (isAdmin) {
     <div class="summary__container mgt-70">
       <h2 class="summary__header">การอนุมัติโครงการ</h2>
-      <div>
+      <div class="mgt-27">
         <app-com-radio
           [form]="form"
-          controlName="projectStatus"
-          [options]="adminStatusOptions"
+          controlName="projectStatusPrimary"
+          [options]="projectStatusPrimaryOptions"
           fontSize="18px"
           direction="horizontal"
           [disabled]="!adminEditMode"
         ></app-com-radio>
       </div>
-      @if (!adminEditMode) {
-      <div class="summary__table">
+      @if (adminEditMode) {
+      <div class="summary__table mgt-29">
         <div class="summary__table__col">
           <p class="summary__text">คะแนนรวม</p>
-          <p class="summary__money__text">{{ adminScore }}</p>
+          <div class="mgt-7">
+            <app-com-input-number
+              id="sumScore"
+              placeholder="คะแนน"
+              [form]="form"
+              controlName="sumScore"
+              width="8.4rem"
+            ></app-com-input-number>
+          </div>
         </div>
         <div class="summary__table__col">
           <p class="summary__text">จำนวนเงินทุน</p>
-          <div class="summary__money">
+          <div class="summary__money mgt-7">
+            <app-com-input-number
+              id="approvedFund"
+              placeholder="เงินทุน"
+              [form]="form"
+              controlName="approvedFund"
+              width="26.4rem"
+            ></app-com-input-number>
+            <p class="summary__money__text">บาท</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="mgt-21">
+        <h3 class="remark__header">หมายเหตุ</h3>
+        <div class="mgt-4">
+          <app-com-textarea
+            [form]="form"
+            controlName="remark"
+            placeholder=""
+            height="27.5rem"
+          ></app-com-textarea>
+        </div>
+      </div>
+      } @else {
+      <div class="summary__table mgt-21">
+        <div class="summary__table__col">
+          <p class="summary__text">คะแนนรวม</p>
+          <p class="summary__money__text mgt-11">{{ adminScore }}</p>
+        </div>
+        <div class="summary__table__col">
+          <p class="summary__text">จำนวนเงินทุน</p>
+          <div class="summary__money mgt-11">
             <p class="summary__money__text">{{ approvedFund }}</p>
             @if (data[0] && data[0].fundApprovedAmount) {
             <p class="summary__money__text">บาท</p>
@@ -306,14 +346,14 @@
           </div>
         </div>
       </div>
-      }
 
       <div class="mgt-18">
         <h3 class="remark__header">หมายเหตุ</h3>
-        <p class="remark__content mgt-11">
+        <p class="remark__content mgt-21">
           {{ adminComment }}
         </p>
       </div>
+      }
     </div>
 
     <div class="button__container mgt-48">

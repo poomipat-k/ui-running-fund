@@ -202,7 +202,7 @@
   &__container {
     display: flex;
     flex-direction: column;
-    gap: 1.5rem;
+    padding-right: 3.4rem;
   }
 
   &__header {
@@ -243,13 +243,13 @@
     &__col {
       display: flex;
       flex-direction: column;
-      gap: 1.3rem;
     }
   }
 
   &__money {
     display: flex;
     gap: 1.4rem;
+    align-items: center;
 
     &__text {
       font-family: $custom-font;
@@ -351,6 +351,9 @@
 }
 
 .mgt {
+  &-4 {
+    margin-top: 4px;
+  }
   &-6 {
     margin-top: 6px;
   }
@@ -371,16 +374,28 @@
     margin-top: 1.8rem;
   }
 
+  &-21 {
+    margin-top: 2.1rem;
+  }
+
   &-25 {
     margin-top: 2.5rem;
   }
 
-  &-35 {
-    margin-top: 3.5rem;
+  &-27 {
+    margin-top: 2.7rem;
   }
 
-  &-43 {
-    margin-top: 4.3rem;
+  &-29 {
+    margin-top: 2.9rem;
+  }
+
+  &-33 {
+    margin-top: 3.3rem;
+  }
+
+  &-35 {
+    margin-top: 3.5rem;
   }
 
   &-48 {
