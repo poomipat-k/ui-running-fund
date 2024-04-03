@@ -235,6 +235,10 @@ export class ApplicantProjectDetailsComponent implements OnInit, OnDestroy {
           if (result && result.length > 0) {
             this.pathDisplay = `${this.projectCode} ${result[0].projectName}`;
             this.data = result;
+            const first = this.data[0];
+            console.log('==first', first);
+            // statusOrder
+
             // this.form.patchValue({});
           } else {
             console.error(`project ${this.projectCode} does not exist`);
@@ -396,7 +400,6 @@ export class ApplicantProjectDetailsComponent implements OnInit, OnDestroy {
   changeToAdminViewMode() {
     this.adminEditMode = false;
     if (this.data?.[0]) {
-      console.log('==this.data?.[0]', this.data?.[0]);
       this.form.patchValue({
         projectStatus: this.data[0].projectStatus,
       });
