@@ -518,24 +518,49 @@
         <!-- 1.5.2 End -->
         <div class="subgroup">
           <h4 class="subgroup__header">1.5.3 การจัดประเภท VIP</h4>
-          <div class="pdl-20">
-            <app-com-radio
-              id="eventDetails.vip"
-              [form]="eventDetailsFormGroup"
-              [options]="vipOptions"
-              controlName="vip"
-              gap="1rem"
-            >
-            </app-com-radio>
-            @if (!eventDetailsFormGroup.get('vip')?.valid &&
-            eventDetailsFormGroup.get('vip')?.touched && formTouched) {
-            <div class="error">
-              <img src="/assets/error_icon.svg" alt="error icon" />
-              <p class="error__text">กรุณาเลือกตัวเลือก</p>
+          <div class="vip pdl-20">
+            <div class="mgt-10">
+              <app-com-radio
+                id="eventDetails.vip"
+                [form]="eventDetailsFormGroup"
+                [options]="vipOptions"
+                controlName="vip"
+                fontSize="16px"
+                gap="2rem"
+                [onChanged]="onVipChanged"
+              >
+              </app-com-radio>
+              @if (!eventDetailsFormGroup.get('vip')?.valid &&
+              eventDetailsFormGroup.get('vip')?.touched && formTouched) {
+              <div class="error">
+                <img src="/assets/error_icon.svg" alt="error icon" />
+                <p class="error__text">กรุณาเลือกตัวเลือก</p>
+              </div>
+              }
             </div>
-            }
+            <div>
+              <div class="vip__fee">
+                <p class="vip__fee__text mgt-10">โปรดระบุค่าสมัคร</p>
+                <app-com-input-number
+                  id="eventDetails.vipFee"
+                  placeholder="ค่าสมัคร"
+                  [form]="eventDetailsFormGroup"
+                  controlName="vipFee"
+                  width="18.9rem"
+                ></app-com-input-number>
+                <p class="vip__fee__text mgt-10">บาท</p>
+              </div>
+              @if (!eventDetailsFormGroup.get('vipFee')?.valid &&
+              eventDetailsFormGroup.get('vipFee')?.touched && formTouched) {
+              <div class="error vip__fee__error">
+                <img src="/assets/error_icon.svg" alt="error icon" />
+                <p class="error__text">กรุณาระบุค่าสมัคร</p>
+              </div>
+              }
+            </div>
           </div>
         </div>
+        <!-- 1.5.3 End -->
       </div>
     </div>
 

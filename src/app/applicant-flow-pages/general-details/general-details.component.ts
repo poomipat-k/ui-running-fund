@@ -247,6 +247,7 @@ export class GeneralDetailsComponent implements OnInit, OnDestroy {
     this.onDistrictChanged = this.onDistrictChanged.bind(this);
     this.onSubdistrictChanged = this.onSubdistrictChanged.bind(this);
     this.onOtherEventTypeChanged = this.onOtherEventTypeChanged.bind(this);
+    this.onVipChanged = this.onVipChanged.bind(this);
   }
 
   ngOnInit(): void {
@@ -532,6 +533,27 @@ export class GeneralDetailsComponent implements OnInit, OnDestroy {
     groupControl.removeControl('organizerName');
   }
 
+  onVipChanged(): void {
+    this.updateVipFeeDisableState();
+    this.form.patchValue({
+      general: {
+        eventDetails: {
+          vipFee: null,
+        },
+      },
+    });
+  }
+
+  private updateVipFeeDisableState(): void {
+    const control = this.form.get('general.eventDetails.vipFee');
+    if (this.form.value?.general?.eventDetails?.vip) {
+      control?.enable();
+      return;
+    }
+    control?.reset();
+    control?.disable();
+  }
+
   private getYearsOptions() {
     const currentYear = this.dateService.getCurrentYear();
     const years = [];
@@ -556,8 +578,8 @@ export class GeneralDetailsComponent implements OnInit, OnDestroy {
     }
 
     const generalFormGroup = this.form.get('general') as FormGroup;
-    // const errorId = this.getFirstErrorId(generalFormGroup);
     const errorId = this.getFirstErrorIdWithPrefix(generalFormGroup, '');
+    console.error('error field:', errorId);
     if (errorId && this.enableScroll) {
       this.scrollToId(errorId);
     }
@@ -666,5 +688,7 @@ export class GeneralDetailsComponent implements OnInit, OnDestroy {
       expectedParticipants: '>=5501',
       hasOrganizer: false,
     });
+
+    this.updateVipFeeDisableState();
   }
 }

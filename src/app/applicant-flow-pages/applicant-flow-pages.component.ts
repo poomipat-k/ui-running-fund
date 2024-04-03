@@ -129,7 +129,7 @@ export class ApplicantFlowPagesComponent implements OnInit, OnDestroy {
     this.initForm();
     this.loadApplicantSelfScoreCriteria();
     // Change page
-    // this.currentStep = 6;
+    this.currentStep = 1;
     this.devModeOn = true;
 
     this.subToUploadFileSubjects();
@@ -250,6 +250,13 @@ export class ApplicantFlowPagesComponent implements OnInit, OnDestroy {
             requiredCheckBoxFormArrayToBeCheckedValidator()
           ),
           vip: new FormControl(null, Validators.required),
+          vipFee: new FormControl(
+            {
+              value: null,
+              disabled: true,
+            },
+            [Validators.required, Validators.min(0)]
+          ),
         }),
         expectedParticipants: new FormControl(null, Validators.required),
         hasOrganizer: new FormControl(null, Validators.required),
@@ -526,6 +533,7 @@ export class ApplicantFlowPagesComponent implements OnInit, OnDestroy {
       this.currentStep === 1 &&
       this.generalDetailsComponent.validToGoNext()
     ) {
+      console.log('===this.form', this.form);
       this.incrementStep();
     } else if (
       this.currentStep === 2 &&
