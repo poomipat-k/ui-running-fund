@@ -4,6 +4,7 @@ import { BehaviorSubject, Subscription } from 'rxjs';
 import { CommonModule, ViewportScroller } from '@angular/common';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
+import { cloneDeep } from 'lodash-es';
 import { environment } from '../../environments/environment';
 import { ButtonComponent } from '../components/button/button/button.component';
 import { ErrorPopupComponent } from '../components/error-popup/error-popup.component';
@@ -105,18 +106,38 @@ export class ApplicantProjectDetailsComponent implements OnInit, OnDestroy {
   protected projectStatusSecondaryOptions: RadioOption[] = [
     {
       id: 1,
-      value: 'Reviewing',
+      value: 'standard__Reviewing',
       display: 'Reviewing',
     },
     {
       id: 2,
-      value: 'Revise',
-      display: 'Revise',
+      value: 'standard__Reviewed',
+      display: 'Reviewed',
     },
     {
       id: 3,
-      value: 'Approved',
+      value: 'standard__Revise',
+      display: 'Revised',
+    },
+    {
+      id: 4,
+      value: 'standard__NotApproved',
+      display: 'NotApproved',
+    },
+    {
+      id: 5,
+      value: 'standard__Approved',
       display: 'Approved',
+    },
+    {
+      id: 6,
+      value: 'standard__Start',
+      display: 'Start',
+    },
+    {
+      id: 7,
+      value: 'standard__Completed',
+      display: 'Completed',
     },
   ];
 
@@ -443,13 +464,20 @@ export class ApplicantProjectDetailsComponent implements OnInit, OnDestroy {
   }
 
   onAdminSubmitForm() {
-    console.log('===onAdminSubmitForm form', this.form);
     if (!this.formTouched) {
       this.formTouched = true;
     }
     if (this.validToSubmit()) {
-      console.log('===DO SUBMIT HERE');
+      const dataToSubmit = this.getFormValueForSubmit();
+      console.log('===DO SUBMIT HERE', dataToSubmit);
     }
+  }
+
+  private getFormValueForSubmit() {
+    const clonedData = cloneDeep(this.form.value);
+    let secondaryStatus: string = clonedData['projectStatusSecondary'];
+    secondaryStatus = secondaryStatus.replace(/^(standard__)/, '');
+    return clonedData;
   }
 
   private validToSubmit() {

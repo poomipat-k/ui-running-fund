@@ -19,10 +19,10 @@
 <!-- Standard -->
 } @else if (cellValue === "standard__Reviewing") {
 <ng-container *ngTemplateOutlet="badgeStandardReviewing"></ng-container>
-} @else if (cellValue === "standard__Revise") {
-<ng-container *ngTemplateOutlet="badgeStandardRevise"></ng-container>
 } @else if (cellValue === "standard__Reviewed") {
 <ng-container *ngTemplateOutlet="badgeStandardReviewed"></ng-container>
+} @else if (cellValue === "standard__Revise") {
+<ng-container *ngTemplateOutlet="badgeStandardRevise"></ng-container>
 } @else if (cellValue === "standard__NotApproved") {
 <ng-container *ngTemplateOutlet="badgeApplicantNotApproved"></ng-container>
 } @else if (cellValue === "standard__Approved") {
@@ -125,21 +125,21 @@
   </div>
 </ng-template>
 
-<ng-template #badgeStandardRevise>
-  <div class="badge__container badge__container--stdRevise">
-    <div class="badge__icon-container">
-      <img src="assets/corner-up-left.svg" alt="corner-up-left" />
-    </div>
-    <p class="badge__text badge__text--revise">มีการแก้ไข</p>
-  </div>
-</ng-template>
-
 <ng-template #badgeStandardReviewed>
   <div class="badge__container badge__container--stdReviewed">
     <div class="badge__icon-container">
       <app-com-svg-check pathClass="color--orange"></app-com-svg-check>
     </div>
     <p class="badge__text badge__text--stdReviewed">กลั่นกรองเรียบร้อย</p>
+  </div>
+</ng-template>
+
+<ng-template #badgeStandardRevise>
+  <div class="badge__container badge__container--stdRevise">
+    <div class="badge__icon-container">
+      <img src="assets/corner-up-left.svg" alt="corner-up-left" />
+    </div>
+    <p class="badge__text badge__text--revise">มีการแก้ไข</p>
   </div>
 </ng-template>
 

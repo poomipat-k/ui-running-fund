@@ -30,6 +30,7 @@ export class SelectDropdownTemplateComponent implements OnInit, OnDestroy {
   @Input() form: FormGroup;
   @Input() controlName = '';
   @Input() defaultValue: string;
+  @Input() cellPrefix = '';
 
   @Input() width = '100%';
   @Input() dropdownWidth = '100%';
@@ -46,7 +47,11 @@ export class SelectDropdownTemplateComponent implements OnInit, OnDestroy {
   protected showDropdown = false;
 
   get selectedValue() {
-    return this.form.get(this.controlName)?.value || this.defaultValue;
+    const val = this.form.get(this.controlName)?.value || this.defaultValue;
+    if (this.cellPrefix && !val.startsWith(this.cellPrefix)) {
+      return `${this.cellPrefix}${val}`;
+    }
+    return val;
   }
 
   ngOnInit(): void {
