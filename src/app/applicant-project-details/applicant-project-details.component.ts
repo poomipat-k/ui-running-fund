@@ -1,7 +1,7 @@
 import { Component, Input, OnDestroy, OnInit, inject } from '@angular/core';
 import { BehaviorSubject, Subscription } from 'rxjs';
 
-import { CommonModule } from '@angular/common';
+import { CommonModule, ViewportScroller } from '@angular/common';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
 import { environment } from '../../environments/environment';
@@ -47,6 +47,11 @@ import { User } from '../shared/models/user';
 export class ApplicantProjectDetailsComponent implements OnInit, OnDestroy {
   // url params
   @Input() projectCode: string;
+
+  private readonly scroller: ViewportScroller = inject(ViewportScroller);
+
+  protected enableScroll = true;
+  protected formTouched = false;
 
   protected currentUser: User;
 
@@ -96,7 +101,7 @@ export class ApplicantProjectDetailsComponent implements OnInit, OnDestroy {
     addition: [],
   };
 
-  protected readonly statusOrder = {
+  protected readonly STATUS_ORDER: { [key: string]: number } = {
     Reviewing: 1,
     Reviewed: 2,
     Revise: 3,
@@ -157,7 +162,7 @@ export class ApplicantProjectDetailsComponent implements OnInit, OnDestroy {
     return this.data?.[0]?.adminScore?.toString() || '-';
   }
 
-  get approvedFund(): string {
+  get fundApprovedAmount(): string {
     const amount = this.data?.[0]?.fundApprovedAmount || 0;
     if (amount > 0) {
       return this.numberFormatter.format(amount);
@@ -211,9 +216,9 @@ export class ApplicantProjectDetailsComponent implements OnInit, OnDestroy {
     this.form = new FormGroup({
       projectStatusPrimary: new FormControl(null, Validators.required),
       projectStatusSecondary: new FormControl(null, Validators.required),
-      sumScore: new FormControl(null),
-      approvedFund: new FormControl(null),
-      remark: new FormControl(null),
+      sumScore: new FormControl(null, [Validators.min(1), Validators.max(100)]),
+      fundApprovedAmount: new FormControl(null, [Validators.min(0)]),
+      adminComment: new FormControl(null),
     });
     this.form.disable();
   }
@@ -231,21 +236,38 @@ export class ApplicantProjectDetailsComponent implements OnInit, OnDestroy {
       this.projectService
         .getApplicantProjectDetails(this.projectCode)
         .subscribe((result: ApplicantDetailsItem[]) => {
-          console.log('===result', result);
           if (result && result.length > 0) {
             this.pathDisplay = `${this.projectCode} ${result[0].projectName}`;
             this.data = result;
-            const first = this.data[0];
-            console.log('==first', first);
-            // statusOrder
-
-            // this.form.patchValue({});
+            if (this.isAdmin) {
+              this.reloadAdminFormData();
+            }
           } else {
             console.error(`project ${this.projectCode} does not exist`);
             this.router.navigate(['/dashboard']);
           }
         })
     );
+  }
+
+  private updateProjectStatusPrimary(data: ApplicantDetailsItem) {
+    const orderValue = this.STATUS_ORDER[data.projectStatus];
+    if (!orderValue) {
+      return;
+    }
+    if (orderValue < this.STATUS_ORDER['NotApproved']) {
+      this.form.patchValue({
+        projectStatusPrimary: 'CurrentBeforeApprove',
+      });
+    } else if (orderValue === this.STATUS_ORDER['NotApproved']) {
+      this.form.patchValue({
+        projectStatusPrimary: 'NotApproved',
+      });
+    } else if (orderValue >= this.STATUS_ORDER['Approved']) {
+      this.form.patchValue({
+        projectStatusPrimary: 'Approved',
+      });
+    }
   }
 
   getReviewerPath(item: ApplicantDetailsItem) {
@@ -399,12 +421,22 @@ export class ApplicantProjectDetailsComponent implements OnInit, OnDestroy {
 
   changeToAdminViewMode() {
     this.adminEditMode = false;
-    if (this.data?.[0]) {
-      this.form.patchValue({
-        projectStatus: this.data[0].projectStatus,
-      });
-    }
+    this.reloadAdminFormData();
     this.form.disable();
+  }
+
+  private reloadAdminFormData() {
+    const first = this.data?.[0];
+    console.log('==first', first);
+    if (first) {
+      this.form.patchValue({
+        projectStatusSecondary: first.projectStatus,
+        sumScore: first.adminScore,
+        fundApprovedAmount: first.fundApprovedAmount,
+        adminComment: first.adminComment,
+      });
+      this.updateProjectStatusPrimary(first);
+    }
   }
 
   onBackToDashboard() {
@@ -413,6 +445,60 @@ export class ApplicantProjectDetailsComponent implements OnInit, OnDestroy {
 
   onAdminSubmitForm() {
     console.log('===onAdminSubmitForm form', this.form);
+    if (!this.formTouched) {
+      this.formTouched = true;
+    }
+    if (this.validToSubmit()) {
+      console.log('===DO SUBMIT HERE');
+    }
+  }
+
+  private validToSubmit() {
+    if (!this.isFormValid()) {
+      this.markFieldsTouched();
+      return false;
+    }
+    return true;
+  }
+
+  private markFieldsTouched() {
+    this.form.markAllAsTouched();
+    const errorId = this.getFirstErrorIdWithPrefix(this.form, '');
+    console.error('error field:', errorId);
+    if (errorId && this.enableScroll) {
+      this.scrollToId(errorId);
+    }
+  }
+
+  private scrollToId(id: string) {
+    this.scroller.setOffset([0, 120]);
+    this.scroller.scrollToAnchor(id);
+  }
+
+  private getFirstErrorIdWithPrefix(
+    rootGroup: FormGroup,
+    prefix: string
+  ): string {
+    const keys = Object.keys(rootGroup.controls);
+    for (const k of keys) {
+      if ((rootGroup.controls[k] as FormGroup)?.controls) {
+        const val = this.getFirstErrorIdWithPrefix(
+          rootGroup.controls[k] as FormGroup,
+          prefix ? `${prefix}.${k}` : k
+        );
+        if (val) {
+          return val;
+        }
+      }
+      if (!rootGroup.controls[k].valid) {
+        return prefix ? `${prefix}.${k}` : k;
+      }
+    }
+    return '';
+  }
+
+  private isFormValid(): boolean {
+    return this.form?.valid ?? false;
   }
 
   onConfirmUpload() {

@@ -228,7 +228,7 @@
         <div class="summary__table__col">
           <p class="summary__text">จำนวนเงินทุน</p>
           <div class="summary__money mgt-11">
-            <p class="summary__money__text">{{ approvedFund }}</p>
+            <p class="summary__money__text">{{ fundApprovedAmount }}</p>
             @if (data[0] && data[0].fundApprovedAmount) {
             <p class="summary__money__text">บาท</p>
             }
@@ -238,7 +238,7 @@
       }
     </div>
 
-    <!-- REMARK -->
+    <!-- Admin Comment -->
     @if (!applicantEditMode) {
     <div class="mgt-33">
       <h3 class="remark__header">หมายเหตุ</h3>
@@ -302,18 +302,34 @@
               controlName="sumScore"
               width="8.4rem"
             ></app-com-input-number>
+            @if (!form.get('sumScore')?.valid && form.get('sumScore')?.touched
+            && formTouched) {
+            <div class="error mgt-10">
+              <img src="/assets/error_icon.svg" alt="error icon" />
+              <p class="error__text">1-100</p>
+            </div>
+            }
           </div>
         </div>
         <div class="summary__table__col">
           <p class="summary__text">จำนวนเงินทุน</p>
           <div class="summary__money mgt-7">
-            <app-com-input-number
-              id="approvedFund"
-              placeholder="เงินทุน"
-              [form]="form"
-              controlName="approvedFund"
-              width="26.4rem"
-            ></app-com-input-number>
+            <div>
+              <app-com-input-number
+                id="fundApprovedAmount"
+                placeholder="เงินทุน"
+                [form]="form"
+                controlName="fundApprovedAmount"
+                width="26.4rem"
+              ></app-com-input-number>
+              @if (!form.get('fundApprovedAmount')?.valid &&
+              form.get('fundApprovedAmount')?.touched && formTouched) {
+              <div class="error mgt-10">
+                <img src="/assets/error_icon.svg" alt="error icon" />
+                <p class="error__text">กรุณาตรวจสอบจำนวนเงินทุน</p>
+              </div>
+              }
+            </div>
             <p class="summary__money__text">บาท</p>
           </div>
         </div>
@@ -324,7 +340,7 @@
         <div class="mgt-4">
           <app-com-textarea
             [form]="form"
-            controlName="remark"
+            controlName="adminComment"
             placeholder=""
             height="27.5rem"
           ></app-com-textarea>
@@ -339,7 +355,7 @@
         <div class="summary__table__col">
           <p class="summary__text">จำนวนเงินทุน</p>
           <div class="summary__money mgt-11">
-            <p class="summary__money__text">{{ approvedFund }}</p>
+            <p class="summary__money__text">{{ fundApprovedAmount }}</p>
             @if (data[0] && data[0].fundApprovedAmount) {
             <p class="summary__money__text">บาท</p>
             }
