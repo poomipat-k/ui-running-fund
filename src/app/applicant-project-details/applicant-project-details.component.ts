@@ -18,6 +18,7 @@ import { ProjectService } from '../services/project.service';
 import { S3Service } from '../services/s3.service';
 import { ThemeService } from '../services/theme.service';
 import { UserService } from '../services/user.service';
+import { STATUS_ORDER } from '../shared/constants/status-order';
 import { BackgroundColor } from '../shared/enums/background-color';
 import { ColumnTypeEnum } from '../shared/enums/column-type';
 import { ApplicantDetailsItem } from '../shared/models/applicant-details-item';
@@ -99,16 +100,6 @@ export class ApplicantProjectDetailsComponent implements OnInit, OnDestroy {
     eventMap: [],
     eventDetails: [],
     addition: [],
-  };
-
-  protected readonly STATUS_ORDER: { [key: string]: number } = {
-    Reviewing: 1,
-    Reviewed: 2,
-    Revise: 3,
-    NotApproved: 4,
-    Approved: 5,
-    Start: 6,
-    Completed: 7,
   };
 
   protected projectStatusSecondaryOptions: RadioOption[] = [
@@ -250,20 +241,28 @@ export class ApplicantProjectDetailsComponent implements OnInit, OnDestroy {
     );
   }
 
+  getStatusDisplay(status: string): string {
+    const statusVal = STATUS_ORDER[status];
+    if (!statusVal) {
+      return '';
+    }
+    return `standard__${status}`;
+  }
+
   private updateProjectStatusPrimary(data: ApplicantDetailsItem) {
-    const orderValue = this.STATUS_ORDER[data.projectStatus];
+    const orderValue = STATUS_ORDER[data.projectStatus];
     if (!orderValue) {
       return;
     }
-    if (orderValue < this.STATUS_ORDER['NotApproved']) {
+    if (orderValue < STATUS_ORDER['NotApproved']) {
       this.form.patchValue({
         projectStatusPrimary: 'CurrentBeforeApprove',
       });
-    } else if (orderValue === this.STATUS_ORDER['NotApproved']) {
+    } else if (orderValue === STATUS_ORDER['NotApproved']) {
       this.form.patchValue({
         projectStatusPrimary: 'NotApproved',
       });
-    } else if (orderValue >= this.STATUS_ORDER['Approved']) {
+    } else if (orderValue >= STATUS_ORDER['Approved']) {
       this.form.patchValue({
         projectStatusPrimary: 'Approved',
       });

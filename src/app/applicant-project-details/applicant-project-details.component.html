@@ -53,7 +53,7 @@
         } @else {
         <app-table-cell-template
           [cellType]="statusCellType"
-          [cellValue]="projectStatus"
+          [cellValue]="getStatusDisplay(projectStatus)"
         ></app-table-cell-template>
         }
       </div>

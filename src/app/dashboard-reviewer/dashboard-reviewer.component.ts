@@ -8,7 +8,6 @@ import { ProjectService } from '../services/project.service';
 import { S3Service } from '../services/s3.service';
 import { ThemeService } from '../services/theme.service';
 import { BackgroundColor } from '../shared/enums/background-color';
-import { BadgeType } from '../shared/enums/badge-type';
 import { ColumnTypeEnum } from '../shared/enums/column-type';
 import { FilterOption } from '../shared/models/filter-option';
 import { ReviewPeriod } from '../shared/models/review-period';
@@ -170,8 +169,8 @@ export class DashboardReviewerComponent {
                 },
                 {
                   display: row.reviewId
-                    ? BadgeType.Reviewed
-                    : BadgeType.PendingReview,
+                    ? 'reviewer__Reviewed'
+                    : 'reviewer__PendingReview',
                   value: row.reviewId,
                 },
                 {

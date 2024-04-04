@@ -7,8 +7,10 @@ import { TableComponent } from '../components/table/table.component';
 import { DateService } from '../services/date.service';
 import { ProjectService } from '../services/project.service';
 import { ThemeService } from '../services/theme.service';
+import { STATUS_ORDER } from '../shared/constants/status-order';
 import { BackgroundColor } from '../shared/enums/background-color';
 import { ColumnTypeEnum } from '../shared/enums/column-type';
+import { ApplicantDashboardRow } from '../shared/models/applicant-dashboard-row';
 import { FilterOption } from '../shared/models/filter-option';
 import { TableCell } from '../shared/models/table-cell';
 import { TableColumn } from '../shared/models/table-column';
@@ -135,9 +137,8 @@ export class DashboardApplicantComponent implements OnInit, OnDestroy {
                 display: row.projectName,
                 value: row.projectName,
               },
-
               {
-                display: row.projectStatus,
+                display: this.getStatusDisplay(row),
                 value: row.projectStatus,
               },
               {
@@ -156,6 +157,17 @@ export class DashboardApplicantComponent implements OnInit, OnDestroy {
         }
       })
     );
+  }
+
+  private getStatusDisplay(row: ApplicantDashboardRow): string {
+    const statusVal = STATUS_ORDER[row?.projectStatus];
+    if (!statusVal) {
+      return '';
+    }
+    if (statusVal >= STATUS_ORDER.Approved) {
+      return `applicant__Approved`;
+    }
+    return `applicant__${row.projectStatus}`;
   }
 
   onCreateProjectClicked() {

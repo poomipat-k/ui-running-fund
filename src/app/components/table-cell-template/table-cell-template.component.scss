@@ -63,6 +63,12 @@
       background-color: #fef3f2;
       width: 13.1rem;
     }
+
+    // Standard
+    &--stdReviewing {
+      background-color: #ededed;
+      width: 13.5rem;
+    }
   }
 
   &__text {
@@ -92,6 +98,11 @@
     &--notApproved {
       color: #b42318;
     }
+
+    // Standard
+    &--stdReviewing {
+      color: #5e6167;
+    }
   }
 
   &__icon {
@@ -119,5 +130,9 @@
     height: 8px;
     border-radius: 8px;
     background-color: #fd853a;
+
+    &--gray {
+      background-color: #5e6167;
+    }
   }
 }

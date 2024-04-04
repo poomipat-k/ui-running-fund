@@ -3,23 +3,27 @@
 } @case ('Badge') {
 <!-- Badge -->
 <!-- Reviewer -->
-@if (cellValue === 'Reviewed') {
-<ng-container *ngTemplateOutlet="badgeReviewed"></ng-container>
-} @else if(cellValue === 'PendingReview') {
-<ng-container *ngTemplateOutlet="badgePendingReview"></ng-container>
-<!-- Reviewer -->
-} @else if(cellValue === "Reviewing") {
-<ng-container *ngTemplateOutlet="badgeReviewing"></ng-container>
-} @else if(cellValue === "Approved") {
-<ng-container *ngTemplateOutlet="badgeApproved"></ng-container>
-} @else if(cellValue === "Revise") {
-<ng-container *ngTemplateOutlet="badgeRevise"></ng-container>
-} @else if(cellValue === "NotApproved") {
-<ng-container *ngTemplateOutlet="badgeNotApproved"></ng-container>
-} } @default { <ng-container *ngTemplateOutlet="text"></ng-container>} }
+@if (cellValue === 'reviewer__Reviewed') {
+<ng-container *ngTemplateOutlet="badgeReviewerReviewed"></ng-container>
+} @else if(cellValue === 'reviewer__PendingReview') {
+<ng-container *ngTemplateOutlet="badgeReviewerPendingReview"></ng-container>
+<!-- Applicant -->
+} @else if(cellValue === "applicant__Reviewing") {
+<ng-container *ngTemplateOutlet="badgeApplicantReviewing"></ng-container>
+} @else if(cellValue === "applicant__Approved") {
+<ng-container *ngTemplateOutlet="badgeApplicantApproved"></ng-container>
+} @else if(cellValue === "applicant__Revise") {
+<ng-container *ngTemplateOutlet="badgeApplicantRevise"></ng-container>
+} @else if(cellValue === "applicant__NotApproved") {
+<ng-container *ngTemplateOutlet="badgeApplicantNotApproved"></ng-container>
+<!-- Standard -->
+} @else if (cellValue === "standard__Reviewing") {
+<ng-container *ngTemplateOutlet="badgeStandardReviewing"></ng-container>
+}
+<!-- Default show text  -->
+} @default { <ng-container *ngTemplateOutlet="text"></ng-container>} }
 
 <!-- Cell Templates -->
-
 <ng-template #text>
   <div [ngClass]="{ bold: bold }">{{ cellValue }}</div>
 </ng-template>
@@ -43,7 +47,8 @@
   }
 </ng-template>
 
-<ng-template #badgePendingReview>
+<!-- Reviewer dashboard badges -->
+<ng-template #badgeReviewerPendingReview>
   <div class="badge__container badge__container--pendingReview">
     <div class="dot__container">
       <div class="dot__icon"></div>
@@ -52,7 +57,7 @@
   </div>
 </ng-template>
 
-<ng-template #badgeReviewed>
+<ng-template #badgeReviewerReviewed>
   <div class="badge__container badge__container--reviewed">
     <div class="badge__icon-container">
       <app-com-svg-check></app-com-svg-check>
@@ -61,8 +66,8 @@
   </div>
 </ng-template>
 
-<!-- Applicant dashboard badge -->
-<ng-template #badgeReviewing>
+<!-- Applicant dashboard badges -->
+<ng-template #badgeApplicantReviewing>
   <div class="badge__container badge__container--reviewing">
     <div class="dot__container">
       <div class="dot__icon"></div>
@@ -71,7 +76,7 @@
   </div>
 </ng-template>
 
-<ng-template #badgeApproved>
+<ng-template #badgeApplicantApproved>
   <div class="badge__container badge__container--approved">
     <div class="badge__icon-container">
       <app-com-svg-check></app-com-svg-check>
@@ -80,7 +85,7 @@
   </div>
 </ng-template>
 
-<ng-template #badgeRevise>
+<ng-template #badgeApplicantRevise>
   <div class="badge__container badge__container--revise">
     <div class="badge__icon-container">
       <img src="assets/corner-up-left.svg" alt="corner-up-left" />
@@ -89,11 +94,21 @@
   </div>
 </ng-template>
 
-<ng-template #badgeNotApproved>
+<ng-template #badgeApplicantNotApproved>
   <div class="badge__container badge__container--notApproved">
     <div class="badge__icon-container">
       <img src="assets/x.svg" alt="close icon" />
     </div>
     <p class="badge__text badge__text--notApproved">ไม่ผ่านการอนุมัติ</p>
+  </div>
+</ng-template>
+
+<!-- Standard (project details/admin dashboard) badges -->
+<ng-template #badgeStandardReviewing>
+  <div class="badge__container badge__container--stdReviewing">
+    <div class="dot__container">
+      <div class="dot__icon dot__icon--gray"></div>
+    </div>
+    <p class="badge__text badge__text--stdReviewing">ยังไม่ได้กลั่นกรอง</p>
   </div>
 </ng-template>
