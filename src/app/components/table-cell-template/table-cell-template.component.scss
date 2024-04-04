@@ -69,6 +69,26 @@
       background-color: #ededed;
       width: 13.5rem;
     }
+
+    &--stdReviewed {
+      background-color: #fff6d5;
+      width: 14.6rem;
+    }
+
+    &--stdRevise {
+      background-color: #ededed;
+      width: 9.7rem;
+    }
+
+    &--stdStart {
+      background-color: #ecfdf3;
+      width: 15.5rem;
+    }
+
+    &--stdCompleted {
+      background-color: #ecfafd;
+      width: 10.4rem;
+    }
   }
 
   &__text {
@@ -103,6 +123,18 @@
     &--stdReviewing {
       color: #5e6167;
     }
+
+    &--stdReviewed {
+      color: #fd853a;
+    }
+
+    &--stdStart {
+      color: #027a48;
+    }
+
+    &--stdCompleted {
+      color: #003eb7;
+    }
   }
 
   &__icon {
@@ -133,6 +165,10 @@
 
     &--gray {
       background-color: #5e6167;
+    }
+
+    &--green {
+      background-color: #027a48;
     }
   }
 }

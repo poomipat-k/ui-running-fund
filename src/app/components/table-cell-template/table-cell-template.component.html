@@ -19,6 +19,18 @@
 <!-- Standard -->
 } @else if (cellValue === "standard__Reviewing") {
 <ng-container *ngTemplateOutlet="badgeStandardReviewing"></ng-container>
+} @else if (cellValue === "standard__Revise") {
+<ng-container *ngTemplateOutlet="badgeStandardRevise"></ng-container>
+} @else if (cellValue === "standard__Reviewed") {
+<ng-container *ngTemplateOutlet="badgeStandardReviewed"></ng-container>
+} @else if (cellValue === "standard__NotApproved") {
+<ng-container *ngTemplateOutlet="badgeApplicantNotApproved"></ng-container>
+} @else if (cellValue === "standard__Approved") {
+<ng-container *ngTemplateOutlet="badgeApplicantApproved"></ng-container>
+}@else if (cellValue === "standard__Start") {
+<ng-container *ngTemplateOutlet="badgeStandardStart"></ng-container>
+}@else if (cellValue === "standard__Completed") {
+<ng-container *ngTemplateOutlet="badgeStandardCompleted"></ng-container>
 }
 <!-- Default show text  -->
 } @default { <ng-container *ngTemplateOutlet="text"></ng-container>} }
@@ -110,5 +122,41 @@
       <div class="dot__icon dot__icon--gray"></div>
     </div>
     <p class="badge__text badge__text--stdReviewing">ยังไม่ได้กลั่นกรอง</p>
+  </div>
+</ng-template>
+
+<ng-template #badgeStandardRevise>
+  <div class="badge__container badge__container--stdRevise">
+    <div class="badge__icon-container">
+      <img src="assets/corner-up-left.svg" alt="corner-up-left" />
+    </div>
+    <p class="badge__text badge__text--revise">มีการแก้ไข</p>
+  </div>
+</ng-template>
+
+<ng-template #badgeStandardReviewed>
+  <div class="badge__container badge__container--stdReviewed">
+    <div class="badge__icon-container">
+      <app-com-svg-check pathClass="color--orange"></app-com-svg-check>
+    </div>
+    <p class="badge__text badge__text--stdReviewed">กลั่นกรองเรียบร้อย</p>
+  </div>
+</ng-template>
+
+<ng-template #badgeStandardStart>
+  <div class="badge__container badge__container--stdStart">
+    <div class="dot__container">
+      <div class="dot__icon dot__icon--green"></div>
+    </div>
+    <p class="badge__text badge__text--stdStart">กำลังดำเนินโครงการ</p>
+  </div>
+</ng-template>
+
+<ng-template #badgeStandardCompleted>
+  <div class="badge__container badge__container--stdCompleted">
+    <div class="badge__icon-container">
+      <app-com-svg-check pathClass="color--blue"></app-com-svg-check>
+    </div>
+    <p class="badge__text badge__text--stdCompleted">ปิดโครงการ</p>
   </div>
 </ng-template>
