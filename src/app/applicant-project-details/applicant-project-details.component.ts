@@ -469,11 +469,69 @@ export class ApplicantProjectDetailsComponent implements OnInit, OnDestroy {
     if (!this.formTouched) {
       this.formTouched = true;
     }
-    if (this.validToSubmit()) {
-      const dataToSubmit = this.getFormValueForSubmit();
-      console.log('===DO SUBMIT HERE', dataToSubmit);
+    if (!this.validToSubmit()) {
+      return;
     }
+    const dataToSubmit = this.getFormValueForSubmit();
+    console.log('===DO SUBMIT HERE', dataToSubmit);
+
+    const formData = new FormData();
+    console.log('==dataToSubmit', dataToSubmit);
+    formData.append('form', JSON.stringify(dataToSubmit));
+    if (this.additionFiles) {
+      for (let i = 0; i < this.additionFiles.length; i++) {
+        formData.append('additionFiles', this.additionFiles[i]);
+      }
+    }
+
+    this.subs.push(
+      this.projectService
+        .adminUpdateProject(formData, this.projectCode)
+        .subscribe({
+          next: (result) => {
+            console.log('===result', result);
+          },
+          error: (err) => {
+            console.error(err);
+          },
+        })
+    );
   }
+
+  // onConfirmUpload2() {
+  //   const body = {
+  //     projectCode: this.projectCode,
+  //   };
+  //   const formData = new FormData();
+  //   formData.append('form', JSON.stringify(body));
+  //   if (this.additionFiles) {
+  //     for (let i = 0; i < this.additionFiles.length; i++) {
+  //       formData.append('additionFiles', this.additionFiles[i]);
+  //     }
+  //   }
+
+  //   this.subs.push(
+  //     this.projectService.addAdditionalFiles(formData).subscribe({
+  //       next: (result) => {
+  //         if (result?.success) {
+  //           this.loadProjectFiles();
+  //           this.displaySuccessPopup();
+  //           setTimeout(() => {
+  //             this.closeSuccessPopup();
+  //             this.changeToApplicantViewMode();
+  //           }, 2000);
+  //         }
+  //       },
+  //       error: (err) => {
+  //         console.error(err);
+  //         this.displayErrorPopup();
+  //         setTimeout(() => {
+  //           this.closeErrorPopup();
+  //         }, 2000);
+  //       },
+  //     })
+  //   );
+  // }
 
   private getFormValueForSubmit() {
     const clonedData = cloneDeep(this.form.value);

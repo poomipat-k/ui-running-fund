@@ -24,7 +24,13 @@ export class ProjectService {
 
   addProject(formData: FormData) {
     return this.http
-      .post<any>(`${this.baseApiUrl}/project`, formData)
+      .post<number>(`${this.baseApiUrl}/project`, formData)
+      .pipe(catchError(this.handleError));
+  }
+
+  adminUpdateProject(formData: FormData, projectCode: string) {
+    return this.http
+      .post<any>(`${this.baseApiUrl}/admin/project/${projectCode}`, formData)
       .pipe(catchError(this.handleError));
   }
 

@@ -171,7 +171,7 @@
         </div>
       </div>
       <!-- Upload file button -->
-      @if (applicantEditMode) {
+      @if (applicantEditMode || adminEditMode) {
       <div class="mgt-16">
         <app-com-upload-button
           [filesSubject]="additionFilesSubject"
