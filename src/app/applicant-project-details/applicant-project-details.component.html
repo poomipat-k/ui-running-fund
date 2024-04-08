@@ -103,7 +103,7 @@
           </p>
 
           <p class="details-row text-center flex-basis-score">
-            {{ item.sumScore }}
+            {{ item.adminScore }}
           </p>
         </div>
         }
@@ -297,17 +297,17 @@
           <p class="summary__text">คะแนนรวม</p>
           <div class="mgt-7">
             <app-com-input-number
-              id="sumScore"
+              id="adminScore"
               placeholder="คะแนน"
               [form]="form"
-              controlName="sumScore"
+              controlName="adminScore"
               width="8.4rem"
             ></app-com-input-number>
-            @if (!form.get('sumScore')?.valid && form.get('sumScore')?.touched
-            && formTouched) {
+            @if (!form.get('adminScore')?.valid &&
+            form.get('adminScore')?.touched && formTouched) {
             <div class="error mgt-10">
               <img src="/assets/error_icon.svg" alt="error icon" />
-              <p class="error__text">1-100</p>
+              <p class="error__text">0-100</p>
             </div>
             }
           </div>

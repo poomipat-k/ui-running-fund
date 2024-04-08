@@ -228,7 +228,10 @@ export class ApplicantProjectDetailsComponent implements OnInit, OnDestroy {
     this.form = new FormGroup({
       projectStatusPrimary: new FormControl(null, Validators.required),
       projectStatusSecondary: new FormControl(null, Validators.required),
-      sumScore: new FormControl(null, [Validators.min(1), Validators.max(100)]),
+      adminScore: new FormControl(null, [
+        Validators.min(0),
+        Validators.max(100),
+      ]),
       fundApprovedAmount: new FormControl(null, [Validators.min(0)]),
       adminComment: new FormControl(null),
     });
@@ -447,11 +450,10 @@ export class ApplicantProjectDetailsComponent implements OnInit, OnDestroy {
 
   private reloadAdminFormData() {
     const first = this.data?.[0];
-    console.log('==first', first);
     if (first) {
       this.form.patchValue({
         projectStatusSecondary: first.projectStatus,
-        sumScore: first.adminScore,
+        adminScore: first.adminScore,
         fundApprovedAmount: first.fundApprovedAmount,
         adminComment: first.adminComment,
       });

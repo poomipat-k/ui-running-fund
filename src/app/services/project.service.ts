@@ -6,6 +6,7 @@ import { environment } from '../../environments/environment';
 import { ApplicantCriteria } from '../shared/models/applicant-criteria';
 import { ApplicantDashboardRow } from '../shared/models/applicant-dashboard-row';
 import { ApplicantDetailsItem } from '../shared/models/applicant-details-item';
+import { CommonSuccessResponse } from '../shared/models/common-success-response';
 import { ReviewCriteria } from '../shared/models/review-criteria';
 import { ReviewPeriod } from '../shared/models/review-period';
 import { ReviewerDashboardRow } from '../shared/models/reviewer-dashboard-row';
@@ -113,10 +114,12 @@ export class ProjectService {
 
   addAdditionalFiles(formData: FormData) {
     return this.http
-      .post<any>(`${this.baseApiUrl}/project/addition-files`, formData)
+      .post<CommonSuccessResponse>(
+        `${this.baseApiUrl}/project/addition-files`,
+        formData
+      )
       .pipe(catchError(this.handleError));
   }
-
   private handleError(error: HttpErrorResponse) {
     if (error.status === 0) {
       // A client-side or network error occurred. Handle it accordingly.
