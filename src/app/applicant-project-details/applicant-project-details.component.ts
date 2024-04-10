@@ -473,7 +473,6 @@ export class ApplicantProjectDetailsComponent implements OnInit, OnDestroy {
       return;
     }
     const dataToSubmit = this.getFormValueForSubmit();
-    console.log('===DO SUBMIT HERE', dataToSubmit);
 
     const formData = new FormData();
     console.log('==dataToSubmit', dataToSubmit);
@@ -489,54 +488,32 @@ export class ApplicantProjectDetailsComponent implements OnInit, OnDestroy {
         .adminUpdateProject(formData, this.projectCode)
         .subscribe({
           next: (result) => {
-            console.log('===result', result);
+            if (result) {
+              this.loadProjectFiles();
+              this.loadProjectDetails();
+              this.displaySuccessPopup();
+              setTimeout(() => {
+                this.closeSuccessPopup();
+                this.changeToAdminViewMode();
+              }, 2000);
+            }
           },
           error: (err) => {
             console.error(err);
+            this.displayErrorPopup();
+            setTimeout(() => {
+              this.closeErrorPopup();
+            }, 2000);
           },
         })
     );
   }
 
-  // onConfirmUpload2() {
-  //   const body = {
-  //     projectCode: this.projectCode,
-  //   };
-  //   const formData = new FormData();
-  //   formData.append('form', JSON.stringify(body));
-  //   if (this.additionFiles) {
-  //     for (let i = 0; i < this.additionFiles.length; i++) {
-  //       formData.append('additionFiles', this.additionFiles[i]);
-  //     }
-  //   }
-
-  //   this.subs.push(
-  //     this.projectService.addAdditionalFiles(formData).subscribe({
-  //       next: (result) => {
-  //         if (result?.success) {
-  //           this.loadProjectFiles();
-  //           this.displaySuccessPopup();
-  //           setTimeout(() => {
-  //             this.closeSuccessPopup();
-  //             this.changeToApplicantViewMode();
-  //           }, 2000);
-  //         }
-  //       },
-  //       error: (err) => {
-  //         console.error(err);
-  //         this.displayErrorPopup();
-  //         setTimeout(() => {
-  //           this.closeErrorPopup();
-  //         }, 2000);
-  //       },
-  //     })
-  //   );
-  // }
-
   private getFormValueForSubmit() {
     const clonedData = cloneDeep(this.form.value);
-    let secondaryStatus: string = clonedData['projectStatusSecondary'];
+    let secondaryStatus: string = clonedData.projectStatusSecondary;
     secondaryStatus = secondaryStatus.replace(/^(standard__)/, '');
+    clonedData.projectStatusSecondary = secondaryStatus;
     return clonedData;
   }
 

@@ -30,7 +30,7 @@ export class ProjectService {
 
   adminUpdateProject(formData: FormData, projectCode: string) {
     return this.http
-      .post<any>(`${this.baseApiUrl}/admin/project/${projectCode}`, formData)
+      .post<number>(`${this.baseApiUrl}/admin/project/${projectCode}`, formData)
       .pipe(catchError(this.handleError));
   }
 
