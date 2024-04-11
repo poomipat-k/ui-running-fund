@@ -25,6 +25,7 @@ export class DashboardAdminComponent implements OnInit {
 
   protected readonly minHistoryYear = 2023;
   protected summaryData = new AdminDashboardSummaryData();
+  protected numberFormatter = Intl.NumberFormat();
 
   private readonly themeService: ThemeService = inject(ThemeService);
   private readonly dateService: DateService = inject(DateService);
