@@ -7,6 +7,7 @@ import { DateService } from '../services/date.service';
 import { ThemeService } from '../services/theme.service';
 import { months } from '../shared/constants/date-objects';
 import { BackgroundColor } from '../shared/enums/background-color';
+import { AdminDashboardSummaryData } from '../shared/models/admin-dashboard-summary-data';
 import { RadioOption } from '../shared/models/radio-option';
 
 @Component({
@@ -22,9 +23,8 @@ export class DashboardAdminComponent implements OnInit {
   protected yearOptions: RadioOption[] = [];
   protected currentYear = 0;
 
-  protected downloadButtonAction = '';
-
   protected readonly minHistoryYear = 2023;
+  protected summaryData = new AdminDashboardSummaryData();
 
   private readonly themeService: ThemeService = inject(ThemeService);
   private readonly dateService: DateService = inject(DateService);

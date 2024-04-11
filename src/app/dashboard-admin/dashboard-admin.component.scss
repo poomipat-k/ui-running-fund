@@ -15,6 +15,7 @@
 .dateContainer {
   display: flex;
   justify-content: space-between;
+  align-items: flex-start;
 }
 
 .dateRow {
@@ -36,9 +37,34 @@
   color: #344054;
 }
 
+.summary {
+  display: flex;
+  justify-content: space-between;
+
+  &__subHeader {
+    font-family: $custom-font;
+    font-weight: 400;
+    font-size: 1.8rem;
+    line-height: 2rem;
+    color: #101828;
+  }
+
+  &__details {
+    font-family: $custom-font;
+    font-weight: 600;
+    font-size: 2.9rem;
+    line-height: 2.8rem;
+    color: #344054;
+
+    &--highlight {
+      color: #f47920;
+    }
+  }
+}
+
 .button-content {
   display: flex;
-  gap: 4px;
+  gap: 8px;
   align-items: center;
   padding: 1.2rem 1.6rem 1.2rem 1.4rem;
 
@@ -54,5 +80,41 @@
 
   &:active svg path {
     fill: #9c2a10;
+  }
+
+  &__description {
+    margin-top: 4px;
+    font-family: $custom-font;
+    font-weight: 400;
+    font-size: 1.2rem;
+    line-height: 2rem;
+    color: #344054;
+    text-align: right;
+  }
+}
+
+.hr {
+  border-top: 1px solid #0000005c;
+}
+
+.mgt {
+  &-12 {
+    margin-top: 12px;
+  }
+
+  &-17 {
+    margin-top: 17px;
+  }
+
+  &-21 {
+    margin-top: 21px;
+  }
+
+  &-30 {
+    margin-top: 30px;
+  }
+
+  &-33 {
+    margin-top: 33px;
   }
 }
