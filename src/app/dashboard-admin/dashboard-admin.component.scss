@@ -71,6 +71,14 @@
     color: #344054;
   }
 
+  &__count {
+    font-family: $custom-font;
+    font-weight: 400;
+    font-size: 1.6rem;
+    line-height: 2rem;
+    color: #667085;
+  }
+
   &__control {
     display: flex;
     justify-content: space-between;
