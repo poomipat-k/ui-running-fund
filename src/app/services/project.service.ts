@@ -3,6 +3,7 @@ import { Injectable, inject } from '@angular/core';
 import { Observable, catchError, throwError } from 'rxjs';
 
 import { environment } from '../../environments/environment';
+import { AdminRequestDashboardRow } from '../shared/models/admin-request-dashboard-row';
 import { ApplicantCriteria } from '../shared/models/applicant-criteria';
 import { ApplicantDashboardRow } from '../shared/models/applicant-dashboard-row';
 import { ApplicantDetailsItem } from '../shared/models/applicant-details-item';
@@ -126,6 +127,30 @@ export class ProjectService {
       )
       .pipe(catchError(this.handleError));
   }
+
+  getAdminRequestDashboard(
+    fromYear: number,
+    toYear: number,
+    pageNo: number,
+    pageSize: number,
+    sortBy: string[],
+    isAsc: boolean
+  ): Observable<AdminRequestDashboardRow[]> {
+    return this.http
+      .post<AdminRequestDashboardRow[]>(
+        `${this.baseApiUrl}/admin/dashboard/request`,
+        {
+          fromYear,
+          toYear,
+          pageNo,
+          pageSize,
+          sortBy,
+          isAsc,
+        }
+      )
+      .pipe(catchError(this.handleError));
+  }
+
   private handleError(error: HttpErrorResponse) {
     if (error.status === 0) {
       // A client-side or network error occurred. Handle it accordingly.

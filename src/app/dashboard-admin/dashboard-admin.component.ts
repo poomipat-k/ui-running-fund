@@ -1,16 +1,19 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Subscription } from 'rxjs';
 import { ButtonComponent } from '../components/button/button/button.component';
 import { FilterComponent } from '../components/filter/filter.component';
 import { SelectDropdownComponent } from '../components/select-dropdown/select-dropdown.component';
 import { TableComponent } from '../components/table/table.component';
 import { DateService } from '../services/date.service';
+import { ProjectService } from '../services/project.service';
 import { ThemeService } from '../services/theme.service';
 import { months } from '../shared/constants/date-objects';
 import { BackgroundColor } from '../shared/enums/background-color';
 import { ColumnTypeEnum } from '../shared/enums/column-type';
 import { AdminDashboardSummaryData } from '../shared/models/admin-dashboard-summary-data';
+import { AdminRequestDashboardRow } from '../shared/models/admin-request-dashboard-row';
 import { FilterOption } from '../shared/models/filter-option';
 import { RadioOption } from '../shared/models/radio-option';
 import { TableCell } from '../shared/models/table-cell';
@@ -29,7 +32,7 @@ import { TableColumn } from '../shared/models/table-column';
   templateUrl: './dashboard-admin.component.html',
   styleUrl: './dashboard-admin.component.scss',
 })
-export class DashboardAdminComponent implements OnInit {
+export class DashboardAdminComponent implements OnInit, OnDestroy {
   protected form: FormGroup;
   protected monthOptions: RadioOption[] = [];
   protected yearOptions: RadioOption[] = [];
@@ -41,8 +44,13 @@ export class DashboardAdminComponent implements OnInit {
   protected summaryData = new AdminDashboardSummaryData();
   protected numberFormatter = Intl.NumberFormat();
 
+  private readonly pageSize = 5;
+
   private readonly themeService: ThemeService = inject(ThemeService);
   private readonly dateService: DateService = inject(DateService);
+  private readonly projectService: ProjectService = inject(ProjectService);
+
+  private readonly subs: Subscription[] = [];
 
   protected filterOptions: FilterOption[] = [
     {
@@ -121,6 +129,14 @@ export class DashboardAdminComponent implements OnInit {
     return this.form.get('period') as FormGroup;
   }
 
+  get fromYear(): number {
+    return this.form.value.period.fromYear;
+  }
+
+  get toYear(): number {
+    return this.form.value.period.toYear;
+  }
+
   ngOnInit(): void {
     this.themeService.changeBackgroundColor(BackgroundColor.white);
 
@@ -129,6 +145,69 @@ export class DashboardAdminComponent implements OnInit {
     this.getYearOptions();
 
     this.initForm();
+
+    this.getRequestDashboard();
+  }
+
+  ngOnDestroy(): void {
+    this.subs.forEach((s) => s.unsubscribe());
+  }
+
+  getRequestDashboard() {
+    this.subs.push(
+      this.projectService
+        .getAdminRequestDashboard(
+          2024,
+          2024,
+          1,
+          this.pageSize,
+          ['created_at'],
+          true
+        )
+        .subscribe((dashboardRows: AdminRequestDashboardRow[]) => {
+          console.log('==top dashboard dashboardRows:', dashboardRows);
+          if (dashboardRows) {
+            const data = dashboardRows.map((row) => {
+              return [
+                {
+                  display: row.projectCode,
+                  value: row.projectCode,
+                },
+                {
+                  display: this.dateService.dateToStringWithLongMonth(
+                    row.projectCreatedAt
+                  ),
+                  value: row.projectCreatedAt,
+                },
+                {
+                  display: row.projectName,
+                  value: row.projectName,
+                },
+
+                {
+                  display: this.getStatusDisplay(row),
+                  value: row.projectStatus,
+                },
+                {
+                  display: this.dateService.dateToStringWithLongMonth(
+                    row.projectUpdatedAt
+                  ),
+                  value: row.projectUpdatedAt,
+                },
+                {
+                  display: row.adminComment,
+                  value: row.adminComment,
+                },
+                {
+                  display: row.avgScore,
+                  value: row.avgScore,
+                },
+              ];
+            });
+            this.requestData = data;
+          }
+        })
+    );
   }
 
   onSortRequestFilterChanged() {
@@ -164,5 +243,9 @@ export class DashboardAdminComponent implements OnInit {
         toYear: new FormControl(null, Validators.required),
       }),
     });
+  }
+
+  private getStatusDisplay(row: AdminRequestDashboardRow): string {
+    return `standard__${row.projectStatus}`;
   }
 }
