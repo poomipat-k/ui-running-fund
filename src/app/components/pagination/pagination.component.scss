@@ -30,3 +30,13 @@
     background-color: #fd853a;
   }
 }
+
+.dot {
+  font-family: $inter;
+  font-weight: 400;
+  font-size: 1.8rem;
+  line-height: 2.2rem;
+  color: #000;
+
+  align-self: flex-end;
+}

@@ -26,12 +26,35 @@ export class PaginationComponent {
     if (this.pageCount === 0) {
       return [[]];
     }
-    const finalList = [];
+    const finalList: number[][] = [];
     const lower = this.activePage - 2;
     const upper = this.activePage + 2;
-    if (lower <= 2) {
+    let group = [];
+    for (let i = lower; i <= upper; i++) {
+      if (i >= 1 && i <= this.pageCount) {
+        group.push(i);
+      }
     }
-    return [[]];
+    if (group[0] === 2) {
+      group.unshift(1);
+    }
+    if (group[group.length - 1] === this.pageCount - 1) {
+      group.push(this.pageCount);
+    }
+    // Order groups
+    if (group[0] !== 1) {
+      finalList.push([1]);
+      // -3 to be interpreted as "..."
+      finalList.push([-3]);
+    }
+    finalList.push(group);
+    if (group[group.length - 1] !== this.pageCount) {
+      // -3 to be interpreted as "..."
+      finalList.push([-3]);
+      finalList.push([this.pageCount]);
+    }
+    console.log('===finalList', finalList);
+    return finalList;
   }
 
   onActivePageChanged(page: number) {

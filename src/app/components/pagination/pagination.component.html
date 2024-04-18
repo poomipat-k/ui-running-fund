@@ -1,1 +1,16 @@
-<div class="pagingContainer"></div>
+<div class="pagingContainer">
+  @for (group of pageList; track $index) { @if (group[0] === -3) {
+  <div class="dot">...</div>
+  } @else { @for (page of group; track $index) { @if (activePage === page) {
+  <div
+    class="pagingButton pagingButton--active"
+    (click)="onActivePageChanged(page)"
+  >
+    {{ page }}
+  </div>
+  } @else {
+  <div class="pagingButton" (click)="onActivePageChanged(page)">
+    {{ page }}
+  </div>
+  } } } }
+</div>
