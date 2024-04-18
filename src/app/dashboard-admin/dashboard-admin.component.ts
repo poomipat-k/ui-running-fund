@@ -4,6 +4,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { ButtonComponent } from '../components/button/button/button.component';
 import { FilterComponent } from '../components/filter/filter.component';
+import { InputTextComponent } from '../components/input-text/input-text.component';
 import { PaginationComponent } from '../components/pagination/pagination.component';
 import { SelectDropdownComponent } from '../components/select-dropdown/select-dropdown.component';
 import { TableComponent } from '../components/table/table.component';
@@ -31,6 +32,7 @@ import { TableColumn } from '../shared/models/table-column';
     FilterComponent,
     TableComponent,
     PaginationComponent,
+    InputTextComponent,
   ],
   templateUrl: './dashboard-admin.component.html',
   styleUrl: './dashboard-admin.component.scss',
@@ -133,6 +135,10 @@ export class DashboardAdminComponent implements OnInit, OnDestroy {
     return this.form.get('period') as FormGroup;
   }
 
+  get searchFormGroup(): FormGroup {
+    return this.form.get('search') as FormGroup;
+  }
+
   get fromYear(): number {
     return this.form.value.period.fromYear;
   }
@@ -152,6 +158,22 @@ export class DashboardAdminComponent implements OnInit, OnDestroy {
 
     this.getAdminSummary();
     this.getRequestDashboard(1);
+  }
+
+  private initForm() {
+    this.form = new FormGroup({
+      period: new FormGroup({
+        fromMonth: new FormControl(null, Validators.required),
+        fromYear: new FormControl(null, Validators.required),
+        toMonth: new FormControl(null, Validators.required),
+        toYear: new FormControl(null, Validators.required),
+      }),
+      search: new FormGroup({
+        projectCode: new FormControl(null),
+        projectName: new FormControl(null),
+        projectStatus: new FormControl(null),
+      }),
+    });
   }
 
   ngOnDestroy(): void {
@@ -287,17 +309,6 @@ export class DashboardAdminComponent implements OnInit, OnDestroy {
       });
     }
     this.yearOptions = years;
-  }
-
-  private initForm() {
-    this.form = new FormGroup({
-      period: new FormGroup({
-        fromMonth: new FormControl(null, Validators.required),
-        fromYear: new FormControl(null, Validators.required),
-        toMonth: new FormControl(null, Validators.required),
-        toYear: new FormControl(null, Validators.required),
-      }),
-    });
   }
 
   private getStatusDisplay(row: AdminRequestDashboardRow): string {

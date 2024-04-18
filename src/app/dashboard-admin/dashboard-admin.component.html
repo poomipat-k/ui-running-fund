@@ -60,6 +60,7 @@
       </div>
     </div>
   </div>
+  <!-- Summary Data -->
   <div class="summary mgt-21">
     <div>
       <p class="summary__subHeader">จำนวนโครงการที่ขอทุนสนับสนุน</p>
@@ -98,8 +99,31 @@
       </div>
     </div>
   </div>
-
   <div class="hr mgt-30"></div>
+  <!-- Search filter -->
+  <div class="searchFilter__Container mgt-33">
+    <div class="searchFilter__item">
+      <p class="searchFilter__label">รหัสโครงการ</p>
+      <app-com-input-text
+        placeholder="ค้นหารหัสโครงการ..."
+        [form]="searchFormGroup"
+        controlName="projectCode"
+        width="19.6rem"
+      ></app-com-input-text>
+    </div>
+
+    <div class="searchFilter__item">
+      <p class="searchFilter__label">ชื่อโครงการ</p>
+      <app-com-input-text
+        placeholder="ค้นหาชื่อโครงการหรือค้นหาโดย keyword..."
+        [form]="searchFormGroup"
+        controlName="projectName"
+        width="44.1rem"
+      ></app-com-input-text>
+    </div>
+  </div>
+  <!-- Request Dashboard -->
+
   <div class="mgt-33">
     <h2 class="dashboard__header">โครงการที่ขอทุนสนับสนุน</h2>
     <div class="dashboard__control mgt-8">

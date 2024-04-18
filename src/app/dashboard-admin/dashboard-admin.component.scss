@@ -120,6 +120,27 @@
   border-top: 1px solid #0000005c;
 }
 
+.searchFilter {
+  &__Container {
+    display: flex;
+    gap: 8px;
+  }
+
+  &__item {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  &__label {
+    font-family: $custom-font;
+    font-weight: 500;
+    font-size: 1.4rem;
+    line-height: 2rem;
+    color: #344054;
+  }
+}
+
 .pagingContainer {
   display: flex;
   justify-content: center;
