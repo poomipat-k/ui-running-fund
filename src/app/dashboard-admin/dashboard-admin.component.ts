@@ -151,7 +151,7 @@ export class DashboardAdminComponent implements OnInit, OnDestroy {
     this.initForm();
 
     this.getAdminSummary();
-    this.getRequestDashboard();
+    this.getRequestDashboard(1);
   }
 
   ngOnDestroy(): void {
@@ -163,6 +163,7 @@ export class DashboardAdminComponent implements OnInit, OnDestroy {
       this.projectService
         .getAdminSummary(2024, 2024)
         .subscribe((summaryRows) => {
+          console.log('===summaryRows', summaryRows);
           if (summaryRows) {
             let count = 0;
             let approvedCount = 0;
@@ -202,13 +203,13 @@ export class DashboardAdminComponent implements OnInit, OnDestroy {
     );
   }
 
-  private getRequestDashboard() {
+  private getRequestDashboard(pageNo: number) {
     this.subs.push(
       this.projectService
         .getAdminRequestDashboard(
           2024,
           2024,
-          1,
+          pageNo,
           this.pageSize,
           ['created_at'],
           true
@@ -270,7 +271,9 @@ export class DashboardAdminComponent implements OnInit, OnDestroy {
   }
 
   onRequestDashboardPageChanged(currentPage: number) {
-    console.log('==onRequestDashboardPageChanged currentPage', currentPage);
+    if (currentPage >= 1) {
+      this.getRequestDashboard(currentPage);
+    }
   }
 
   private getYearOptions() {

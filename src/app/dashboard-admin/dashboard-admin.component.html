@@ -106,9 +106,7 @@
       <p class="dashboard__count">
         ทั้งหมด
         {{
-          numberFormatter.format(
-            summaryData.projectCount - summaryData.approvedProjectCount
-          )
+          numberFormatter.format(summaryData.projectCount - startedProjectCount)
         }}
         โครงการ
       </p>
@@ -126,9 +124,8 @@
         (rowClicked)="onTableRowClicked($event)"
       ></app-com-table>
       <div class="pagingContainer mgt-18">
-        <!-- [count]="summaryData.projectCount - summaryData.approvedProjectCount" -->
         <app-com-pagination
-          [count]="41"
+          [count]="summaryData.projectCount - startedProjectCount"
           [pageSize]="5"
           (currentPage)="onRequestDashboardPageChanged($event)"
         ></app-com-pagination>

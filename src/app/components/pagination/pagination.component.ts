@@ -53,7 +53,6 @@ export class PaginationComponent {
       finalList.push([-3]);
       finalList.push([this.pageCount]);
     }
-    console.log('===finalList', finalList);
     return finalList;
   }
 
