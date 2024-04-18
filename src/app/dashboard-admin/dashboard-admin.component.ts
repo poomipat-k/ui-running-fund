@@ -4,6 +4,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { ButtonComponent } from '../components/button/button/button.component';
 import { FilterComponent } from '../components/filter/filter.component';
+import { PaginationComponent } from '../components/pagination/pagination.component';
 import { SelectDropdownComponent } from '../components/select-dropdown/select-dropdown.component';
 import { TableComponent } from '../components/table/table.component';
 import { DateService } from '../services/date.service';
@@ -29,6 +30,7 @@ import { TableColumn } from '../shared/models/table-column';
     CommonModule,
     FilterComponent,
     TableComponent,
+    PaginationComponent,
   ],
   templateUrl: './dashboard-admin.component.html',
   styleUrl: './dashboard-admin.component.scss',

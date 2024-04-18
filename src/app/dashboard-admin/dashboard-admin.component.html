@@ -125,10 +125,11 @@
         [rowClickable]="true"
         (rowClicked)="onTableRowClicked($event)"
       ></app-com-table>
-      <div class="pagingContainer mgt-18">
-        <div>1</div>
-        <div>2</div>
-        <div>3</div>
+      <div class="mgt-18">
+        <app-com-pagination
+          [count]="summaryData.projectCount - summaryData.approvedProjectCount"
+          [pageSize]="5"
+        ></app-com-pagination>
       </div>
     </div>
   </div>
