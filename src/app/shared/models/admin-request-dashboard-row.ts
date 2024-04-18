@@ -1,4 +1,5 @@
 export class AdminRequestDashboardRow {
+  count: number;
   projectCode: string;
   projectCreatedAt: string;
   projectName: string;

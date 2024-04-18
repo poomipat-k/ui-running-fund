@@ -4,14 +4,14 @@
     <div class="dateRow">
       <div class="dateGroup">
         <app-com-select-dropdown
-          [form]="periodFormGroup"
+          [form]="dateFormGroup"
           [items]="monthOptions"
           placeholder="เดือน"
           width="14.1rem"
           controlName="fromMonth"
         ></app-com-select-dropdown>
         <app-com-select-dropdown
-          [form]="periodFormGroup"
+          [form]="dateFormGroup"
           [items]="yearOptions"
           placeholder="ปี"
           width="9.9rem"
@@ -22,14 +22,14 @@
       <div class="dateGroup">
         <app-com-select-dropdown
           id="formMonth"
-          [form]="periodFormGroup"
+          [form]="dateFormGroup"
           [items]="monthOptions"
           placeholder="เดือน"
           width="14.1rem"
           controlName="toMonth"
         ></app-com-select-dropdown>
         <app-com-select-dropdown
-          [form]="periodFormGroup"
+          [form]="dateFormGroup"
           [items]="yearOptions"
           placeholder="ปี"
           width="9.9rem"
@@ -123,7 +123,7 @@
     </div>
 
     <div class="searchFilter__item">
-      <p class="searchFilter__label">รหัสโครงการ</p>
+      <p class="searchFilter__label">ค้นหาจากสถานะ</p>
       <app-com-select-dropdown
         [form]="searchFormGroup"
         [items]="statusSearchOptions"
@@ -145,9 +145,7 @@
     <div class="dashboard__control mgt-8">
       <p class="dashboard__count">
         ทั้งหมด
-        {{
-          numberFormatter.format(summaryData.projectCount - startedProjectCount)
-        }}
+        {{ numberFormatter.format(requestDashboardItemCount) }}
         โครงการ
       </p>
       <app-com-filter
@@ -165,7 +163,7 @@
       ></app-com-table>
       <div class="pagingContainer mgt-18">
         <app-com-pagination
-          [count]="summaryData.projectCount - startedProjectCount"
+          [count]="requestDashboardItemCount"
           [pageSize]="5"
           (currentPage)="onRequestDashboardPageChanged($event)"
         ></app-com-pagination>

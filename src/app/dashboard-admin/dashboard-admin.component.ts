@@ -46,7 +46,8 @@ export class DashboardAdminComponent implements OnInit, OnDestroy {
   protected currentYear = 0;
 
   protected requestData: TableCell[][] = [];
-  protected startedProjectCount = 0;
+  protected summaryStartedProjectCount = 0;
+  protected requestDashboardItemCount = 0;
 
   protected readonly minHistoryYear = 2023;
   protected summaryData = new AdminDashboardSummaryData();
@@ -59,6 +60,8 @@ export class DashboardAdminComponent implements OnInit, OnDestroy {
   private readonly projectService: ProjectService = inject(ProjectService);
 
   private readonly subs: Subscription[] = [];
+
+  protected usedSearchFilter = {};
 
   protected filterOptions: FilterOption[] = [
     {
@@ -171,8 +174,8 @@ export class DashboardAdminComponent implements OnInit, OnDestroy {
     },
   ];
 
-  get periodFormGroup(): FormGroup {
-    return this.form.get('period') as FormGroup;
+  get dateFormGroup(): FormGroup {
+    return this.form.get('date') as FormGroup;
   }
 
   get searchFormGroup(): FormGroup {
@@ -180,11 +183,11 @@ export class DashboardAdminComponent implements OnInit, OnDestroy {
   }
 
   get fromYear(): number {
-    return this.form.value.period.fromYear;
+    return this.form.value.date.fromYear;
   }
 
   get toYear(): number {
-    return this.form.value.period.toYear;
+    return this.form.value.date.toYear;
   }
 
   ngOnInit(): void {
@@ -202,7 +205,7 @@ export class DashboardAdminComponent implements OnInit, OnDestroy {
 
   private initForm() {
     this.form = new FormGroup({
-      period: new FormGroup({
+      date: new FormGroup({
         fromMonth: new FormControl(null, Validators.required),
         fromYear: new FormControl(null, Validators.required),
         toMonth: new FormControl(null, Validators.required),
@@ -250,7 +253,7 @@ export class DashboardAdminComponent implements OnInit, OnDestroy {
               }
               approvedFundSum += group.fundSum;
             });
-            this.startedProjectCount = startedProjectCount;
+            this.summaryStartedProjectCount = startedProjectCount;
             const approvedFundAvg = Math.round(approvedFundSum / approvedCount);
             const summaryData = new AdminDashboardSummaryData();
             summaryData.projectCount = count;
@@ -259,17 +262,24 @@ export class DashboardAdminComponent implements OnInit, OnDestroy {
             summaryData.averageFund = approvedFundAvg;
 
             this.summaryData = summaryData;
-            console.log('==summaryData', summaryData);
           }
         })
     );
   }
 
   onSearchClick() {
-    console.log('===onSearchClick', this.form);
+    console.log('===onSearchClick', this.form.value);
+    this.usedSearchFilter = this.form.value;
   }
 
-  private getRequestDashboard(pageNo: number) {
+  private getRequestDashboard(
+    pageNo: number,
+    whereFilter?: {
+      projectCode?: string;
+      projectName?: string;
+      projectStatus?: string;
+    }
+  ) {
     this.subs.push(
       this.projectService
         .getAdminRequestDashboard(
@@ -278,9 +288,11 @@ export class DashboardAdminComponent implements OnInit, OnDestroy {
           pageNo,
           this.pageSize,
           ['created_at'],
-          true
+          true,
+          whereFilter
         )
         .subscribe((dashboardRows: AdminRequestDashboardRow[]) => {
+          console.log('==dashboardRows', dashboardRows);
           if (dashboardRows) {
             const data = dashboardRows.map((row) => {
               return [
@@ -319,6 +331,8 @@ export class DashboardAdminComponent implements OnInit, OnDestroy {
                 },
               ];
             });
+            const count = dashboardRows[0].count;
+            this.requestDashboardItemCount = count;
             this.requestData = data;
           }
         })

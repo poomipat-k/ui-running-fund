@@ -135,7 +135,12 @@ export class ProjectService {
     pageNo: number,
     pageSize: number,
     sortBy: string[],
-    isAsc: boolean
+    isAsc: boolean,
+    whereFilter?: {
+      projectCode?: string;
+      projectName?: string;
+      projectStatus?: string;
+    }
   ): Observable<AdminRequestDashboardRow[]> {
     return this.http
       .post<AdminRequestDashboardRow[]>(
@@ -147,6 +152,9 @@ export class ProjectService {
           pageSize,
           sortBy,
           isAsc,
+          projectCode: whereFilter?.projectCode,
+          projectName: whereFilter?.projectName,
+          projectStatus: whereFilter?.projectStatus,
         }
       )
       .pipe(catchError(this.handleError));
