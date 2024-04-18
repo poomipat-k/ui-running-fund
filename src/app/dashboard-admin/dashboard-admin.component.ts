@@ -269,6 +269,10 @@ export class DashboardAdminComponent implements OnInit, OnDestroy {
     }
   }
 
+  onRequestDashboardPageChanged(currentPage: number) {
+    console.log('==onRequestDashboardPageChanged currentPage', currentPage);
+  }
+
   private getYearOptions() {
     const years = [];
     const minYear = this.minHistoryYear;

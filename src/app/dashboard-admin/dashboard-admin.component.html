@@ -125,10 +125,12 @@
         [rowClickable]="true"
         (rowClicked)="onTableRowClicked($event)"
       ></app-com-table>
-      <div class="mgt-18">
+      <div class="pagingContainer mgt-18">
+        <!-- [count]="summaryData.projectCount - summaryData.approvedProjectCount" -->
         <app-com-pagination
-          [count]="summaryData.projectCount - summaryData.approvedProjectCount"
+          [count]="41"
           [pageSize]="5"
+          (currentPage)="onRequestDashboardPageChanged($event)"
         ></app-com-pagination>
       </div>
     </div>
