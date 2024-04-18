@@ -65,7 +65,7 @@
       <p class="summary__subHeader">จำนวนโครงการที่ขอทุนสนับสนุน</p>
       <div class="summary__details mgt-17">
         <span class="summary__details summary__details--highlight">
-          {{ numberFormatter.format(1000) }}
+          {{ numberFormatter.format(summaryData.projectCount) }}
         </span>
         โครงการ
       </div>
@@ -74,7 +74,7 @@
       <p class="summary__subHeader">จำนวนโครงการที่ได้สนับสนุน</p>
       <div class="summary__details mgt-17">
         <span class="summary__details summary__details--highlight"
-          >{{ numberFormatter.format(2000) }}
+          >{{ numberFormatter.format(summaryData.approvedProjectCount) }}
         </span>
         โครงการ
       </div>
@@ -83,7 +83,7 @@
       <p class="summary__subHeader">จำนวนเงินที่ให้ทุน</p>
       <div class="summary__details mgt-17">
         <span class="summary__details summary__details--highlight"
-          >{{ numberFormatter.format(3000000) }}
+          >{{ numberFormatter.format(summaryData.approvedFundSum) }}
         </span>
         บาท
       </div>
@@ -92,7 +92,7 @@
       <p class="summary__subHeader">ค่าเฉลี่ยเงินสนับสนุนแต่ละโครงการ</p>
       <div class="summary__details mgt-17">
         <span class="summary__details summary__details--highlight"
-          >{{ numberFormatter.format(40000) }}
+          >{{ numberFormatter.format(summaryData.averageFund) }}
         </span>
         บาท
       </div>
@@ -103,7 +103,15 @@
   <div class="mgt-33">
     <h2 class="dashboard__header">โครงการที่ขอทุนสนับสนุน</h2>
     <div class="dashboard__control mgt-8">
-      <p class="dashboard__count">ทั้งหมด 5 โครงการ</p>
+      <p class="dashboard__count">
+        ทั้งหมด
+        {{
+          numberFormatter.format(
+            summaryData.projectCount - summaryData.approvedProjectCount
+          )
+        }}
+        โครงการ
+      </p>
       <app-com-filter
         [filterOptions]="filterOptions"
         (selectedFilter)="onSortRequestFilterChanged()"
@@ -117,6 +125,11 @@
         [rowClickable]="true"
         (rowClicked)="onTableRowClicked($event)"
       ></app-com-table>
+      <div class="pagingContainer mgt-18">
+        <div>1</div>
+        <div>2</div>
+        <div>3</div>
+      </div>
     </div>
   </div>
 </div>

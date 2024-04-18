@@ -4,6 +4,7 @@ import { Observable, catchError, throwError } from 'rxjs';
 
 import { environment } from '../../environments/environment';
 import { AdminRequestDashboardRow } from '../shared/models/admin-request-dashboard-row';
+import { AdminSummaryByStatus } from '../shared/models/admin-summary-by-status';
 import { ApplicantCriteria } from '../shared/models/applicant-criteria';
 import { ApplicantDashboardRow } from '../shared/models/applicant-dashboard-row';
 import { ApplicantDetailsItem } from '../shared/models/applicant-details-item';
@@ -146,6 +147,21 @@ export class ProjectService {
           pageSize,
           sortBy,
           isAsc,
+        }
+      )
+      .pipe(catchError(this.handleError));
+  }
+
+  getAdminSummary(
+    fromYear: number,
+    toYear: number
+  ): Observable<AdminSummaryByStatus[]> {
+    return this.http
+      .post<AdminSummaryByStatus[]>(
+        `${this.baseApiUrl}/admin/dashboard/summary`,
+        {
+          fromYear,
+          toYear,
         }
       )
       .pipe(catchError(this.handleError));

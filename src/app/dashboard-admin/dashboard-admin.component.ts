@@ -10,6 +10,7 @@ import { DateService } from '../services/date.service';
 import { ProjectService } from '../services/project.service';
 import { ThemeService } from '../services/theme.service';
 import { months } from '../shared/constants/date-objects';
+import { STATUS_ORDER } from '../shared/constants/status-order';
 import { BackgroundColor } from '../shared/enums/background-color';
 import { ColumnTypeEnum } from '../shared/enums/column-type';
 import { AdminDashboardSummaryData } from '../shared/models/admin-dashboard-summary-data';
@@ -39,6 +40,7 @@ export class DashboardAdminComponent implements OnInit, OnDestroy {
   protected currentYear = 0;
 
   protected requestData: TableCell[][] = [];
+  protected startedProjectCount = 0;
 
   protected readonly minHistoryYear = 2023;
   protected summaryData = new AdminDashboardSummaryData();
@@ -146,6 +148,7 @@ export class DashboardAdminComponent implements OnInit, OnDestroy {
 
     this.initForm();
 
+    this.getAdminSummary();
     this.getRequestDashboard();
   }
 
@@ -153,7 +156,51 @@ export class DashboardAdminComponent implements OnInit, OnDestroy {
     this.subs.forEach((s) => s.unsubscribe());
   }
 
-  getRequestDashboard() {
+  private getAdminSummary() {
+    this.subs.push(
+      this.projectService
+        .getAdminSummary(2024, 2024)
+        .subscribe((summaryRows) => {
+          if (summaryRows) {
+            let count = 0;
+            let approvedCount = 0;
+            let approvedFundSum = 0;
+            let startedProjectCount = 0;
+
+            summaryRows.forEach((group) => {
+              count += group.count;
+              const statusVal = STATUS_ORDER[group.status];
+              if (
+                statusVal === STATUS_ORDER.Approved ||
+                statusVal === STATUS_ORDER.Start ||
+                statusVal === STATUS_ORDER.Completed
+              ) {
+                approvedCount += group.count;
+              }
+              if (
+                statusVal === STATUS_ORDER.Start ||
+                statusVal === STATUS_ORDER.Completed
+              ) {
+                startedProjectCount += group.count;
+              }
+              approvedFundSum += group.fundSum;
+            });
+            this.startedProjectCount = startedProjectCount;
+            const approvedFundAvg = Math.round(approvedFundSum / approvedCount);
+            const summaryData = new AdminDashboardSummaryData();
+            summaryData.projectCount = count;
+            summaryData.approvedProjectCount = approvedCount;
+            summaryData.approvedFundSum = approvedFundSum;
+            summaryData.averageFund = approvedFundAvg;
+
+            this.summaryData = summaryData;
+            console.log('==summaryData', summaryData);
+          }
+        })
+    );
+  }
+
+  private getRequestDashboard() {
     this.subs.push(
       this.projectService
         .getAdminRequestDashboard(
@@ -165,7 +212,6 @@ export class DashboardAdminComponent implements OnInit, OnDestroy {
           true
         )
         .subscribe((dashboardRows: AdminRequestDashboardRow[]) => {
-          console.log('==top dashboard dashboardRows:', dashboardRows);
           if (dashboardRows) {
             const data = dashboardRows.map((row) => {
               return [
