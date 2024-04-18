@@ -16,6 +16,7 @@ import { months } from '../shared/constants/date-objects';
 import { STATUS_ORDER } from '../shared/constants/status-order';
 import { BackgroundColor } from '../shared/enums/background-color';
 import { ColumnTypeEnum } from '../shared/enums/column-type';
+import { AdminDashboardFilter } from '../shared/models/admin-dashboard-filter';
 import { AdminDashboardSummaryData } from '../shared/models/admin-dashboard-summary-data';
 import { AdminRequestDashboardRow } from '../shared/models/admin-request-dashboard-row';
 import { FilterOption } from '../shared/models/filter-option';
@@ -44,6 +45,7 @@ export class DashboardAdminComponent implements OnInit, OnDestroy {
   protected monthOptions: RadioOption[] = [];
   protected yearOptions: RadioOption[] = [];
   protected currentYear = 0;
+  protected currentPage = 1;
 
   protected requestData: TableCell[][] = [];
   protected summaryStartedProjectCount = 0;
@@ -61,7 +63,7 @@ export class DashboardAdminComponent implements OnInit, OnDestroy {
 
   private readonly subs: Subscription[] = [];
 
-  protected usedSearchFilter = {};
+  protected activeSearchFilter: any = {};
 
   protected filterOptions: FilterOption[] = [
     {
@@ -228,7 +230,6 @@ export class DashboardAdminComponent implements OnInit, OnDestroy {
       this.projectService
         .getAdminSummary(2024, 2024)
         .subscribe((summaryRows) => {
-          console.log('===summaryRows', summaryRows);
           if (summaryRows) {
             let count = 0;
             let approvedCount = 0;
@@ -268,17 +269,18 @@ export class DashboardAdminComponent implements OnInit, OnDestroy {
   }
 
   onSearchClick() {
-    console.log('===onSearchClick', this.form.value);
-    this.usedSearchFilter = this.form.value;
+    this.activeSearchFilter = this.form.value;
+    console.log('===activeSearchFilter', this.activeSearchFilter);
+    this.getRequestDashboard(this.currentPage, {
+      projectCode: this.activeSearchFilter?.search?.projectCode || null,
+      projectName: this.activeSearchFilter?.search?.projectName || null,
+      projectStatus: this.activeSearchFilter?.search?.projectStatus || null,
+    });
   }
 
   private getRequestDashboard(
     pageNo: number,
-    whereFilter?: {
-      projectCode?: string;
-      projectName?: string;
-      projectStatus?: string;
-    }
+    searchFilter?: AdminDashboardFilter
   ) {
     this.subs.push(
       this.projectService
@@ -289,7 +291,7 @@ export class DashboardAdminComponent implements OnInit, OnDestroy {
           this.pageSize,
           ['created_at'],
           true,
-          whereFilter
+          searchFilter
         )
         .subscribe((dashboardRows: AdminRequestDashboardRow[]) => {
           console.log('==dashboardRows', dashboardRows);
@@ -334,6 +336,9 @@ export class DashboardAdminComponent implements OnInit, OnDestroy {
             const count = dashboardRows[0].count;
             this.requestDashboardItemCount = count;
             this.requestData = data;
+          } else {
+            this.requestDashboardItemCount = 0;
+            this.requestData = [];
           }
         })
     );
@@ -352,6 +357,7 @@ export class DashboardAdminComponent implements OnInit, OnDestroy {
 
   onRequestDashboardPageChanged(currentPage: number) {
     if (currentPage >= 1) {
+      this.currentPage = currentPage;
       this.getRequestDashboard(currentPage);
     }
   }

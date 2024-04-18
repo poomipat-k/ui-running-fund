@@ -3,6 +3,7 @@ import { Injectable, inject } from '@angular/core';
 import { Observable, catchError, throwError } from 'rxjs';
 
 import { environment } from '../../environments/environment';
+import { AdminDashboardFilter } from '../shared/models/admin-dashboard-filter';
 import { AdminRequestDashboardRow } from '../shared/models/admin-request-dashboard-row';
 import { AdminSummaryByStatus } from '../shared/models/admin-summary-by-status';
 import { ApplicantCriteria } from '../shared/models/applicant-criteria';
@@ -136,11 +137,7 @@ export class ProjectService {
     pageSize: number,
     sortBy: string[],
     isAsc: boolean,
-    whereFilter?: {
-      projectCode?: string;
-      projectName?: string;
-      projectStatus?: string;
-    }
+    searchFilter?: AdminDashboardFilter
   ): Observable<AdminRequestDashboardRow[]> {
     return this.http
       .post<AdminRequestDashboardRow[]>(
@@ -152,9 +149,9 @@ export class ProjectService {
           pageSize,
           sortBy,
           isAsc,
-          projectCode: whereFilter?.projectCode,
-          projectName: whereFilter?.projectName,
-          projectStatus: whereFilter?.projectStatus,
+          projectCode: searchFilter?.projectCode,
+          projectName: searchFilter?.projectName,
+          projectStatus: searchFilter?.projectStatus,
         }
       )
       .pipe(catchError(this.handleError));
