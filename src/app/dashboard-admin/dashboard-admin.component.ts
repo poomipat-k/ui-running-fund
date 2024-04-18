@@ -141,36 +141,41 @@ export class DashboardAdminComponent implements OnInit, OnDestroy {
   protected statusSearchOptions: RadioOption[] = [
     {
       id: 1,
+      value: '',
+      display: '',
+    },
+    {
+      id: 2,
       value: 'Reviewing',
       display: 'ยังไม่ได้กลั่นกรอง',
     },
     {
-      id: 2,
+      id: 3,
       value: 'Reviewed',
       display: 'กลั่นกรองเรียบร้อย',
     },
     {
-      id: 3,
+      id: 4,
       value: 'Revise',
       display: 'มีการแก้ไข',
     },
     {
-      id: 4,
+      id: 5,
       value: 'NotApproved',
       display: 'ไม่ผ่านการอนุมัติ',
     },
     {
-      id: 5,
+      id: 6,
       value: 'Approved',
       display: 'ผ่านการอนุมัติ',
     },
     {
-      id: 6,
+      id: 7,
       value: 'Start',
       display: 'กำลังดำเนินโครงการ',
     },
     {
-      id: 7,
+      id: 8,
       value: 'Completed',
       display: 'ปิดโครงการ',
     },
