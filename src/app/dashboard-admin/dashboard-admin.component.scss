@@ -139,6 +139,37 @@
     line-height: 2rem;
     color: #344054;
   }
+
+  &__button {
+    height: 4.4rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    align-self: flex-end;
+    background-color: #667085;
+
+    border: none;
+    outline: none;
+
+    border-radius: 8px;
+    padding: 1rem 1.4rem;
+
+    font-family: $custom-font;
+    font-weight: 500;
+    font-size: 1.6rem;
+    line-height: 2.4rem;
+    color: #fff;
+    cursor: pointer;
+
+    &:hover {
+      filter: brightness(110%);
+    }
+
+    &:active {
+      filter: brightness(90%);
+    }
+  }
 }
 
 .pagingContainer {
@@ -176,5 +207,9 @@
 
   &-33 {
     margin-top: 33px;
+  }
+
+  &-39 {
+    margin-top: 39px;
   }
 }

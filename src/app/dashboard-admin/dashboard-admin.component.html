@@ -121,10 +121,26 @@
         width="44.1rem"
       ></app-com-input-text>
     </div>
+
+    <div class="searchFilter__item">
+      <p class="searchFilter__label">รหัสโครงการ</p>
+      <app-com-select-dropdown
+        [form]="searchFormGroup"
+        [items]="statusSearchOptions"
+        placeholder="เลือกการค้นหา"
+        width="28.6rem"
+        controlName="projectStatus"
+      ></app-com-select-dropdown>
+    </div>
+
+    <button class="searchFilter__button" (click)="onSearchClick()">
+      ค้นหา
+    </button>
   </div>
+
   <!-- Request Dashboard -->
 
-  <div class="mgt-33">
+  <div class="mgt-39">
     <h2 class="dashboard__header">โครงการที่ขอทุนสนับสนุน</h2>
     <div class="dashboard__control mgt-8">
       <p class="dashboard__count">

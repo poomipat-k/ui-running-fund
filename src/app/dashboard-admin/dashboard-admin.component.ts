@@ -6,6 +6,7 @@ import { ButtonComponent } from '../components/button/button/button.component';
 import { FilterComponent } from '../components/filter/filter.component';
 import { InputTextComponent } from '../components/input-text/input-text.component';
 import { PaginationComponent } from '../components/pagination/pagination.component';
+import { SelectDropdownTemplateComponent } from '../components/select-dropdown-template/select-dropdown-template.component';
 import { SelectDropdownComponent } from '../components/select-dropdown/select-dropdown.component';
 import { TableComponent } from '../components/table/table.component';
 import { DateService } from '../services/date.service';
@@ -33,6 +34,7 @@ import { TableColumn } from '../shared/models/table-column';
     TableComponent,
     PaginationComponent,
     InputTextComponent,
+    SelectDropdownTemplateComponent,
   ],
   templateUrl: './dashboard-admin.component.html',
   styleUrl: './dashboard-admin.component.scss',
@@ -131,6 +133,44 @@ export class DashboardAdminComponent implements OnInit, OnDestroy {
     },
   ];
 
+  protected statusSearchOptions: RadioOption[] = [
+    {
+      id: 1,
+      value: 'Reviewing',
+      display: 'ยังไม่ได้กลั่นกรอง',
+    },
+    {
+      id: 2,
+      value: 'Reviewed',
+      display: 'กลั่นกรองเรียบร้อย',
+    },
+    {
+      id: 3,
+      value: 'Revise',
+      display: 'มีการแก้ไข',
+    },
+    {
+      id: 4,
+      value: 'NotApproved',
+      display: 'ไม่ผ่านการอนุมัติ',
+    },
+    {
+      id: 5,
+      value: 'Approved',
+      display: 'ผ่านการอนุมัติ',
+    },
+    {
+      id: 6,
+      value: 'Start',
+      display: 'กำลังดำเนินโครงการ',
+    },
+    {
+      id: 7,
+      value: 'Completed',
+      display: 'ปิดโครงการ',
+    },
+  ];
+
   get periodFormGroup(): FormGroup {
     return this.form.get('period') as FormGroup;
   }
@@ -223,6 +263,10 @@ export class DashboardAdminComponent implements OnInit, OnDestroy {
           }
         })
     );
+  }
+
+  onSearchClick() {
+    console.log('===onSearchClick', this.form);
   }
 
   private getRequestDashboard(pageNo: number) {
