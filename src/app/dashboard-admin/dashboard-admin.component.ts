@@ -271,6 +271,11 @@ export class DashboardAdminComponent implements OnInit, OnDestroy {
   onSearchClick() {
     this.activeSearchFilter = this.form.value;
     console.log('===activeSearchFilter', this.activeSearchFilter);
+    // reset current page to 1 and reload data
+    this.onRequestDashboardPageChanged(1);
+  }
+
+  private refreshRequestDashboard() {
     this.getRequestDashboard(this.currentPage, {
       projectCode: this.activeSearchFilter?.search?.projectCode || null,
       projectName: this.activeSearchFilter?.search?.projectName || null,
@@ -358,7 +363,7 @@ export class DashboardAdminComponent implements OnInit, OnDestroy {
   onRequestDashboardPageChanged(currentPage: number) {
     if (currentPage >= 1) {
       this.currentPage = currentPage;
-      this.getRequestDashboard(currentPage);
+      this.refreshRequestDashboard();
     }
   }
 

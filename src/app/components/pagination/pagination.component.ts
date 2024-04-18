@@ -10,10 +10,9 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 export class PaginationComponent {
   @Input() count = 0;
   @Input() pageSize = 5;
+  @Input() activePage = 1;
 
   @Output() currentPage = new EventEmitter<number>();
-
-  protected activePage = 1;
 
   get pageCount(): number {
     if (this.pageSize <= 0) {

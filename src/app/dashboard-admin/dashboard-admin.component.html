@@ -165,6 +165,7 @@
         <app-com-pagination
           [count]="requestDashboardItemCount"
           [pageSize]="5"
+          [activePage]="currentPage"
           (currentPage)="onRequestDashboardPageChanged($event)"
         ></app-com-pagination>
       </div>
