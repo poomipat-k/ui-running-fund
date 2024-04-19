@@ -130,7 +130,7 @@ export class ApplicantFlowPagesComponent implements OnInit, OnDestroy {
     this.loadApplicantSelfScoreCriteria();
     // Change page
     // TODO: comment this line
-    this.currentStep = 2;
+    this.currentStep = 3;
     this.devModeOn = true;
 
     this.subToUploadFileSubjects();
@@ -352,6 +352,7 @@ export class ApplicantFlowPagesComponent implements OnInit, OnDestroy {
               ambulance: new FormControl(false),
               firstAid: new FormControl(false),
               aed: new FormControl(false),
+              volunteerDoctor: new FormControl(false),
               insurance: new FormControl(false),
               other: new FormControl(false),
             },

@@ -207,18 +207,19 @@ export class PlanAndDetailsComponent {
     {
       id: 1,
       value: 'manual',
-      display: 'ระบบ Manual ใช้กรรมการตัดสิน',
+      display:
+        'การตัดสินโดยใช้กรรมการที่มีประสบการณ์และมีความชำนาญทำหน้าที่บันทึก ณ จุดเริ่มต้น ตลอดจนบนเส้นทางวิ่ง และเส้นชัย เพื่อเป็นข้อมูลตัดสินผลการจัดกิจกรรม (Manual)',
     },
     {
       id: 2,
       value: 'auto',
       display:
-        'ระบบ Auto (Chip time) ใช้เครื่องประมวลผลร่วมกับกรรมการตัดสินชี้ขาด',
+        'การตัดสินโดยใช้เครื่องประมวลผลอัตโนมัติ (Auto) ร่วมกับกรรมการตัดสินชี้ขาด',
     },
     {
       id: 3,
       value: 'other',
-      display: 'อื่น ๆ เช่น กรณีใช้การตัดสินทั้ง 2 ระบบ โปรดระบุรายละเอียด',
+      display: 'อื่น ๆ โปรดระบุ',
     },
   ];
 
@@ -227,17 +228,19 @@ export class PlanAndDetailsComponent {
       id: 1,
       controlName: 'runnerInformation',
       display:
-        'ข้อมูลสุขภาพและหมายเลขโทรศัพท์ติดต่อฉุกเฉินของนักวิ่งในแบบฟอร์มลงทะเบียน/ระบบ/BIB',
+        'มีข้อมูลส่วนบุคคลของนักวิ่ง ทั้งข้อมูลส่วนตัวและข้อมูลสุขภาพในระบบลงทะเบียนรับสมัคร',
     },
     {
       id: 2,
       controlName: 'healthDecider',
-      display: 'กำหนดผู้รับผิดชอบ/ผู้ตัดสินใจเรื่องความปลอดภัยด้านสุขภาพ',
+      display:
+        'กำหนดผู้รับผิดชอบเพื่อตัดสินใจ กรณีเกิดปัญหาด้านสุขภาพฉุกเฉินแก่นักวิ่ง',
     },
     {
       id: 3,
       controlName: 'ambulance',
-      display: 'รถพยาบาลฉุกเฉิน (ambulance) พร้อมแพทย์/พยาบาลเคลื่อนที่',
+      display:
+        'มีรถพยาบาลฉุกเฉิน (ambulance) พร้อมแพทย์/พยาบาลวิชาชีพ/เจ้าหน้าที่ที่ผ่านการอบรมด้านการกู้ชีพฉุกเฉิน',
     },
     {
       id: 4,
@@ -253,11 +256,17 @@ export class PlanAndDetailsComponent {
     },
     {
       id: 6,
+      controlName: 'volunteerDoctor',
+      display:
+        'มีอาสาสมัครด้านการแพืย์ฉุกเฉินในรูปแบบจักรยานหรือจักรยานยนต์ พร้อมเครื่อง AED',
+    },
+    {
+      id: 7,
       controlName: 'insurance',
       display: 'ประกันชีวิตสำหรับนักวิ่ง',
     },
     {
-      id: 7,
+      id: 8,
       controlName: 'other',
       display: 'อื่น ๆ โปรดระบุ',
       onChanged: this.onOtherSafetyTypeChanged.bind(this),
@@ -294,7 +303,7 @@ export class PlanAndDetailsComponent {
     {
       id: 6,
       controlName: 'other',
-      display: 'อื่น ๆ',
+      display: 'อื่น ๆ ระบุ',
       onChanged: this.onOtherOrganizationChanged.bind(this),
     },
   ];
@@ -314,7 +323,8 @@ export class PlanAndDetailsComponent {
     {
       id: 3,
       controlName: 'booth',
-      display: 'การตั้งบูธประชาสัมพันธ์/ รับสมัคร',
+      display:
+        'การตั้งบูธประชาสัมพันธ์/รับสมัครในงานวิ่งอื่นหรือสถานที่ในชุมชน',
     },
     {
       id: 4,
