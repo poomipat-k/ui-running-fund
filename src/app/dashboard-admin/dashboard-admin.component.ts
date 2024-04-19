@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { ButtonComponent } from '../components/button/button/button.component';
 import { FilterComponent } from '../components/filter/filter.component';
@@ -60,6 +61,7 @@ export class DashboardAdminComponent implements OnInit, OnDestroy {
   private readonly themeService: ThemeService = inject(ThemeService);
   private readonly dateService: DateService = inject(DateService);
   private readonly projectService: ProjectService = inject(ProjectService);
+  private readonly router: Router = inject(Router);
 
   private readonly subs: Subscription[] = [];
 
@@ -358,10 +360,9 @@ export class DashboardAdminComponent implements OnInit, OnDestroy {
     console.log('==[onSortRequestFilterChanged]');
   }
 
-  onTableRowClicked(row: TableCell[]) {
-    console.log('===onTableRowClicked', row);
+  onRequestTableRowClicked(row: TableCell[]) {
     if (row.length > 0) {
-      // this.routerService.navigate(['applicant', 'project', row[0].value]);
+      this.router.navigate(['admin', 'project', row[0].value]);
     }
   }
 
