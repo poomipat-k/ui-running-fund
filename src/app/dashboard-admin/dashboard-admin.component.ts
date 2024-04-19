@@ -137,6 +137,7 @@ export class DashboardAdminComponent implements OnInit, OnDestroy {
     },
     {
       name: 'คะแนน',
+      class: 'col-score',
     },
   ];
 

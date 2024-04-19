@@ -27,6 +27,7 @@
       <td
         [class]="[
           'table__cell',
+          columns[$index].class,
           columns[$index].bold ? 'table__cell--bold' : '',
           columns[$index].compact ? 'table__cell--compact' : ''
         ]"

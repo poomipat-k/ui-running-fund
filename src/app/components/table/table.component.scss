@@ -207,6 +207,7 @@ $cell-height: 7.2rem;
     }
   }
 
+  // Admin
   &-standardStatus {
     width: 18rem;
     padding: 1.2rem 1.6rem;
@@ -219,9 +220,14 @@ $cell-height: 7.2rem;
     width: 12.8rem;
     padding: 1.2rem 1.6rem;
     @media only screen and (min-width: $bp1) {
-      padding: 1.2rem 2.4rem;
-      width: 14.4rem;
+      width: 17.8rem;
+      padding: 1.2rem 1.6rem;
     }
+  }
+
+  &-score {
+    width: 8rem;
+    padding: 1.2rem 1.6rem;
   }
 }
 
