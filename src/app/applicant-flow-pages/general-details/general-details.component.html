@@ -27,7 +27,7 @@
     </div>
 
     <div class="section">
-      <h3 class="section__header">1.2 วันที่จัดกิจกรรม</h3>
+      <h3 class="section__header">1.2 วันที่จัดงานวิ่ง</h3>
       <div class="section-content">
         <div class="eventDate__line">
           <p class="eventDate__line-label">วันที่</p>
@@ -307,7 +307,7 @@
     </div>
 
     <div class="section">
-      <h3 class="section__header">1.4 เส้นทางที่ใช้สำหรับจัดกิจกรรม</h3>
+      <h3 class="section__header">1.4 เส้นทางที่ใช้สำหรับจัดงานวิ่ง</h3>
       <div class="section-content">
         <div class="route">
           <label for="startPoint" class="route__label route__start-label"
@@ -356,14 +356,16 @@
 
     <div class="section section--wider-gap">
       <h3 class="section__header">
-        1.5 ประเภทกิจกรรมและอัตราค่าสมัคร
-        <span class="section__header--light"
+        1.5 ประเภทระยะทางวิ่งและอัตราค่าสมัคร
+        <!-- <span class="section__header--light"
           >(โปรดเลือกทุกระยะทางทีโครงการของท่านจัดกิจกรรม)
-        </span>
+        </span> -->
       </h3>
       <div class="eventDetails">
         <div class="subgroup" id="eventDetails.category.available">
-          <h4 class="subgroup__header">1.5.1 ประเภทการจัดกิจกรรม</h4>
+          <h4 class="subgroup__header">
+            1.5.1 ประเภทการจัดงานวิ่ง (เลือกทุกข้อที่มีการดำเนินการ)
+          </h4>
           <div class="subgroup__checkbox pdl-20">
             <app-com-checkbox
               [form]="categoryAvailableFormGroup"
@@ -376,7 +378,7 @@
             <app-com-checkbox
               [form]="categoryAvailableFormGroup"
               controlName="trailRunning"
-              display="Trail Running (การวิ่งตามภูมิประเทศ)"
+              display="วิ่งเทรล/วิ่งตามภูมิประเทศ (Trail Run)"
               gap="8px"
               fontSize="16px"
             >
@@ -384,7 +386,7 @@
             <app-com-checkbox
               [form]="categoryAvailableFormGroup"
               controlName="other"
-              display="อื่น ๆ (โปรดระบุ)"
+              display="อื่น ๆ โปรดระบุ"
               gap="8px"
               fontSize="16px"
               [onChanged]="onOtherEventTypeChanged"
@@ -420,7 +422,7 @@
         <!-- 1.5.2 -->
         <div class="subgroup">
           <h4 class="subgroup__header" id="eventDetails.distanceAndFee">
-            1.5.2 ระยะทางและอัตราค่าสมัคร
+            1.5.2 ระยะทางและอัตราค่าสมัครปกติ (เลือกทุกข้อที่มีการดำเนินการ)
           </h4>
           <div class="subgroup__checkbox pdl-20">
             @for (group of distanceAndFeeFormArray.controls; track $index) {
@@ -517,7 +519,10 @@
         </div>
         <!-- 1.5.2 End -->
         <div class="subgroup">
-          <h4 class="subgroup__header">1.5.3 การจัดประเภท VIP</h4>
+          <h4 class="subgroup__header">
+            1.5.3 การจัดกิจกรรมครั้งนี้มีการเปิดรับสมัครประเภท VIP หรือไม่
+            (เลือกตอบเพียง 1 ข้อ)
+          </h4>
           <div class="vip pdl-20">
             <div class="mgt-10">
               <app-com-radio
@@ -566,7 +571,7 @@
 
     <div class="section section--wider-gap">
       <h3 class="section__header">
-        1.6 จำนวนผู้เข้าร่วมที่คาดหวัง
+        1.6 จำนวนผู้เข้าร่วมที่ตั้งเป้า
         <span class="section__header--light">(เลือกตอบเพียง 1ข้อ)</span>
       </h3>
       <div class="section-content">
