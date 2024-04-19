@@ -130,7 +130,7 @@ export class ApplicantFlowPagesComponent implements OnInit, OnDestroy {
     this.loadApplicantSelfScoreCriteria();
     // Change page
     // TODO: comment this line
-    this.currentStep = 6;
+    // this.currentStep = 4;
     this.devModeOn = true;
 
     this.subToUploadFileSubjects();
@@ -423,7 +423,6 @@ export class ApplicantFlowPagesComponent implements OnInit, OnDestroy {
                 Validators.max(currentYear + 543),
                 Validators.min(this.minHistoryYear + 543),
               ]),
-              name: new FormControl(null, Validators.required),
               participant: new FormControl(null, [
                 Validators.required,
                 Validators.min(0),
@@ -434,7 +433,6 @@ export class ApplicantFlowPagesComponent implements OnInit, OnDestroy {
                 Validators.max(currentYear + 543),
                 Validators.min(this.minHistoryYear + 543),
               ]),
-              name: new FormControl(null),
               participant: new FormControl(null, [Validators.min(0)]),
             }),
             completed3: new FormGroup({
@@ -442,7 +440,6 @@ export class ApplicantFlowPagesComponent implements OnInit, OnDestroy {
                 Validators.max(currentYear + 543),
                 Validators.min(this.minHistoryYear + 543),
               ]),
-              name: new FormControl(null),
               participant: new FormControl(null, [Validators.min(0)]),
             }),
           }),

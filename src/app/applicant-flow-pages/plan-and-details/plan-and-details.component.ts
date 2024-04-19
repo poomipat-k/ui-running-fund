@@ -587,6 +587,7 @@ export class PlanAndDetailsComponent {
           ambulance: true,
           firstAid: false,
           aed: false,
+          volunteerDoctor: true,
           insurance: false,
           other: false,
         },
