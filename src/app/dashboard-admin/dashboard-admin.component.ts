@@ -115,7 +115,7 @@ export class DashboardAdminComponent implements OnInit, OnDestroy {
     {
       name: 'วันที่ส่งใบขอทุน',
       format: 'datetime',
-      class: 'col-applyDate',
+      class: 'col-longDate',
     },
     {
       name: 'ชื่อโครงการ',
@@ -123,13 +123,13 @@ export class DashboardAdminComponent implements OnInit, OnDestroy {
     },
     {
       name: 'สถานะการดำเนินงาน',
-      class: 'col-applicantStatus',
+      class: 'col-standardStatus',
       type: ColumnTypeEnum.Badge,
     },
     {
       name: 'วันที่แก้ไขล่าสุด',
       format: 'datetime',
-      class: 'col-updateDate',
+      class: 'col-longDate',
     },
     {
       name: 'หมายเหตุ',

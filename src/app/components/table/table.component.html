@@ -30,6 +30,7 @@
           columns[$index].bold ? 'table__cell--bold' : '',
           columns[$index].compact ? 'table__cell--compact' : ''
         ]"
+        [ngStyle]="{ 'font-size': contentFontSize ? contentFontSize : '' }"
       >
         <app-table-cell-template
           [cellType]="columns[$index].type"

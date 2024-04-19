@@ -206,6 +206,23 @@ $cell-height: 7.2rem;
       font-size: 1.8rem;
     }
   }
+
+  &-standardStatus {
+    width: 18rem;
+    padding: 1.2rem 1.6rem;
+    @media only screen and (min-width: $bp1) {
+      padding: 1.2rem 2.4rem;
+    }
+  }
+
+  &-longDate {
+    width: 12.8rem;
+    padding: 1.2rem 1.6rem;
+    @media only screen and (min-width: $bp1) {
+      padding: 1.2rem 2.4rem;
+      width: 14.4rem;
+    }
+  }
 }
 
 .margin-top-24 {
