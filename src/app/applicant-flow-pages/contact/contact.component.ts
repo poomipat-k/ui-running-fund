@@ -285,7 +285,7 @@ export class ContactComponent implements OnInit, OnDestroy {
 
   public validToGoNext(): boolean {
     if (this.projectManagerSameAsProjectHead) {
-      this.patchProjectManager();
+      this.patchProjectManagerAsProjectHead();
     }
 
     if (this.projectCoordinatorSameAsProjectHead) {
@@ -301,6 +301,7 @@ export class ContactComponent implements OnInit, OnDestroy {
       this.markFieldsTouched();
       return false;
     }
+    console.log('==form', this.form);
     return true;
   }
 
@@ -409,6 +410,16 @@ export class ContactComponent implements OnInit, OnDestroy {
       lastName: null,
       organizationPosition: null,
       eventPosition: null,
+      address: {
+        address: null,
+        provinceId: null,
+        districtId: null,
+        subdistrictId: null,
+        postcodeId: null,
+      },
+      email: null,
+      lineId: null,
+      phoneNumber: null,
     });
     this.projectManagerGroup.markAsPristine();
     this.projectManagerGroup.markAsUntouched();
@@ -422,6 +433,13 @@ export class ContactComponent implements OnInit, OnDestroy {
       lastName: null,
       organizationPosition: null,
       eventPosition: null,
+      address: {
+        address: null,
+        provinceId: null,
+        districtId: null,
+        subdistrictId: null,
+        postcodeId: null,
+      },
     });
     const fields = [
       'prefix',
@@ -436,15 +454,28 @@ export class ContactComponent implements OnInit, OnDestroy {
     });
   }
 
-  private patchProjectManager() {
-    const { prefix, firstName, lastName, organizationPosition, eventPosition } =
-      this.projectHeadGroup.value;
+  private patchProjectManagerAsProjectHead() {
+    const {
+      prefix,
+      firstName,
+      lastName,
+      organizationPosition,
+      eventPosition,
+      address,
+      email,
+      lineId,
+      phoneNumber,
+    } = this.projectHeadGroup.value;
     this.projectManagerGroup.patchValue({
       prefix,
       firstName,
       lastName,
       organizationPosition,
       eventPosition,
+      address: { ...address },
+      email,
+      lineId,
+      phoneNumber,
     });
   }
 
@@ -597,17 +628,39 @@ export class ContactComponent implements OnInit, OnDestroy {
         lastName: 'B',
         organizationPosition: 'software eng',
         eventPosition: 'Judge',
+        address: {
+          address: 'projectHead address',
+          provinceId: 1,
+          districtId: 1,
+          subdistrictId: 1,
+          postcodeId: 1,
+        },
+        email: 'head@test.com',
+        lineId: '@head',
+        phoneNumber: '091111111',
       },
       projectManager: {
-        sameAsProjectHead: true,
+        // sameAsProjectHead: true,
+        sameAsProjectHead: false,
         prefix: 'Mr',
         firstName: 'A',
         lastName: 'B',
         organizationPosition: 'software eng',
         eventPosition: 'Judge',
+        address: {
+          address: 'projectManager address',
+          provinceId: 2,
+          districtId: 10,
+          subdistrictId: 60,
+          postcodeId: 60,
+        },
+        email: 'projectManager@test.com',
+        lineId: '@projectManager',
+        phoneNumber: '091111111',
       },
       projectCoordinator: {
-        sameAsProjectHead: true,
+        // sameAsProjectHead: true,
+        sameAsProjectHead: false,
         sameAsProjectManager: false,
         prefix: 'Mr',
         firstName: 'A',
@@ -615,14 +668,14 @@ export class ContactComponent implements OnInit, OnDestroy {
         organizationPosition: 'software eng',
         eventPosition: 'Judge',
         address: {
-          address: 'A',
-          provinceId: 3,
-          districtId: 59,
-          subdistrictId: 235,
-          postcodeId: 246,
+          address: 'projectManager address',
+          provinceId: 6,
+          districtId: 113,
+          subdistrictId: 652,
+          postcodeId: 666,
         },
-        email: 'test@test.com',
-        lineId: '@aabb',
+        email: 'coordinator@test.com',
+        lineId: '@coordinator',
         phoneNumber: '0902029423',
       },
       raceDirector: {

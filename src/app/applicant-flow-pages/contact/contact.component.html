@@ -122,7 +122,7 @@
         </div>
       </div>
 
-      <!-- Additional collapse 2.1 -->
+      <!-- 2.1 Address start -->
       <div class="section-content pdl-20">
         <div class="flexGapZero">
           <label class="label width-177" id="projectHead.address.address"
@@ -312,7 +312,7 @@
           </div>
         </div>
       </div>
-      <!-- End additional collapse 2.3 -->
+      <!-- 2.1 Address END -->
     </div>
     <!-- 2.2 Start -->
     <div class="section">
@@ -450,6 +450,209 @@
               </div>
             </div>
           </div>
+          <!-- 2.2 Address Start -->
+          <div class="section-content pdl-20">
+            <div class="flexGapZero">
+              <label class="label width-177" id="projectManager.address.address"
+                >ที่อยู่ (ที่ไปรษณีย์ส่งถึง)</label
+              >
+              <div class="flex-1">
+                <app-com-textarea
+                  [form]="projectManagerAddressFormGroup"
+                  controlName="address"
+                  placeholder="ระบุที่อยู่ที่ไปรษณีย์ส่งถึง"
+                  height="15.8rem"
+                ></app-com-textarea>
+
+                @if (!form.get('contact.projectManager.address.address')?.valid
+                && form.get('contact.projectManager.address.address')?.touched
+                && formTouched) {
+                <div class="error mgt-10">
+                  <img src="/assets/error_icon.svg" alt="error icon" />
+                  <p class="error__text">กรุณาระบุที่อยู่ที่ติดต่อได้สะดวก</p>
+                </div>
+                }
+              </div>
+            </div>
+
+            <div class="flexGapZero">
+              <label class="label width-177">จังหวัด</label>
+              <div>
+                <app-com-select-dropdown
+                  id="projectManager.address.provinceId"
+                  [form]="projectManagerAddressFormGroup"
+                  [items]="provinceOptions"
+                  placeholder="จังหวัด"
+                  width="32rem"
+                  controlName="provinceId"
+                  [onChange]="onProjectManagerProvinceChanged"
+                ></app-com-select-dropdown>
+                @if(!form.get('contact.projectManager.address.provinceId')?.valid
+                &&
+                form.get('contact.projectManager.address.provinceId')?.touched
+                && formTouched) {
+                <div class="error mgt-10">
+                  <img src="/assets/error_icon.svg" alt="error icon" />
+                  <p class="error__text">กรุณาเลือกจังหวัด</p>
+                </div>
+                }
+              </div>
+            </div>
+
+            <div class="flexGapZero">
+              <label class="label width-177">อำเภอ/เขต</label>
+              <div>
+                <app-com-select-dropdown
+                  id="projectManager.address.districtId"
+                  [form]="projectManagerAddressFormGroup"
+                  [items]="projectManagerDistrictOptions"
+                  placeholder="อำเภอ/เขต"
+                  width="32rem"
+                  controlName="districtId"
+                  [onChange]="onProjectManagerDistrictChanged"
+                  [disabled]="
+                    !form.value.contact.projectManager.address.provinceId
+                  "
+                ></app-com-select-dropdown>
+                @if(!form.get('contact.projectManager.address.districtId')?.valid
+                &&
+                form.get('contact.projectManager.address.districtId')?.touched
+                && formTouched) {
+                <div class="error mgt-10">
+                  <img src="/assets/error_icon.svg" alt="error icon" />
+                  <p class="error__text">กรุณาเลือกอำเภอ/เขต</p>
+                </div>
+                }
+              </div>
+            </div>
+
+            <div class="flexGapZero">
+              <label class="label width-177">ตำบล/แขวง</label>
+              <div>
+                <app-com-select-dropdown
+                  id="projectManager.address.subdistrictId"
+                  [form]="projectManagerAddressFormGroup"
+                  [items]="projectManagerSubdistrictOptions"
+                  placeholder="ตำบล/แขวง"
+                  width="32rem"
+                  controlName="subdistrictId"
+                  [onChange]="onProjectManagerSubdistrictChanged"
+                  [disabled]="
+                    !form.value.contact.projectManager.address.districtId
+                  "
+                ></app-com-select-dropdown>
+                @if(!form.get('contact.projectManager.address.subdistrictId')?.valid
+                &&
+                form.get('contact.projectManager.address.subdistrictId')?.touched
+                && formTouched) {
+                <div class="error mgt-10">
+                  <img src="/assets/error_icon.svg" alt="error icon" />
+                  <p class="error__text">กรุณาเลือกตำบล/แขวง</p>
+                </div>
+                }
+              </div>
+            </div>
+
+            <div class="flexGapZero">
+              <label class="label width-177">รหัสไปรษณีย์</label>
+              <div>
+                <app-com-select-dropdown
+                  id="projectManager.address.postcodeId"
+                  [form]="projectManagerAddressFormGroup"
+                  [items]="projectManagerPostcodeOptions"
+                  placeholder="รหัสไปรษณีย์"
+                  width="32rem"
+                  controlName="postcodeId"
+                  [disabled]="
+                    !form.value.contact.projectManager.address.subdistrictId
+                  "
+                ></app-com-select-dropdown>
+                @if(!form.get('contact.projectManager.address.postcodeId')?.valid
+                &&
+                form.get('contact.projectManager.address.postcodeId')?.touched
+                && formTouched) {
+                <div class="error mgt-10">
+                  <img src="/assets/error_icon.svg" alt="error icon" />
+                  <p class="error__text">กรุณารหัสไปรษณีย์</p>
+                </div>
+                }
+              </div>
+            </div>
+
+            <div class="flexGapZero">
+              <label class="label width-177">อีเมล (E-mail)</label>
+              <div>
+                <app-com-input-text
+                  id="projectManager.email"
+                  placeholder="ระบุอีเมล"
+                  [form]="projectManagerGroup"
+                  controlName="email"
+                  width="47.5rem"
+                ></app-com-input-text>
+
+                @if (!projectManagerEmailControl.valid &&
+                projectManagerEmailControl.touched && formTouched) {
+                <div class="error mgt-10">
+                  <img src="/assets/error_icon.svg" alt="error icon" />
+                  <p class="error__text">กรุณาระบุอีเมล</p>
+                </div>
+                }
+              </div>
+            </div>
+
+            <div class="flexGapZero">
+              <label class="label width-177">ไลน์ไอดี (Line ID)</label>
+              <div>
+                <app-com-input-text
+                  id="projectManager.lineId"
+                  placeholder="ระบุ Line ID"
+                  [form]="projectManagerGroup"
+                  controlName="lineId"
+                  width="47.5rem"
+                ></app-com-input-text>
+
+                @if (!projectManagerLineIdControl.valid &&
+                projectManagerLineIdControl.touched && formTouched) {
+                <div class="error mgt-10">
+                  <img src="/assets/error_icon.svg" alt="error icon" />
+                  <p class="error__text">กรุณาระบุไลน์ไอดี</p>
+                </div>
+                }
+              </div>
+            </div>
+
+            <div class="flexGapZero">
+              <label class="label width-177">หมายเลขโทรศัพท์</label>
+              <div>
+                <app-com-input-text
+                  id="projectManager.phoneNumber"
+                  placeholder="ระบุหมายเลขโทรศัพท์ (ระบุเฉพาะตัวเลข ไม่มีเครื่องหมาย -)"
+                  [form]="projectManagerGroup"
+                  controlName="phoneNumber"
+                  width="47.5rem"
+                  appOnlyNumber
+                ></app-com-input-text>
+
+                @if (!projectManagerPhoneNumberControl.valid &&
+                projectManagerPhoneNumberControl.touched && formTouched) {
+                <div class="error mgt-10">
+                  <img src="/assets/error_icon.svg" alt="error icon" />
+                  @if (projectManagerPhoneNumberControl.errors &&
+                  projectManagerPhoneNumberControl.errors['required']) {
+                  <p class="error__text">กรุณาระบุหมายเลขโทรศัพท์</p>
+
+                  }@else {
+                  <p class="error__text">
+                    โปรดตรวจสอบหมายเลขโทรศัพท์ให้ถูกต้อง
+                  </p>
+
+                  }
+                </div>
+                }
+              </div>
+            </div>
+          </div>
+          <!-- 2.2 Address End -->
         </div>
       </div>
     </div>
@@ -604,7 +807,7 @@
               </div>
             </div>
           </div>
-          <!-- Additional collapse 2.3 -->
+          <!-- 2.3 Address Start -->
           <div class="section-content">
             <div class="flexGapZero">
               <label
@@ -620,9 +823,11 @@
                   height="15.8rem"
                 ></app-com-textarea>
 
-                @if (!form.get('contact.projectCoordinator.address')?.valid &&
-                form.get('contact.projectCoordinator.address')?.touched &&
-                formTouched) {
+                @if
+                (!form.get('contact.projectCoordinator.address.address')?.valid
+                &&
+                form.get('contact.projectCoordinator.address.address')?.touched
+                && formTouched) {
                 <div class="error mgt-10">
                   <img src="/assets/error_icon.svg" alt="error icon" />
                   <p class="error__text">กรุณาระบุที่อยู่ที่ติดต่อได้สะดวก</p>
@@ -635,7 +840,7 @@
               <label class="label width-177">จังหวัด</label>
               <div>
                 <app-com-select-dropdown
-                  id="provinceId"
+                  id="projectCoordinator.address.provinceId"
                   [form]="projectCoordinatorAddressFormGroup"
                   [items]="provinceOptions"
                   placeholder="จังหวัด"
@@ -659,7 +864,7 @@
               <label class="label width-177">อำเภอ/เขต</label>
               <div>
                 <app-com-select-dropdown
-                  id="districtId"
+                  id="projectCoordinator.address.districtId"
                   [form]="projectCoordinatorAddressFormGroup"
                   [items]="projectCoordinatorDistrictOptions"
                   placeholder="อำเภอ/เขต"
@@ -686,7 +891,7 @@
               <label class="label width-177">ตำบล/แขวง</label>
               <div>
                 <app-com-select-dropdown
-                  id="subdistrictId"
+                  id="projectCoordinator.address.subdistrictId"
                   [form]="projectCoordinatorAddressFormGroup"
                   [items]="projectCoordinatorSubdistrictOptions"
                   placeholder="ตำบล/แขวง"
@@ -713,7 +918,7 @@
               <label class="label width-177">รหัสไปรษณีย์</label>
               <div>
                 <app-com-select-dropdown
-                  id="postcodeId"
+                  id="projectCoordinator.address.postcodeId"
                   [form]="projectCoordinatorAddressFormGroup"
                   [items]="projectCoordinatorPostcodeOptions"
                   placeholder="รหัสไปรษณีย์"
@@ -808,7 +1013,7 @@
               </div>
             </div>
           </div>
-          <!-- End additional collapse 2.3 -->
+          <!-- 2.2 Address End -->
         </div>
 
         <!-- Collapse End -->
