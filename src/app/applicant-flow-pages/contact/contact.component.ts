@@ -440,43 +440,23 @@ export class ContactComponent implements OnInit, OnDestroy {
         subdistrictId: null,
         postcodeId: null,
       },
+      email: null,
+      lineId: null,
+      phoneNumber: null,
     });
-    const fields = [
-      'prefix',
-      'firstName',
-      'lastName',
-      'organizationPosition',
-      'eventPosition',
-    ];
-    fields.forEach((field) => {
-      group.get(field)?.markAsPristine();
-      group.get(field)?.markAsUntouched();
-    });
-  }
-
-  private patchProjectManagerAsProjectHead() {
-    const {
-      prefix,
-      firstName,
-      lastName,
-      organizationPosition,
-      eventPosition,
-      address,
-      email,
-      lineId,
-      phoneNumber,
-    } = this.projectHeadGroup.value;
-    this.projectManagerGroup.patchValue({
-      prefix,
-      firstName,
-      lastName,
-      organizationPosition,
-      eventPosition,
-      address: { ...address },
-      email,
-      lineId,
-      phoneNumber,
-    });
+    // const fields = [
+    //   'prefix',
+    //   'firstName',
+    //   'lastName',
+    //   'organizationPosition',
+    //   'eventPosition',
+    // ];
+    // fields.forEach((field) => {
+    //   group.get(field)?.markAsPristine();
+    //   group.get(field)?.markAsUntouched();
+    // });
+    this.projectCoordinatorGroup.markAsPristine();
+    this.projectCoordinatorGroup.markAsUntouched();
   }
 
   private isFormValid(): boolean {
@@ -580,15 +560,53 @@ export class ContactComponent implements OnInit, OnDestroy {
     );
   }
 
+  private patchProjectManagerAsProjectHead() {
+    const {
+      prefix,
+      firstName,
+      lastName,
+      organizationPosition,
+      eventPosition,
+      address,
+      email,
+      lineId,
+      phoneNumber,
+    } = this.projectHeadGroup.value;
+    this.projectManagerGroup.patchValue({
+      prefix,
+      firstName,
+      lastName,
+      organizationPosition,
+      eventPosition,
+      address: { ...address },
+      email,
+      lineId,
+      phoneNumber,
+    });
+  }
+
   private patchProjectCoordinator(copyFrom: FormGroup) {
-    const { prefix, firstName, lastName, organizationPosition, eventPosition } =
-      copyFrom.value;
+    const {
+      prefix,
+      firstName,
+      lastName,
+      organizationPosition,
+      eventPosition,
+      address,
+      email,
+      lineId,
+      phoneNumber,
+    } = copyFrom.value;
     this.projectCoordinatorGroup.patchValue({
       prefix,
       firstName,
       lastName,
       organizationPosition,
       eventPosition,
+      address: { ...address },
+      email,
+      lineId,
+      phoneNumber,
     });
   }
 
