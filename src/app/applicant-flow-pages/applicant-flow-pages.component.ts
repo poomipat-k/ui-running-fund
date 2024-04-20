@@ -269,6 +269,20 @@ export class ApplicantFlowPagesComponent implements OnInit, OnDestroy {
           lastName: new FormControl(null, Validators.required),
           organizationPosition: new FormControl(null, Validators.required),
           eventPosition: new FormControl(null, Validators.required),
+          address: new FormGroup({
+            address: new FormControl(null, Validators.required),
+            provinceId: new FormControl(null, Validators.required),
+            districtId: new FormControl(null, Validators.required),
+            subdistrictId: new FormControl(null, Validators.required),
+            postcodeId: new FormControl(null, Validators.required),
+          }),
+          email: new FormControl(null, [Validators.required]),
+          lineId: new FormControl(null, [Validators.required]),
+          phoneNumber: new FormControl(null, [
+            Validators.required,
+            // Allow only number len >= 9
+            Validators.pattern('[0-9]{9,}'),
+          ]),
         }),
         projectManager: new FormGroup({
           sameAsProjectHead: new FormControl(false),
@@ -277,6 +291,20 @@ export class ApplicantFlowPagesComponent implements OnInit, OnDestroy {
           lastName: new FormControl(null, Validators.required),
           organizationPosition: new FormControl(null, Validators.required),
           eventPosition: new FormControl(null, Validators.required),
+          address: new FormGroup({
+            address: new FormControl(null, Validators.required),
+            provinceId: new FormControl(null, Validators.required),
+            districtId: new FormControl(null, Validators.required),
+            subdistrictId: new FormControl(null, Validators.required),
+            postcodeId: new FormControl(null, Validators.required),
+          }),
+          email: new FormControl(null, [Validators.required]),
+          lineId: new FormControl(null, [Validators.required]),
+          phoneNumber: new FormControl(null, [
+            Validators.required,
+            // Allow only number len >= 9
+            Validators.pattern('[0-9]{9,}'),
+          ]),
         }),
         projectCoordinator: new FormGroup({
           sameAsProjectHead: new FormControl(false),
@@ -623,6 +651,7 @@ export class ApplicantFlowPagesComponent implements OnInit, OnDestroy {
       }
     }
 
+    console.log('===form', this.getSubmitFormData());
     formData.append('form', JSON.stringify(this.getSubmitFormData()));
     // upload snapshots
     this.subs.push(

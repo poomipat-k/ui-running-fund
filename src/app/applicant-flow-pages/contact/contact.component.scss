@@ -45,7 +45,6 @@
   }
 
   &-content {
-    padding-left: 2rem;
     display: flex;
     flex-direction: column;
     gap: 1.4rem;
@@ -58,7 +57,7 @@
     gap: 1.4rem;
     opacity: 1;
     transition: opacity 300ms ease-out, max-height 300ms ease-out;
-    max-height: 26rem; // Need to be a little higher than actual for smooth animation
+    max-height: 110rem; //26rem,  Need to be a little higher than actual for smooth animation
     z-index: 0;
 
     &--hide {
@@ -113,6 +112,11 @@
   }
 }
 
+.flexGapZero {
+  display: flex;
+  gap: 0;
+}
+
 .projectCoordinator {
   &__line {
     display: flex;
@@ -122,11 +126,6 @@
   &__item {
     display: flex;
     gap: 8px;
-  }
-
-  &__line-important {
-    display: flex;
-    gap: 0;
   }
 }
 
@@ -225,5 +224,11 @@ label {
 .flex {
   &-1 {
     flex: 1;
+  }
+}
+
+.pdl {
+  &-20 {
+    padding-left: 20px;
   }
 }

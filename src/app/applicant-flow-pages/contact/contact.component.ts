@@ -42,12 +42,36 @@ export class ContactComponent implements OnInit, OnDestroy {
 
   private readonly scroller: ViewportScroller = inject(ViewportScroller);
 
+  get projectHeadEmailControl(): FormControl {
+    return this.form.get('contact.projectHead.email') as FormControl;
+  }
+
+  get projectManagerEmailControl(): FormControl {
+    return this.form.get('contact.projectManager.email') as FormControl;
+  }
+
   get projectCoordinatorEmailControl(): FormControl {
     return this.form.get('contact.projectCoordinator.email') as FormControl;
   }
 
+  get projectHeadLineIdControl(): FormControl {
+    return this.form.get('contact.projectHead.lineId') as FormControl;
+  }
+
+  get projectManagerLineIdControl(): FormControl {
+    return this.form.get('contact.projectManager.lineId') as FormControl;
+  }
+
   get projectCoordinatorLineIdControl(): FormControl {
     return this.form.get('contact.projectCoordinator.lineId') as FormControl;
+  }
+
+  get projectHeadPhoneNumberControl(): FormControl {
+    return this.form.get('contact.projectHead.phoneNumber') as FormControl;
+  }
+
+  get projectManagerPhoneNumberControl(): FormControl {
+    return this.form.get('contact.projectManager.phoneNumber') as FormControl;
   }
 
   get projectCoordinatorPhoneNumberControl(): FormControl {
@@ -56,7 +80,15 @@ export class ContactComponent implements OnInit, OnDestroy {
     ) as FormControl;
   }
 
-  get coordinatorAddressFormGroup(): FormGroup {
+  get projectHeadAddressFormGroup(): FormGroup {
+    return this.form.get('contact.projectHead.address') as FormGroup;
+  }
+
+  get projectManagerAddressFormGroup(): FormGroup {
+    return this.form.get('contact.projectManager.address') as FormGroup;
+  }
+
+  get projectCoordinatorAddressFormGroup(): FormGroup {
     return this.form.get('contact.projectCoordinator.address') as FormGroup;
   }
 
@@ -255,7 +287,7 @@ export class ContactComponent implements OnInit, OnDestroy {
   }
 
   onProvinceChanged() {
-    this.coordinatorAddressFormGroup.patchValue({
+    this.projectCoordinatorAddressFormGroup.patchValue({
       districtId: null,
       subdistrictId: null,
       postcodeId: null,
@@ -263,14 +295,14 @@ export class ContactComponent implements OnInit, OnDestroy {
   }
 
   onDistrictChanged() {
-    this.coordinatorAddressFormGroup.patchValue({
+    this.projectCoordinatorAddressFormGroup.patchValue({
       subdistrictId: null,
       postcodeId: null,
     });
   }
 
   onSubdistrictChanged() {
-    this.coordinatorAddressFormGroup.patchValue({ postcodeId: null });
+    this.projectCoordinatorAddressFormGroup.patchValue({ postcodeId: null });
   }
 
   protected onProjectManagerSameAsProjectHeadChanged() {
@@ -357,6 +389,7 @@ export class ContactComponent implements OnInit, OnDestroy {
 
     const fromGroup = this.form.get('contact') as FormGroup;
     const errorId = this.getFirstErrorIdWithPrefix(fromGroup, '');
+    console.error('errorId:', errorId);
     if (errorId && this.enableScroll) {
       this.scrollToId(errorId);
     }
