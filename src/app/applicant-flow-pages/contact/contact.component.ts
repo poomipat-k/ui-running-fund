@@ -658,7 +658,6 @@ export class ContactComponent implements OnInit, OnDestroy {
         phoneNumber: '091111111',
       },
       projectManager: {
-        // sameAsProjectHead: true,
         sameAsProjectHead: false,
         prefix: 'Mr',
         firstName: 'A',
@@ -677,7 +676,6 @@ export class ContactComponent implements OnInit, OnDestroy {
         phoneNumber: '091111111',
       },
       projectCoordinator: {
-        // sameAsProjectHead: true,
         sameAsProjectHead: false,
         sameAsProjectManager: false,
         prefix: 'Mr',
