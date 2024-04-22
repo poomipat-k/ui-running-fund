@@ -3,7 +3,6 @@ import { Component, OnInit, inject } from '@angular/core';
 import { DashboardApplicantComponent } from '../dashboard-applicant/dashboard-applicant.component';
 import { DashboardReviewerComponent } from '../dashboard-reviewer/dashboard-reviewer.component';
 import { UserService } from '../services/user.service';
-import { User } from '../shared/models/user';
 
 @Component({
   selector: 'app-home',
@@ -17,15 +16,9 @@ import { User } from '../shared/models/user';
   styleUrl: './home.component.scss',
 })
 export class HomeComponent implements OnInit {
-  private userService: UserService = inject(UserService);
-  // private router: Router = inject(Router);
+  private readonly userService: UserService = inject(UserService);
 
-  protected user: User;
   ngOnInit(): void {
-    const currentUser = this.userService.getCurrentInMemoryUser();
-    this.user = currentUser;
-    console.log('==user', this.user);
-
-    // this.router.navigate(['/dashboard']);
+    this.userService.tryGetUserForNonGuardedRoute();
   }
 }

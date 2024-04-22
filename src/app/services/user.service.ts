@@ -47,6 +47,17 @@ export class UserService {
       .pipe(catchError(this.handleError));
   }
 
+  public tryGetUserForNonGuardedRoute() {
+    const loggedInUser = this.getCurrentInMemoryUser();
+    if (!loggedInUser?.id) {
+      this.getCurrentUser().subscribe((user) => {
+        if (user.id) {
+          this.setUser(user);
+        }
+      });
+    }
+  }
+
   public register(
     email: string,
     firstName: string,
