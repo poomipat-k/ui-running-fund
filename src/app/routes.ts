@@ -2,6 +2,7 @@ import { Routes } from '@angular/router';
 import { EmailActivateSuccessComponent } from './email-activate-success/email-activate-success.component';
 import { ForgotPasswordEmailSentComponent } from './forgot-password-email-sent/forgot-password-email-sent.component';
 import { HomeComponent } from './home/home.component';
+import { HowToCreateComponent } from './how-to-create/how-to-create.component';
 import { LoginComponent } from './login/login.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { ResetPasswordSuccessComponent } from './reset-password-success/reset-password-success.component';
@@ -16,7 +17,12 @@ const routeConfig: Routes = [
   {
     path: '',
     component: HomeComponent,
-    title: 'Login',
+    title: 'หน้าหลัก',
+  },
+  {
+    path: 'how-to-create',
+    component: HowToCreateComponent,
+    title: 'วิธีสร้างใบขอทุนสนับสนุน',
   },
   {
     path: 'proposal/create',
