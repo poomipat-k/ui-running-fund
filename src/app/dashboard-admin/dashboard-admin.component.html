@@ -66,7 +66,7 @@
       <p class="summary__subHeader">จำนวนโครงการที่ขอทุนสนับสนุน</p>
       <div class="summary__details mgt-17">
         <span class="summary__details summary__details--highlight">
-          {{ numberFormatter.format(summaryData.projectCount) }}
+          {{ numberFormatter.format(summaryData.projectCount || 0) }}
         </span>
         โครงการ
       </div>
@@ -75,7 +75,7 @@
       <p class="summary__subHeader">จำนวนโครงการที่ได้สนับสนุน</p>
       <div class="summary__details mgt-17">
         <span class="summary__details summary__details--highlight"
-          >{{ numberFormatter.format(summaryData.approvedProjectCount) }}
+          >{{ numberFormatter.format(summaryData.approvedProjectCount || 0) }}
         </span>
         โครงการ
       </div>
@@ -84,7 +84,7 @@
       <p class="summary__subHeader">จำนวนเงินที่ให้ทุน</p>
       <div class="summary__details mgt-17">
         <span class="summary__details summary__details--highlight"
-          >{{ numberFormatter.format(summaryData.approvedFundSum) }}
+          >{{ numberFormatter.format(summaryData.approvedFundSum || 0) }}
         </span>
         บาท
       </div>
@@ -93,7 +93,7 @@
       <p class="summary__subHeader">ค่าเฉลี่ยเงินสนับสนุนแต่ละโครงการ</p>
       <div class="summary__details mgt-17">
         <span class="summary__details summary__details--highlight"
-          >{{ numberFormatter.format(summaryData.averageFund) }}
+          >{{ numberFormatter.format(summaryData.averageFund || 0) }}
         </span>
         บาท
       </div>
