@@ -5,17 +5,19 @@
       <div class="dateGroup">
         <app-com-select-dropdown
           [form]="dateFormGroup"
-          [items]="monthOptions"
-          placeholder="เดือน"
-          width="14.1rem"
-          controlName="fromMonth"
-        ></app-com-select-dropdown>
-        <app-com-select-dropdown
-          [form]="dateFormGroup"
           [items]="yearOptions"
           placeholder="ปี"
           width="9.9rem"
           controlName="fromYear"
+          [onChange]="onFromYearOrMonthChanged"
+        ></app-com-select-dropdown>
+        <app-com-select-dropdown
+          [form]="dateFormGroup"
+          [items]="monthOptions"
+          placeholder="เดือน"
+          width="14.1rem"
+          controlName="fromMonth"
+          [onChange]="onFromYearOrMonthChanged"
         ></app-com-select-dropdown>
         <app-com-select-dropdown
           [form]="dateFormGroup"
@@ -30,11 +32,11 @@
       <div class="dateGroup">
         <app-com-select-dropdown
           [form]="dateFormGroup"
-          [items]="toDaysInMonthOptions"
-          placeholder="วันที่"
-          width="9rem"
-          controlName="toDay"
-          emptyMessage="กรุณาเลือกปีและวัน"
+          [items]="yearOptions"
+          placeholder="ปี"
+          width="9.9rem"
+          controlName="toYear"
+          [onChange]="onToYearOrMonthChanged"
         ></app-com-select-dropdown>
         <app-com-select-dropdown
           [form]="dateFormGroup"
@@ -42,13 +44,15 @@
           placeholder="เดือน"
           width="14.1rem"
           controlName="toMonth"
+          [onChange]="onToYearOrMonthChanged"
         ></app-com-select-dropdown>
         <app-com-select-dropdown
           [form]="dateFormGroup"
-          [items]="yearOptions"
-          placeholder="ปี"
-          width="9.9rem"
-          controlName="toYear"
+          [items]="toDaysInMonthOptions"
+          placeholder="วันที่"
+          width="9rem"
+          controlName="toDay"
+          emptyMessage="กรุณาเลือกปีและวัน"
         ></app-com-select-dropdown>
       </div>
     </div>

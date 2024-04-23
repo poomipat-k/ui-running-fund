@@ -242,6 +242,11 @@ export class DashboardAdminComponent implements OnInit, OnDestroy {
     return this.isLeapYear(year) ? this.febLeap : this.febNormal;
   }
 
+  constructor() {
+    this.onFromYearOrMonthChanged = this.onFromYearOrMonthChanged.bind(this);
+    this.onToYearOrMonthChanged = this.onToYearOrMonthChanged.bind(this);
+  }
+
   ngOnInit(): void {
     this.themeService.changeBackgroundColor(BackgroundColor.white);
 
@@ -279,6 +284,38 @@ export class DashboardAdminComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.subs.forEach((s) => s.unsubscribe());
+  }
+
+  onFromYearOrMonthChanged() {
+    const year = this.form.value.date.fromYear;
+    const month = this.form.value.date.fromMonth;
+    const day = this.form.value.date.fromDay;
+    if (!this.isValidDate(year, month, day)) {
+      this.dateFormGroup.patchValue({
+        fromDay: null,
+      });
+    }
+  }
+
+  onToYearOrMonthChanged() {
+    const year = this.form.value.date.toYear;
+    const month = this.form.value.date.toMonth;
+    const day = this.form.value.date.toDay;
+    if (!this.isValidDate(year, month, day)) {
+      this.dateFormGroup.patchValue({
+        toDay: null,
+      });
+    }
+  }
+
+  private isValidDate(year: number, month: number, day: number): boolean {
+    if (!year || !month || !day) {
+      return false;
+    }
+    if (month > 12 || day > 31) {
+      return false;
+    }
+    return new Date(year, month - 1, day).getDate() === day;
   }
 
   private getAdminSummary() {
