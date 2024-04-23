@@ -30,6 +30,7 @@ import { FilterOption } from '../shared/models/filter-option';
 import { RadioOption } from '../shared/models/radio-option';
 import { TableCell } from '../shared/models/table-cell';
 import { TableColumn } from '../shared/models/table-column';
+import { fromDateBeforeToDateValidator } from '../shared/validators/fromDateBeforeToDate';
 
 @Component({
   selector: 'app-dashboard-admin',
@@ -53,6 +54,8 @@ export class DashboardAdminComponent implements OnInit, OnDestroy {
   protected yearOptions: RadioOption[] = [];
   protected currentYear = 0;
   protected currentPage = 1;
+
+  protected allDateHasBeenTouched = false;
 
   protected requestData: TableCell[][] = [];
   protected summaryStartedProjectCount = 0;
@@ -266,14 +269,17 @@ export class DashboardAdminComponent implements OnInit, OnDestroy {
 
   private initForm() {
     this.form = new FormGroup({
-      date: new FormGroup({
-        fromDay: new FormControl(null, Validators.required),
-        fromMonth: new FormControl(null, Validators.required),
-        fromYear: new FormControl(null, Validators.required),
-        toDay: new FormControl(null, Validators.required),
-        toMonth: new FormControl(null, Validators.required),
-        toYear: new FormControl(null, Validators.required),
-      }),
+      date: new FormGroup(
+        {
+          fromDay: new FormControl(null, Validators.required),
+          fromMonth: new FormControl(null, Validators.required),
+          fromYear: new FormControl(null, Validators.required),
+          toDay: new FormControl(null, Validators.required),
+          toMonth: new FormControl(null, Validators.required),
+          toYear: new FormControl(null, Validators.required),
+        },
+        fromDateBeforeToDateValidator()
+      ),
       search: new FormGroup({
         projectCode: new FormControl(null),
         projectName: new FormControl(null),
@@ -363,17 +369,9 @@ export class DashboardAdminComponent implements OnInit, OnDestroy {
 
   onSearchClick() {
     this.activeSearchFilter = this.form.value;
-    console.log('===activeSearchFilter', this.activeSearchFilter);
+    console.log('===this.form', this.form);
     // reset current page to 1 and reload data
     this.onRequestDashboardPageChanged(1);
-  }
-
-  private refreshRequestDashboard() {
-    this.getRequestDashboard(this.currentPage, {
-      projectCode: this.activeSearchFilter?.search?.projectCode || null,
-      projectName: this.activeSearchFilter?.search?.projectName || null,
-      projectStatus: this.activeSearchFilter?.search?.projectStatus || null,
-    });
   }
 
   private getRequestDashboard(
@@ -457,6 +455,14 @@ export class DashboardAdminComponent implements OnInit, OnDestroy {
       this.currentPage = currentPage;
       this.refreshRequestDashboard();
     }
+  }
+
+  private refreshRequestDashboard() {
+    this.getRequestDashboard(this.currentPage, {
+      projectCode: this.activeSearchFilter?.search?.projectCode || null,
+      projectName: this.activeSearchFilter?.search?.projectName || null,
+      projectStatus: this.activeSearchFilter?.search?.projectStatus || null,
+    });
   }
 
   private getYearOptions() {
