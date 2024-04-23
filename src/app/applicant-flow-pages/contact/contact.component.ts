@@ -642,7 +642,7 @@ export class ContactComponent implements OnInit, OnDestroy {
     group.patchValue({
       projectHead: {
         prefix: 'Mr',
-        firstName: 'A',
+        firstName: 'projectHead',
         lastName: 'B',
         organizationPosition: 'software eng',
         eventPosition: 'Judge',
@@ -660,7 +660,7 @@ export class ContactComponent implements OnInit, OnDestroy {
       projectManager: {
         sameAsProjectHead: false,
         prefix: 'Mr',
-        firstName: 'A',
+        firstName: 'projectManager',
         lastName: 'B',
         organizationPosition: 'software eng',
         eventPosition: 'Judge',
@@ -679,12 +679,12 @@ export class ContactComponent implements OnInit, OnDestroy {
         sameAsProjectHead: false,
         sameAsProjectManager: false,
         prefix: 'Mr',
-        firstName: 'A',
+        firstName: 'projectCoordinator',
         lastName: 'B',
         organizationPosition: 'software eng',
         eventPosition: 'Judge',
         address: {
-          address: 'projectManager address',
+          address: 'projectCoordinator address',
           provinceId: 6,
           districtId: 113,
           subdistrictId: 652,
