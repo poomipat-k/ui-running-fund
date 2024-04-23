@@ -1,7 +1,6 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { ThemeService } from '../services/theme.service';
-import { UserService } from '../services/user.service';
 import { BackgroundColor } from '../shared/enums/background-color';
 
 @Component({
@@ -14,7 +13,6 @@ import { BackgroundColor } from '../shared/enums/background-color';
 export class HowToCreateComponent implements OnInit {
   private readonly themeService: ThemeService = inject(ThemeService);
   private readonly domSanitizer: DomSanitizer = inject(DomSanitizer);
-  private readonly userService: UserService = inject(UserService);
   protected youtubeUrl = 'https://www.youtube.com/embed/lJIrF4YjHfQ';
 
   protected safeVideoUrl: SafeResourceUrl;
@@ -24,7 +22,5 @@ export class HowToCreateComponent implements OnInit {
     this.safeVideoUrl = this.domSanitizer.bypassSecurityTrustResourceUrl(
       this.youtubeUrl
     );
-
-    this.userService.tryGetUserForNonGuardedRoute();
   }
 }

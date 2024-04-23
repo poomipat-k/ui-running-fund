@@ -17,11 +17,26 @@
           width="9.9rem"
           controlName="fromYear"
         ></app-com-select-dropdown>
+        <app-com-select-dropdown
+          [form]="dateFormGroup"
+          [items]="fromDaysInMonthOptions"
+          placeholder="วันที่"
+          width="9rem"
+          controlName="fromDay"
+          emptyMessage="กรุณาเลือกปีและวัน"
+        ></app-com-select-dropdown>
       </div>
       <p class="dash">-</p>
       <div class="dateGroup">
         <app-com-select-dropdown
-          id="formMonth"
+          [form]="dateFormGroup"
+          [items]="toDaysInMonthOptions"
+          placeholder="วันที่"
+          width="9rem"
+          controlName="toDay"
+          emptyMessage="กรุณาเลือกปีและวัน"
+        ></app-com-select-dropdown>
+        <app-com-select-dropdown
           [form]="dateFormGroup"
           [items]="monthOptions"
           placeholder="เดือน"

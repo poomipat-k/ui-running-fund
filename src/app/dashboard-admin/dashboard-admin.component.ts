@@ -13,7 +13,13 @@ import { TableComponent } from '../components/table/table.component';
 import { DateService } from '../services/date.service';
 import { ProjectService } from '../services/project.service';
 import { ThemeService } from '../services/theme.service';
-import { months } from '../shared/constants/date-objects';
+import {
+  days28,
+  days29,
+  days30,
+  days31,
+  months,
+} from '../shared/constants/date-objects';
 import { STATUS_ORDER } from '../shared/constants/status-order';
 import { BackgroundColor } from '../shared/enums/background-color';
 import { ColumnTypeEnum } from '../shared/enums/column-type';
@@ -57,6 +63,12 @@ export class DashboardAdminComponent implements OnInit, OnDestroy {
   protected numberFormatter = Intl.NumberFormat();
 
   private readonly pageSize = 5;
+
+  private readonly thirtyDaysMonths = [4, 6, 9, 11];
+  private febLeap: RadioOption[] = [];
+  private febNormal: RadioOption[] = [];
+  private thirtyDays: RadioOption[] = [];
+  private thirtyOneDays: RadioOption[] = [];
 
   private readonly themeService: ThemeService = inject(ThemeService);
   private readonly dateService: DateService = inject(DateService);
@@ -200,11 +212,45 @@ export class DashboardAdminComponent implements OnInit, OnDestroy {
     return this.form.value.date.toYear;
   }
 
+  get fromDaysInMonthOptions() {
+    const year = this.form.value.date.fromYear;
+    const month = this.form.value.date.fromMonth;
+    if (!year || !month) {
+      return [];
+    }
+    if (this.thirtyDaysMonths.includes(month)) {
+      return this.thirtyDays;
+    }
+    if (month !== 2) {
+      return this.thirtyOneDays;
+    }
+    return this.isLeapYear(year) ? this.febLeap : this.febNormal;
+  }
+
+  get toDaysInMonthOptions() {
+    const year = this.form.value.date.toYear;
+    const month = this.form.value.date.toMonth;
+    if (!year || !month) {
+      return [];
+    }
+    if (this.thirtyDaysMonths.includes(month)) {
+      return this.thirtyDays;
+    }
+    if (month !== 2) {
+      return this.thirtyOneDays;
+    }
+    return this.isLeapYear(year) ? this.febLeap : this.febNormal;
+  }
+
   ngOnInit(): void {
     this.themeService.changeBackgroundColor(BackgroundColor.white);
 
     this.currentYear = this.dateService.getCurrentYear();
     this.monthOptions = months;
+    this.febNormal = days28;
+    this.febLeap = days29;
+    this.thirtyDays = days30;
+    this.thirtyOneDays = days31;
     this.getYearOptions();
 
     this.initForm();
@@ -216,8 +262,10 @@ export class DashboardAdminComponent implements OnInit, OnDestroy {
   private initForm() {
     this.form = new FormGroup({
       date: new FormGroup({
+        fromDay: new FormControl(null, Validators.required),
         fromMonth: new FormControl(null, Validators.required),
         fromYear: new FormControl(null, Validators.required),
+        toDay: new FormControl(null, Validators.required),
         toMonth: new FormControl(null, Validators.required),
         toYear: new FormControl(null, Validators.required),
       }),
@@ -389,5 +437,9 @@ export class DashboardAdminComponent implements OnInit, OnDestroy {
 
   private getStatusDisplay(row: AdminRequestDashboardRow): string {
     return `standard__${row.projectStatus}`;
+  }
+
+  private isLeapYear(year: number): boolean {
+    return new Date(year, 1, 29).getDate() === 29;
   }
 }

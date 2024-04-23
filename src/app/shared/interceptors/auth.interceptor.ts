@@ -11,6 +11,8 @@ import { UserService } from '../../services/user.service';
 
 const refreshTokenFragmentUrl = '/refresh-token';
 
+const statusUnauthorized = 401;
+
 export const authInterceptor: HttpInterceptorFn = (req, next) => {
   const withCredentialReq = req.clone({ withCredentials: true });
   const userService: UserService = inject(UserService);
@@ -18,7 +20,7 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
   return next(withCredentialReq).pipe(
     catchError((error: HttpErrorResponse) => {
       if (
-        error?.status === 403 &&
+        error?.status === statusUnauthorized &&
         !error?.url?.includes(refreshTokenFragmentUrl)
       ) {
         return doRefreshToken(withCredentialReq, next, userService, router);

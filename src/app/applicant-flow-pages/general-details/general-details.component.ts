@@ -56,9 +56,10 @@ export class GeneralDetailsComponent implements OnInit, OnDestroy {
   private febLeap: RadioOption[] = [];
   private febNormal: RadioOption[] = [];
   private thirtyDays: RadioOption[] = [];
+  private thirtyOneDays: RadioOption[] = [];
+
   protected hourOptions: RadioOption[] = [];
   protected minuteOptions: RadioOption[] = [];
-  private thirtyOneDays: RadioOption[] = [];
   protected dayDropdownDisabled = true;
   protected provinceOptions: RadioOption[] = [];
   protected districtOptions: RadioOption[] = [];
