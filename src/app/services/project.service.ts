@@ -131,8 +131,21 @@ export class ProjectService {
   }
 
   getAdminRequestDashboard(
-    fromYear: number,
-    toYear: number,
+    {
+      fromYear,
+      fromMonth,
+      fromDay,
+      toYear,
+      toMonth,
+      toDay,
+    }: {
+      fromYear: number;
+      fromMonth: number;
+      fromDay: number;
+      toYear: number;
+      toMonth: number;
+      toDay: number;
+    },
     pageNo: number,
     pageSize: number,
     sortBy: string[],
@@ -144,7 +157,11 @@ export class ProjectService {
         `${this.baseApiUrl}/admin/dashboard/request`,
         {
           fromYear,
+          fromMonth,
+          fromDay,
           toYear,
+          toMonth,
+          toDay,
           pageNo,
           pageSize,
           sortBy,

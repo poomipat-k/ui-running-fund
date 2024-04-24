@@ -263,20 +263,24 @@ export class DashboardAdminComponent implements OnInit, OnDestroy {
 
     this.initForm();
 
+    this.watchDateChanges();
+  }
+
+  private watchDateChanges() {
     this.subs.push(
       this.dateFormGroup.valueChanges.subscribe((values) => {
         console.log('==values:', values);
         if (this.dateFormGroup.valid) {
-          console.log('==date is valid', this.dateFormGroup.value);
+          console.log('==date is valid');
+          // summary
           this.getAdminSummary(this.dateFormGroup.value);
+          // request dashboard
+          this.refreshRequestDashboard();
         } else {
-          console.log('==date is invalid', this.dateFormGroup.value);
+          console.log('==date is invalid');
         }
       })
     );
-
-    // this.getAdminSummary(this.dateFormGroup.value);
-    // this.getRequestDashboard(1);
   }
 
   private initForm() {
@@ -416,14 +420,35 @@ export class DashboardAdminComponent implements OnInit, OnDestroy {
   }
 
   private getRequestDashboard(
+    {
+      fromYear,
+      fromMonth,
+      fromDay,
+      toYear,
+      toMonth,
+      toDay,
+    }: {
+      fromYear: number;
+      fromMonth: number;
+      fromDay: number;
+      toYear: number;
+      toMonth: number;
+      toDay: number;
+    },
     pageNo: number,
     searchFilter?: AdminDashboardFilter
   ) {
     this.subs.push(
       this.projectService
         .getAdminRequestDashboard(
-          2024,
-          2024,
+          {
+            fromYear,
+            fromMonth,
+            fromDay,
+            toYear,
+            toMonth,
+            toDay,
+          },
           pageNo,
           this.pageSize,
           ['created_at'],
@@ -499,7 +524,7 @@ export class DashboardAdminComponent implements OnInit, OnDestroy {
   }
 
   private refreshRequestDashboard() {
-    this.getRequestDashboard(this.currentPage, {
+    this.getRequestDashboard(this.dateFormGroup.value, this.currentPage, {
       projectCode: this.activeSearchFilter?.search?.projectCode || null,
       projectName: this.activeSearchFilter?.search?.projectName || null,
       projectStatus: this.activeSearchFilter?.search?.projectStatus || null,
@@ -530,11 +555,11 @@ export class DashboardAdminComponent implements OnInit, OnDestroy {
   patchDate() {
     this.dateFormGroup.patchValue({
       fromYear: 2024,
-      fromMonth: 2,
-      fromDay: 29,
+      fromMonth: 4,
+      fromDay: 22,
       toYear: 2024,
       toMonth: 6,
-      toDay: 14,
+      toDay: 22,
     });
   }
 }
