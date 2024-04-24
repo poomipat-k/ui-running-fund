@@ -1,60 +1,71 @@
 <div class="pageContainer">
+  <button class="searchFilter__button" (click)="patchDate()">PATCH DATE</button>
   <h1 class="pageHeader">Summary</h1>
   <div class="dateContainer mgt-12">
-    <div class="dateRow">
-      <div class="dateGroup">
-        <app-com-select-dropdown
-          [form]="dateFormGroup"
-          [items]="yearOptions"
-          placeholder="ปี"
-          width="9.9rem"
-          controlName="fromYear"
-          [onChange]="onFromYearOrMonthChanged"
-        ></app-com-select-dropdown>
-        <app-com-select-dropdown
-          [form]="dateFormGroup"
-          [items]="monthOptions"
-          placeholder="เดือน"
-          width="14.1rem"
-          controlName="fromMonth"
-          [onChange]="onFromYearOrMonthChanged"
-        ></app-com-select-dropdown>
-        <app-com-select-dropdown
-          [form]="dateFormGroup"
-          [items]="fromDaysInMonthOptions"
-          placeholder="วันที่"
-          width="9rem"
-          controlName="fromDay"
-          emptyMessage="กรุณาเลือกปีและวัน"
-        ></app-com-select-dropdown>
+    <div>
+      <div class="dateRow">
+        <div class="dateGroup">
+          <app-com-select-dropdown
+            [form]="dateFormGroup"
+            [items]="yearOptions"
+            placeholder="ปี"
+            width="9.9rem"
+            controlName="fromYear"
+            [onChange]="onFromYearOrMonthChanged"
+          ></app-com-select-dropdown>
+          <app-com-select-dropdown
+            [form]="dateFormGroup"
+            [items]="monthOptions"
+            placeholder="เดือน"
+            width="14.1rem"
+            controlName="fromMonth"
+            [onChange]="onFromYearOrMonthChanged"
+          ></app-com-select-dropdown>
+          <app-com-select-dropdown
+            [form]="dateFormGroup"
+            [items]="fromDaysInMonthOptions"
+            placeholder="วันที่"
+            width="9rem"
+            controlName="fromDay"
+            emptyMessage="กรุณาเลือกปีและวัน"
+          ></app-com-select-dropdown>
+        </div>
+        <p class="dash">-</p>
+        <div class="dateGroup">
+          <app-com-select-dropdown
+            [form]="dateFormGroup"
+            [items]="yearOptions"
+            placeholder="ปี"
+            width="9.9rem"
+            controlName="toYear"
+            [onChange]="onToYearOrMonthChanged"
+          ></app-com-select-dropdown>
+          <app-com-select-dropdown
+            [form]="dateFormGroup"
+            [items]="monthOptions"
+            placeholder="เดือน"
+            width="14.1rem"
+            controlName="toMonth"
+            [onChange]="onToYearOrMonthChanged"
+          ></app-com-select-dropdown>
+          <app-com-select-dropdown
+            [form]="dateFormGroup"
+            [items]="toDaysInMonthOptions"
+            placeholder="วันที่"
+            width="9rem"
+            controlName="toDay"
+            emptyMessage="กรุณาเลือกปีและวัน"
+          ></app-com-select-dropdown>
+        </div>
       </div>
-      <p class="dash">-</p>
-      <div class="dateGroup">
-        <app-com-select-dropdown
-          [form]="dateFormGroup"
-          [items]="yearOptions"
-          placeholder="ปี"
-          width="9.9rem"
-          controlName="toYear"
-          [onChange]="onToYearOrMonthChanged"
-        ></app-com-select-dropdown>
-        <app-com-select-dropdown
-          [form]="dateFormGroup"
-          [items]="monthOptions"
-          placeholder="เดือน"
-          width="14.1rem"
-          controlName="toMonth"
-          [onChange]="onToYearOrMonthChanged"
-        ></app-com-select-dropdown>
-        <app-com-select-dropdown
-          [form]="dateFormGroup"
-          [items]="toDaysInMonthOptions"
-          placeholder="วันที่"
-          width="9rem"
-          controlName="toDay"
-          emptyMessage="กรุณาเลือกปีและวัน"
-        ></app-com-select-dropdown>
+      @if (!dateFormGroup.valid && (dateFormGroup.errors?.['invalidFromDate'] ||
+      dateFormGroup.errors?.['invalidToDate'] ||
+      dateFormGroup.errors?.['fromDateLaterThanToDate'])) {
+      <div class="error flexCenter">
+        <img src="/assets/error_icon.svg" alt="error icon" />
+        <p class="error__text mgt-10">วันที่ที่เลือกไม่ถูกต้อง</p>
       </div>
+      }
     </div>
     <div>
       <div>

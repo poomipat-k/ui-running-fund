@@ -157,16 +157,31 @@ export class ProjectService {
       .pipe(catchError(this.handleError));
   }
 
-  getAdminSummary(
-    fromYear: number,
-    toYear: number
-  ): Observable<AdminSummaryByStatus[]> {
+  getAdminSummary({
+    fromYear,
+    fromMonth,
+    fromDay,
+    toYear,
+    toMonth,
+    toDay,
+  }: {
+    fromYear: number;
+    fromMonth: number;
+    fromDay: number;
+    toYear: number;
+    toMonth: number;
+    toDay: number;
+  }): Observable<AdminSummaryByStatus[]> {
     return this.http
       .post<AdminSummaryByStatus[]>(
         `${this.baseApiUrl}/admin/dashboard/summary`,
         {
           fromYear,
+          fromMonth,
+          fromDay,
           toYear,
+          toMonth,
+          toDay,
         }
       )
       .pipe(catchError(this.handleError));

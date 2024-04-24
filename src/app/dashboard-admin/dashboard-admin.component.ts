@@ -263,8 +263,20 @@ export class DashboardAdminComponent implements OnInit, OnDestroy {
 
     this.initForm();
 
-    this.getAdminSummary();
-    this.getRequestDashboard(1);
+    this.subs.push(
+      this.dateFormGroup.valueChanges.subscribe((values) => {
+        console.log('==values:', values);
+        if (this.dateFormGroup.valid) {
+          console.log('==date is valid', this.dateFormGroup.value);
+          this.getAdminSummary(this.dateFormGroup.value);
+        } else {
+          console.log('==date is invalid', this.dateFormGroup.value);
+        }
+      })
+    );
+
+    // this.getAdminSummary(this.dateFormGroup.value);
+    // this.getRequestDashboard(1);
   }
 
   private initForm() {
@@ -324,11 +336,33 @@ export class DashboardAdminComponent implements OnInit, OnDestroy {
     return new Date(year, month - 1, day).getDate() === day;
   }
 
-  private getAdminSummary() {
+  private getAdminSummary({
+    fromYear,
+    fromMonth,
+    fromDay,
+    toYear,
+    toMonth,
+    toDay,
+  }: {
+    fromYear: number;
+    fromMonth: number;
+    fromDay: number;
+    toYear: number;
+    toMonth: number;
+    toDay: number;
+  }) {
     this.subs.push(
       this.projectService
-        .getAdminSummary(2024, 2024)
+        .getAdminSummary({
+          fromYear,
+          fromMonth,
+          fromDay,
+          toYear,
+          toMonth,
+          toDay,
+        })
         .subscribe((summaryRows) => {
+          console.log('==summaryRows', summaryRows);
           if (summaryRows) {
             let count = 0;
             let approvedCount = 0;
@@ -361,6 +395,13 @@ export class DashboardAdminComponent implements OnInit, OnDestroy {
             summaryData.approvedFundSum = approvedFundSum;
             summaryData.averageFund = approvedFundAvg;
 
+            this.summaryData = summaryData;
+          } else {
+            const summaryData = new AdminDashboardSummaryData();
+            summaryData.projectCount = 0;
+            summaryData.approvedProjectCount = 0;
+            summaryData.approvedFundSum = 0;
+            summaryData.averageFund = 0;
             this.summaryData = summaryData;
           }
         })
@@ -484,5 +525,16 @@ export class DashboardAdminComponent implements OnInit, OnDestroy {
 
   private isLeapYear(year: number): boolean {
     return new Date(year, 1, 29).getDate() === 29;
+  }
+
+  patchDate() {
+    this.dateFormGroup.patchValue({
+      fromYear: 2024,
+      fromMonth: 2,
+      fromDay: 29,
+      toYear: 2024,
+      toMonth: 6,
+      toDay: 14,
+    });
   }
 }
