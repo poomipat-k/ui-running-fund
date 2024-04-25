@@ -179,8 +179,8 @@
         โครงการ
       </p>
       <app-com-filter
-        [filterOptions]="filterOptions"
-        (selectedFilter)="onSortRequestFilterChanged()"
+        [filterOptions]="requestFilterOptions"
+        (selectedFilter)="onSortRequestFilterChanged($event)"
       ></app-com-filter>
     </div>
     <div class="mgt-24">

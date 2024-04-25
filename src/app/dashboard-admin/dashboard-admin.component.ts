@@ -81,13 +81,16 @@ export class DashboardAdminComponent implements OnInit, OnDestroy {
   private readonly subs: Subscription[] = [];
 
   protected activeSearchFilter: any = {};
+  protected requestDashboardSortedBy = ['project_history.created_at'];
+  protected requestDashboardASC = true;
 
-  protected filterOptions: FilterOption[] = [
+  protected requestFilterOptions: FilterOption[] = [
     {
       id: 1,
       display: 'เรียงตามตัวอักษร',
       name: 'ชื่อโครงการ',
       order: 'ASC',
+      dbSortBy: ['project_history.project_name'],
     },
     {
       id: 2,
@@ -416,7 +419,11 @@ export class DashboardAdminComponent implements OnInit, OnDestroy {
     this.activeSearchFilter = this.form.value;
     console.log('===this.form', this.form);
     // reset current page to 1 and reload data
-    this.onRequestDashboardPageChanged(1);
+    if (this.form.valid) {
+      this.onRequestDashboardPageChanged(1);
+    } else {
+      console.error(this.dateFormGroup.errors);
+    }
   }
 
   private getRequestDashboard(
@@ -436,6 +443,8 @@ export class DashboardAdminComponent implements OnInit, OnDestroy {
       toDay: number;
     },
     pageNo: number,
+    sortBy: string[],
+    isAsc: boolean,
     searchFilter?: AdminDashboardFilter
   ) {
     this.subs.push(
@@ -451,8 +460,8 @@ export class DashboardAdminComponent implements OnInit, OnDestroy {
           },
           pageNo,
           this.pageSize,
-          ['created_at'],
-          true,
+          sortBy,
+          isAsc,
           searchFilter
         )
         .subscribe((dashboardRows: AdminRequestDashboardRow[]) => {
@@ -506,8 +515,8 @@ export class DashboardAdminComponent implements OnInit, OnDestroy {
     );
   }
 
-  onSortRequestFilterChanged() {
-    console.log('==[onSortRequestFilterChanged]');
+  onSortRequestFilterChanged(option: FilterOption) {
+    console.log('==[onSortRequestFilterChanged] option', option);
   }
 
   onRequestTableRowClicked(row: TableCell[]) {
@@ -524,11 +533,17 @@ export class DashboardAdminComponent implements OnInit, OnDestroy {
   }
 
   private refreshRequestDashboard() {
-    this.getRequestDashboard(this.dateFormGroup.value, this.currentPage, {
-      projectCode: this.activeSearchFilter?.search?.projectCode || null,
-      projectName: this.activeSearchFilter?.search?.projectName || null,
-      projectStatus: this.activeSearchFilter?.search?.projectStatus || null,
-    });
+    this.getRequestDashboard(
+      this.dateFormGroup.value,
+      this.currentPage,
+      this.requestDashboardSortedBy,
+      this.requestDashboardASC,
+      {
+        projectCode: this.activeSearchFilter?.search?.projectCode || null,
+        projectName: this.activeSearchFilter?.search?.projectName || null,
+        projectStatus: this.activeSearchFilter?.search?.projectStatus || null,
+      }
+    );
   }
 
   private getYearOptions() {

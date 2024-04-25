@@ -3,6 +3,7 @@ export class FilterOption {
   display: string;
   name: string;
   order: string;
+  dbSortBy?: string[];
 
   constructor() {}
 }
