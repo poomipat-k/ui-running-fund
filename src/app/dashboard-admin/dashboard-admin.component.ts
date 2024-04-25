@@ -87,39 +87,47 @@ export class DashboardAdminComponent implements OnInit, OnDestroy {
   protected requestFilterOptions: FilterOption[] = [
     {
       id: 1,
-      display: 'เรียงตามตัวอักษร',
-      name: 'ชื่อโครงการ',
-      isAsc: true,
-      dbSortBy: ['project_history.project_name'],
-    },
-    {
-      id: 2,
       display: 'วันที่สร้าง ใหม่ - เก่า',
       name: 'วันที่สร้าง',
+      dbSortBy: ['project_history.created_at'],
       isAsc: false,
     },
     {
-      id: 3,
+      id: 2,
       display: 'วันที่สร้าง เก่า - ใหม่',
       name: 'วันที่สร้าง',
+      dbSortBy: ['project_history.created_at'],
+      isAsc: true,
+    },
+    {
+      id: 3,
+      display: 'เรียงตามตัวอักษร',
+      name: 'ชื่อโครงการ',
+      dbSortBy: ['project_history.project_name'],
       isAsc: true,
     },
     {
       id: 4,
       display: 'วันที่แก้ไขล่าสุด ใหม่ - เก่า',
       name: 'วันที่แก้ไขล่าสุด',
+      dbSortBy: ['project_history.updated_at'],
       isAsc: false,
     },
     {
       id: 5,
       display: 'วันที่แก้ไขล่าสุด เก่า - ใหม่',
       name: 'วันที่แก้ไขล่าสุด',
+      dbSortBy: ['project_history.updated_at'],
       isAsc: true,
     },
     {
       id: 6,
       display: 'สถานะการกลั่นกรอง',
       name: 'priority',
+      dbSortBy: [
+        "POSITION(project_history.status::text IN 'Reviewing,Reviewed,Revise,NotApproved,Approved')",
+        'project_history.created_at',
+      ],
       isAsc: true,
     },
   ];
@@ -369,7 +377,6 @@ export class DashboardAdminComponent implements OnInit, OnDestroy {
           toDay,
         })
         .subscribe((summaryRows) => {
-          console.log('==summaryRows', summaryRows);
           if (summaryRows) {
             let count = 0;
             let approvedCount = 0;
@@ -517,6 +524,14 @@ export class DashboardAdminComponent implements OnInit, OnDestroy {
 
   onSortRequestFilterChanged(option: FilterOption) {
     console.log('==[onSortRequestFilterChanged] option', option);
+    if (!option) {
+      return;
+    }
+    if (option.dbSortBy) {
+      this.requestDashboardSortedBy = option.dbSortBy;
+      this.requestDashboardASC = option.isAsc;
+      this.refreshRequestDashboard();
+    }
   }
 
   onRequestTableRowClicked(row: TableCell[]) {
