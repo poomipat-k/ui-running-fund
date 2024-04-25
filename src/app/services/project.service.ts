@@ -4,7 +4,8 @@ import { Observable, catchError, throwError } from 'rxjs';
 
 import { environment } from '../../environments/environment';
 import { AdminDashboardFilter } from '../shared/models/admin-dashboard-filter';
-import { AdminRequestDashboardRow } from '../shared/models/admin-request-dashboard-row';
+
+import { AdminDashboardRow } from '../shared/models/admin-request-dashboard-row';
 import { AdminSummaryByStatus } from '../shared/models/admin-summary-by-status';
 import { ApplicantCriteria } from '../shared/models/applicant-criteria';
 import { ApplicantDashboardRow } from '../shared/models/applicant-dashboard-row';
@@ -151,26 +152,64 @@ export class ProjectService {
     sortBy: string[],
     isAsc: boolean,
     searchFilter?: AdminDashboardFilter
-  ): Observable<AdminRequestDashboardRow[]> {
+  ): Observable<AdminDashboardRow[]> {
     return this.http
-      .post<AdminRequestDashboardRow[]>(
-        `${this.baseApiUrl}/admin/dashboard/request`,
-        {
-          fromYear,
-          fromMonth,
-          fromDay,
-          toYear,
-          toMonth,
-          toDay,
-          pageNo,
-          pageSize,
-          sortBy,
-          isAsc,
-          projectCode: searchFilter?.projectCode,
-          projectName: searchFilter?.projectName,
-          projectStatus: searchFilter?.projectStatus,
-        }
-      )
+      .post<AdminDashboardRow[]>(`${this.baseApiUrl}/admin/dashboard/request`, {
+        fromYear,
+        fromMonth,
+        fromDay,
+        toYear,
+        toMonth,
+        toDay,
+        pageNo,
+        pageSize,
+        sortBy,
+        isAsc,
+        projectCode: searchFilter?.projectCode,
+        projectName: searchFilter?.projectName,
+        projectStatus: searchFilter?.projectStatus,
+      })
+      .pipe(catchError(this.handleError));
+  }
+
+  getAdminStartedDashboard(
+    {
+      fromYear,
+      fromMonth,
+      fromDay,
+      toYear,
+      toMonth,
+      toDay,
+    }: {
+      fromYear: number;
+      fromMonth: number;
+      fromDay: number;
+      toYear: number;
+      toMonth: number;
+      toDay: number;
+    },
+    pageNo: number,
+    pageSize: number,
+    sortBy: string[],
+    isAsc: boolean,
+    searchFilter?: AdminDashboardFilter
+  ): Observable<AdminDashboardRow[]> {
+    return this.http
+      .post<AdminDashboardRow[]>(`${this.baseApiUrl}/admin/dashboard/started`, {
+        fromYear,
+        fromMonth,
+        fromDay,
+        toYear,
+        toMonth,
+        toDay,
+        pageNo,
+        pageSize,
+        sortBy,
+        isAsc,
+        projectCode: searchFilter?.projectCode,
+        projectName: searchFilter?.projectName,
+        projectStatus: searchFilter?.projectStatus,
+      })
       .pipe(catchError(this.handleError));
   }
 

@@ -25,7 +25,8 @@ import { BackgroundColor } from '../shared/enums/background-color';
 import { ColumnTypeEnum } from '../shared/enums/column-type';
 import { AdminDashboardFilter } from '../shared/models/admin-dashboard-filter';
 import { AdminDashboardSummaryData } from '../shared/models/admin-dashboard-summary-data';
-import { AdminRequestDashboardRow } from '../shared/models/admin-request-dashboard-row';
+
+import { AdminDashboardRow } from '../shared/models/admin-request-dashboard-row';
 import { FilterOption } from '../shared/models/filter-option';
 import { RadioOption } from '../shared/models/radio-option';
 import { TableCell } from '../shared/models/table-cell';
@@ -53,13 +54,17 @@ export class DashboardAdminComponent implements OnInit, OnDestroy {
   protected monthOptions: RadioOption[] = [];
   protected yearOptions: RadioOption[] = [];
   protected currentYear = 0;
-  protected currentPage = 1;
+
+  protected requestCurrentPage = 1;
+  protected startedCurrentPage = 1;
 
   protected allDateHasBeenTouched = false;
 
   protected requestData: TableCell[][] = [];
+  protected startedData: TableCell[][] = [];
   protected summaryStartedProjectCount = 0;
   protected requestDashboardItemCount = 0;
+  protected startedDashboardItemCount = 0;
 
   protected readonly minHistoryYear = 2023;
   protected summaryData = new AdminDashboardSummaryData();
@@ -81,8 +86,11 @@ export class DashboardAdminComponent implements OnInit, OnDestroy {
   private readonly subs: Subscription[] = [];
 
   protected activeSearchFilter: any = {};
+
   protected requestDashboardSortedBy = ['project_history.created_at'];
   protected requestDashboardASC = true;
+  protected startedDashboardSortedBy = ['project_history.created_at'];
+  protected startedDashboardASC = true;
 
   protected requestFilterOptions: FilterOption[] = [
     {
@@ -132,6 +140,54 @@ export class DashboardAdminComponent implements OnInit, OnDestroy {
     },
   ];
 
+  protected startedFilterOptions: FilterOption[] = [
+    {
+      id: 1,
+      display: 'วันที่สร้าง ใหม่ - เก่า',
+      name: 'วันที่สร้าง',
+      dbSortBy: ['project_history.created_at'],
+      isAsc: false,
+    },
+    {
+      id: 2,
+      display: 'วันที่สร้าง เก่า - ใหม่',
+      name: 'วันที่สร้าง',
+      dbSortBy: ['project_history.created_at'],
+      isAsc: true,
+    },
+    {
+      id: 3,
+      display: 'เรียงตามตัวอักษร',
+      name: 'ชื่อโครงการ',
+      dbSortBy: ['project_history.project_name'],
+      isAsc: true,
+    },
+    {
+      id: 4,
+      display: 'วันที่แก้ไขล่าสุด ใหม่ - เก่า',
+      name: 'วันที่แก้ไขล่าสุด',
+      dbSortBy: ['project_history.updated_at'],
+      isAsc: false,
+    },
+    {
+      id: 5,
+      display: 'วันที่แก้ไขล่าสุด เก่า - ใหม่',
+      name: 'วันที่แก้ไขล่าสุด',
+      dbSortBy: ['project_history.updated_at'],
+      isAsc: true,
+    },
+    {
+      id: 6,
+      display: 'สถานะการกลั่นกรอง',
+      name: 'priority',
+      dbSortBy: [
+        "POSITION(project_history.status::text IN 'Start,Completed')",
+        'project_history.created_at',
+      ],
+      isAsc: true,
+    },
+  ];
+
   protected requestColumns: TableColumn[] = [
     {
       name: 'รหัสโครงการ',
@@ -149,6 +205,41 @@ export class DashboardAdminComponent implements OnInit, OnDestroy {
     },
     {
       name: 'สถานะการดำเนินงาน',
+      class: 'col-standardStatus',
+      type: ColumnTypeEnum.Badge,
+    },
+    {
+      name: 'วันที่แก้ไขล่าสุด',
+      format: 'datetime',
+      class: 'col-longDate',
+    },
+    {
+      name: 'หมายเหตุ',
+      class: 'col-adminComment',
+    },
+    {
+      name: 'คะแนน',
+      class: 'col-score',
+    },
+  ];
+
+  protected startedColumns: TableColumn[] = [
+    {
+      name: 'รหัสโครงการ',
+      class: 'col-projectCode',
+      bold: true,
+    },
+    {
+      name: 'วันที่ส่งใบขอทุน',
+      format: 'datetime',
+      class: 'col-longDate',
+    },
+    {
+      name: 'ชื่อโครงการ',
+      class: 'col-projectName',
+    },
+    {
+      name: 'สถานะโครงการ',
       class: 'col-standardStatus',
       type: ColumnTypeEnum.Badge,
     },
@@ -287,6 +378,8 @@ export class DashboardAdminComponent implements OnInit, OnDestroy {
           this.getAdminSummary(this.dateFormGroup.value);
           // request dashboard
           this.onRequestDashboardPageChanged(1);
+          // started dashboard
+          this.onStartedDashboardPageChanged(1);
         } else {
           console.log('==date is invalid');
         }
@@ -471,8 +564,8 @@ export class DashboardAdminComponent implements OnInit, OnDestroy {
           isAsc,
           searchFilter
         )
-        .subscribe((dashboardRows: AdminRequestDashboardRow[]) => {
-          console.log('==dashboardRows', dashboardRows);
+        .subscribe((dashboardRows: AdminDashboardRow[]) => {
+          console.log('==request dashboardRows', dashboardRows);
           if (dashboardRows) {
             const data = dashboardRows.map((row) => {
               return [
@@ -522,6 +615,95 @@ export class DashboardAdminComponent implements OnInit, OnDestroy {
     );
   }
 
+  private getStartedDashboard(
+    {
+      fromYear,
+      fromMonth,
+      fromDay,
+      toYear,
+      toMonth,
+      toDay,
+    }: {
+      fromYear: number;
+      fromMonth: number;
+      fromDay: number;
+      toYear: number;
+      toMonth: number;
+      toDay: number;
+    },
+    pageNo: number,
+    sortBy: string[],
+    isAsc: boolean,
+    searchFilter?: AdminDashboardFilter
+  ) {
+    this.subs.push(
+      this.projectService
+        .getAdminStartedDashboard(
+          {
+            fromYear,
+            fromMonth,
+            fromDay,
+            toYear,
+            toMonth,
+            toDay,
+          },
+          pageNo,
+          this.pageSize,
+          sortBy,
+          isAsc,
+          searchFilter
+        )
+        .subscribe((dashboardRows: AdminDashboardRow[]) => {
+          console.log('==started dashboardRows', dashboardRows);
+          if (dashboardRows) {
+            const data = dashboardRows.map((row) => {
+              return [
+                {
+                  display: row.projectCode,
+                  value: row.projectCode,
+                },
+                {
+                  display: this.dateService.dateToStringWithLongMonth(
+                    row.projectCreatedAt
+                  ),
+                  value: row.projectCreatedAt,
+                },
+                {
+                  display: row.projectName,
+                  value: row.projectName,
+                },
+
+                {
+                  display: this.getStatusDisplay(row),
+                  value: row.projectStatus,
+                },
+                {
+                  display: this.dateService.dateToStringWithLongMonth(
+                    row.projectUpdatedAt
+                  ),
+                  value: row.projectUpdatedAt,
+                },
+                {
+                  display: row.adminComment,
+                  value: row.adminComment,
+                },
+                {
+                  display: row.avgScore,
+                  value: row.avgScore,
+                },
+              ];
+            });
+            const count = dashboardRows[0].count;
+            this.startedDashboardItemCount = count;
+            this.startedData = data;
+          } else {
+            this.startedDashboardItemCount = 0;
+            this.startedData = [];
+          }
+        })
+    );
+  }
+
   onSortRequestFilterChanged(option: FilterOption) {
     console.log('==[onSortRequestFilterChanged] option', option);
     if (!option) {
@@ -534,6 +716,18 @@ export class DashboardAdminComponent implements OnInit, OnDestroy {
     }
   }
 
+  onSortStartedFilterChanged(option: FilterOption) {
+    console.log('==[onSortStartedFilterChanged] option', option);
+    if (!option) {
+      return;
+    }
+    if (option.dbSortBy) {
+      this.startedDashboardSortedBy = option.dbSortBy;
+      this.startedDashboardASC = option.isAsc;
+      this.refreshStartedDashboard();
+    }
+  }
+
   onRequestTableRowClicked(row: TableCell[]) {
     if (row.length > 0) {
       this.router.navigate(['admin', 'project', row[0].value]);
@@ -542,17 +736,39 @@ export class DashboardAdminComponent implements OnInit, OnDestroy {
 
   onRequestDashboardPageChanged(currentPage: number) {
     if (currentPage >= 1) {
-      this.currentPage = currentPage;
+      this.requestCurrentPage = currentPage;
       this.refreshRequestDashboard();
+    }
+  }
+
+  onStartedDashboardPageChanged(currentPage: number) {
+    if (currentPage >= 1) {
+      this.startedCurrentPage = currentPage;
+      this.refreshStartedDashboard();
     }
   }
 
   private refreshRequestDashboard() {
     this.getRequestDashboard(
       this.dateFormGroup.value,
-      this.currentPage,
+      this.requestCurrentPage,
       this.requestDashboardSortedBy,
       this.requestDashboardASC,
+      {
+        projectCode: this.activeSearchFilter?.search?.projectCode || null,
+        projectName: this.activeSearchFilter?.search?.projectName || null,
+        projectStatus: this.activeSearchFilter?.search?.projectStatus || null,
+      }
+    );
+  }
+
+  private refreshStartedDashboard() {
+    // Todo
+    this.getStartedDashboard(
+      this.dateFormGroup.value,
+      this.startedCurrentPage,
+      this.startedDashboardSortedBy,
+      this.startedDashboardASC,
       {
         projectCode: this.activeSearchFilter?.search?.projectCode || null,
         projectName: this.activeSearchFilter?.search?.projectName || null,
@@ -574,7 +790,7 @@ export class DashboardAdminComponent implements OnInit, OnDestroy {
     this.yearOptions = years;
   }
 
-  private getStatusDisplay(row: AdminRequestDashboardRow): string {
+  private getStatusDisplay(row: AdminDashboardRow): string {
     return `standard__${row.projectStatus}`;
   }
 

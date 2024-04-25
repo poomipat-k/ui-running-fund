@@ -172,6 +172,18 @@
   }
 }
 
+.startedDashboardContainer {
+  position: relative;
+}
+
+.flexEnd {
+  display: flex;
+  justify-content: flex-end;
+  position: absolute;
+  top: -3rem;
+  right: 0;
+}
+
 .pagingContainer {
   display: flex;
   justify-content: center;
@@ -222,6 +234,10 @@
 
   &-24 {
     margin-top: 24px;
+  }
+
+  &-25 {
+    margin-top: 25px;
   }
 
   &-30 {

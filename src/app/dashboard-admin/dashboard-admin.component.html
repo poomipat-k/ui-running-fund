@@ -169,7 +169,6 @@
   </div>
 
   <!-- Request Dashboard -->
-
   <div class="mgt-39">
     <h2 class="dashboard__header">โครงการที่ขอทุนสนับสนุน</h2>
     <div class="dashboard__control mgt-8">
@@ -196,10 +195,32 @@
         <app-com-pagination
           [count]="requestDashboardItemCount"
           [pageSize]="5"
-          [activePage]="currentPage"
+          [activePage]="requestCurrentPage"
           (currentPage)="onRequestDashboardPageChanged($event)"
         ></app-com-pagination>
       </div>
+    </div>
+  </div>
+
+  <!-- Started Dashboard -->
+  <div class="mgt-25">
+    <h2 class="dashboard__header">โครงการที่ได้รับทุนและเริ่มโครงการแล้ว</h2>
+    <div class="startedDashboardContainer mgt-24">
+      <div class="flexEnd">
+        <app-com-filter
+          [filterOptions]="startedFilterOptions"
+          (selectedFilter)="onSortStartedFilterChanged($event)"
+        ></app-com-filter>
+      </div>
+
+      <app-com-table
+        [columns]="startedColumns"
+        [data]="startedData"
+        emptyText="ไม่มีโครงการ ณ ขณะนี้"
+        [rowClickable]="true"
+        (rowClicked)="onRequestTableRowClicked($event)"
+        contentFontSize="16px"
+      ></app-com-table>
     </div>
   </div>
 </div>

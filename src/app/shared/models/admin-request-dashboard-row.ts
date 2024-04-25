@@ -1,4 +1,4 @@
-export class AdminRequestDashboardRow {
+export class AdminDashboardRow {
   count: number;
   projectCode: string;
   projectCreatedAt: string;
