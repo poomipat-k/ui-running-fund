@@ -286,7 +286,7 @@ export class DashboardAdminComponent implements OnInit, OnDestroy {
           // summary
           this.getAdminSummary(this.dateFormGroup.value);
           // request dashboard
-          this.refreshRequestDashboard();
+          this.onRequestDashboardPageChanged(1);
         } else {
           console.log('==date is invalid');
         }
