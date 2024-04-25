@@ -521,6 +521,7 @@ export class DashboardAdminComponent implements OnInit, OnDestroy {
     // reset current page to 1 and reload data
     if (this.form.valid) {
       this.onRequestDashboardPageChanged(1);
+      this.onStartedDashboardPageChanged(1);
     } else {
       console.error(this.dateFormGroup.errors);
     }
