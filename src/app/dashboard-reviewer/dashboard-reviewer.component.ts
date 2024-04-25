@@ -73,20 +73,20 @@ export class DashboardReviewerComponent {
       id: 1,
       display: 'เรียงตามตัวอักษร',
       name: 'ชื่อโครงการ',
-      order: 'ASC',
+      isAsc: true,
     },
     {
       id: 2,
       display: 'ใหม่ - เก่า',
       name: 'วันที่สร้าง',
-      order: 'DESC',
+      isAsc: false,
     },
-    { id: 3, display: 'เก่า - ใหม่', name: 'วันที่สร้าง', order: 'ASC' },
+    { id: 3, display: 'เก่า - ใหม่', name: 'วันที่สร้าง', isAsc: true },
     {
       id: 4,
       display: 'สถานะการกลั่นกรอง',
       name: 'priority',
-      order: 'ASC',
+      isAsc: true,
     },
   ];
 
@@ -234,26 +234,25 @@ export class DashboardReviewerComponent {
     if (columnIndex === -1) {
       return;
     }
-    const isAsc = option.order === 'ASC';
     if (this.columns[columnIndex].format === 'datetime') {
       data.sort((a, b) => {
         const aDate = new Date(a[columnIndex].value);
         const bDate = new Date(b[columnIndex].value);
         if (aDate > bDate) {
-          return isAsc ? 1 : -1;
+          return option.isAsc ? 1 : -1;
         }
         if (aDate < bDate) {
-          return isAsc ? -1 : 1;
+          return option.isAsc ? -1 : 1;
         }
         return 0;
       });
     } else {
       data.sort((a, b) => {
         if (a[columnIndex].value > b[columnIndex].value) {
-          return isAsc ? 1 : -1;
+          return option.isAsc ? 1 : -1;
         }
         if (a[columnIndex].value < b[columnIndex].value) {
-          return isAsc ? -1 : 1;
+          return option.isAsc ? -1 : 1;
         }
         return 0;
       });
