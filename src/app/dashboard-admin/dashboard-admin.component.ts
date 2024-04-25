@@ -763,7 +763,6 @@ export class DashboardAdminComponent implements OnInit, OnDestroy {
   }
 
   private refreshStartedDashboard() {
-    // Todo
     this.getStartedDashboard(
       this.dateFormGroup.value,
       this.startedCurrentPage,

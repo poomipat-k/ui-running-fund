@@ -205,14 +205,18 @@
   <!-- Started Dashboard -->
   <div class="mgt-25">
     <h2 class="dashboard__header">โครงการที่ได้รับทุนและเริ่มโครงการแล้ว</h2>
-    <div class="startedDashboardContainer mgt-24">
-      <div class="flexEnd">
-        <app-com-filter
-          [filterOptions]="startedFilterOptions"
-          (selectedFilter)="onSortStartedFilterChanged($event)"
-        ></app-com-filter>
-      </div>
-
+    <div class="dashboard__control mgt-10">
+      <p class="dashboard__count">
+        ทั้งหมด
+        {{ numberFormatter.format(startedDashboardItemCount) }}
+        โครงการ
+      </p>
+      <app-com-filter
+        [filterOptions]="startedFilterOptions"
+        (selectedFilter)="onSortStartedFilterChanged($event)"
+      ></app-com-filter>
+    </div>
+    <div class="mgt-24">
       <app-com-table
         [columns]="startedColumns"
         [data]="startedData"
@@ -221,6 +225,14 @@
         (rowClicked)="onRequestTableRowClicked($event)"
         contentFontSize="16px"
       ></app-com-table>
+      <div class="pagingContainer mgt-18">
+        <app-com-pagination
+          [count]="startedDashboardItemCount"
+          [pageSize]="5"
+          [activePage]="startedCurrentPage"
+          (currentPage)="onStartedDashboardPageChanged($event)"
+        ></app-com-pagination>
+      </div>
     </div>
   </div>
 </div>
