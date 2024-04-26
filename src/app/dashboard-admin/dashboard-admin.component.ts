@@ -301,8 +301,8 @@ export class DashboardAdminComponent implements OnInit, OnDestroy {
     },
   ];
 
-  get dateFormGroup(): FormGroup {
-    return this.form.get('date') as FormGroup;
+  get summaryDateGroup(): FormGroup {
+    return this.form.get('summaryDate') as FormGroup;
   }
 
   get searchFormGroup(): FormGroup {
@@ -310,16 +310,16 @@ export class DashboardAdminComponent implements OnInit, OnDestroy {
   }
 
   get fromYear(): number {
-    return this.form.value.date.fromYear;
+    return this.form.value.summaryDate.fromYear;
   }
 
   get toYear(): number {
-    return this.form.value.date.toYear;
+    return this.form.value.summaryDate.toYear;
   }
 
   get fromDaysInMonthOptions() {
-    const year = this.form.value.date.fromYear;
-    const month = this.form.value.date.fromMonth;
+    const year = this.form.value.summaryDate.fromYear;
+    const month = this.form.value.summaryDate.fromMonth;
     if (!year || !month) {
       return [];
     }
@@ -333,8 +333,8 @@ export class DashboardAdminComponent implements OnInit, OnDestroy {
   }
 
   get toDaysInMonthOptions() {
-    const year = this.form.value.date.toYear;
-    const month = this.form.value.date.toMonth;
+    const year = this.form.value.summaryDate.toYear;
+    const month = this.form.value.summaryDate.toMonth;
     if (!year || !month) {
       return [];
     }
@@ -370,12 +370,12 @@ export class DashboardAdminComponent implements OnInit, OnDestroy {
 
   private watchDateChanges() {
     this.subs.push(
-      this.dateFormGroup.valueChanges.subscribe((values) => {
+      this.summaryDateGroup.valueChanges.subscribe((values) => {
         console.log('==values:', values);
-        if (this.dateFormGroup.valid) {
+        if (this.summaryDateGroup.valid) {
           console.log('==date is valid');
           // summary
-          this.getAdminSummary(this.dateFormGroup.value);
+          this.getAdminSummary(this.summaryDateGroup.value);
           // // request dashboard
           // this.onRequestDashboardPageChanged(1);
           // // started dashboard
@@ -387,7 +387,7 @@ export class DashboardAdminComponent implements OnInit, OnDestroy {
 
   private initForm() {
     this.form = new FormGroup({
-      date: new FormGroup(
+      summaryDate: new FormGroup(
         {
           fromDay: new FormControl(null, Validators.required),
           fromMonth: new FormControl(null, Validators.required),
@@ -411,13 +411,13 @@ export class DashboardAdminComponent implements OnInit, OnDestroy {
   }
 
   onDownloadReport() {
-    if (!this.dateFormGroup.valid) {
+    if (!this.summaryDateGroup.valid) {
       console.error('fromDate-toDate is not valid');
       return;
     }
     this.subs.push(
       this.projectService
-        .downloadReport(this.dateFormGroup.value)
+        .downloadReport(this.summaryDateGroup.value)
         .subscribe((result) => {
           // %EF%BB%BF is for forcing excel to use UTF-8 encoding
           let exportData =
@@ -428,22 +428,22 @@ export class DashboardAdminComponent implements OnInit, OnDestroy {
   }
 
   onFromYearOrMonthChanged() {
-    const year = this.form.value.date.fromYear;
-    const month = this.form.value.date.fromMonth;
-    const day = this.form.value.date.fromDay;
+    const year = this.form.value.summaryDate.fromYear;
+    const month = this.form.value.summaryDate.fromMonth;
+    const day = this.form.value.summaryDate.fromDay;
     if (!this.isValidDate(year, month, day)) {
-      this.dateFormGroup.patchValue({
+      this.summaryDateGroup.patchValue({
         fromDay: null,
       });
     }
   }
 
   onToYearOrMonthChanged() {
-    const year = this.form.value.date.toYear;
-    const month = this.form.value.date.toMonth;
-    const day = this.form.value.date.toDay;
+    const year = this.form.value.summaryDate.toYear;
+    const month = this.form.value.summaryDate.toMonth;
+    const day = this.form.value.summaryDate.toDay;
     if (!this.isValidDate(year, month, day)) {
-      this.dateFormGroup.patchValue({
+      this.summaryDateGroup.patchValue({
         toDay: null,
       });
     }
@@ -538,7 +538,7 @@ export class DashboardAdminComponent implements OnInit, OnDestroy {
       this.onRequestDashboardPageChanged(1);
       this.onStartedDashboardPageChanged(1);
     } else {
-      console.error(this.dateFormGroup.errors);
+      console.error(this.summaryDateGroup.errors);
     }
   }
 
@@ -766,7 +766,7 @@ export class DashboardAdminComponent implements OnInit, OnDestroy {
 
   private refreshRequestDashboard() {
     this.getRequestDashboard(
-      this.dateFormGroup.value,
+      this.summaryDateGroup.value,
       this.requestCurrentPage,
       this.requestDashboardSortedBy,
       this.requestDashboardASC,
@@ -780,7 +780,7 @@ export class DashboardAdminComponent implements OnInit, OnDestroy {
 
   private refreshStartedDashboard() {
     this.getStartedDashboard(
-      this.dateFormGroup.value,
+      this.summaryDateGroup.value,
       this.startedCurrentPage,
       this.startedDashboardSortedBy,
       this.startedDashboardASC,
@@ -814,7 +814,7 @@ export class DashboardAdminComponent implements OnInit, OnDestroy {
   }
 
   patchDate() {
-    this.dateFormGroup.patchValue({
+    this.summaryDateGroup.patchValue({
       fromYear: 2024,
       fromMonth: 4,
       fromDay: 22,

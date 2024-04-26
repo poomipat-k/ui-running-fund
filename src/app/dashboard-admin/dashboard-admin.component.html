@@ -6,7 +6,7 @@
       <div class="dateRow">
         <div class="dateGroup">
           <app-com-select-dropdown
-            [form]="dateFormGroup"
+            [form]="summaryDateGroup"
             [items]="yearOptions"
             placeholder="ปี"
             width="9.9rem"
@@ -14,7 +14,7 @@
             [onChange]="onFromYearOrMonthChanged"
           ></app-com-select-dropdown>
           <app-com-select-dropdown
-            [form]="dateFormGroup"
+            [form]="summaryDateGroup"
             [items]="monthOptions"
             placeholder="เดือน"
             width="14.1rem"
@@ -22,7 +22,7 @@
             [onChange]="onFromYearOrMonthChanged"
           ></app-com-select-dropdown>
           <app-com-select-dropdown
-            [form]="dateFormGroup"
+            [form]="summaryDateGroup"
             [items]="fromDaysInMonthOptions"
             placeholder="วันที่"
             width="9rem"
@@ -33,7 +33,7 @@
         <p class="dash">-</p>
         <div class="dateGroup">
           <app-com-select-dropdown
-            [form]="dateFormGroup"
+            [form]="summaryDateGroup"
             [items]="yearOptions"
             placeholder="ปี"
             width="9.9rem"
@@ -41,7 +41,7 @@
             [onChange]="onToYearOrMonthChanged"
           ></app-com-select-dropdown>
           <app-com-select-dropdown
-            [form]="dateFormGroup"
+            [form]="summaryDateGroup"
             [items]="monthOptions"
             placeholder="เดือน"
             width="14.1rem"
@@ -49,7 +49,7 @@
             [onChange]="onToYearOrMonthChanged"
           ></app-com-select-dropdown>
           <app-com-select-dropdown
-            [form]="dateFormGroup"
+            [form]="summaryDateGroup"
             [items]="toDaysInMonthOptions"
             placeholder="วันที่"
             width="9rem"
@@ -58,9 +58,10 @@
           ></app-com-select-dropdown>
         </div>
       </div>
-      @if (!dateFormGroup.valid && (dateFormGroup.errors?.['invalidFromDate'] ||
-      dateFormGroup.errors?.['invalidToDate'] ||
-      dateFormGroup.errors?.['fromDateLaterThanToDate'])) {
+      @if (!summaryDateGroup.valid &&
+      (summaryDateGroup.errors?.['invalidFromDate'] ||
+      summaryDateGroup.errors?.['invalidToDate'] ||
+      summaryDateGroup.errors?.['fromDateLaterThanToDate'])) {
       <div class="error flexCenter">
         <img src="/assets/error_icon.svg" alt="error icon" />
         <p class="error__text mgt-10">วันที่ที่เลือกไม่ถูกต้อง</p>
