@@ -376,12 +376,10 @@ export class DashboardAdminComponent implements OnInit, OnDestroy {
           console.log('==date is valid');
           // summary
           this.getAdminSummary(this.dateFormGroup.value);
-          // request dashboard
-          this.onRequestDashboardPageChanged(1);
-          // started dashboard
-          this.onStartedDashboardPageChanged(1);
-        } else {
-          console.log('==date is invalid');
+          // // request dashboard
+          // this.onRequestDashboardPageChanged(1);
+          // // started dashboard
+          // this.onStartedDashboardPageChanged(1);
         }
       })
     );
@@ -413,14 +411,19 @@ export class DashboardAdminComponent implements OnInit, OnDestroy {
   }
 
   onDownloadReport() {
+    if (!this.dateFormGroup.valid) {
+      console.error('fromDate-toDate is not valid');
+      return;
+    }
     this.subs.push(
-      this.projectService.downloadReport().subscribe((result) => {
-        const universalBOM = '\uFEFF';
-
-        let exportData =
-          'data:text/csv;charset=utf-8,%EF%BB%BF' + encodeURI(result);
-        window.open(exportData);
-      })
+      this.projectService
+        .downloadReport(this.dateFormGroup.value)
+        .subscribe((result) => {
+          // %EF%BB%BF is for forcing excel to use UTF-8 encoding
+          let exportData =
+            'data:text/csv;charset=utf-8,%EF%BB%BF' + encodeURI(result);
+          window.open(exportData);
+        })
     );
   }
 
@@ -531,7 +534,7 @@ export class DashboardAdminComponent implements OnInit, OnDestroy {
     this.activeSearchFilter = this.form.value;
     console.log('===this.form', this.form);
     // reset current page to 1 and reload data
-    if (this.form.valid) {
+    if (this.searchFormGroup.valid) {
       this.onRequestDashboardPageChanged(1);
       this.onStartedDashboardPageChanged(1);
     } else {

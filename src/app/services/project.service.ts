@@ -243,9 +243,30 @@ export class ProjectService {
       .pipe(catchError(this.handleError));
   }
 
-  downloadReport() {
+  downloadReport({
+    fromYear,
+    fromMonth,
+    fromDay,
+    toYear,
+    toMonth,
+    toDay,
+  }: {
+    fromYear: number;
+    fromMonth: number;
+    fromDay: number;
+    toYear: number;
+    toMonth: number;
+    toDay: number;
+  }) {
     return this.http
-      .post<string>(`${this.baseApiUrl}/admin/report`, {})
+      .post<string>(`${this.baseApiUrl}/admin/report`, {
+        fromYear,
+        fromMonth,
+        fromDay,
+        toYear,
+        toMonth,
+        toDay,
+      })
       .pipe(catchError(this.handleError));
   }
 
