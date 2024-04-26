@@ -66,7 +66,7 @@ export class DashboardAdminComponent implements OnInit, OnDestroy {
   protected requestDashboardItemCount = 0;
   protected startedDashboardItemCount = 0;
 
-  protected readonly minHistoryYear = 2023;
+  protected readonly minHistoryYear = 2024;
   protected summaryData = new AdminDashboardSummaryData();
   protected numberFormatter = Intl.NumberFormat();
 
@@ -305,6 +305,10 @@ export class DashboardAdminComponent implements OnInit, OnDestroy {
     return this.form.get('summaryDate') as FormGroup;
   }
 
+  get dashboardDateGroup(): FormGroup {
+    return this.form.get('dashboardDate') as FormGroup;
+  }
+
   get searchFormGroup(): FormGroup {
     return this.form.get('search') as FormGroup;
   }
@@ -365,22 +369,74 @@ export class DashboardAdminComponent implements OnInit, OnDestroy {
 
     this.initForm();
 
-    this.watchDateChanges();
+    this.watchSummaryDateChanges();
+    this.watchDashboardDateChanges();
+    this.getDashboardPeriod();
   }
 
-  private watchDateChanges() {
+  private watchSummaryDateChanges() {
     this.subs.push(
-      this.summaryDateGroup.valueChanges.subscribe((values) => {
-        console.log('==values:', values);
+      this.summaryDateGroup.valueChanges.subscribe(() => {
         if (this.summaryDateGroup.valid) {
-          console.log('==date is valid');
           // summary
           this.getAdminSummary(this.summaryDateGroup.value);
-          // // request dashboard
-          // this.onRequestDashboardPageChanged(1);
-          // // started dashboard
-          // this.onStartedDashboardPageChanged(1);
+          if (this.dashboardDateGroup.valid) {
+            // request dashboard
+            this.onRequestDashboardPageChanged(1);
+            // started dashboard
+            this.onStartedDashboardPageChanged(1);
+          }
         }
+      })
+    );
+  }
+
+  private watchDashboardDateChanges() {
+    this.subs.push(
+      this.dashboardDateGroup.valueChanges.subscribe(() => {
+        if (this.dashboardDateGroup.valid) {
+          // request dashboard
+          this.onRequestDashboardPageChanged(1);
+          // started dashboard
+          this.onStartedDashboardPageChanged(1);
+        }
+      })
+    );
+  }
+
+  private getDashboardPeriod() {
+    this.subs.push(
+      this.projectService.getReviewPeriod().subscribe((p) => {
+        const fromDate = new Date(p.fromDate);
+        const toDate = new Date(p.toDate);
+        const localFromDate = fromDate.toLocaleDateString('en-US', {
+          timeZone: 'Asia/bangkok',
+        });
+        const localToDate = toDate.toLocaleDateString('en-US', {
+          timeZone: 'Asia/bangkok',
+        });
+        const [fromMonth, fromDay, fromYear] = localFromDate
+          ?.split('/')
+          .map((s) => +s);
+        const [toMonth, toDay, toYear] = localToDate?.split('/').map((s) => +s);
+        this.form.patchValue({
+          summaryDate: {
+            fromYear,
+            fromMonth,
+            fromDay,
+            toYear,
+            toMonth,
+            toDay,
+          },
+          dashboardDate: {
+            fromYear,
+            fromMonth,
+            fromDay,
+            toYear,
+            toMonth,
+            toDay,
+          },
+        });
       })
     );
   }
@@ -388,6 +444,17 @@ export class DashboardAdminComponent implements OnInit, OnDestroy {
   private initForm() {
     this.form = new FormGroup({
       summaryDate: new FormGroup(
+        {
+          fromDay: new FormControl(null, Validators.required),
+          fromMonth: new FormControl(null, Validators.required),
+          fromYear: new FormControl(null, Validators.required),
+          toDay: new FormControl(null, Validators.required),
+          toMonth: new FormControl(null, Validators.required),
+          toYear: new FormControl(null, Validators.required),
+        },
+        fromDateBeforeToDateValidator()
+      ),
+      dashboardDate: new FormGroup(
         {
           fromDay: new FormControl(null, Validators.required),
           fromMonth: new FormControl(null, Validators.required),
@@ -581,7 +648,6 @@ export class DashboardAdminComponent implements OnInit, OnDestroy {
           searchFilter
         )
         .subscribe((dashboardRows: AdminDashboardRow[]) => {
-          console.log('==request dashboardRows', dashboardRows);
           if (dashboardRows) {
             const data = dashboardRows.map((row) => {
               return [
@@ -721,7 +787,6 @@ export class DashboardAdminComponent implements OnInit, OnDestroy {
   }
 
   onSortRequestFilterChanged(option: FilterOption) {
-    console.log('==[onSortRequestFilterChanged] option', option);
     if (!option) {
       return;
     }
@@ -733,7 +798,6 @@ export class DashboardAdminComponent implements OnInit, OnDestroy {
   }
 
   onSortStartedFilterChanged(option: FilterOption) {
-    console.log('==[onSortStartedFilterChanged] option', option);
     if (!option) {
       return;
     }
@@ -766,7 +830,7 @@ export class DashboardAdminComponent implements OnInit, OnDestroy {
 
   private refreshRequestDashboard() {
     this.getRequestDashboard(
-      this.summaryDateGroup.value,
+      this.dashboardDateGroup.value,
       this.requestCurrentPage,
       this.requestDashboardSortedBy,
       this.requestDashboardASC,
@@ -780,7 +844,7 @@ export class DashboardAdminComponent implements OnInit, OnDestroy {
 
   private refreshStartedDashboard() {
     this.getStartedDashboard(
-      this.summaryDateGroup.value,
+      this.dashboardDateGroup.value,
       this.startedCurrentPage,
       this.startedDashboardSortedBy,
       this.startedDashboardASC,
