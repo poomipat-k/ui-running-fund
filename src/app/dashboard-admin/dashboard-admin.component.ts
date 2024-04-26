@@ -412,6 +412,18 @@ export class DashboardAdminComponent implements OnInit, OnDestroy {
     this.subs.forEach((s) => s.unsubscribe());
   }
 
+  onDownloadReport() {
+    this.subs.push(
+      this.projectService.downloadReport().subscribe((result) => {
+        const universalBOM = '\uFEFF';
+
+        let exportData =
+          'data:text/csv;charset=utf-8,%EF%BB%BF' + encodeURI(result);
+        window.open(exportData);
+      })
+    );
+  }
+
   onFromYearOrMonthChanged() {
     const year = this.form.value.date.fromYear;
     const month = this.form.value.date.fromMonth;

@@ -243,6 +243,12 @@ export class ProjectService {
       .pipe(catchError(this.handleError));
   }
 
+  downloadReport() {
+    return this.http
+      .post<string>(`${this.baseApiUrl}/admin/report`, {})
+      .pipe(catchError(this.handleError));
+  }
+
   private handleError(error: HttpErrorResponse) {
     if (error.status === 0) {
       // A client-side or network error occurred. Handle it accordingly.
