@@ -36,6 +36,11 @@ Curabitur tempor quis eros tempus lacinia. Nam bibendum pellentesque quam a conv
  Vestibulum dictum ultrices elit a luctus. Sed in ante ut leo congue posuere at sit amet ligula. Pellentesque eget augue nec nisl sodales blandit sed et sem. Aenean quis finibus arcu, in hendrerit purus. Praesent ac aliquet lorem. Morbi feugiat aliquam ligula, et vestibulum ligula hendrerit vitae. Sed ex lorem, pulvinar sed auctor sit amet, molestie a nibh. Ut euismod nisl arcu, sed placerat nulla volutpat aliquet. Ut id convallis nisl. Ut mauris leo, lacinia sed elit id, sagittis rhoncus odio. Pellentesque sapien libero, lobortis a placerat et, malesuada sit amet dui. Nam sem sapien, congue eu rutrum nec, pellentesque eget ligula.
 `;
 
+  protected section1Header = 'วิธีสร้างใบขอทุนสนับสนุน';
+  protected section2Header = 'ควรเตรียมเอกสารอะไรก่อนยื่นขอทุน';
+  protected section3Header =
+    'วิธีการลงทะเบียนและเข้าสู่ระบบเพื่อเข้าใช้งานเว็บไซต์';
+
   protected youtubeUrl = 'https://www.youtube.com/embed/lJIrF4YjHfQ';
   protected safeVideoUrl: SafeResourceUrl;
 

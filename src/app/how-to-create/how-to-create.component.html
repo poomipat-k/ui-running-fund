@@ -8,32 +8,32 @@
   </nav>
 
   <div class="mainContainer">
-    <div class="nav">
+    <div class="nav mgt-55">
       <a
         routerLink="/how-to-create"
-        fragment="วิธีสร้างใบขอทุนสนับสนุน"
+        [fragment]="section1Header"
         class="nav__text nav__text--active"
-        >วิธีสร้างใบขอทุนสนับสนุน</a
+        >{{ section1Header }}</a
       >
       <a
         routerLink="/how-to-create"
-        fragment="ควรเตรียมเอกสารอะไรก่อนยื่นขอทุน"
+        [fragment]="section2Header"
         class="nav__text"
-        >ควรเตรียมเอกสารอะไรก่อนยื่นขอทุน</a
+        >{{ section2Header }}</a
       >
       <a
         routerLink="/how-to-create"
-        fragment="วิธีการลงทะเบียนและเข้าสู่ระบบเพื่อเข้าใช้งานเว็บไซต์"
+        [fragment]="section3Header"
         class="nav__text"
-        >วิธีการลงทะเบียนและเข้าสู่ระบบเพื่อเข้าใช้งานเว็บไซต์</a
+        >{{ section3Header }}</a
       >
     </div>
     <!-- Content -->
     <div>
       <!-- Section 1 -->
       <div>
-        <h1 id="วิธีสร้างใบขอทุนสนับสนุน" class="content__header">
-          วิธีสร้างใบขอทุนสนับสนุน
+        <h1 [id]="section1Header" class="content__header">
+          {{ section1Header }}
         </h1>
         <div class="mgt-15">
           <app-com-button (click)="onDownloadDocumentClick()">
@@ -68,19 +68,16 @@
       <div class="hr mgt-70"></div>
       <!-- Section 2 -->
       <div class="mgt-53">
-        <h1 id="ควรเตรียมเอกสารอะไรก่อนยื่นขอทุน" class="content__header">
-          ควรเตรียมเอกสารอะไรก่อนยื่นขอทุน
+        <h1 [id]="section2Header" class="content__header">
+          {{ section2Header }}
         </h1>
         <p class="content__commonText mgt-15">{{ documentPreparation }}</p>
       </div>
       <div class="hr mgt-66"></div>
       <!-- Section 3 -->
       <div class="mgt-53">
-        <h1
-          id="วิธีการลงทะเบียนและเข้าสู่ระบบเพื่อเข้าใช้งานเว็บไซต์"
-          class="content__header"
-        >
-          วิธีการลงทะเบียนและเข้าสู่ระบบเพื่อเข้าใช้งานเว็บไซต์
+        <h1 [id]="section3Header" class="content__header">
+          {{ section3Header }}
         </h1>
         <p class="content__commonText mgt-24">{{ howToRegisterAndLogin }}</p>
 
