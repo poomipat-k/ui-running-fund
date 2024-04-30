@@ -9,17 +9,32 @@
 
   <div class="mainContainer">
     <div class="nav">
-      <a class="nav__text nav__text--active">วิธีสร้างใบขอทุนสนับสนุน</a>
-      <a class="nav__text">ควรเตรียมเอกสารอะไรก่อนยื่นขอทุน</a>
-      <a class="nav__text"
-        >วิธีการลงทะเบียนและ เข้าสู่ระบบเพื่อเข้าใช้งาน เว็บไซต์</a
+      <a
+        routerLink="/how-to-create"
+        fragment="วิธีสร้างใบขอทุนสนับสนุน"
+        class="nav__text nav__text--active"
+        >วิธีสร้างใบขอทุนสนับสนุน</a
+      >
+      <a
+        routerLink="/how-to-create"
+        fragment="ควรเตรียมเอกสารอะไรก่อนยื่นขอทุน"
+        class="nav__text"
+        >ควรเตรียมเอกสารอะไรก่อนยื่นขอทุน</a
+      >
+      <a
+        routerLink="/how-to-create"
+        fragment="วิธีการลงทะเบียนและเข้าสู่ระบบเพื่อเข้าใช้งานเว็บไซต์"
+        class="nav__text"
+        >วิธีการลงทะเบียนและเข้าสู่ระบบเพื่อเข้าใช้งานเว็บไซต์</a
       >
     </div>
     <!-- Content -->
     <div>
       <!-- Section 1 -->
       <div>
-        <h1 class="content__header">วิธีสร้างใบขอทุนสนับสนุน</h1>
+        <h1 id="วิธีสร้างใบขอทุนสนับสนุน" class="content__header">
+          วิธีสร้างใบขอทุนสนับสนุน
+        </h1>
         <div class="mgt-15">
           <app-com-button (click)="onDownloadDocumentClick()">
             <div class="button-content">
@@ -53,13 +68,18 @@
       <div class="hr mgt-70"></div>
       <!-- Section 2 -->
       <div class="mgt-53">
-        <h1 class="content__header">ควรเตรียมเอกสารอะไรก่อนยื่นขอทุน</h1>
+        <h1 id="ควรเตรียมเอกสารอะไรก่อนยื่นขอทุน" class="content__header">
+          ควรเตรียมเอกสารอะไรก่อนยื่นขอทุน
+        </h1>
         <p class="content__commonText mgt-15">{{ documentPreparation }}</p>
       </div>
       <div class="hr mgt-66"></div>
       <!-- Section 3 -->
       <div class="mgt-53">
-        <h1 class="content__header">
+        <h1
+          id="วิธีการลงทะเบียนและเข้าสู่ระบบเพื่อเข้าใช้งานเว็บไซต์"
+          class="content__header"
+        >
           วิธีการลงทะเบียนและเข้าสู่ระบบเพื่อเข้าใช้งานเว็บไซต์
         </h1>
         <p class="content__commonText mgt-24">{{ howToRegisterAndLogin }}</p>
