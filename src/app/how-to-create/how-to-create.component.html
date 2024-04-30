@@ -12,26 +12,41 @@
       <a
         routerLink="/how-to-create"
         [fragment]="section1Header"
-        class="nav__text nav__text--active"
+        [ngClass]="{
+          nav__text: true,
+          'nav__text--active': navActiveIndex === 1
+        }"
         >{{ section1Header }}</a
       >
       <a
         routerLink="/how-to-create"
         [fragment]="section2Header"
-        class="nav__text"
+        [ngClass]="{
+          nav__text: true,
+          'nav__text--active': navActiveIndex === 2
+        }"
         >{{ section2Header }}</a
       >
       <a
         routerLink="/how-to-create"
         [fragment]="section3Header"
-        class="nav__text"
+        [ngClass]="{
+          nav__text: true,
+          'nav__text--active': navActiveIndex === 3
+        }"
         >{{ section3Header }}</a
       >
     </div>
     <!-- Content -->
     <div>
       <!-- Section 1 -->
-      <div>
+      <div
+        appIntersectionElement
+        (isIntersecting)="isIntersecting($event, 1)"
+        [isContinuous]="true"
+        [threshold]="0.6"
+        rootMargin="-72px 0px 0px 0px"
+      >
         <h1 [id]="section1Header" class="content__header">
           {{ section1Header }}
         </h1>
@@ -47,7 +62,7 @@
                 xmlns="http://www.w3.org/2000/svg"
               >
                 <path
-                  d="M8 12L3 7L4.4 5.55L7 8.15V0H9V8.15L11.6 5.55L13 7L8 12ZM2 16C1.45 16 0.979167 15.8042 0.5875 15.4125C0.195833 15.0208 0 14.55 0 14V11H2V14H14V11H16V14C16 14.55 15.8042 15.0208 15.4125 15.4125C15.0208 15.8042 14.55 16 14 16H2Z"
+                  d="M8 12L3 7L4.4 5.55L7 8.15V0H9V8.15L11.6 5.55L13 7L8 12ZM2 16C1.45 16 0.979167 15.8042 0.6850 15.4125C0.195833 15.0208 0 14.55 0 14V11H2V14H14V11H16V14C16 14.55 15.8042 15.0208 15.4125 15.4125C15.0208 15.8042 14.55 16 14 16H2Z"
                   fill="#344054"
                 />
               </svg>
@@ -67,7 +82,14 @@
       </div>
       <div class="hr mgt-70"></div>
       <!-- Section 2 -->
-      <div class="mgt-53">
+      <div
+        appIntersectionElement
+        (isIntersecting)="isIntersecting($event, 2)"
+        [isContinuous]="true"
+        [threshold]="0.6"
+        rootMargin="-72px 0px 0px 0px"
+        class="mgt-53"
+      >
         <h1 [id]="section2Header" class="content__header">
           {{ section2Header }}
         </h1>
@@ -75,7 +97,14 @@
       </div>
       <div class="hr mgt-66"></div>
       <!-- Section 3 -->
-      <div class="mgt-53">
+      <div
+        appIntersectionElement
+        (isIntersecting)="isIntersecting($event, 3)"
+        [isContinuous]="true"
+        [threshold]="0.6"
+        rootMargin="-72px 0px 0px 0px"
+        class="mgt-53"
+      >
         <h1 [id]="section3Header" class="content__header">
           {{ section3Header }}
         </h1>

@@ -1,16 +1,23 @@
-import { ViewportScroller } from '@angular/common';
+import { CommonModule, ViewportScroller } from '@angular/common';
 import { Component, OnInit, inject } from '@angular/core';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
 import { ButtonComponent } from '../components/button/button/button.component';
 import { FaqComponent } from '../components/faq/faq.component';
 import { ThemeService } from '../services/theme.service';
+import { IntersectionElementDirective } from '../shared/directives/intersection-element.directive';
 import { BackgroundColor } from '../shared/enums/background-color';
 
 @Component({
   selector: 'app-how-to-create',
   standalone: true,
-  imports: [RouterModule, ButtonComponent, FaqComponent],
+  imports: [
+    RouterModule,
+    ButtonComponent,
+    FaqComponent,
+    IntersectionElementDirective,
+    CommonModule,
+  ],
   templateUrl: './how-to-create.component.html',
   styleUrl: './how-to-create.component.scss',
 })
@@ -44,6 +51,8 @@ Curabitur tempor quis eros tempus lacinia. Nam bibendum pellentesque quam a conv
   protected youtubeUrl = 'https://www.youtube.com/embed/lJIrF4YjHfQ';
   protected safeVideoUrl: SafeResourceUrl;
 
+  protected navActiveIndex = 1;
+
   ngOnInit(): void {
     this.themeService.changeBackgroundColor(BackgroundColor.white);
     this.scroller.setOffset([0, 80]);
@@ -51,6 +60,12 @@ Curabitur tempor quis eros tempus lacinia. Nam bibendum pellentesque quam a conv
     this.safeVideoUrl = this.domSanitizer.bypassSecurityTrustResourceUrl(
       this.youtubeUrl
     );
+  }
+
+  isIntersecting(intersecting: boolean, index: number) {
+    if (intersecting && index) {
+      this.navActiveIndex = index;
+    }
   }
 
   onDownloadDocumentClick() {
