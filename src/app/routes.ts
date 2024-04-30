@@ -1,4 +1,5 @@
 import { Routes } from '@angular/router';
+import { AskingForHelpComponent } from './asking-for-help/asking-for-help.component';
 import { EmailActivateSuccessComponent } from './email-activate-success/email-activate-success.component';
 import { ForgotPasswordEmailSentComponent } from './forgot-password-email-sent/forgot-password-email-sent.component';
 import { HomeComponent } from './home/home.component';
@@ -25,12 +26,17 @@ const routeConfig: Routes = [
     title: 'วิธีสร้างใบขอทุนสนับสนุน',
   },
   {
+    path: 'help',
+    component: AskingForHelpComponent,
+    title: 'ขอความช่วยเหลือ',
+  },
+  {
     path: 'proposal/create',
     loadComponent: () =>
       import('./applicant-flow-pages/applicant-flow-pages.component').then(
         (mod) => mod.ApplicantFlowPagesComponent
       ),
-    title: 'Create a proposal',
+    title: 'สร้างใบขอทุนสนับสนุน',
     canActivate: [applicantAuthGuard],
   },
   {
@@ -39,7 +45,7 @@ const routeConfig: Routes = [
       import('./dashboard/dashboard.component').then(
         (mod) => mod.DashboardComponent
       ),
-    title: 'Dashboard',
+    title: 'แดชบอร์ด',
     canActivate: [authGuard],
   },
   {
@@ -49,6 +55,7 @@ const routeConfig: Routes = [
         (mod) => mod.ReviewerFlowPagesComponent
       ),
     canActivate: [reviewerAuthGuard],
+    title: 'รีวิวโครงการ',
   },
   {
     path: 'applicant/project/:projectCode',
@@ -57,6 +64,7 @@ const routeConfig: Routes = [
         './applicant-project-details/applicant-project-details.component'
       ).then((mod) => mod.ApplicantProjectDetailsComponent),
     canActivate: [applicantAuthGuard],
+    title: 'รายละเอียดโครงการ',
   },
   {
     path: 'admin/project/:projectCode',
@@ -65,15 +73,16 @@ const routeConfig: Routes = [
         './applicant-project-details/applicant-project-details.component'
       ).then((mod) => mod.ApplicantProjectDetailsComponent),
     canActivate: [adminAuthGuard],
+    title: 'รายละเอียดโครงการ',
   },
-  {
-    path: 'applicant/project/review-details/:projectCode/:reviewerId',
-    loadComponent: () =>
-      import('./reviewer-flow-pages/reviewer-flow-pages.component').then(
-        (mod) => mod.ReviewerFlowPagesComponent
-      ),
-    canActivate: [applicantAuthGuard],
-  },
+  // {
+  //   path: 'applicant/project/review-details/:projectCode/:reviewerId',
+  //   loadComponent: () =>
+  //     import('./reviewer-flow-pages/reviewer-flow-pages.component').then(
+  //       (mod) => mod.ReviewerFlowPagesComponent
+  //     ),
+  //   canActivate: [applicantAuthGuard],
+  // },
   {
     path: 'admin/project/review-details/:projectCode/:reviewerId',
     loadComponent: () =>
@@ -81,6 +90,7 @@ const routeConfig: Routes = [
         (mod) => mod.ReviewerFlowPagesComponent
       ),
     canActivate: [adminAuthGuard],
+    title: 'รายละเอียดการประเมิณโครงการ',
   },
   {
     path: 'login',
@@ -96,7 +106,7 @@ const routeConfig: Routes = [
   {
     path: 'signup/success',
     component: SignupSuccessComponent,
-    title: 'Signup success',
+    title: 'Signup successfully',
   },
   {
     path: 'signup/activate/:activateCode',

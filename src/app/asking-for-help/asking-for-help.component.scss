@@ -1,0 +1,27 @@
+@import "../../styles.scss";
+
+.container {
+  padding: 2rem 12.2rem 14.1rem 12.2rem;
+}
+
+.nav {
+  display: flex;
+  gap: 4px;
+
+  &__text {
+    font-family: $custom-font;
+    font-weight: 400;
+    font-size: 1.8rem;
+    line-height: 3rem;
+    color: #667085;
+
+    &--bold {
+      font-weight: 500;
+      color: #000;
+    }
+  }
+
+  &__link {
+    text-decoration: none;
+  }
+}
