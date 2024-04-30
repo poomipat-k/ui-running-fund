@@ -1,12 +1,13 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import { RouterModule } from '@angular/router';
 import { ThemeService } from '../services/theme.service';
 import { BackgroundColor } from '../shared/enums/background-color';
 
 @Component({
   selector: 'app-how-to-create',
   standalone: true,
-  imports: [],
+  imports: [RouterModule],
   templateUrl: './how-to-create.component.html',
   styleUrl: './how-to-create.component.scss',
 })

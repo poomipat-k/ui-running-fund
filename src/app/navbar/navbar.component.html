@@ -1,7 +1,7 @@
 <div class="navbar">
   <div class="navbar__body">
     <div class="navbar__left-group">
-      <a [routerLink]="'/dashboard'" class="navbar__logo" draggable="false">
+      <a routerLink="/dashboard" class="navbar__logo" draggable="false">
         <img
           src="/assets/jogging_logo.svg"
           alt="Thai Jogging logo"
@@ -10,13 +10,16 @@
       </a>
 
       <ul class="navbar__menu">
-        <a [routerLink]="'/'" class="margin-left" draggable="false">
+        <a routerLink="/" class="margin-left" draggable="false">
           <li>หน้าหลัก</li>
+        </a>
+        <a routerLink="/dashboard" class="margin-left" draggable="false">
+          <li>แดชบอร์ด</li>
         </a>
         <a routerLink="/how-to-create" class="margin-left" draggable="false">
           <li>วิธีการกลั่นกรองโครงการ</li>
         </a>
-        <a [routerLink]="'/dashboard'" class="margin-left" draggable="false">
+        <a routerLink="/dashboard" class="margin-left" draggable="false">
           <li>ขอความช่วยเหลือ</li>
         </a>
       </ul>
