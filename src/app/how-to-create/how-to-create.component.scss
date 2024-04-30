@@ -4,7 +4,80 @@
   padding: 2rem 12.2rem 14.1rem 12.2rem;
 }
 
+.mainContainer {
+  padding-top: 4.5rem;
+  display: flex;
+  gap: 3.8rem;
+}
+
 .nav {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  flex: 0 0 16.7rem;
+
+  &__text {
+    font-family: $custom-font;
+    font-weight: 400;
+    font-size: 1.6rem;
+    line-height: 2.4rem;
+
+    &--active {
+      font-weight: 600;
+      color: #f47920;
+    }
+  }
+}
+
+.content {
+  &__header {
+    font-family: $custom-font;
+    font-weight: 600;
+    font-size: 2.4rem;
+    line-height: 4rem;
+    color: #000;
+  }
+
+  &__subHeader {
+    font-family: $custom-font;
+    font-weight: 500;
+    font-size: 1.8rem;
+    line-height: 3rem;
+    color: #344054;
+  }
+
+  &__commonText {
+    font-family: $custom-font-looped;
+    font-weight: 400;
+    font-size: 1.8rem;
+    line-height: 3rem;
+    color: #344054;
+    white-space: pre-wrap;
+  }
+}
+
+.button-content {
+  display: flex;
+  gap: 4px;
+  align-items: center;
+  padding: 1.2rem 1.6rem 1.2rem 1.4rem;
+
+  font-family: $custom-font;
+  font-weight: 500;
+  font-size: 1.6rem;
+  line-height: 2.7rem;
+  text-align: center;
+
+  &:hover svg path {
+    fill: #fb6514;
+  }
+
+  &:active svg path {
+    fill: #9c2a10;
+  }
+}
+
+.address {
   display: flex;
   gap: 4px;
 
@@ -23,5 +96,56 @@
 
   &__link {
     text-decoration: none;
+  }
+}
+
+.hr {
+  border-top: 1px solid rgba(102, 112, 133, 0.5);
+}
+
+.video {
+  border-radius: 1.6rem;
+  width: 41.8rem;
+  height: 26rem;
+}
+
+.authContainer {
+  display: flex;
+  gap: 3.8rem;
+}
+
+.mgt {
+  &-10 {
+    margin-top: 10px;
+  }
+  &-14 {
+    margin-top: 14px;
+  }
+  &-15 {
+    margin-top: 15px;
+  }
+  &-19 {
+    margin-top: 19px;
+  }
+  &-24 {
+    margin-top: 24px;
+  }
+  &-26 {
+    margin-top: 26px;
+  }
+  &-53 {
+    margin-top: 53px;
+  }
+  &-62 {
+    margin-top: 62px;
+  }
+  &-66 {
+    margin-top: 66px;
+  }
+  &-70 {
+    margin-top: 70px;
+  }
+  &-80 {
+    margin-top: 80px;
   }
 }
