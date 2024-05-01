@@ -3,7 +3,12 @@
     type="text"
     class="input"
     [placeholder]="placeholder"
-    [style]="{ width: width, margin: margin, height: height }"
+    [style]="{
+      width: width,
+      margin: margin,
+      height: height,
+      fontSize: fontSize
+    }"
     [formControlName]="controlName"
   />
 </ng-container>

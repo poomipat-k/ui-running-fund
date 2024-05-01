@@ -301,7 +301,6 @@ export class ContactComponent implements OnInit, OnDestroy {
       this.markFieldsTouched();
       return false;
     }
-    console.log('==form', this.form);
     return true;
   }
 

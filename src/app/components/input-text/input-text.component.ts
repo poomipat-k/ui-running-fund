@@ -15,4 +15,5 @@ export class InputTextComponent {
   @Input() width = '100%';
   @Input() height = '4.4rem';
   @Input() margin = '0';
+  @Input() fontSize = '16px';
 }

@@ -38,6 +38,95 @@
       </div>
     </div>
   </div>
+
+  <!-- Form -->
+  <div class="form__container mgt-57">
+    <h1 class="form__header">ส่งข้อความ</h1>
+    <div class="form__item">
+      <div class="form__item-label">ที่อยู่อีเมล*</div>
+      <app-com-input-text
+        id="email"
+        placeholder="กรอกที่อยู่อีเมล"
+        [form]="form"
+        controlName="email"
+        width="61.6rem"
+        height="6rem"
+        fontSize="1.8rem"
+      ></app-com-input-text>
+      @if (!emailControl.valid && emailControl.touched && formTouched) {
+      @if(emailControl.errors?.['required']) {
+      <div class="error mgt-10">
+        <img src="/assets/error_icon.svg" alt="error icon" />
+        <p class="error__text">กรุณากรอกที่อยู่อีเมล</p>
+      </div>
+      } @else {
+      <div class="error mgt-10">
+        <img src="/assets/error_icon.svg" alt="error icon" />
+        <p class="error__text">กรุณาตรวจสอบที่อยู่อีเมลให้ถูกต้อง</p>
+      </div>
+      } }
+    </div>
+
+    <div class="form__item">
+      <div class="form__item-label">ชื่อจริง*</div>
+      <app-com-input-text
+        id="firstName"
+        placeholder="กรอกชื่อจริง"
+        [form]="form"
+        controlName="firstName"
+        width="61.6rem"
+        height="6rem"
+        fontSize="1.8rem"
+      ></app-com-input-text>
+      @if (!form.get('firstName')?.valid && form.get('firstName')?.touched &&
+      formTouched) {
+      <div class="error mgt-10">
+        <img src="/assets/error_icon.svg" alt="error icon" />
+        <p class="error__text">กรุณากรอกชื่อจริง</p>
+      </div>
+      }
+    </div>
+
+    <div class="form__item">
+      <div class="form__item-label">นามสกุล*</div>
+      <app-com-input-text
+        id="lastName"
+        placeholder="กรอกนามสกุล"
+        [form]="form"
+        controlName="lastName"
+        width="61.6rem"
+        height="6rem"
+        fontSize="1.8rem"
+      ></app-com-input-text>
+      @if (!form.get('lastName')?.valid && form.get('lastName')?.touched &&
+      formTouched) {
+      <div class="error mgt-10">
+        <img src="/assets/error_icon.svg" alt="error icon" />
+        <p class="error__text">กรุณากรอกนามสกุล</p>
+      </div>
+      }
+    </div>
+
+    <div class="form__item">
+      <div class="form__item-label">ข้อความ*</div>
+      <app-com-textarea
+        [form]="form"
+        controlName="message"
+        placeholder="รายละเอียดข้อความ"
+        width="61.6rem"
+        height="18.4rem"
+      ></app-com-textarea>
+      @if (!form.get('message')?.valid && form.get('message')?.touched &&
+      formTouched) {
+      <div class="error mgt-10">
+        <img src="/assets/error_icon.svg" alt="error icon" />
+        <p class="error__text">กรุณากรอกรายละเอียดข้อความ</p>
+      </div>
+      }
+    </div>
+
+    <button class="button" (click)="onSubmitClick()">ส่งข้อความ</button>
+  </div>
   <div class="hr mgt-97"></div>
   <div class="mgt-62">
     <app-com-faq></app-com-faq>
