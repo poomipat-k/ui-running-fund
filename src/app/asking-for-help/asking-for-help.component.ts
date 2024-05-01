@@ -1,11 +1,13 @@
 import { ViewportScroller } from '@angular/common';
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { RouterModule } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { ButtonComponent } from '../components/button/button/button.component';
 import { FaqComponent } from '../components/faq/faq.component';
 import { InputTextComponent } from '../components/input-text/input-text.component';
 import { TextareaComponent } from '../components/textarea/textarea.component';
+import { ContactUsService } from '../services/contact-us.service';
 
 @Component({
   selector: 'app-asking-for-help',
@@ -20,11 +22,15 @@ import { TextareaComponent } from '../components/textarea/textarea.component';
   templateUrl: './asking-for-help.component.html',
   styleUrl: './asking-for-help.component.scss',
 })
-export class AskingForHelpComponent implements OnInit {
+export class AskingForHelpComponent implements OnInit, OnDestroy {
   protected form: FormGroup;
   protected formTouched = false;
   private readonly scroller: ViewportScroller = inject(ViewportScroller);
+  private readonly contactUsService: ContactUsService =
+    inject(ContactUsService);
   protected enableScroll = true;
+
+  subs: Subscription[] = [];
 
   get emailControl(): FormControl {
     return this.form.get('email') as FormControl;
@@ -39,6 +45,10 @@ export class AskingForHelpComponent implements OnInit {
     });
   }
 
+  ngOnDestroy(): void {
+    this.subs.forEach((s) => s.unsubscribe());
+  }
+
   onSubmitClick() {
     if (!this.formTouched) {
       this.formTouched = true;
@@ -48,6 +58,9 @@ export class AskingForHelpComponent implements OnInit {
       this.markFieldsTouched();
       return;
     }
+    this.subs.push(
+      this.contactUsService.sendContactUsRequest(this.form.value).subscribe()
+    );
   }
 
   private isFormValid(): boolean {
