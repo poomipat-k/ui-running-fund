@@ -25,3 +25,97 @@
     text-decoration: none;
   }
 }
+
+.contactUs {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+
+  &__header {
+    font-family: $custom-font;
+    font-weight: 600;
+    font-size: 2.4rem;
+    line-height: 4rem;
+    color: #000;
+  }
+
+  &__tel {
+    display: flex;
+    gap: 6px;
+
+    &__text {
+      font-family: $custom-font;
+      font-weight: 400;
+      font-size: 2rem;
+      line-height: 3.3rem;
+      color: #344054;
+    }
+
+    &-label {
+      font-family: $custom-font;
+      font-weight: 500;
+      font-size: 2rem;
+      line-height: 3.3rem;
+      color: #344054;
+    }
+
+    &-details {
+      display: flex;
+      gap: 1rem;
+
+      &-item {
+        display: flex;
+        gap: 6px;
+      }
+    }
+  }
+
+  &__facebook {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+
+    &-text {
+      font-family: $custom-font;
+      font-weight: 500;
+      font-size: 2rem;
+      line-height: 3.3rem;
+
+      &--light {
+        font-weight: 400;
+      }
+    }
+  }
+
+  &__line {
+    display: flex;
+    gap: 8px;
+
+    &-text {
+      font-family: $custom-font;
+      font-weight: 500;
+      font-size: 2rem;
+      line-height: 3.3rem;
+
+      &--light {
+        font-weight: 400;
+      }
+    }
+  }
+}
+
+.hr {
+  border-top: 1px solid rgba(102, 112, 133, 0.5);
+}
+
+.mgt {
+  &-45 {
+    margin-top: 45px;
+  }
+  &-62 {
+    margin-top: 62px;
+  }
+  &-97 {
+    margin-top: 97px;
+  }
+}
