@@ -54,17 +54,11 @@
         fontSize="1.8rem"
       ></app-com-input-text>
       @if (!emailControl.valid && emailControl.touched && formTouched) {
-      @if(emailControl.errors?.['required']) {
       <div class="error mgt-10">
         <img src="/assets/error_icon.svg" alt="error icon" />
         <p class="error__text">กรุณากรอกที่อยู่อีเมล</p>
       </div>
-      } @else {
-      <div class="error mgt-10">
-        <img src="/assets/error_icon.svg" alt="error icon" />
-        <p class="error__text">กรุณาตรวจสอบที่อยู่อีเมลให้ถูกต้อง</p>
-      </div>
-      } }
+      }
     </div>
 
     <div class="form__item">

@@ -38,7 +38,7 @@ export class AskingForHelpComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.form = new FormGroup({
-      email: new FormControl(null, [Validators.email, Validators.required]),
+      email: new FormControl(null, [Validators.required]),
       firstName: new FormControl(null, [Validators.required]),
       lastName: new FormControl(null, [Validators.required]),
       message: new FormControl(null, [Validators.required]),
