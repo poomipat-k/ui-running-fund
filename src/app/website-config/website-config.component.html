@@ -24,6 +24,8 @@
       <app-website-config-dashboard
         [form]="dashboardGroup"
         [dashboardData]="dashboardData"
+        [count]="dashboardItemCount"
+        (currentPageChanged)="onDashboardPageChanged($event)"
       ></app-website-config-dashboard>
       } }
       <!-- Button -->

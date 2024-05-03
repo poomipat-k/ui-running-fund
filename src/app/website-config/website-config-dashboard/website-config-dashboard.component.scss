@@ -67,12 +67,20 @@
   color: #667085;
 }
 
+.pagingContainer {
+  display: flex;
+  justify-content: center;
+}
+
 .mgt {
   &-9 {
     margin-top: 9px;
   }
   &-19 {
     margin-top: 19px;
+  }
+  &-27 {
+    margin-top: 27px;
   }
   &-31 {
     margin-top: 31px;

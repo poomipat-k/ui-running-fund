@@ -1,5 +1,13 @@
-import { Component, Input, OnInit, inject } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+  inject,
+} from '@angular/core';
 import { FormGroup } from '@angular/forms';
+import { PaginationComponent } from '../../components/pagination/pagination.component';
 import { SelectDropdownComponent } from '../../components/select-dropdown/select-dropdown.component';
 import { TableComponent } from '../../components/table/table.component';
 import { DateService } from '../../services/date.service';
@@ -18,7 +26,7 @@ import { TableColumn } from '../../shared/models/table-column';
 @Component({
   selector: 'app-website-config-dashboard',
   standalone: true,
-  imports: [SelectDropdownComponent, TableComponent],
+  imports: [SelectDropdownComponent, TableComponent, PaginationComponent],
   templateUrl: './website-config-dashboard.component.html',
   styleUrl: './website-config-dashboard.component.scss',
 })
@@ -26,15 +34,18 @@ export class WebsiteConfigDashboardComponent implements OnInit {
   // dashboard formGroup
   @Input() form: FormGroup;
   @Input() dashboardData: TableCell[][] = [];
+  @Input() count = 0;
+
+  @Output() currentPageChanged = new EventEmitter<number>();
 
   private readonly dateService: DateService = inject(DateService);
 
   protected readonly minHistoryYear = 2024;
 
-  protected dashboardItemCount = 0;
-
   private readonly thirtyDaysMonths = [4, 6, 9, 11];
   protected currentYear = 0;
+  protected currentPage = 1;
+
   private febLeap: RadioOption[] = [];
   private febNormal: RadioOption[] = [];
   private thirtyDays: RadioOption[] = [];
@@ -129,6 +140,13 @@ export class WebsiteConfigDashboardComponent implements OnInit {
       this.form.patchValue({
         toDay: null,
       });
+    }
+  }
+
+  onDashboardPageChanged(currentPage: number) {
+    if (currentPage >= 1) {
+      this.currentPage = currentPage;
+      this.currentPageChanged.emit(currentPage);
     }
   }
 

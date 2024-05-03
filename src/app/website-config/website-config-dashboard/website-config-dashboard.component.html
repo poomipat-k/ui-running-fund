@@ -67,7 +67,7 @@
   </div>
   <!-- Dashboard -->
   <div class="mgt-31">
-    <p class="countText">ทั้งหมด {{ dashboardItemCount }} โครงการ</p>
+    <p class="countText">ทั้งหมด {{ count }} โครงการ</p>
     <div class="mgt-19">
       <app-com-table
         [columns]="columns"
@@ -76,6 +76,15 @@
         [rowClickable]="false"
         contentFontSize="16px"
       ></app-com-table>
+      <!-- Pagination -->
+      <div class="pagingContainer mgt-27">
+        <app-com-pagination
+          [count]="count"
+          [pageSize]="5"
+          [activePage]="currentPage"
+          (currentPage)="onDashboardPageChanged($event)"
+        ></app-com-pagination>
+      </div>
     </div>
   </div>
 </div>

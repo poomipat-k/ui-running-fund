@@ -22,10 +22,11 @@ import { WebsiteConfigLandingPageComponent } from './website-config-landing-page
 export class WebsiteConfigComponent implements OnInit {
   private readonly themeService: ThemeService = inject(ThemeService);
 
+  private readonly PAGE_SIZE = 5;
+
   protected form: FormGroup;
   protected dashboardData: TableCell[][] = [];
-
-  protected dashboardCurrentPage = 1;
+  protected dashboardItemCount = 0;
   protected activeNav = '';
   protected sideNavItems: WebsiteConfigSideNav[] = [
     {
@@ -60,9 +61,9 @@ export class WebsiteConfigComponent implements OnInit {
 
     // subs to dashboard date config changes
 
-    this.dashboardGroup.valueChanges.subscribe((values) => {
+    this.dashboardGroup.valueChanges.subscribe((_) => {
       if (this.dashboardGroup.valid) {
-        this.loadDashboardData();
+        this.loadDashboardData(1);
       }
     });
   }
@@ -83,12 +84,15 @@ export class WebsiteConfigComponent implements OnInit {
     });
   }
 
-  private loadDashboardData() {
+  private loadDashboardData(pageNo: number) {
     this.subs.push(
       this.projectService
-        .getAdminDashboardDateConfigPreview(this.dashboardGroup.value, 1, 5)
+        .getAdminDashboardDateConfigPreview(
+          this.dashboardGroup.value,
+          pageNo,
+          this.PAGE_SIZE
+        )
         .subscribe((rows: AdminDashboardDateConfigPreviewRow[]) => {
-          console.log('==rows', rows);
           if (rows && rows.length) {
             const data = rows.map((row) => [
               {
@@ -112,16 +116,17 @@ export class WebsiteConfigComponent implements OnInit {
               },
             ]);
             const count = rows[0].count;
+            this.dashboardItemCount = count;
             this.dashboardData = data;
           }
         })
     );
   }
 
-  onRequestDashboardPageChanged(currentPage: number) {
+  onDashboardPageChanged(currentPage: number) {
+    console.log('==Main currentPage', currentPage);
     if (currentPage >= 1) {
-      this.dashboardCurrentPage = currentPage;
-      this.loadDashboardData();
+      this.loadDashboardData(currentPage);
     }
   }
 
