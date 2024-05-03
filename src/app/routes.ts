@@ -93,6 +93,15 @@ const routeConfig: Routes = [
     title: 'รายละเอียดการประเมิณโครงการ',
   },
   {
+    path: 'admin/website/config',
+    loadComponent: () =>
+      import('./website-config/website-config.component').then(
+        (mod) => mod.WebsiteConfigComponent
+      ),
+    canActivate: [adminAuthGuard],
+    title: 'จัดการเว็บไซต์',
+  },
+  {
     path: 'login',
     component: LoginComponent,
     title: 'Login',

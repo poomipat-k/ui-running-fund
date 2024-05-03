@@ -1,0 +1,15 @@
+<div class="pageContainer">
+  <h1 class="header">จัดการเว็บไซต์</h1>
+  <div class="container mgt-25">
+    <div class="sideNav">
+      @for (item of sideNavItems; track $index) {
+      <nav>{{ item.display }}</nav>
+      }
+    </div>
+    <div class="content">
+      @switch (activeNav) { @case ('dashboard') {
+      <app-website-config-dashboard></app-website-config-dashboard>
+      } }
+    </div>
+  </div>
+</div>

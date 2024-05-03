@@ -1,7 +1,7 @@
 <div class="navbar">
   <div class="navbar__body">
     <div class="navbar__left-group">
-      <a routerLink="/dashboard" class="navbar__logo" draggable="false">
+      <a routerLink="/" class="navbar__logo" draggable="false">
         <img
           src="/assets/jogging_logo.svg"
           alt="Thai Jogging logo"
@@ -16,12 +16,22 @@
         <a routerLink="/dashboard" class="margin-left" draggable="false">
           <li>แดชบอร์ด</li>
         </a>
+        @if (!isAdmin) {
         <a routerLink="/how-to-create" class="margin-left" draggable="false">
           <li>วิธีการกลั่นกรองโครงการ</li>
         </a>
         <a routerLink="/help" class="margin-left" draggable="false">
           <li>ขอความช่วยเหลือ</li>
         </a>
+        } @else {
+        <a
+          routerLink="/admin/website/config"
+          class="margin-left"
+          draggable="false"
+        >
+          <li>จัดการเว็บไซต์</li>
+        </a>
+        }
       </ul>
     </div>
 

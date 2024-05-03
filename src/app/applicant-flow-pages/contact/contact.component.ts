@@ -8,7 +8,9 @@ import { RadioComponent } from '../../components/radio/radio.component';
 import { SelectDropdownComponent } from '../../components/select-dropdown/select-dropdown.component';
 import { TextareaComponent } from '../../components/textarea/textarea.component';
 import { AddressService } from '../../services/address.service';
+import { ThemeService } from '../../services/theme.service';
 import { OnlyNumberDirective } from '../../shared/directives/only-number.directive';
+import { BackgroundColor } from '../../shared/enums/background-color';
 import { RadioOption } from '../../shared/models/radio-option';
 
 @Component({
@@ -32,6 +34,7 @@ export class ContactComponent implements OnInit, OnDestroy {
   @Input() devModeOn = false;
 
   private readonly addressService: AddressService = inject(AddressService);
+  private readonly themeService: ThemeService = inject(ThemeService);
 
   protected formTouched = false;
 
@@ -219,6 +222,8 @@ export class ContactComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    this.themeService.changeBackgroundColor(BackgroundColor.white);
+
     this.getProvinces();
 
     this.configAddress('projectHead');
