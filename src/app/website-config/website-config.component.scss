@@ -55,6 +55,10 @@
   }
 }
 
+.content {
+  flex: 1;
+}
+
 .button {
   &__container {
     display: flex;
@@ -124,9 +128,6 @@
 }
 
 .mgb {
-  &-72 {
-    margin-bottom: 72px;
-  }
   &-79 {
     margin-bottom: 79px;
   }

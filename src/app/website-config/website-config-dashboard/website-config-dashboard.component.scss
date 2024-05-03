@@ -1,7 +1,8 @@
 @import "../../../styles.scss";
 
 .container {
-  padding: 1.8rem 1.6rem 9.3rem 3.4rem;
+  padding: 1.8rem 1.6rem 7.2rem 3.4rem;
+  flex: 1;
 }
 
 .header {
@@ -18,6 +19,10 @@
   font-size: 2rem;
   line-height: 3.3rem;
   color: #000;
+}
+
+.dateContainer {
+  position: relative;
 }
 
 .dateRow {
@@ -39,11 +44,37 @@
   color: #344054;
 }
 
+.error {
+  display: flex;
+  font-family: $custom-font-looped;
+  font-size: 1.3rem;
+  font-weight: 400;
+  line-height: normal;
+  color: #ec4a0a;
+  position: absolute;
+  bottom: -2.4rem;
+
+  &__text {
+    margin-left: 4px;
+  }
+}
+
+.countText {
+  font-family: $custom-font;
+  font-weight: 400;
+  font-size: 1.6rem;
+  line-height: 1.8rem;
+  color: #667085;
+}
+
 .mgt {
   &-9 {
     margin-top: 9px;
   }
   &-19 {
     margin-top: 19px;
+  }
+  &-31 {
+    margin-top: 31px;
   }
 }

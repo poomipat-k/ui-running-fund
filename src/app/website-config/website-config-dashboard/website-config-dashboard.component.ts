@@ -1,6 +1,7 @@
 import { Component, Input, OnInit, inject } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { SelectDropdownComponent } from '../../components/select-dropdown/select-dropdown.component';
+import { TableComponent } from '../../components/table/table.component';
 import { DateService } from '../../services/date.service';
 import {
   days28,
@@ -9,12 +10,15 @@ import {
   days31,
   months,
 } from '../../shared/constants/date-objects';
+import { ColumnTypeEnum } from '../../shared/enums/column-type';
 import { RadioOption } from '../../shared/models/radio-option';
+import { TableCell } from '../../shared/models/table-cell';
+import { TableColumn } from '../../shared/models/table-column';
 
 @Component({
   selector: 'app-website-config-dashboard',
   standalone: true,
-  imports: [SelectDropdownComponent],
+  imports: [SelectDropdownComponent, TableComponent],
   templateUrl: './website-config-dashboard.component.html',
   styleUrl: './website-config-dashboard.component.scss',
 })
@@ -26,6 +30,8 @@ export class WebsiteConfigDashboardComponent implements OnInit {
 
   protected readonly minHistoryYear = 2024;
 
+  protected dashboardItemCount = 0;
+
   private readonly thirtyDaysMonths = [4, 6, 9, 11];
   protected currentYear = 0;
   private febLeap: RadioOption[] = [];
@@ -35,6 +41,30 @@ export class WebsiteConfigDashboardComponent implements OnInit {
 
   protected yearOptions: RadioOption[] = [];
   protected monthOptions: RadioOption[] = [];
+
+  protected dashboardData: TableCell[][] = [];
+
+  protected columns: TableColumn[] = [
+    {
+      name: 'รหัสโครงการ',
+      class: 'col-projectCode',
+      bold: true,
+    },
+    {
+      name: 'วันที่ส่งใบขอทุน',
+      format: 'datetime',
+      class: 'col-longDate',
+    },
+    {
+      name: 'ชื่อโครงการ',
+      class: 'col-projectName',
+    },
+    {
+      name: 'สถานะการดำเนินงาน',
+      type: ColumnTypeEnum.Badge,
+      width: '19rem',
+    },
+  ];
 
   get fromDaysInMonthOptions() {
     const year = this.form.value.fromYear;
