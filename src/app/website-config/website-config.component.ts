@@ -1,4 +1,10 @@
-import { Component, OnInit, inject } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  OnInit,
+  ViewChild,
+  inject,
+} from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { DateService } from '../services/date.service';
@@ -19,7 +25,9 @@ import { WebsiteConfigLandingPageComponent } from './website-config-landing-page
   templateUrl: './website-config.component.html',
   styleUrl: './website-config.component.scss',
 })
-export class WebsiteConfigComponent implements OnInit {
+export class WebsiteConfigComponent implements OnInit, AfterViewInit {
+  @ViewChild('dashboard') dashboardComponent: WebsiteConfigDashboardComponent;
+
   private readonly themeService: ThemeService = inject(ThemeService);
 
   private readonly PAGE_SIZE = 5;
@@ -58,12 +66,15 @@ export class WebsiteConfigComponent implements OnInit {
 
     // Load dashboard data
     this.getDashboardPeriod();
+  }
 
+  ngAfterViewInit(): void {
     // subs to dashboard date config changes
-
-    this.dashboardGroup.valueChanges.subscribe((_) => {
+    this.dashboardGroup.valueChanges.subscribe(() => {
       if (this.dashboardGroup.valid) {
-        this.loadDashboardData(1);
+        this.dashboardComponent.onDashboardPageChanged(1);
+      } else {
+        this.clearDashboard();
       }
     });
   }
@@ -118,9 +129,16 @@ export class WebsiteConfigComponent implements OnInit {
             const count = rows[0].count;
             this.dashboardItemCount = count;
             this.dashboardData = data;
+          } else {
+            this.clearDashboard();
           }
         })
     );
+  }
+
+  private clearDashboard() {
+    this.dashboardItemCount = 0;
+    this.dashboardData = [];
   }
 
   onDashboardPageChanged(currentPage: number) {
