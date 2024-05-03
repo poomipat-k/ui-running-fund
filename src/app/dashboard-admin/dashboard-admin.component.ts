@@ -7,7 +7,6 @@ import { ButtonComponent } from '../components/button/button/button.component';
 import { FilterComponent } from '../components/filter/filter.component';
 import { InputTextComponent } from '../components/input-text/input-text.component';
 import { PaginationComponent } from '../components/pagination/pagination.component';
-import { SelectDropdownTemplateComponent } from '../components/select-dropdown-template/select-dropdown-template.component';
 import { SelectDropdownComponent } from '../components/select-dropdown/select-dropdown.component';
 import { TableComponent } from '../components/table/table.component';
 import { DateService } from '../services/date.service';
@@ -44,7 +43,6 @@ import { fromDateBeforeToDateValidator } from '../shared/validators/fromDateBefo
     TableComponent,
     PaginationComponent,
     InputTextComponent,
-    SelectDropdownTemplateComponent,
   ],
   templateUrl: './dashboard-admin.component.html',
   styleUrl: './dashboard-admin.component.scss',

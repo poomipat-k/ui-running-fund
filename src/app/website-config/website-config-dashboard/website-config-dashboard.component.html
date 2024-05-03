@@ -1,1 +1,59 @@
-<p>website-config-dashboard works!</p>
+<div class="container">
+  <h2 class="header">Dashboard</h2>
+  <h3 class="subHeader mgt-9">ช่วงเวลาที่แสดงบน Dashboard</h3>
+  <div class="dateRow mgt-19">
+    <div class="dateGroup">
+      <app-com-select-dropdown
+        [form]="form"
+        [items]="yearOptions"
+        placeholder="ปี"
+        width="8.3rem"
+        controlName="fromYear"
+        [onChange]="onFromYearOrMonthChanged"
+      ></app-com-select-dropdown>
+      <app-com-select-dropdown
+        [form]="form"
+        [items]="monthOptions"
+        placeholder="เดือน"
+        width="14.1rem"
+        controlName="fromMonth"
+        [onChange]="onFromYearOrMonthChanged"
+      ></app-com-select-dropdown>
+      <app-com-select-dropdown
+        [form]="form"
+        [items]="fromDaysInMonthOptions"
+        placeholder="วันที่"
+        width="9.9rem"
+        controlName="fromDay"
+        emptyMessage="กรุณาเลือกปีและวัน"
+      ></app-com-select-dropdown>
+    </div>
+    <p class="dash">-</p>
+    <div class="dateGroup">
+      <app-com-select-dropdown
+        [form]="form"
+        [items]="yearOptions"
+        placeholder="ปี"
+        width="8.3rem"
+        controlName="toYear"
+        [onChange]="onToYearOrMonthChanged"
+      ></app-com-select-dropdown>
+      <app-com-select-dropdown
+        [form]="form"
+        [items]="monthOptions"
+        placeholder="เดือน"
+        width="14.1rem"
+        controlName="toMonth"
+        [onChange]="onToYearOrMonthChanged"
+      ></app-com-select-dropdown>
+      <app-com-select-dropdown
+        [form]="form"
+        [items]="toDaysInMonthOptions"
+        placeholder="วันที่"
+        width="9.9rem"
+        controlName="toDay"
+        emptyMessage="กรุณาเลือกปีและวัน"
+      ></app-com-select-dropdown>
+    </div>
+  </div>
+</div>

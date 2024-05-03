@@ -75,14 +75,6 @@ const routeConfig: Routes = [
     canActivate: [adminAuthGuard],
     title: 'รายละเอียดโครงการ',
   },
-  // {
-  //   path: 'applicant/project/review-details/:projectCode/:reviewerId',
-  //   loadComponent: () =>
-  //     import('./reviewer-flow-pages/reviewer-flow-pages.component').then(
-  //       (mod) => mod.ReviewerFlowPagesComponent
-  //     ),
-  //   canActivate: [applicantAuthGuard],
-  // },
   {
     path: 'admin/project/review-details/:projectCode/:reviewerId',
     loadComponent: () =>

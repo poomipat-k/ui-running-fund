@@ -1,15 +1,39 @@
 <div class="pageContainer">
   <h1 class="header">จัดการเว็บไซต์</h1>
   <div class="container mgt-25">
+    <!-- SideNav -->
     <div class="sideNav">
-      @for (item of sideNavItems; track $index) {
-      <nav>{{ item.display }}</nav>
-      }
-    </div>
-    <div class="content">
-      @switch (activeNav) { @case ('dashboard') {
-      <app-website-config-dashboard></app-website-config-dashboard>
+      @for (item of sideNavItems; track $index) { @if (activeNav === item.value)
+      {
+      <nav class="sideNav__text sideNav__text--active">{{ item.display }}</nav>
+
+      } @else {
+      <nav class="sideNav__text" (click)="onNavItemClick(item)">
+        {{ item.display }}
+      </nav>
       } }
+    </div>
+    <div class="verticalLine"></div>
+    <!-- Content -->
+    <div>
+      @switch (activeNav) { @case ('landingPage') {
+      <div class="mgb-79">
+        <app-website-config-landing-page></app-website-config-landing-page>
+      </div>
+      } @case ('dashboard') {
+      <div class="mgb-72">
+        <app-website-config-dashboard
+          [form]="dashboardGroup"
+        ></app-website-config-dashboard>
+      </div>
+      } }
+      <!-- Button -->
+      <div class="button__container mgl-34">
+        <button class="button button--next" (click)="onSave()">บันทึก</button>
+        <button class="button button--cancel" (click)="onCancel()">
+          ยกเลิก
+        </button>
+      </div>
     </div>
   </div>
 </div>

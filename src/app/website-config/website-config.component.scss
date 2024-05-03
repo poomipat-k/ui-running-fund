@@ -12,10 +12,20 @@
   color: #344054;
 }
 
+.verticalLine {
+  width: 1px;
+  height: max(calc(100vh - 382px), calc(100% + 6.6rem));
+  position: absolute;
+  top: 0;
+  left: 20.8rem;
+  background-color: rgba(0, 0, 0, 0.36);
+  overflow: hidden;
+}
+
 .container {
   border-top: 1px solid rgba(0, 0, 0, 0.36);
   display: flex;
-  height: 40rem;
+  position: relative;
 }
 
 .sideNav {
@@ -24,15 +34,106 @@
   gap: 1rem;
   flex: 0 0 20.8rem;
   margin-top: 2.5rem;
+
+  position: sticky;
+  align-self: flex-start;
+  top: 9.7rem;
+
+  &__text {
+    font-family: $custom-font;
+    font-weight: 400;
+    font-size: 1.6rem;
+    line-height: 2.4rem;
+    color: #344054;
+    cursor: pointer;
+
+    &--active {
+      font-weight: 600;
+      line-height: 2.7rem;
+      color: #f47920;
+    }
+  }
 }
 
-.content {
-  padding: 2rem;
-  border-left: 1px solid rgba(0, 0, 0, 0.36);
+.button {
+  &__container {
+    display: flex;
+    gap: 1rem;
+  }
+
+  display: flex;
+  padding: 1.25rem 1.5rem;
+  width: 15.5rem;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  font-family: $custom-font;
+  font-size: 1.8rem;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 3rem;
+  cursor: pointer;
+
+  &:disabled {
+    background-color: #a5a6a7;
+    box-shadow: 0px 2px 8px 0px rgba(126, 36, 16, 0.25);
+
+    color: #4d535c;
+    cursor: not-allowed;
+
+    &:hover {
+      background-color: #a5a6a7;
+      box-shadow: 0px 2px 8px 0px rgba(126, 36, 16, 0.25);
+      color: #4d535c;
+    }
+  }
+
+  &--cancel {
+    border: none;
+    color: #4d535c;
+    background-color: #d2d2d2;
+
+    &:hover {
+      filter: brightness(105%);
+    }
+    &:active {
+      filter: brightness(90%);
+    }
+  }
+
+  &--next {
+    border: none;
+    background-color: #feb273;
+    color: $black;
+
+    &:hover {
+      background-color: #ffbe88;
+      color: #424f64;
+    }
+
+    &:active {
+      background-color: #ffa167;
+    }
+  }
 }
 
 .mgt {
   &-25 {
     margin-top: 25px;
+  }
+}
+
+.mgb {
+  &-72 {
+    margin-bottom: 72px;
+  }
+  &-79 {
+    margin-bottom: 79px;
+  }
+}
+
+.mgl {
+  &-34 {
+    margin-left: 34px;
   }
 }

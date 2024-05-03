@@ -31,13 +31,11 @@ export class NavbarComponent implements OnInit, OnDestroy {
       this.userService.currentUserSubject$.subscribe((user) => {
         if (user.id) {
           this.currentUser = user;
-          console.log('==cur1', this.currentUser);
         } else {
           const lsUser = localStorage.getItem('loggedInUser');
           if (lsUser) {
             const jsonLocalStorageUser: User = JSON.parse(lsUser);
             this.currentUser = jsonLocalStorageUser;
-            console.log('==cur2', this.currentUser);
           }
         }
       })
