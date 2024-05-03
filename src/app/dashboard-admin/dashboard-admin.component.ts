@@ -203,7 +203,7 @@ export class DashboardAdminComponent implements OnInit, OnDestroy {
     },
     {
       name: 'สถานะการดำเนินงาน',
-      class: 'col-standardStatus',
+      width: '19.4rem',
       type: ColumnTypeEnum.Badge,
     },
     {

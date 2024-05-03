@@ -13,17 +13,18 @@
         <a routerLink="/" class="margin-left" draggable="false">
           <li>หน้าหลัก</li>
         </a>
+        @if (isLoggedIn) {
         <a routerLink="/dashboard" class="margin-left" draggable="false">
           <li>แดชบอร์ด</li>
         </a>
-        @if (!isAdmin) {
+        } @if (!isLoggedIn || isApplicant) {
         <a routerLink="/how-to-create" class="margin-left" draggable="false">
-          <li>วิธีการกลั่นกรองโครงการ</li>
+          <li>วิธีสร้างใบขอทุนสนับสนุน</li>
         </a>
         <a routerLink="/help" class="margin-left" draggable="false">
           <li>ขอความช่วยเหลือ</li>
         </a>
-        } @else {
+        } @if (isAdmin) {
         <a
           routerLink="/admin/website/config"
           class="margin-left"

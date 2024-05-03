@@ -115,9 +115,9 @@ export class UserService {
       .pipe(
         tap((result) => {
           if (result.success) {
+            this.removeLocalStorageUser();
             this.loggedInUser = new User();
             this.currentUserSubject.next(this.loggedInUser);
-            this.removeLocalStorageUser();
           }
         }),
         catchError(this.handleError)

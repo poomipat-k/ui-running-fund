@@ -24,6 +24,18 @@ export class NavbarComponent implements OnInit, OnDestroy {
     return this.currentUser.userRole === 'admin';
   }
 
+  get isApplicant(): boolean {
+    return this.currentUser.userRole === 'applicant';
+  }
+
+  get isReviewer(): boolean {
+    return this.currentUser.userRole === 'reviewer';
+  }
+
+  get isLoggedIn(): boolean {
+    return this.currentUser.id > 0;
+  }
+
   constructor() {}
 
   ngOnInit(): void {
@@ -31,13 +43,15 @@ export class NavbarComponent implements OnInit, OnDestroy {
       this.userService.currentUserSubject$.subscribe((user) => {
         if (user.id) {
           this.currentUser = user;
-        } else {
-          const lsUser = localStorage.getItem('loggedInUser');
-          if (lsUser) {
-            const jsonLocalStorageUser: User = JSON.parse(lsUser);
-            this.currentUser = jsonLocalStorageUser;
-          }
+          return;
         }
+        const lsUser = localStorage.getItem('loggedInUser');
+        if (lsUser) {
+          const jsonLocalStorageUser: User = JSON.parse(lsUser);
+          this.currentUser = jsonLocalStorageUser;
+          return;
+        }
+        this.currentUser = user;
       })
     );
   }
