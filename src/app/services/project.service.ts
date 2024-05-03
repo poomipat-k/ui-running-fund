@@ -5,6 +5,7 @@ import { Observable, catchError, throwError } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { AdminDashboardFilter } from '../shared/models/admin-dashboard-filter';
 
+import { AdminDashboardDateConfigPreviewRow } from '../shared/models/admin-dashboard-date-config-preview-row';
 import { AdminDashboardRow } from '../shared/models/admin-request-dashboard-row';
 import { AdminSummaryByStatus } from '../shared/models/admin-summary-by-status';
 import { ApplicantCriteria } from '../shared/models/applicant-criteria';
@@ -267,6 +268,42 @@ export class ProjectService {
         toMonth,
         toDay,
       })
+      .pipe(catchError(this.handleError));
+  }
+
+  getAdminDashboardDateConfigPreview(
+    {
+      fromYear,
+      fromMonth,
+      fromDay,
+      toYear,
+      toMonth,
+      toDay,
+    }: {
+      fromYear: number;
+      fromMonth: number;
+      fromDay: number;
+      toYear: number;
+      toMonth: number;
+      toDay: number;
+    },
+    pageNo: number,
+    pageSize: number
+  ): Observable<AdminDashboardDateConfigPreviewRow[]> {
+    return this.http
+      .post<AdminDashboardDateConfigPreviewRow[]>(
+        `${this.baseApiUrl}/admin/dashboard/config/preview`,
+        {
+          fromYear,
+          fromMonth,
+          fromDay,
+          toYear,
+          toMonth,
+          toDay,
+          pageNo,
+          pageSize,
+        }
+      )
       .pipe(catchError(this.handleError));
   }
 

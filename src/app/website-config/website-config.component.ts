@@ -1,9 +1,12 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
+import { DateService } from '../services/date.service';
 import { ProjectService } from '../services/project.service';
 import { ThemeService } from '../services/theme.service';
 import { BackgroundColor } from '../shared/enums/background-color';
+import { AdminDashboardDateConfigPreviewRow } from '../shared/models/admin-dashboard-date-config-preview-row';
+import { TableCell } from '../shared/models/table-cell';
 import { WebsiteConfigSideNav } from '../shared/models/website-config-side-nav';
 import { fromDateBeforeToDateValidator } from '../shared/validators/fromDateBeforeToDate';
 import { WebsiteConfigDashboardComponent } from './website-config-dashboard/website-config-dashboard.component';
@@ -20,7 +23,9 @@ export class WebsiteConfigComponent implements OnInit {
   private readonly themeService: ThemeService = inject(ThemeService);
 
   protected form: FormGroup;
+  protected dashboardData: TableCell[][] = [];
 
+  protected dashboardCurrentPage = 1;
   protected activeNav = '';
   protected sideNavItems: WebsiteConfigSideNav[] = [
     {
@@ -36,6 +41,7 @@ export class WebsiteConfigComponent implements OnInit {
   private readonly subs: Subscription[] = [];
 
   private readonly projectService: ProjectService = inject(ProjectService);
+  private readonly dateService: DateService = inject(DateService);
 
   get dashboardGroup(): FormGroup {
     return this.form.get('dashboard') as FormGroup;
@@ -51,6 +57,14 @@ export class WebsiteConfigComponent implements OnInit {
 
     // Load dashboard data
     this.getDashboardPeriod();
+
+    // subs to dashboard date config changes
+
+    this.dashboardGroup.valueChanges.subscribe((values) => {
+      if (this.dashboardGroup.valid) {
+        this.loadDashboardData();
+      }
+    });
   }
 
   private initForm() {
@@ -69,6 +83,48 @@ export class WebsiteConfigComponent implements OnInit {
     });
   }
 
+  private loadDashboardData() {
+    this.subs.push(
+      this.projectService
+        .getAdminDashboardDateConfigPreview(this.dashboardGroup.value, 1, 5)
+        .subscribe((rows: AdminDashboardDateConfigPreviewRow[]) => {
+          console.log('==rows', rows);
+          if (rows && rows.length) {
+            const data = rows.map((row) => [
+              {
+                display: row.projectCode,
+                value: row.projectCode,
+              },
+              {
+                display: this.dateService.dateToStringWithLongMonth(
+                  row.projectCreatedAt
+                ),
+                value: row.projectCreatedAt,
+              },
+              {
+                display: row.projectName,
+                value: row.projectName,
+              },
+
+              {
+                display: this.getStatusDisplay(row),
+                value: row.projectStatus,
+              },
+            ]);
+            const count = rows[0].count;
+            this.dashboardData = data;
+          }
+        })
+    );
+  }
+
+  onRequestDashboardPageChanged(currentPage: number) {
+    if (currentPage >= 1) {
+      this.dashboardCurrentPage = currentPage;
+      this.loadDashboardData();
+    }
+  }
+
   onNavItemClick(item: WebsiteConfigSideNav) {
     if (item.value) {
       this.activeNav = item.value;
@@ -81,6 +137,10 @@ export class WebsiteConfigComponent implements OnInit {
 
   onCancel() {
     console.log('===onCancel');
+  }
+
+  private getStatusDisplay(row: AdminDashboardDateConfigPreviewRow): string {
+    return `standard__${row.projectStatus}`;
   }
 
   private getDashboardPeriod() {

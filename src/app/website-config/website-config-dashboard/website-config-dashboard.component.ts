@@ -25,6 +25,7 @@ import { TableColumn } from '../../shared/models/table-column';
 export class WebsiteConfigDashboardComponent implements OnInit {
   // dashboard formGroup
   @Input() form: FormGroup;
+  @Input() dashboardData: TableCell[][] = [];
 
   private readonly dateService: DateService = inject(DateService);
 
@@ -41,8 +42,6 @@ export class WebsiteConfigDashboardComponent implements OnInit {
 
   protected yearOptions: RadioOption[] = [];
   protected monthOptions: RadioOption[] = [];
-
-  protected dashboardData: TableCell[][] = [];
 
   protected columns: TableColumn[] = [
     {
