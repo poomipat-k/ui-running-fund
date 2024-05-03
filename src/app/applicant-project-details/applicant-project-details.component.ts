@@ -475,7 +475,6 @@ export class ApplicantProjectDetailsComponent implements OnInit, OnDestroy {
     const dataToSubmit = this.getFormValueForSubmit();
 
     const formData = new FormData();
-    console.log('==dataToSubmit', dataToSubmit);
     formData.append('form', JSON.stringify(dataToSubmit));
     if (this.additionFiles) {
       for (let i = 0; i < this.additionFiles.length; i++) {

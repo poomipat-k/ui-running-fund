@@ -53,7 +53,7 @@ export class AskingForHelpComponent implements OnInit, OnDestroy {
     if (!this.formTouched) {
       this.formTouched = true;
     }
-    console.log('==this.form', this.form);
+
     if (!this.isFormValid()) {
       this.markFieldsTouched();
       return;

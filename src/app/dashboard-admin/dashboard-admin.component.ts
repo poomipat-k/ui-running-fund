@@ -597,7 +597,6 @@ export class DashboardAdminComponent implements OnInit, OnDestroy {
 
   onSearchClick() {
     this.activeSearchFilter = this.form.value;
-    console.log('===this.form', this.form);
     // reset current page to 1 and reload data
     if (this.searchFormGroup.valid) {
       this.onRequestDashboardPageChanged(1);
@@ -734,7 +733,6 @@ export class DashboardAdminComponent implements OnInit, OnDestroy {
           searchFilter
         )
         .subscribe((dashboardRows: AdminDashboardRow[]) => {
-          console.log('==started dashboardRows', dashboardRows);
           if (dashboardRows) {
             const data = dashboardRows.map((row) => {
               return [

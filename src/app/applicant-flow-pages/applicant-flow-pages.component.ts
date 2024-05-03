@@ -560,7 +560,6 @@ export class ApplicantFlowPagesComponent implements OnInit, OnDestroy {
       this.currentStep === 1 &&
       this.generalDetailsComponent.validToGoNext()
     ) {
-      console.log('===this.form', this.form);
       this.incrementStep();
     } else if (
       this.currentStep === 2 &&
@@ -651,7 +650,6 @@ export class ApplicantFlowPagesComponent implements OnInit, OnDestroy {
       }
     }
 
-    console.log('===form', this.getSubmitFormData());
     formData.append('form', JSON.stringify(this.getSubmitFormData()));
     // upload snapshots
     this.subs.push(

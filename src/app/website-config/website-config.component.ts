@@ -124,7 +124,6 @@ export class WebsiteConfigComponent implements OnInit {
   }
 
   onDashboardPageChanged(currentPage: number) {
-    console.log('==Main currentPage', currentPage);
     if (currentPage >= 1) {
       this.loadDashboardData(currentPage);
     }
