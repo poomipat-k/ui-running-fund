@@ -1,5 +1,12 @@
 import { CommonModule } from '@angular/common';
-import { Component, ElementRef, Input, ViewChild } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  ElementRef,
+  Input,
+  OnDestroy,
+  ViewChild,
+} from '@angular/core';
 
 @Component({
   selector: 'app-com-carousel',
@@ -8,7 +15,7 @@ import { Component, ElementRef, Input, ViewChild } from '@angular/core';
   templateUrl: './carousel.component.html',
   styleUrl: './carousel.component.scss',
 })
-export class CarouselComponent {
+export class CarouselComponent implements AfterViewInit, OnDestroy {
   @Input() slides: string[] = [
     'https://running-fund-static-store-prod.s3.ap-southeast-1.amazonaws.com/banner/test_1.jpeg',
     'https://running-fund-static-store-prod.s3.ap-southeast-1.amazonaws.com/banner/test_2.jpeg',
@@ -16,21 +23,43 @@ export class CarouselComponent {
     'https://running-fund-static-store-prod.s3.ap-southeast-1.amazonaws.com/banner/test_4.jpeg',
     'https://running-fund-static-store-prod.s3.ap-southeast-1.amazonaws.com/banner/test_5.jpeg',
   ];
+  @Input() intervalMs = 3000;
+
+  protected intervalId: any;
 
   @ViewChild('container') viewContainer: ElementRef;
 
   protected activeIndex = 0;
 
-  getSlideId(index: number) {
-    return `slide__${index}`;
+  ngAfterViewInit(): void {
+    this.resetTimer();
+  }
+
+  ngOnDestroy(): void {
+    clearInterval(this.intervalId);
   }
 
   onNavItemClick(index: number) {
     if (index !== this.activeIndex) {
-      const diff = index - this.activeIndex;
-      this.activeIndex = index;
-      this.scroll(diff);
+      this.scrollToIndex(index);
+      this.resetTimer();
     }
+  }
+
+  private resetTimer() {
+    if (!!this.intervalId) {
+      clearInterval(this.intervalId);
+    }
+    this.intervalId = setInterval(() => {
+      this.scrollToIndex(this.activeIndex + 1);
+    }, this.intervalMs);
+  }
+
+  private scrollToIndex(_index: number) {
+    const index = _index >= this.slides.length ? 0 : _index;
+    const diff = index - this.activeIndex;
+    this.activeIndex = index;
+    this.scroll(diff);
   }
 
   private scroll(diff: number) {

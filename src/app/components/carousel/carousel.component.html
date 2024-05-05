@@ -1,7 +1,6 @@
 <div class="container" #container>
   @for (item of slides; track $index) {
   <div
-    [id]="getSlideId($index)"
     [ngClass]="{
       carousel__container: true,
       bg__gray: $index % 2 == 1

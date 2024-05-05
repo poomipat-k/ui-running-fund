@@ -37,7 +37,7 @@
     transform: translateY(-4.9rem);
 
     opacity: 0.4;
-    transition: opacity 0.2s ease-in;
+    transition: opacity 300ms ease-in;
 
     &:hover {
       opacity: 1;
@@ -50,6 +50,8 @@
     border-radius: 50%;
     background-color: #fff;
     cursor: pointer;
+
+    transition: all 300ms linear;
 
     &--active {
       background-color: #a5a8ae;
