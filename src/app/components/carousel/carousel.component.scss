@@ -1,10 +1,6 @@
 .container {
   height: 45rem;
-
-  background-color: #8e5c5c;
-
-  overflow-x: auto;
-  overflow-y: hidden;
+  overflow: hidden;
 
   display: flex;
   position: relative;
@@ -19,7 +15,8 @@
     height: 45rem;
     display: flex;
     justify-content: center;
-    border: 1px solid blue;
+
+    scroll-snap-align: center;
   }
 
   &__item {
@@ -39,7 +36,7 @@
 
     transform: translateY(-4.9rem);
 
-    opacity: 0.5;
+    opacity: 0.4;
     transition: opacity 0.2s ease-in;
 
     &:hover {
@@ -61,10 +58,7 @@
 }
 
 .bg {
-  &__cream {
-    background-color: rgb(246, 236, 236);
-  }
-  &__green {
-    background-color: rgb(224, 243, 224);
+  &__gray {
+    background-color: #d9d9d9;
   }
 }
