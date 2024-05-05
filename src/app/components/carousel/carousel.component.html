@@ -3,7 +3,7 @@
   <div
     [ngClass]="{
       carousel__container: true,
-      bg__gray: $index % 2 == 1
+      bg__gray: $index % 2 == 0
     }"
   >
     <img class="carousel__item" [src]="slides[$index]" alt="carousel image" />

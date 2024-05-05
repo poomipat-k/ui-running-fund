@@ -16,13 +16,7 @@ import {
   styleUrl: './carousel.component.scss',
 })
 export class CarouselComponent implements AfterViewInit, OnDestroy {
-  @Input() slides: string[] = [
-    'https://running-fund-static-store-prod.s3.ap-southeast-1.amazonaws.com/banner/test_1.jpeg',
-    'https://running-fund-static-store-prod.s3.ap-southeast-1.amazonaws.com/banner/test_2.jpeg',
-    'https://running-fund-static-store-prod.s3.ap-southeast-1.amazonaws.com/banner/test_3.jpeg',
-    'https://running-fund-static-store-prod.s3.ap-southeast-1.amazonaws.com/banner/test_4.jpeg',
-    'https://running-fund-static-store-prod.s3.ap-southeast-1.amazonaws.com/banner/test_5.jpeg',
-  ];
+  @Input() slides: string[] = [];
   @Input() intervalMs = 3000;
 
   protected intervalId: any;
