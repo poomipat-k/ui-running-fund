@@ -1,4 +1,21 @@
+@import "../../styles.scss";
+
 .paddingContainer {
   padding-left: 15rem;
   padding-right: 15rem;
+}
+
+.text {
+  font-family: $custom-font-looped;
+  font-weight: 400;
+  font-size: 1.8rem;
+  line-height: 3rem;
+
+  color: #344054;
+}
+
+.mgt {
+  &-116 {
+    margin-top: 116px;
+  }
 }

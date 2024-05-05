@@ -1,0 +1,25 @@
+<div class="container">
+  @for (item of slides; track $index) {
+  <div
+    [id]="getSlideId($index)"
+    [ngClass]="{
+      carousel__container: true,
+      bg__cream: $index % 2 == 0,
+      bg__green: $index % 2 == 1
+    }"
+  >
+    <img class="carousel__item" [src]="slides[$index]" alt="carousel image" />
+  </div>
+  }
+</div>
+<div class="nav__container">
+  @for (item of slides; track $index) {
+  <div
+    [ngClass]="{
+      nav__item: true,
+      'nav__item--active': activeIndex === $index
+    }"
+    (click)="onNavItemClick($index)"
+  ></div>
+  }
+</div>
