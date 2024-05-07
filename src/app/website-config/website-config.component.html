@@ -39,3 +39,11 @@
     </div>
   </div>
 </div>
+
+@if (showSuccessPopup) {
+<div [ngClass]="{ popup: true, 'popup--show': showSuccessPopup }">
+  <app-com-success-popup
+    displayText="อัพเดตข้อมูลเว็บไซต์เรียบร้อยแล้ว"
+  ></app-com-success-popup>
+</div>
+}

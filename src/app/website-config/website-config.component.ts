@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common';
 import {
   AfterViewInit,
   Component,
@@ -8,6 +9,7 @@ import {
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { SuccessPopupComponent } from '../components/success-popup/success-popup.component';
 import { DateService } from '../services/date.service';
 import { ProjectService } from '../services/project.service';
 import { ThemeService } from '../services/theme.service';
@@ -23,7 +25,12 @@ import { WebsiteConfigLandingPageComponent } from './website-config-landing-page
 @Component({
   selector: 'app-website-config',
   standalone: true,
-  imports: [WebsiteConfigLandingPageComponent, WebsiteConfigDashboardComponent],
+  imports: [
+    WebsiteConfigLandingPageComponent,
+    WebsiteConfigDashboardComponent,
+    SuccessPopupComponent,
+    CommonModule,
+  ],
   templateUrl: './website-config.component.html',
   styleUrl: './website-config.component.scss',
 })
@@ -48,6 +55,7 @@ export class WebsiteConfigComponent implements OnInit, AfterViewInit {
       value: 'dashboard',
     },
   ];
+  protected showSuccessPopup = false;
 
   private readonly subs: Subscription[] = [];
 
@@ -165,9 +173,12 @@ export class WebsiteConfigComponent implements OnInit, AfterViewInit {
         this.websiteConfigService
           .adminUpdateWebsiteConfig(this.form.value)
           .subscribe((result) => {
-            console.log('==result', result);
             if (result.success) {
-              this.redirectToDashboardPage();
+              this.showSuccessPopup = true;
+              setTimeout(() => {
+                this.showSuccessPopup = false;
+                this.redirectToDashboardPage();
+              }, 2000);
             }
           })
       );
