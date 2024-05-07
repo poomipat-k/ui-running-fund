@@ -6,10 +6,12 @@ import {
   inject,
 } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { DateService } from '../services/date.service';
 import { ProjectService } from '../services/project.service';
 import { ThemeService } from '../services/theme.service';
+import { WebsiteConfigService } from '../services/website-config.service';
 import { BackgroundColor } from '../shared/enums/background-color';
 import { AdminDashboardDateConfigPreviewRow } from '../shared/models/admin-dashboard-date-config-preview-row';
 import { TableCell } from '../shared/models/table-cell';
@@ -51,6 +53,9 @@ export class WebsiteConfigComponent implements OnInit, AfterViewInit {
 
   private readonly projectService: ProjectService = inject(ProjectService);
   private readonly dateService: DateService = inject(DateService);
+  private readonly router: Router = inject(Router);
+  private readonly websiteConfigService: WebsiteConfigService =
+    inject(WebsiteConfigService);
 
   get dashboardGroup(): FormGroup {
     return this.form.get('dashboard') as FormGroup;
@@ -154,11 +159,29 @@ export class WebsiteConfigComponent implements OnInit, AfterViewInit {
   }
 
   onSave() {
-    console.log('===onSave');
+    console.log('==this.form', this.form);
+    if (this.form.valid) {
+      this.subs.push(
+        this.websiteConfigService
+          .adminUpdateWebsiteConfig(this.form.value)
+          .subscribe((result) => {
+            console.log('==result', result);
+            if (result.success) {
+              this.redirectToDashboardPage();
+            }
+          })
+      );
+    } else {
+      console.error(this.form.errors);
+    }
   }
 
   onCancel() {
-    console.log('===onCancel');
+    this.redirectToDashboardPage();
+  }
+
+  private redirectToDashboardPage() {
+    this.router.navigate(['/dashboard']);
   }
 
   private getStatusDisplay(row: AdminDashboardDateConfigPreviewRow): string {
