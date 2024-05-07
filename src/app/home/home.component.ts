@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit, inject } from '@angular/core';
+import { RouterModule } from '@angular/router';
 import { CarouselComponent } from '../components/carousel/carousel.component';
 import { FaqComponent } from '../components/faq/faq.component';
 import { DashboardApplicantComponent } from '../dashboard-applicant/dashboard-applicant.component';
@@ -16,6 +17,7 @@ import { BackgroundColor } from '../shared/enums/background-color';
     DashboardReviewerComponent,
     FaqComponent,
     CarouselComponent,
+    RouterModule,
   ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',

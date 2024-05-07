@@ -3,6 +3,7 @@
 .paddingContainer {
   padding-left: 15rem;
   padding-right: 15rem;
+  padding-bottom: 16.2rem;
 }
 
 .text {
@@ -14,7 +15,70 @@
   color: #344054;
 }
 
+.nav {
+  &__container {
+    display: flex;
+    gap: 3.1rem;
+    justify-content: space-between;
+  }
+
+  &__link {
+    text-decoration: none;
+  }
+
+  &__button {
+    display: flex;
+    justify-content: center;
+    padding: 2.4rem 2rem;
+    align-items: center;
+    gap: 2rem;
+    background-color: #fff;
+    outline: none;
+    border: none;
+    border-radius: 16px;
+    background-color: #ffe3ce;
+
+    cursor: pointer;
+
+    &:hover {
+      filter: brightness(105%);
+    }
+
+    &:active {
+      filter: brightness(95%);
+    }
+  }
+
+  &__text {
+    font-family: $custom-font;
+    font-weight: 500;
+    font-size: 2rem;
+    line-height: 3.3rem;
+    color: #000;
+    text-align: left;
+  }
+
+  &__svg {
+    width: 4rem;
+    height: 4rem;
+  }
+}
+
+.width {
+  &-307 {
+    min-width: 307px;
+    width: auto;
+  }
+  &-400 {
+    min-width: 400px;
+    width: auto;
+  }
+}
+
 .mgt {
+  &-74 {
+    margin-top: 74px;
+  }
   &-116 {
     margin-top: 116px;
   }
