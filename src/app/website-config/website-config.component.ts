@@ -8,7 +8,9 @@ import {
 } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { isEqual } from 'lodash-es';
 import { Subscription } from 'rxjs';
+
 import { SuccessPopupComponent } from '../components/success-popup/success-popup.component';
 import { DateService } from '../services/date.service';
 import { ProjectService } from '../services/project.service';
@@ -16,6 +18,7 @@ import { ThemeService } from '../services/theme.service';
 import { WebsiteConfigService } from '../services/website-config.service';
 import { BackgroundColor } from '../shared/enums/background-color';
 import { AdminDashboardDateConfigPreviewRow } from '../shared/models/admin-dashboard-date-config-preview-row';
+import { AdminUpdateWebsiteConfig } from '../shared/models/admin-update-website-config';
 import { TableCell } from '../shared/models/table-cell';
 import { WebsiteConfigSideNav } from '../shared/models/website-config-side-nav';
 import { fromDateBeforeToDateValidator } from '../shared/validators/fromDateBeforeToDate';
@@ -42,6 +45,7 @@ export class WebsiteConfigComponent implements OnInit, AfterViewInit {
   private readonly PAGE_SIZE = 5;
 
   protected form: FormGroup;
+  protected originalFormValue: AdminUpdateWebsiteConfig;
   protected dashboardData: TableCell[][] = [];
   protected dashboardItemCount = 0;
   protected activeNav = '';
@@ -56,6 +60,7 @@ export class WebsiteConfigComponent implements OnInit, AfterViewInit {
     },
   ];
   protected showSuccessPopup = false;
+  protected successPopupText = 'อัพเดตข้อมูลเว็บไซต์เรียบร้อยแล้ว';
 
   private readonly subs: Subscription[] = [];
 
@@ -167,24 +172,34 @@ export class WebsiteConfigComponent implements OnInit, AfterViewInit {
   }
 
   onSave() {
-    console.log('==this.form', this.form);
-    if (this.form.valid) {
-      this.subs.push(
-        this.websiteConfigService
-          .adminUpdateWebsiteConfig(this.form.value)
-          .subscribe((result) => {
-            if (result.success) {
-              this.showSuccessPopup = true;
-              setTimeout(() => {
-                this.showSuccessPopup = false;
-                this.redirectToDashboardPage();
-              }, 2000);
-            }
-          })
-      );
-    } else {
+    if (!this.form.valid) {
       console.error(this.form.errors);
+      return;
     }
+    if (isEqual(this.originalFormValue, this.form.value)) {
+      console.warn('nothing changed from current website configuration');
+      this.successPopupText = 'ไม่มีการเปลี่ยนแปลงข้อมูล';
+      this.showSuccessPopup = true;
+      setTimeout(() => {
+        this.showSuccessPopup = false;
+        this.redirectToDashboardPage();
+      }, 2000);
+      return;
+    }
+    this.subs.push(
+      this.websiteConfigService
+        .adminUpdateWebsiteConfig(this.form.value)
+        .subscribe((result) => {
+          if (result.success) {
+            this.successPopupText = 'อัพเดตข้อมูลเว็บไซต์เรียบร้อยแล้ว';
+            this.showSuccessPopup = true;
+            setTimeout(() => {
+              this.showSuccessPopup = false;
+              this.redirectToDashboardPage();
+            }, 2000);
+          }
+        })
+    );
   }
 
   onCancel() {
@@ -224,6 +239,7 @@ export class WebsiteConfigComponent implements OnInit, AfterViewInit {
             toDay,
           },
         });
+        this.originalFormValue = this.form.value;
       })
     );
   }
