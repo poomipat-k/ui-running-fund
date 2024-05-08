@@ -126,3 +126,11 @@
     <app-com-faq></app-com-faq>
   </div>
 </div>
+
+@if (showSuccessPopup) {
+<div [ngClass]="{ popup: true, 'popup--show': showSuccessPopup }">
+  <app-com-success-popup
+    [displayText]="successPopupText"
+  ></app-com-success-popup>
+</div>
+}

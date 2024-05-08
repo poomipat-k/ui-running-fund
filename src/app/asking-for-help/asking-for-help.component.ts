@@ -1,4 +1,4 @@
-import { ViewportScroller } from '@angular/common';
+import { CommonModule, ViewportScroller } from '@angular/common';
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { RouterModule } from '@angular/router';
@@ -6,6 +6,7 @@ import { Subscription } from 'rxjs';
 import { ButtonComponent } from '../components/button/button/button.component';
 import { FaqComponent } from '../components/faq/faq.component';
 import { InputTextComponent } from '../components/input-text/input-text.component';
+import { SuccessPopupComponent } from '../components/success-popup/success-popup.component';
 import { TextareaComponent } from '../components/textarea/textarea.component';
 import { ContactUsService } from '../services/contact-us.service';
 
@@ -18,6 +19,8 @@ import { ContactUsService } from '../services/contact-us.service';
     InputTextComponent,
     TextareaComponent,
     ButtonComponent,
+    SuccessPopupComponent,
+    CommonModule,
   ],
   templateUrl: './asking-for-help.component.html',
   styleUrl: './asking-for-help.component.scss',
@@ -29,6 +32,9 @@ export class AskingForHelpComponent implements OnInit, OnDestroy {
   private readonly contactUsService: ContactUsService =
     inject(ContactUsService);
   protected enableScroll = true;
+
+  protected showSuccessPopup = false;
+  protected successPopupText = 'ส่งข้อความขอความช่วยเหลือสำเร็จ';
 
   subs: Subscription[] = [];
 
@@ -59,7 +65,18 @@ export class AskingForHelpComponent implements OnInit, OnDestroy {
       return;
     }
     this.subs.push(
-      this.contactUsService.sendContactUsRequest(this.form.value).subscribe()
+      this.contactUsService
+        .sendContactUsRequest(this.form.value)
+        .subscribe((result) => {
+          if (result?.success) {
+            this.successPopupText = 'อัพเดตข้อมูลเว็บไซต์เรียบร้อยแล้ว';
+            this.showSuccessPopup = true;
+            setTimeout(() => {
+              this.form.reset();
+              this.showSuccessPopup = false;
+            }, 2000);
+          }
+        })
     );
   }
 
