@@ -872,15 +872,4 @@ export class DashboardAdminComponent implements OnInit, OnDestroy {
   private isLeapYear(year: number): boolean {
     return new Date(year, 1, 29).getDate() === 29;
   }
-
-  patchDate() {
-    this.summaryDateGroup.patchValue({
-      fromYear: 2024,
-      fromMonth: 4,
-      fromDay: 22,
-      toYear: 2024,
-      toMonth: 6,
-      toDay: 22,
-    });
-  }
 }
