@@ -4,6 +4,7 @@ import {
   ElementRef,
   Input,
   OnDestroy,
+  OnInit,
   ViewChild,
 } from '@angular/core';
 
@@ -14,15 +15,21 @@ import {
   templateUrl: './carousel.component.html',
   styleUrl: './carousel.component.scss',
 })
-export class CarouselComponent implements OnDestroy {
+export class CarouselComponent implements OnInit, OnDestroy {
   @Input() slides: string[] = [];
   @Input() intervalMs = 3000;
+
+  protected blurList: boolean[] = [];
 
   protected intervalId: any;
 
   @ViewChild('container') viewContainer: ElementRef;
 
   protected activeIndex = 0;
+
+  ngOnInit(): void {
+    this.blurList = this.slides.map((_) => true);
+  }
 
   ngOnDestroy(): void {
     clearInterval(this.intervalId);
@@ -36,8 +43,11 @@ export class CarouselComponent implements OnDestroy {
   }
 
   imageLoad(index: number) {
+    console.log('===loaded', index);
+    this.blurList[index] = false;
     if (index === 0) {
-      this.resetTimer();
+      // Todo: uncomment the line below
+      // this.resetTimer();
     }
   }
 

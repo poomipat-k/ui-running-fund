@@ -26,6 +26,10 @@
     max-height: 45rem;
     width: auto;
     height: auto;
+
+    &--blur {
+      filter: blur(8px);
+    }
   }
 }
 

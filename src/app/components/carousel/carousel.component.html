@@ -7,7 +7,10 @@
     }"
   >
     <img
-      class="carousel__item"
+      [ngClass]="{
+        carousel__item: true,
+        'carousel__item--blur': blurList[$index]
+      }"
       [src]="slides[$index]"
       alt="carousel image"
       (load)="imageLoad($index)"
