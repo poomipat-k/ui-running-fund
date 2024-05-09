@@ -31,6 +31,54 @@
       filter: blur(8px);
     }
   }
+
+  &__iconContainer {
+    &--left {
+      position: absolute;
+      top: 20.5rem;
+      cursor: pointer;
+      transform: translateX(calc(-50vw + 12.2rem));
+      opacity: 0.5;
+
+      &:hover {
+        opacity: 1;
+      }
+      &:hover #backIcon {
+        fill: #d9d9d9;
+      }
+
+      &:active {
+        opacity: 1;
+      }
+      &:active #backIcon {
+        fill: #b9b9b9;
+      }
+    }
+
+    &--right {
+      position: absolute;
+      top: 20.5rem;
+      cursor: pointer;
+      transform: translateX(calc(50vw - 12.2rem));
+      opacity: 0.5;
+
+      &:hover {
+        opacity: 1;
+      }
+      &:hover #nextIcon {
+        fill: #d9d9d9;
+        opacity: 1;
+      }
+
+      &:active {
+        opacity: 1;
+      }
+      &:active #nextIcon {
+        fill: #b9b9b9;
+        opacity: 1;
+      }
+    }
+  }
 }
 
 .nav {

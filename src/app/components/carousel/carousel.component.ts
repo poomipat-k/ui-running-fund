@@ -21,6 +21,8 @@ export class CarouselComponent implements OnInit, OnDestroy {
 
   protected blurList: boolean[] = [];
 
+  protected backImgUrl = '/assets/home_back_icon.svg';
+  protected nextImgUrl = '/assets/home_next_icon.svg';
   protected intervalId: any;
 
   @ViewChild('container') viewContainer: ElementRef;
@@ -43,7 +45,6 @@ export class CarouselComponent implements OnInit, OnDestroy {
   }
 
   imageLoad(index: number) {
-    console.log('===loaded', index);
     this.blurList[index] = false;
     if (index === 0) {
       // Todo: uncomment the line below
