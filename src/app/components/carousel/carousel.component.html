@@ -6,7 +6,12 @@
       bg__gray: $index % 2 == 0
     }"
   >
-    <img class="carousel__item" [src]="slides[$index]" alt="carousel image" />
+    <img
+      class="carousel__item"
+      [src]="slides[$index]"
+      alt="carousel image"
+      (load)="imageLoad($index)"
+    />
   </div>
   }
 </div>

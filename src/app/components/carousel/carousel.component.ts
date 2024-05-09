@@ -1,6 +1,5 @@
 import { CommonModule } from '@angular/common';
 import {
-  AfterViewInit,
   Component,
   ElementRef,
   Input,
@@ -15,7 +14,7 @@ import {
   templateUrl: './carousel.component.html',
   styleUrl: './carousel.component.scss',
 })
-export class CarouselComponent implements AfterViewInit, OnDestroy {
+export class CarouselComponent implements OnDestroy {
   @Input() slides: string[] = [];
   @Input() intervalMs = 3000;
 
@@ -25,10 +24,6 @@ export class CarouselComponent implements AfterViewInit, OnDestroy {
 
   protected activeIndex = 0;
 
-  ngAfterViewInit(): void {
-    this.resetTimer();
-  }
-
   ngOnDestroy(): void {
     clearInterval(this.intervalId);
   }
@@ -36,6 +31,12 @@ export class CarouselComponent implements AfterViewInit, OnDestroy {
   onNavItemClick(index: number) {
     if (index !== this.activeIndex) {
       this.scrollToIndex(index);
+      this.resetTimer();
+    }
+  }
+
+  imageLoad(index: number) {
+    if (index === 0) {
       this.resetTimer();
     }
   }
