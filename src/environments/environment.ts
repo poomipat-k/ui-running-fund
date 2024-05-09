@@ -1,6 +1,6 @@
 export const environment = {
   production: true,
-  apiUrl: 'http://api.thaijogging.activethai.org:8080/api/v1',
+  apiUrl: 'https://api.thaijogging.activethai.org/api/v1',
   reviewCriteriaVersion: 1,
   exampleFiles: {
     reportTemplate:
