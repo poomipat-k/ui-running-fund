@@ -44,6 +44,16 @@ export class CarouselComponent implements OnInit, OnDestroy {
     }
   }
 
+  onBackClick() {
+    this.scrollToIndex(this.activeIndex - 1);
+    this.resetTimer();
+  }
+
+  onNextClick() {
+    this.scrollToIndex(this.activeIndex + 1);
+    this.resetTimer();
+  }
+
   imageLoad(index: number) {
     this.blurList[index] = false;
     if (index === 0) {
@@ -62,7 +72,16 @@ export class CarouselComponent implements OnInit, OnDestroy {
   }
 
   private scrollToIndex(_index: number) {
-    const index = _index >= this.slides.length ? 0 : _index;
+    console.log('===_index', _index);
+    let index = 0;
+    const len = this.slides.length;
+    if (_index < 0) {
+      index = len - 1;
+    } else if (_index >= len) {
+      index = 0;
+    } else {
+      index = _index;
+    }
     const diff = index - this.activeIndex;
     this.activeIndex = index;
     this.scroll(diff);
