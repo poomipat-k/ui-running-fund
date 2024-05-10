@@ -58,7 +58,7 @@ export class CarouselComponent implements OnInit, OnDestroy {
     this.blurList[index] = false;
     if (index === 0) {
       // Todo: uncomment the line below
-      // this.resetTimer();
+      this.resetTimer();
     }
   }
 
