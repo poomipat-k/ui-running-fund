@@ -1,4 +1,9 @@
-<div class="container" #container>
+<div
+  class="container"
+  #container
+  (scroll)="onScroll()"
+  (scrollend)="onScrollEnd()"
+>
   @for (item of slides; track $index) {
   <div
     [ngClass]="{
@@ -16,7 +21,13 @@
       (load)="imageLoad($index)"
     />
     <!-- Start -->
-    <div class="carousel__iconContainer--left" (click)="onBackClick()">
+    <div
+      [ngClass]="{
+        'carousel__iconContainer--left': true,
+        'opacity-0': scrolling
+      }"
+      (click)="onBackClick()"
+    >
       <svg
         width="40"
         height="40"
@@ -52,7 +63,13 @@
       </svg>
     </div>
 
-    <div class="carousel__iconContainer--right" (click)="onNextClick()">
+    <div
+      [ngClass]="{
+        'carousel__iconContainer--right': true,
+        'opacity-0': scrolling
+      }"
+      (click)="onNextClick()"
+    >
       <svg
         width="40"
         height="40"

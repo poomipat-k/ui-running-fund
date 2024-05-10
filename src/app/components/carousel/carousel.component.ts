@@ -21,9 +21,8 @@ export class CarouselComponent implements OnInit, OnDestroy {
 
   protected blurList: boolean[] = [];
 
-  protected backImgUrl = '/assets/home_back_icon.svg';
-  protected nextImgUrl = '/assets/home_next_icon.svg';
   protected intervalId: any;
+  protected scrolling = false;
 
   @ViewChild('container') viewContainer: ElementRef;
 
@@ -89,5 +88,16 @@ export class CarouselComponent implements OnInit, OnDestroy {
   private scroll(diff: number) {
     const scrollValue = diff * window.innerWidth;
     this.viewContainer.nativeElement.scrollLeft += scrollValue;
+  }
+
+  onScroll() {
+    console.log('==onScroll');
+    if (!this.scrolling) {
+      this.scrolling = true;
+    }
+  }
+
+  onScrollEnd() {
+    this.scrolling = false;
   }
 }
