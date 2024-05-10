@@ -20,8 +20,10 @@ export class CarouselComponent implements OnInit, OnDestroy {
   @Input() intervalMs = 3000;
 
   protected blurList: boolean[] = [];
+  protected isSafari = false;
 
   protected intervalId: any;
+  protected scrollingTimerId: any;
   protected scrolling = false;
 
   @ViewChild('container') viewContainer: ElementRef;
@@ -30,10 +32,14 @@ export class CarouselComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.blurList = this.slides.map((_) => true);
+    if ((window as any)?.safari) {
+      this.isSafari = true;
+    }
   }
 
   ngOnDestroy(): void {
     clearInterval(this.intervalId);
+    clearTimeout(this.scrollingTimerId);
   }
 
   onNavItemClick(index: number) {
@@ -91,13 +97,11 @@ export class CarouselComponent implements OnInit, OnDestroy {
   }
 
   onScroll() {
-    console.log('==onScroll');
     if (!this.scrolling) {
       this.scrolling = true;
+      this.scrollingTimerId = setTimeout(() => {
+        this.scrolling = false;
+      }, 750);
     }
-  }
-
-  onScrollEnd() {
-    this.scrolling = false;
   }
 }

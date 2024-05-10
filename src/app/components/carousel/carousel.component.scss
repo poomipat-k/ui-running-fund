@@ -113,7 +113,7 @@
 }
 
 .bg {
-  &__gray {
+  &__carousel {
     background-color: #344054;
   }
 }
@@ -122,4 +122,8 @@
   &-0 {
     opacity: 0;
   }
+}
+
+.overflowXScroll {
+  overflow-x: scroll;
 }

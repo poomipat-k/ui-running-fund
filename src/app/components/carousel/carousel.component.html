@@ -1,14 +1,13 @@
 <div
-  class="container"
+  [ngClass]="{ container: true, overflowXScroll: isSafari }"
   #container
   (scroll)="onScroll()"
-  (scrollend)="onScrollEnd()"
 >
   @for (item of slides; track $index) {
   <div
     [ngClass]="{
       carousel__container: true,
-      bg__gray: true
+      bg__carousel: true
     }"
   >
     <img
