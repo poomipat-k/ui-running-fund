@@ -72,7 +72,6 @@ export class CarouselComponent implements OnInit, OnDestroy {
   }
 
   private scrollToIndex(_index: number) {
-    console.log('===_index', _index);
     let index = 0;
     const len = this.slides.length;
     if (_index < 0) {
