@@ -35,6 +35,7 @@ export class WebsiteConfigDashboardComponent implements OnInit {
   @Input() form: FormGroup;
   @Input() dashboardData: TableCell[][] = [];
   @Input() count = 0;
+  @Input() activePage = 1;
 
   @Output() currentPageChanged = new EventEmitter<number>();
 
@@ -44,7 +45,6 @@ export class WebsiteConfigDashboardComponent implements OnInit {
 
   private readonly thirtyDaysMonths = [4, 6, 9, 11];
   protected currentYear = 0;
-  protected currentPage = 1;
 
   private febLeap: RadioOption[] = [];
   private febNormal: RadioOption[] = [];
@@ -145,7 +145,7 @@ export class WebsiteConfigDashboardComponent implements OnInit {
 
   onDashboardPageChanged(currentPage: number) {
     if (currentPage >= 1) {
-      this.currentPage = currentPage;
+      // this.currentPage = currentPage;
       this.currentPageChanged.emit(currentPage);
     }
   }

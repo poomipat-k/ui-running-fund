@@ -45,6 +45,7 @@ export class WebsiteConfigComponent implements OnInit, AfterViewInit {
   private readonly PAGE_SIZE = 5;
 
   protected form: FormGroup;
+  protected dashboardActivePage = 1;
   protected originalFormValue: AdminUpdateWebsiteConfig;
   protected dashboardData: TableCell[][] = [];
   protected dashboardItemCount = 0;
@@ -78,8 +79,8 @@ export class WebsiteConfigComponent implements OnInit, AfterViewInit {
     this.themeService.changeBackgroundColor(BackgroundColor.white);
     this.initForm();
 
-    if (this.sideNavItems[1]) {
-      this.activeNav = this.sideNavItems[1].value;
+    if (this.sideNavItems[0]) {
+      this.activeNav = this.sideNavItems[0].value;
     }
 
     // Load dashboard data
@@ -89,7 +90,7 @@ export class WebsiteConfigComponent implements OnInit, AfterViewInit {
   ngAfterViewInit(): void {
     // subs to dashboard date config changes
     this.dashboardGroup.valueChanges.subscribe(() => {
-      if (this.dashboardGroup.valid) {
+      if (this.dashboardComponent && this.dashboardGroup.valid) {
         this.dashboardComponent.onDashboardPageChanged(1);
       } else {
         this.clearDashboard();
@@ -161,6 +162,7 @@ export class WebsiteConfigComponent implements OnInit, AfterViewInit {
 
   onDashboardPageChanged(currentPage: number) {
     if (currentPage >= 1) {
+      this.dashboardActivePage = currentPage;
       this.loadDashboardData(currentPage);
     }
   }
