@@ -4,13 +4,12 @@
     formControlName="data"
     (change)="modelChangeFn($event)"
     licenseKey="gpl"
-    [init]="{
-      base_url: '/tinymce',
-      suffix: '.min',
-    }"
+    [init]="editorInit"
+    [plugins]="editorPlugins"
+    [toolbar]="editorToolbar"
   ></editor>
 </div>
 
 <button (click)="onClick()" style="padding: 2rem">Test</button>
 
-<div class="editorContent" [innerHTML]="dataGroup.value | safeHtml"></div>
+<div class="editorContent" [innerHTML]="dataGroup.value || '' | safeHtml"></div>
