@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import {
   FormControl,
   FormGroup,
@@ -6,12 +6,20 @@ import {
   ReactiveFormsModule,
 } from '@angular/forms';
 import { EditorModule, TINYMCE_SCRIPT_SRC } from '@tinymce/tinymce-angular';
+import { BehaviorSubject } from 'rxjs';
+import { UploadButtonComponent } from '../../components/upload-button/upload-button.component';
 import { SafeHtmlPipe } from '../../shared/pipe/safe-html.pipe';
 
 @Component({
   selector: 'app-website-config-landing-page',
   standalone: true,
-  imports: [EditorModule, FormsModule, ReactiveFormsModule, SafeHtmlPipe],
+  imports: [
+    EditorModule,
+    FormsModule,
+    ReactiveFormsModule,
+    SafeHtmlPipe,
+    UploadButtonComponent,
+  ],
   providers: [
     { provide: TINYMCE_SCRIPT_SRC, useValue: 'tinymce/tinymce.min.js' },
   ],
@@ -19,7 +27,8 @@ import { SafeHtmlPipe } from '../../shared/pipe/safe-html.pipe';
   styleUrl: './website-config-landing-page.component.scss',
 })
 export class WebsiteConfigLandingPageComponent implements OnInit {
-  form: FormGroup;
+  @ViewChild('uploadButton') uploadButtonComponent: UploadButtonComponent;
+  protected form: FormGroup;
 
   protected editorInit = {
     base_url: '/tinymce',
@@ -33,8 +42,15 @@ export class WebsiteConfigLandingPageComponent implements OnInit {
   protected editorToolbar =
     'undo redo | blocks fontsize | bold italic underline strikethrough | align numlist bullist | link image | table media | lineheight outdent indent| forecolor backcolor removeformat | charmap emoticons | code fullscreen preview | save print | anchor codesample';
 
+  protected bannerFilesSubject = new BehaviorSubject<File[]>([]);
+
   get dataGroup(): FormGroup {
     return this.form.get('data') as FormGroup;
+  }
+
+  get selectedFiles() {
+    console.log(this.uploadButtonComponent?.files);
+    return this.uploadButtonComponent?.files || [];
   }
 
   ngOnInit(): void {

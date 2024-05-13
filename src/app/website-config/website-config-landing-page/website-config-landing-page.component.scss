@@ -1,3 +1,61 @@
+@import "../../../styles.scss";
+
+.landingContainer {
+  padding: 1.8rem 0 0 3rem;
+}
+.header {
+  font-family: $custom-font;
+  font-weight: 600;
+  font-size: 2.4rem;
+  line-height: 4rem;
+  color: #000;
+}
+
+.subHeader {
+  font-family: $custom-font;
+  font-weight: 600;
+  font-size: 2rem;
+  line-height: 3.3rem;
+  color: #000;
+}
+
+.uploadContainer {
+  display: flex;
+  gap: 1.2rem;
+}
+
+.adviceText {
+  font-family: $custom-font;
+  font-weight: 400;
+  font-size: 1.6rem;
+  line-height: 2.4rem;
+  color: #ec4a0a;
+}
+
 .editorContent {
   white-space: pre-wrap;
+}
+
+.pdt {
+  &-14 {
+    padding-top: 14px;
+  }
+}
+
+.mgt {
+  &-6 {
+    margin-top: 6px;
+  }
+  &-8 {
+    margin-top: 8px;
+  }
+  &-10 {
+    margin-top: 10px;
+  }
+  &-11 {
+    margin-top: 11px;
+  }
+  &-57 {
+    margin-top: 57px;
+  }
 }

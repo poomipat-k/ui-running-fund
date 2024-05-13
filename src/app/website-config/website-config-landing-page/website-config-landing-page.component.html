@@ -1,15 +1,39 @@
-<div [formGroup]="form">
-  <editor
-    #editor
-    formControlName="data"
-    (change)="modelChangeFn($event)"
-    licenseKey="gpl"
-    [init]="editorInit"
-    [plugins]="editorPlugins"
-    [toolbar]="editorToolbar"
-  ></editor>
+<div class="landingContainer">
+  <h1 class="header">Landing Page Setting</h1>
+  <h2 class="subHeader mgt-10">Banner Setting</h2>
+
+  <div class="uploadContainer mgt-11">
+    <div>
+      <app-com-upload-button
+        #uploadButton
+        [filesSubject]="bannerFilesSubject"
+        [disabled]="false"
+        text="เพิ่ม Banner"
+        accept="image/jpg, image/jpeg, image/png"
+        [showFilesList]="false"
+      ></app-com-upload-button>
+      @for (item of selectedFiles; track $index) {
+      <p>{{ item.name }}</p>
+      }
+    </div>
+    <p class="adviceText pdt-14">แนะนำไฟล์ JPG ขนาด 1440px*450px</p>
+  </div>
+
+  <h2 class="subHeader mgt-57">Text Setting</h2>
+  <div [formGroup]="form" class="mgt-6">
+    <editor
+      #editor
+      formControlName="data"
+      (change)="modelChangeFn($event)"
+      licenseKey="gpl"
+      [init]="editorInit"
+      [plugins]="editorPlugins"
+      [toolbar]="editorToolbar"
+    ></editor>
+  </div>
+
+  <div
+    class="editorContent mgt-10"
+    [innerHTML]="dataGroup.value || '' | safeHtml"
+  ></div>
 </div>
-
-<button (click)="onClick()" style="padding: 2rem">Test</button>
-
-<div class="editorContent" [innerHTML]="dataGroup.value || '' | safeHtml"></div>

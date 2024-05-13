@@ -41,10 +41,11 @@
         </svg>
         <!-- End clip svg -->
 
-        <div class="button__content--text">เลือกไฟล์</div>
+        <div class="button__content--text">{{ text }}</div>
       </div>
     </button>
   </div>
+  @if (showFilesList) {
   <div class="filename">
     @for (item of files; track $index) {
     <div class="filename__line">
@@ -58,4 +59,5 @@
     </div>
     }
   </div>
+  }
 </div>
