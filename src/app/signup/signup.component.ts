@@ -9,7 +9,7 @@ import {
 } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
 import { Subscription, catchError, throwError } from 'rxjs';
-import { ModalComponent } from '../components/modal/modal.component';
+import { PrivacyPolicyComponent } from '../components/privacy-policy/privacy-policy.component';
 import { TacComponent } from '../components/tac/tac.component';
 import { ThemeService } from '../services/theme.service';
 import { UserService } from '../services/user.service';
@@ -24,15 +24,15 @@ import { confirmPasswordMatchValidator } from '../shared/validators/confirmPassw
     CommonModule,
     ReactiveFormsModule,
     RouterModule,
-    ModalComponent,
     TacComponent,
+    PrivacyPolicyComponent,
   ],
   templateUrl: './signup.component.html',
   styleUrl: './signup.component.scss',
 })
 export class SignupComponent {
   @ViewChild('tacModal') tacModal: TacComponent;
-  @ViewChild('privacyModal') privacyModal: ModalComponent;
+  @ViewChild('privacyModal') privacyModal: PrivacyPolicyComponent;
 
   protected form: FormGroup;
 
