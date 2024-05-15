@@ -24,10 +24,21 @@ export class S3Service {
       .pipe(catchError(this.handleError));
   }
 
+  // upload through formdata
   uploadFileToStaticBucket(formData: FormData) {
     return this.http
       .post<string>(`${this.baseApiUrl}/admin/cms/upload`, formData)
       .pipe(catchError(this.handleError));
+  }
+
+  getPutPresigned() {
+    return this.http
+      .post<Presigned>(`${this.baseApiUrl}/admin/test/presigned`, {})
+      .pipe(catchError(this.handleError));
+  }
+
+  putPresigned(url: string, file: File) {
+    return this.http.put<any>(url, file).pipe(catchError(this.handleError));
   }
 
   private handleError(error: HttpErrorResponse) {
