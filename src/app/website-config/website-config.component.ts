@@ -6,10 +6,10 @@ import {
   ViewChild,
   inject,
 } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { isEqual } from 'lodash-es';
-import { Subscription } from 'rxjs';
+import { BehaviorSubject, Subscription } from 'rxjs';
 
 import { SuccessPopupComponent } from '../components/success-popup/success-popup.component';
 import { DateService } from '../services/date.service';
@@ -46,6 +46,8 @@ export class WebsiteConfigComponent implements OnInit, AfterViewInit {
 
   protected form: FormGroup;
   protected dashboardActivePage = 1;
+
+  protected bannerFilesSubject = new BehaviorSubject<File[]>([]);
   protected originalFormValue: AdminUpdateWebsiteConfig;
   protected dashboardData: TableCell[][] = [];
   protected dashboardItemCount = 0;
@@ -71,6 +73,9 @@ export class WebsiteConfigComponent implements OnInit, AfterViewInit {
   private readonly websiteConfigService: WebsiteConfigService =
     inject(WebsiteConfigService);
 
+  get landingGroup(): FormGroup {
+    return this.form.get('landing') as FormGroup;
+  }
   get dashboardGroup(): FormGroup {
     return this.form.get('dashboard') as FormGroup;
   }
@@ -100,6 +105,17 @@ export class WebsiteConfigComponent implements OnInit, AfterViewInit {
 
   private initForm() {
     this.form = new FormGroup({
+      landing: new FormGroup({
+        banner: new FormArray([
+          // new FormGroup({
+          //   id: new FormControl(null),
+          //   fileName: new FormControl(null, Validators.required),
+          //   linkTo: new FormControl(null),
+          //   imageAddress: new FormControl(null),
+          // }),
+        ]),
+        content: new FormControl(null),
+      }),
       dashboard: new FormGroup(
         {
           fromDay: new FormControl(null, Validators.required),

@@ -11,19 +11,54 @@
         text="เพิ่ม Banner"
         accept="image/jpg, image/jpeg, image/png"
         [showFilesList]="false"
+        [multiple]="false"
       ></app-com-upload-button>
-      @for (item of selectedFiles; track $index) {
-      <p>{{ item.name }}</p>
-      }
     </div>
     <p class="adviceText pdt-14">แนะนำไฟล์ JPG ขนาด 1440px*450px</p>
+  </div>
+  <!-- Banners display table -->
+  <div class="mgt-26">
+    <div class="table">
+      <div class="table__row">
+        <div class="table__cell table__cell--header table__cell--no">No.</div>
+        <div class="table__cell table__cell--header table__cell--flex1">
+          File Name
+        </div>
+        <div class="table__cell table__cell--header table__cell--flex1">
+          Link to url
+        </div>
+        <div class="table__cell table__cell--header table__cell--preview">
+          Preview
+        </div>
+        <div class="table__cell table__cell--header table__cell--delete"></div>
+      </div>
+      @for (item of bannerFormArray.controls; track $index) {
+      <div class="table__row">
+        <div class="table__cell table__cell--no">{{ $index + 1 }}</div>
+        <div class="table__cell table__cell--flex1">
+          {{ item.value.fileName }}
+        </div>
+        <div class="table__cell table__cell--flex1">Link to url</div>
+        <div class="table__cell table__cell--preview">
+          <img
+            class="table__imagePreview"
+            [src]="item.value.imageAddress"
+            alt="preview"
+          />
+        </div>
+        <div class="table__cell table__cell--delete">
+          <img src="/assets/close_icon.svg" alt="X" />
+        </div>
+      </div>
+      }
+    </div>
   </div>
 
   <h2 class="subHeader mgt-57">Text Setting</h2>
   <div [formGroup]="form" class="mgt-6">
     <editor
       #editor
-      formControlName="data"
+      formControlName="content"
       (change)="modelChangeFn($event)"
       licenseKey="gpl"
       [init]="editorInit"
@@ -34,6 +69,6 @@
 
   <div
     class="editorContent mgt-10"
-    [innerHTML]="dataGroup.value || '' | safeHtml"
+    [innerHTML]="contentControl.value || '' | safeHtml"
   ></div>
 </div>

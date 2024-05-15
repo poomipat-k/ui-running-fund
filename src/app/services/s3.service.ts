@@ -17,10 +17,16 @@ export class S3Service {
     userId?: number
   ): Observable<Presigned> {
     return this.http
-      .post<any>(`${this.baseApiUrl}/s3/presigned`, {
+      .post<Presigned>(`${this.baseApiUrl}/s3/presigned`, {
         path,
         projectCreatedByUserId: userId,
       })
+      .pipe(catchError(this.handleError));
+  }
+
+  uploadFileToStaticBucket(formData: FormData) {
+    return this.http
+      .post<string>(`${this.baseApiUrl}/admin/cms/upload`, formData)
       .pipe(catchError(this.handleError));
   }
 

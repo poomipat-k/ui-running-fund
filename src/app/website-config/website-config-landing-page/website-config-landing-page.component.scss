@@ -32,6 +32,51 @@
   color: #ec4a0a;
 }
 
+.table {
+  display: flex;
+  flex-direction: column;
+
+  &__row {
+    display: flex;
+    border-bottom: 1px solid #0000005c;
+  }
+
+  &__cell {
+    padding: 1rem;
+    font-family: $custom-font;
+    font-weight: 400;
+    font-size: 1.6rem;
+    line-height: 2.4rem;
+    color: #344054;
+
+    &--header {
+      font-weight: 500;
+    }
+
+    &--no {
+      flex: 0 0 4.5rem;
+    }
+
+    &--flex1 {
+      flex: 1;
+    }
+
+    &--preview {
+      flex: 0 0 15.4rem;
+    }
+
+    &--delete {
+      flex: 0 0 4.4rem;
+      align-self: center;
+    }
+  }
+
+  &__imagePreview {
+    height: 3rem;
+    width: auto;
+  }
+}
+
 .editorContent {
   white-space: pre-wrap;
 }
@@ -54,6 +99,9 @@
   }
   &-11 {
     margin-top: 11px;
+  }
+  &-26 {
+    margin-top: 26px;
   }
   &-57 {
     margin-top: 57px;

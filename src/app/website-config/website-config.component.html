@@ -18,7 +18,10 @@
     <div class="content">
       @switch (activeNav) { @case ('landingPage') {
       <div class="mgb-79">
-        <app-website-config-landing-page></app-website-config-landing-page>
+        <app-website-config-landing-page
+          [form]="landingGroup"
+          [bannerFilesSubject]="bannerFilesSubject"
+        ></app-website-config-landing-page>
       </div>
       } @case ('dashboard') {
       <app-website-config-dashboard
