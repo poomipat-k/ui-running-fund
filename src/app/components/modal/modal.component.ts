@@ -19,7 +19,11 @@ import {
 })
 export class ModalComponent implements OnDestroy {
   @ViewChild('modal') modal: ElementRef;
-  @Input() customContainer = {};
+
+  @Input() width = '';
+  @Input() height = '';
+  @Input() padding = '';
+
   @Output() modalCloseEvent = new EventEmitter();
 
   protected displayModal = false;

@@ -4,7 +4,7 @@
   class="container"
   (keyup)="onKeyUp($event)"
   tabindex="0"
-  [ngStyle]="customContainer"
+  [style]="{ width: width, height: height, padding: padding }"
 >
   <ng-content></ng-content>
 </div>
