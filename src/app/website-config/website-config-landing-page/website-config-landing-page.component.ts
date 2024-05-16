@@ -19,6 +19,7 @@ import { BehaviorSubject, Subscription, concatMap, map, of } from 'rxjs';
 import { UploadButtonComponent } from '../../components/upload-button/upload-button.component';
 import { S3Service } from '../../services/s3.service';
 import { Presigned } from '../../shared/models/presigned-url';
+import { S3UploadResponse } from '../../shared/models/s3-upload-response';
 import { SafeHtmlPipe } from '../../shared/pipe/safe-html.pipe';
 
 @Component({
@@ -104,19 +105,19 @@ export class WebsiteConfigLandingPageComponent
               formData.append('banner', files[0]);
               return this.s3Service.uploadFileToStaticBucket(formData);
             }
-            return of('');
+            return of(new S3UploadResponse());
           })
         )
-        .subscribe((fileName) => {
-          console.log('==fileName', fileName);
-          if (fileName) {
+        .subscribe((response: S3UploadResponse) => {
+          console.log('==response', response);
+          if (response.fullPath && response.objectKey) {
             console.log('==uploaded!!');
             this.bannerFormArray.push(
               new FormGroup({
                 id: new FormControl(null),
-                fileName: new FormControl(this.getImageFileName(fileName)),
+                objectKey: new FormControl(response.objectKey),
                 linkTo: new FormControl(null),
-                imageAddress: new FormControl(this.getImageAddress(fileName)),
+                fullPath: new FormControl(response.fullPath),
               })
             );
             console.log('===added to formArray', this.bannerFormArray);
@@ -161,12 +162,8 @@ export class WebsiteConfigLandingPageComponent
     );
   }
 
-  private getImageFileName(fileName: string): string {
-    return fileName.split('/')?.[1];
-  }
-
-  private getImageAddress(fileName: string): string {
-    return `https://running-fund-static-store.s3.ap-southeast-1.amazonaws.com/${fileName}`;
+  protected getImageFileName(objectKey: string): string {
+    return objectKey.split('/')?.[1];
   }
 
   onClick() {

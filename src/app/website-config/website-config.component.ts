@@ -108,10 +108,10 @@ export class WebsiteConfigComponent implements OnInit, AfterViewInit {
       landing: new FormGroup({
         banner: new FormArray([
           // new FormGroup({
-          //   id: new FormControl(null),
-          //   fileName: new FormControl(null, Validators.required),
-          //   linkTo: new FormControl(null),
-          //   imageAddress: new FormControl(null),
+          // id: new FormControl(null),
+          // objectKey: new FormControl(null),
+          // linkTo: new FormControl(null),
+          // fullPath: new FormControl(null),
           // }),
         ]),
         content: new FormControl(null),

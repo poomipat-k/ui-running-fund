@@ -36,7 +36,7 @@
       <div class="table__row">
         <div class="table__cell table__cell--no">{{ $index + 1 }}</div>
         <div class="table__cell table__cell--flex1">
-          {{ item.value.fileName }}
+          {{ getImageFileName(item.value.objectKey) }}
         </div>
         <div class="table__cell table__cell--flex1">Link to url</div>
         <div class="table__cell table__cell--preview">

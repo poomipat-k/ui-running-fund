@@ -3,6 +3,7 @@ import { Injectable, inject } from '@angular/core';
 import { Observable, catchError, throwError } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { Presigned } from '../shared/models/presigned-url';
+import { S3UploadResponse } from '../shared/models/s3-upload-response';
 
 @Injectable({
   providedIn: 'root',
@@ -27,7 +28,7 @@ export class S3Service {
   // upload through formdata
   uploadFileToStaticBucket(formData: FormData) {
     return this.http
-      .post<string>(`${this.baseApiUrl}/admin/cms/upload`, formData)
+      .post<S3UploadResponse>(`${this.baseApiUrl}/admin/cms/upload`, formData)
       .pipe(catchError(this.handleError));
   }
 
