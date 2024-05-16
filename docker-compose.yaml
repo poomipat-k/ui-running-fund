@@ -1,0 +1,12 @@
+services:
+  running-app-ui:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    container_name: running_app_ui
+    restart: always
+    ports:
+      - "80:80"
+    deploy:
+      mode: replicated
+      replicas: 1
