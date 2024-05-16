@@ -11,7 +11,7 @@ RUN npm install -g @angular/cli
 
 COPY . .
 
-RUN npm run build:production
+RUN npm run build:staging
 
 # Step 2
 FROM nginx:latest

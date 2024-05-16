@@ -2,6 +2,7 @@ import {
   AfterViewInit,
   Component,
   Input,
+  OnDestroy,
   OnInit,
   ViewChild,
   inject,
@@ -14,7 +15,7 @@ import {
   ReactiveFormsModule,
 } from '@angular/forms';
 import { EditorModule, TINYMCE_SCRIPT_SRC } from '@tinymce/tinymce-angular';
-import { BehaviorSubject, concatMap, map, of } from 'rxjs';
+import { BehaviorSubject, Subscription, concatMap, map, of } from 'rxjs';
 import { UploadButtonComponent } from '../../components/upload-button/upload-button.component';
 import { S3Service } from '../../services/s3.service';
 import { Presigned } from '../../shared/models/presigned-url';
@@ -37,12 +38,14 @@ import { SafeHtmlPipe } from '../../shared/pipe/safe-html.pipe';
   styleUrl: './website-config-landing-page.component.scss',
 })
 export class WebsiteConfigLandingPageComponent
-  implements OnInit, AfterViewInit
+  implements OnInit, AfterViewInit, OnDestroy
 {
   @ViewChild('uploadButton') uploadButtonComponent: UploadButtonComponent;
 
   @Input() bannerFilesSubject: BehaviorSubject<File[]>;
   @Input() form: FormGroup;
+
+  private readonly subs: Subscription[] = [];
 
   private readonly s3Service: S3Service = inject(S3Service);
 
@@ -81,69 +84,81 @@ export class WebsiteConfigLandingPageComponent
   }
 
   ngAfterViewInit(): void {
-    // // upload with form data
-    // this.bannerFilesSubject
-    //   .pipe(
-    //     concatMap((files) => {
-    //       if (files.length > 0) {
-    //         const formData = new FormData();
-    //         formData.append('banner', files[0]);
-    //         return this.s3Service.uploadFileToStaticBucket(formData);
-    //       }
-    //       return of('');
-    //     })
-    //   )
-    //   .subscribe((fileName) => {
-    //     console.log('==fileName', fileName);
-    //     if (fileName) {
-    //       console.log('==uploaded!!');
-    //       this.bannerFormArray.push(
-    //         new FormGroup({
-    //           id: new FormControl(null),
-    //           fileName: new FormControl(this.getImageFileName(fileName)),
-    //           linkTo: new FormControl(null),
-    //           imageAddress: new FormControl(this.getImageAddress(fileName)),
-    //         })
-    //       );
-    //       console.log('===added to formArray', this.bannerFormArray);
-    //       this.uploadButtonComponent.clearFiles();
-    //       console.log('==cleared');
-    //     } else {
-    //       console.log('=== no file name');
-    //     }
-    //   });
+    this.watchFileChangesAndUploadFormData();
 
-    this.watchFileChanges();
+    // this.watchFileChanges();
+  }
+
+  ngOnDestroy(): void {
+    this.subs.forEach((s) => s.unsubscribe());
+  }
+
+  private watchFileChangesAndUploadFormData() {
+    // upload with form data
+    this.subs.push(
+      this.bannerFilesSubject
+        .pipe(
+          concatMap((files) => {
+            if (files.length > 0) {
+              const formData = new FormData();
+              formData.append('banner', files[0]);
+              return this.s3Service.uploadFileToStaticBucket(formData);
+            }
+            return of('');
+          })
+        )
+        .subscribe((fileName) => {
+          console.log('==fileName', fileName);
+          if (fileName) {
+            console.log('==uploaded!!');
+            this.bannerFormArray.push(
+              new FormGroup({
+                id: new FormControl(null),
+                fileName: new FormControl(this.getImageFileName(fileName)),
+                linkTo: new FormControl(null),
+                imageAddress: new FormControl(this.getImageAddress(fileName)),
+              })
+            );
+            console.log('===added to formArray', this.bannerFormArray);
+            this.uploadButtonComponent.clearFiles();
+            console.log('==cleared');
+          } else {
+            console.log('=== no file name');
+          }
+        })
+    );
   }
 
   private watchFileChanges() {
-    this.bannerFilesSubject
-      .pipe(
-        concatMap((files) => {
-          if (files.length > 0) {
-            return this.s3Service
-              .getPutPresigned()
-              .pipe(map((presigned) => ({ presigned, files })));
-          }
-          return of({
-            presigned: new Presigned(),
-            files,
-          });
-        }),
-        concatMap((object) => {
-          console.log('==object', object);
-          if (object?.presigned?.URL && object.files?.length) {
-            return this.s3Service.putPresigned(
-              object.presigned.URL,
-              object.files[0]
-            );
-          }
-          return of(false);
+    this.subs.push(
+      this.bannerFilesSubject
+        .pipe(
+          concatMap((files) => {
+            if (files.length > 0) {
+              return this.s3Service
+                .getPutPresigned()
+                .pipe(map((presigned) => ({ presigned, files })));
+            }
+            return of({
+              presigned: new Presigned(),
+              files,
+            });
+          }),
+          concatMap((object) => {
+            console.log('==object', object);
+            if (object?.presigned?.URL && object.files?.length) {
+              return this.s3Service.putPresigned(
+                object.presigned.URL,
+                object.files[0]
+              );
+            }
+            return of(false);
+          })
+        )
+        .subscribe((result) => {
+          console.log('==result', result);
         })
-      )
-      .subscribe((result) => {
-        console.log('==result', result);
-      });
+    );
   }
 
   private getImageFileName(fileName: string): string {

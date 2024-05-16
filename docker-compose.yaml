@@ -6,7 +6,8 @@ services:
     container_name: running_app_ui
     restart: always
     ports:
-      - "80:80"
+      - "4200:80"
     deploy:
       mode: replicated
       replicas: 1
+    network_mode: bridge

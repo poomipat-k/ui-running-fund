@@ -44,3 +44,9 @@ Thumbs.db
 
 # docker-compose
 docker-compose-staging.yaml
+
+#.env
+
+.env
+.env.prod
+.env.staging
