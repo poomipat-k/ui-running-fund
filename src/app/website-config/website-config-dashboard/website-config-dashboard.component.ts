@@ -145,7 +145,6 @@ export class WebsiteConfigDashboardComponent implements OnInit {
 
   onDashboardPageChanged(currentPage: number) {
     if (currentPage >= 1) {
-      // this.currentPage = currentPage;
       this.currentPageChanged.emit(currentPage);
     }
   }

@@ -406,7 +406,8 @@ export class DashboardAdminComponent implements OnInit, OnDestroy {
     this.subs.push(
       this.projectService.getReviewPeriod().subscribe((p) => {
         const fromDate = new Date(p.fromDate);
-        const toDate = new Date(p.toDate);
+        const rawToDate = new Date(p.toDate);
+        const toDate = new Date(rawToDate.getTime() - 1000);
         const localFromDate = fromDate.toLocaleDateString('en-US', {
           timeZone: 'Asia/bangkok',
         });

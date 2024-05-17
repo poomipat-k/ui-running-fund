@@ -121,7 +121,12 @@ export class DashboardReviewerComponent {
             this.fromDate = this.dateService.dateToStringWithShortMonth(
               p.fromDate
             );
-            this.toDate = this.dateService.dateToStringWithShortMonth(p.toDate);
+            console.log('==p', p);
+            const rawToDate = new Date(p.toDate);
+            const toDate = new Date(rawToDate.getTime() - 1000);
+            this.toDate = this.dateService.dateToStringWithShortMonth(
+              toDate.toISOString()
+            );
             this.reviewPeriod = p;
             return this.projectService.getReviewDashboard(
               this.reviewPeriod?.fromDate,

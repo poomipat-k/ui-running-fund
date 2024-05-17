@@ -39,6 +39,9 @@ export class ProjectService {
       .pipe(catchError(this.handleError));
   }
 
+  /* 
+  use [fromDate, toDate) as result to sync with the backend api
+  */
   getReviewPeriod(): Observable<ReviewPeriod> {
     return this.http
       .get<ReviewPeriod>(`${this.baseApiUrl}/project/review-period`)
