@@ -121,7 +121,7 @@ export class DashboardReviewerComponent {
             this.fromDate = this.dateService.dateToStringWithShortMonth(
               p.fromDate
             );
-            console.log('==p', p);
+
             const rawToDate = new Date(p.toDate);
             const toDate = new Date(rawToDate.getTime() - 1000);
             this.toDate = this.dateService.dateToStringWithShortMonth(

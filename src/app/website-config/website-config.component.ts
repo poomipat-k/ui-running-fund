@@ -94,12 +94,10 @@ export class WebsiteConfigComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit(): void {
     // subs to dashboard date config changes
-    this.dashboardGroup.valueChanges.subscribe((values) => {
+    this.dashboardGroup.valueChanges.subscribe(() => {
       if (this.dashboardGroup.valid) {
-        console.log('===VALID===');
         this.onDashboardPageChanged(1);
       } else {
-        console.log('===clearDashboard1');
         this.clearDashboard();
       }
     });
@@ -167,7 +165,6 @@ export class WebsiteConfigComponent implements OnInit, AfterViewInit {
             this.dashboardItemCount = count;
             this.dashboardData = data;
           } else {
-            console.log('===clearDashboard2');
             this.clearDashboard();
           }
         })
@@ -181,7 +178,6 @@ export class WebsiteConfigComponent implements OnInit, AfterViewInit {
 
   onDashboardPageChanged(currentPage: number) {
     if (currentPage >= 1) {
-      console.log('==onDashboardPageChanged', currentPage);
       this.dashboardActivePage = currentPage;
       this.loadDashboardData(currentPage);
     }
