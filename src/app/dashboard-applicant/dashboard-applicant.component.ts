@@ -165,7 +165,10 @@ export class DashboardApplicantComponent implements OnInit, OnDestroy {
       return '';
     }
     if (statusVal >= STATUS_ORDER.Approved) {
-      return `applicant__Approved`;
+      return 'applicant__Approved';
+    } else if (statusVal === STATUS_ORDER.Reviewed) {
+      // Reviewed is considered to be Reviewing from applicant POV
+      return 'applicant__Reviewing';
     }
     return `applicant__${row.projectStatus}`;
   }
