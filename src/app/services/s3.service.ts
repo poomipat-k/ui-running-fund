@@ -2,6 +2,7 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { Observable, catchError, throwError } from 'rxjs';
 import { environment } from '../../environments/environment';
+import { GetPutPresignedResponse } from '../shared/models/get-put-presigned-response';
 import { Presigned } from '../shared/models/presigned-url';
 import { S3UploadResponse } from '../shared/models/s3-upload-response';
 
@@ -32,9 +33,14 @@ export class S3Service {
       .pipe(catchError(this.handleError));
   }
 
-  getPutPresigned() {
+  getPutPresigned(objectKey: string) {
     return this.http
-      .post<Presigned>(`${this.baseApiUrl}/admin/test/presigned`, {})
+      .post<GetPutPresignedResponse>(
+        `${this.baseApiUrl}/s3/static/presigned/put`,
+        {
+          objectKey,
+        }
+      )
       .pipe(catchError(this.handleError));
   }
 

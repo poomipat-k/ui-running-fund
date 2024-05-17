@@ -42,12 +42,16 @@
         <div class="table__cell table__cell--preview">
           <img
             class="table__imagePreview"
-            [src]="item.value.imageAddress"
+            [src]="item.value.fullPath"
             alt="preview"
           />
         </div>
         <div class="table__cell table__cell--delete">
-          <img src="/assets/close_icon.svg" alt="X" />
+          <img
+            src="/assets/close_icon.svg"
+            alt="X"
+            (click)="onDeleteBanner($index)"
+          />
         </div>
       </div>
       }

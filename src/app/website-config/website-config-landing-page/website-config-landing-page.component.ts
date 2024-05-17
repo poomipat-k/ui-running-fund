@@ -1,3 +1,4 @@
+import { NgOptimizedImage } from '@angular/common';
 import {
   AfterViewInit,
   Component,
@@ -14,11 +15,21 @@ import {
   FormsModule,
   ReactiveFormsModule,
 } from '@angular/forms';
-import { EditorModule, TINYMCE_SCRIPT_SRC } from '@tinymce/tinymce-angular';
-import { BehaviorSubject, Subscription, concatMap, map, of } from 'rxjs';
+import {
+  EditorComponent,
+  EditorModule,
+  TINYMCE_SCRIPT_SRC,
+} from '@tinymce/tinymce-angular';
+import {
+  BehaviorSubject,
+  Subscription,
+  concatMap,
+  lastValueFrom,
+  map,
+  of,
+} from 'rxjs';
 import { UploadButtonComponent } from '../../components/upload-button/upload-button.component';
 import { S3Service } from '../../services/s3.service';
-import { Presigned } from '../../shared/models/presigned-url';
 import { S3UploadResponse } from '../../shared/models/s3-upload-response';
 import { SafeHtmlPipe } from '../../shared/pipe/safe-html.pipe';
 
@@ -31,6 +42,7 @@ import { SafeHtmlPipe } from '../../shared/pipe/safe-html.pipe';
     ReactiveFormsModule,
     SafeHtmlPipe,
     UploadButtonComponent,
+    NgOptimizedImage,
   ],
   providers: [
     { provide: TINYMCE_SCRIPT_SRC, useValue: 'tinymce/tinymce.min.js' },
@@ -50,13 +62,7 @@ export class WebsiteConfigLandingPageComponent
 
   private readonly s3Service: S3Service = inject(S3Service);
 
-  protected editorInit = {
-    base_url: '/tinymce',
-    suffix: '.min',
-    font_size_formats:
-      '8pt 10pt 12pt 14pt 16pt 18pt 20pt 24pt 30pt 36pt 48pt 60pt 72pt',
-    images_file_types: 'jpeg,jpg,jpe,jfi,jif,jfif,png,gif,bmp,webp,svg',
-  };
+  protected editorInit: EditorComponent['init'] = {};
   protected editorPlugins =
     'preview autolink autosave save code visualblocks visualchars fullscreen image link media codesample table charmap nonbreaking anchor lists advlist wordcount help charmap quickbars emoticons';
   protected editorToolbar =
@@ -82,20 +88,49 @@ export class WebsiteConfigLandingPageComponent
     this.form.valueChanges.subscribe((values) => {
       console.log('==values:', values);
     });
+
+    this.initRichTextEditor();
   }
 
   ngAfterViewInit(): void {
     this.watchFileChangesAndUploadFormData();
-
-    // this.watchFileChanges();
   }
 
   ngOnDestroy(): void {
     this.subs.forEach((s) => s.unsubscribe());
   }
 
+  private initRichTextEditor() {
+    this.editorInit = {
+      base_url: '/tinymce',
+      suffix: '.min',
+      font_size_formats:
+        '8pt 10pt 12pt 14pt 16pt 18pt 20pt 24pt 30pt 36pt 48pt 60pt 72pt',
+      images_file_types: 'jpeg,jpg,jpe,jfi,jif,jfif,png,gif,bmp,webp,svg',
+      images_reuse_filename: true,
+      block_unsupported_drop: true,
+      images_upload_handler: (blobInfo) => {
+        const objectKey = `cms/landing/${Date.now()}-${blobInfo.filename()}`;
+        const file = new File([blobInfo.blob()], objectKey);
+        const promise = lastValueFrom(
+          this.s3Service.getPutPresigned(objectKey).pipe(
+            concatMap((putPresignedObject) => {
+              return this.s3Service
+                .putPresigned(putPresignedObject.presigned.URL, file)
+                .pipe(
+                  map(() => {
+                    return putPresignedObject.fullPath;
+                  })
+                );
+            })
+          )
+        );
+        return promise;
+      },
+    };
+  }
+
   private watchFileChangesAndUploadFormData() {
-    // upload with form data
     this.subs.push(
       this.bannerFilesSubject
         .pipe(
@@ -109,9 +144,7 @@ export class WebsiteConfigLandingPageComponent
           })
         )
         .subscribe((response: S3UploadResponse) => {
-          console.log('==response', response);
           if (response.fullPath && response.objectKey) {
-            console.log('==uploaded!!');
             this.bannerFormArray.push(
               new FormGroup({
                 id: new FormControl(null),
@@ -120,44 +153,10 @@ export class WebsiteConfigLandingPageComponent
                 fullPath: new FormControl(response.fullPath),
               })
             );
-            console.log('===added to formArray', this.bannerFormArray);
+            console.log('===added to formArray', this.bannerFormArray.value);
             this.uploadButtonComponent.clearFiles();
             console.log('==cleared');
-          } else {
-            console.log('=== no file name');
           }
-        })
-    );
-  }
-
-  private watchFileChanges() {
-    this.subs.push(
-      this.bannerFilesSubject
-        .pipe(
-          concatMap((files) => {
-            if (files.length > 0) {
-              return this.s3Service
-                .getPutPresigned()
-                .pipe(map((presigned) => ({ presigned, files })));
-            }
-            return of({
-              presigned: new Presigned(),
-              files,
-            });
-          }),
-          concatMap((object) => {
-            console.log('==object', object);
-            if (object?.presigned?.URL && object.files?.length) {
-              return this.s3Service.putPresigned(
-                object.presigned.URL,
-                object.files[0]
-              );
-            }
-            return of(false);
-          })
-        )
-        .subscribe((result) => {
-          console.log('==result', result);
         })
     );
   }
@@ -166,8 +165,8 @@ export class WebsiteConfigLandingPageComponent
     return objectKey.split('/')?.[1];
   }
 
-  onClick() {
-    console.log('==form', this.form);
+  onDeleteBanner(index: number) {
+    this.bannerFormArray.removeAt(index);
   }
 
   modelChangeFn(e: any) {
