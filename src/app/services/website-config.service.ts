@@ -5,6 +5,7 @@ import { environment } from '../../environments/environment';
 
 import { AdminUpdateWebsiteConfig } from '../shared/models/admin-update-website-config';
 import { CommonSuccessResponse } from '../shared/models/common-success-response';
+import { LandingPage } from '../shared/models/landing-page';
 
 @Injectable({
   providedIn: 'root',
@@ -14,6 +15,12 @@ export class WebsiteConfigService {
   private readonly http: HttpClient = inject(HttpClient);
 
   constructor() {}
+
+  getLandingPage() {
+    return this.http
+      .get<LandingPage>(`${this.baseApiUrl}/content/landing`)
+      .pipe(catchError(this.handleError));
+  }
 
   adminUpdateWebsiteConfig(
     formData: AdminUpdateWebsiteConfig

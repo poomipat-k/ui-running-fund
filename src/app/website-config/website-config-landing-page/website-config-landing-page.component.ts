@@ -30,6 +30,7 @@ import {
 } from 'rxjs';
 import { UploadButtonComponent } from '../../components/upload-button/upload-button.component';
 import { S3Service } from '../../services/s3.service';
+import { WebsiteConfigService } from '../../services/website-config.service';
 import { S3UploadResponse } from '../../shared/models/s3-upload-response';
 import { SafeHtmlPipe } from '../../shared/pipe/safe-html.pipe';
 
@@ -61,6 +62,8 @@ export class WebsiteConfigLandingPageComponent
   private readonly subs: Subscription[] = [];
 
   private readonly s3Service: S3Service = inject(S3Service);
+  private readonly websiteConfigService: WebsiteConfigService =
+    inject(WebsiteConfigService);
 
   protected editorInit: EditorComponent['init'] = {};
   protected editorPlugins =
@@ -85,11 +88,33 @@ export class WebsiteConfigLandingPageComponent
   }
 
   ngOnInit(): void {
-    this.form.valueChanges.subscribe((values) => {
-      console.log('==values:', values);
-    });
+    this.subs.push(
+      this.form.valueChanges.subscribe((values) => {
+        console.log('==values:', values);
+      })
+    );
 
     this.initRichTextEditor();
+
+    this.subs.push(
+      this.websiteConfigService.getLandingPage().subscribe((result) => {
+        if (result) {
+          this.form.patchValue({
+            content: result.content,
+          });
+          result.banner?.forEach((b) => {
+            this.bannerFormArray.push(
+              new FormGroup({
+                id: new FormControl(b.id ?? null),
+                objectKey: new FormControl(b.objectKey ?? null),
+                linkTo: new FormControl(b.linkTo ?? null),
+                fullPath: new FormControl(b.fullPath ?? null),
+              })
+            );
+          });
+        }
+      })
+    );
   }
 
   ngAfterViewInit(): void {
@@ -162,7 +187,11 @@ export class WebsiteConfigLandingPageComponent
   }
 
   protected getImageFileName(objectKey: string): string {
-    return objectKey.split('/')?.[1];
+    if (!objectKey) {
+      return '';
+    }
+    const splits = objectKey.split('/');
+    return splits[splits.length - 1];
   }
 
   onDeleteBanner(index: number) {
