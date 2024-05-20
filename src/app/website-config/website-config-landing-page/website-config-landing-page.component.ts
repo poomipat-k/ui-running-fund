@@ -88,11 +88,11 @@ export class WebsiteConfigLandingPageComponent
   }
 
   ngOnInit(): void {
-    this.subs.push(
-      this.form.valueChanges.subscribe((values) => {
-        console.log('==values:', values);
-      })
-    );
+    // this.subs.push(
+    //   this.form.valueChanges.subscribe((values) => {
+    //     console.log('==values:', values);
+    //   })
+    // );
 
     this.initRichTextEditor();
   }

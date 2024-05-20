@@ -23,6 +23,7 @@ import { TableCell } from '../shared/models/table-cell';
 import { WebsiteConfigSideNav } from '../shared/models/website-config-side-nav';
 import { fromDateBeforeToDateValidator } from '../shared/validators/fromDateBeforeToDate';
 import { WebsiteConfigDashboardComponent } from './website-config-dashboard/website-config-dashboard.component';
+import { WebsiteConfigFaqComponent } from './website-config-faq/website-config-faq.component';
 import { WebsiteConfigLandingPageComponent } from './website-config-landing-page/website-config-landing-page.component';
 
 @Component({
@@ -33,6 +34,7 @@ import { WebsiteConfigLandingPageComponent } from './website-config-landing-page
     WebsiteConfigDashboardComponent,
     SuccessPopupComponent,
     CommonModule,
+    WebsiteConfigFaqComponent,
   ],
   templateUrl: './website-config.component.html',
   styleUrl: './website-config.component.scss',
@@ -61,6 +63,10 @@ export class WebsiteConfigComponent implements OnInit, AfterViewInit {
       display: 'Dashboard',
       value: 'dashboard',
     },
+    {
+      display: 'คำถามที่พบบ่อย (FAQ)',
+      value: 'faq',
+    },
   ];
   protected showSuccessPopup = false;
   protected successPopupText = 'อัพเดตข้อมูลเว็บไซต์เรียบร้อยแล้ว';
@@ -85,12 +91,17 @@ export class WebsiteConfigComponent implements OnInit, AfterViewInit {
     return this.form.get('dashboard') as FormGroup;
   }
 
+  get faqFormArray(): FormArray {
+    return this.form.get('faq') as FormArray;
+  }
+
   ngOnInit(): void {
     this.themeService.changeBackgroundColor(BackgroundColor.white);
     this.initForm();
 
     if (this.sideNavItems[0]) {
-      this.activeNav = this.sideNavItems[0].value;
+      // Todo
+      this.activeNav = this.sideNavItems[2].value;
     }
 
     // Load dashboard data
@@ -133,6 +144,13 @@ export class WebsiteConfigComponent implements OnInit, AfterViewInit {
         },
         fromDateBeforeToDateValidator()
       ),
+      faq: new FormArray([
+        // new FormGroup({
+        //   id: new FormControl(null),
+        //   question: new FormControl(null, Validators.required),
+        //   answer: new FormControl(null, Validators.required),
+        // }),
+      ]),
     });
   }
 

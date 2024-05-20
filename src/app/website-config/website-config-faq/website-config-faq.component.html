@@ -1,0 +1,65 @@
+<div class="container">
+  @if (!isEdit) {
+  <div class="pdb-178">
+    <h1 class="header">คำถามที่พบบ่อย (FAQ)</h1>
+    <div class="mgt-18">
+      <app-com-button>
+        <div class="button" (click)="onAddQuestionClick()">
+          <svg
+            width="32"
+            height="32"
+            viewBox="0 0 32 32"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <mask
+              id="mask0_2093_893"
+              style="mask-type: alpha"
+              maskUnits="userSpaceOnUse"
+              x="0"
+              y="0"
+              width="32"
+              height="32"
+            >
+              <rect width="32" height="32" fill="#D9D9D9" />
+            </mask>
+            <g mask="url(#mask0_2093_893)">
+              <path
+                d="M14.6667 25.3333V17.3333H6.66669V14.6666H14.6667V6.66663H17.3334V14.6666H25.3334V17.3333H17.3334V25.3333H14.6667Z"
+                fill="#344054"
+                class="button__icon"
+              />
+            </g>
+          </svg>
+          <p class="button__text">เพิ่มคำถาม</p>
+        </div>
+      </app-com-button>
+    </div>
+  </div>
+  } @else {
+  <div class="addQuestion pdb-49">
+    <h1 class="header">เพิ่มคำถามที่พบบ่อย ( Add FAQ)</h1>
+    <div class="addQuestion__item">
+      <label for="question" class="addQuestion__label">คำถาม</label>
+      <app-com-input-text
+        placeholder="กรอกคำถาม"
+        [form]="form"
+        controlName="question"
+        width="70.2rem"
+        height="4.4rem"
+      ></app-com-input-text>
+    </div>
+
+    <div class="addQuestion__item">
+      <label for="answer" class="addQuestion__label">คำตอบ</label>
+      <app-com-textarea
+        [form]="form"
+        controlName="answer"
+        placeholder="กรอกคำตอบ"
+        width="70.2rem"
+        height="19.8rem"
+      ></app-com-textarea>
+    </div>
+  </div>
+  }
+</div>

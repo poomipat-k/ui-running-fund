@@ -32,6 +32,10 @@
         (currentPageChanged)="onDashboardPageChanged($event)"
         [activePage]="dashboardActivePage"
       ></app-website-config-dashboard>
+      } @case ('faq') {
+      <app-website-config-faq
+        [formArray]="faqFormArray"
+      ></app-website-config-faq>
       } }
       <!-- Button -->
       <div class="button__container mgl-34">
