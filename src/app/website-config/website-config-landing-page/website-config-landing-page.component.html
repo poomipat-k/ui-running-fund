@@ -38,7 +38,13 @@
         <div class="table__cell table__cell--flex1">
           {{ getImageFileName(item.value.objectKey) }}
         </div>
-        <div class="table__cell table__cell--flex1">Link to url</div>
+        <div class="table__cell table__cell--flex1">
+          <app-com-input-text
+            placeholder="link to url"
+            [form]="getBannerFormGroup($index)"
+            controlName="linkTo"
+          ></app-com-input-text>
+        </div>
         <div class="table__cell table__cell--preview">
           <img
             class="table__imagePreview"

@@ -194,16 +194,25 @@ export class WebsiteConfigComponent implements OnInit, AfterViewInit {
       console.error(this.form.errors);
       return;
     }
+    console.log('==originalFormValue', this.originalFormValue);
+    console.log('==form ', this.form.value);
+    console.log(
+      '===isEqual(this.originalFormValue, this.form.value)',
+      isEqual(this.originalFormValue, this.form.value)
+    );
     if (isEqual(this.originalFormValue, this.form.value)) {
+      console.log('==1');
       console.warn('nothing changed from current website configuration');
       this.successPopupText = 'ไม่มีการเปลี่ยนแปลงข้อมูล';
       this.showSuccessPopup = true;
       setTimeout(() => {
         this.showSuccessPopup = false;
         this.redirectToDashboardPage();
-      }, 2000);
+      }, 200000);
       return;
     }
+    console.log('==2');
+
     this.subs.push(
       this.websiteConfigService
         .adminUpdateWebsiteConfig(this.form.value)
@@ -214,7 +223,7 @@ export class WebsiteConfigComponent implements OnInit, AfterViewInit {
             setTimeout(() => {
               this.showSuccessPopup = false;
               this.redirectToDashboardPage();
-            }, 2000);
+            }, 200000);
           }
         })
     );

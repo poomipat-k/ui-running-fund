@@ -1,4 +1,3 @@
-import { NgOptimizedImage } from '@angular/common';
 import {
   AfterViewInit,
   Component,
@@ -28,6 +27,7 @@ import {
   map,
   of,
 } from 'rxjs';
+import { InputTextComponent } from '../../components/input-text/input-text.component';
 import { UploadButtonComponent } from '../../components/upload-button/upload-button.component';
 import { S3Service } from '../../services/s3.service';
 import { WebsiteConfigService } from '../../services/website-config.service';
@@ -43,7 +43,7 @@ import { SafeHtmlPipe } from '../../shared/pipe/safe-html.pipe';
     ReactiveFormsModule,
     SafeHtmlPipe,
     UploadButtonComponent,
-    NgOptimizedImage,
+    InputTextComponent,
   ],
   providers: [
     { provide: TINYMCE_SCRIPT_SRC, useValue: 'tinymce/tinymce.min.js' },
@@ -123,6 +123,10 @@ export class WebsiteConfigLandingPageComponent
 
   ngOnDestroy(): void {
     this.subs.forEach((s) => s.unsubscribe());
+  }
+
+  getBannerFormGroup(index: number): FormGroup {
+    return this.bannerFormArray.at(index) as FormGroup;
   }
 
   private initRichTextEditor() {
