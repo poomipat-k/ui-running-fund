@@ -41,6 +41,7 @@ import { WebsiteConfigLandingPageComponent } from './website-config-landing-page
 })
 export class WebsiteConfigComponent implements OnInit, AfterViewInit {
   @ViewChild('dashboard') dashboardComponent: WebsiteConfigDashboardComponent;
+  @ViewChild('FAQ') faqConfigComponent: WebsiteConfigFaqComponent;
 
   private readonly themeService: ThemeService = inject(ThemeService);
 
@@ -152,6 +153,7 @@ export class WebsiteConfigComponent implements OnInit, AfterViewInit {
         // }),
       ]),
     });
+    this.originalFormValue = this.form.value;
   }
 
   private loadLandingPageData() {
@@ -239,13 +241,26 @@ export class WebsiteConfigComponent implements OnInit, AfterViewInit {
   }
 
   onSave() {
+    // FAQ edit mode
+    if (this.activeNav === 'faq' && this.faqConfigComponent.isEdit) {
+      // add a new faq item to faq formArray
+      if (this.faqConfigComponent.validToBeAdded()) {
+        this.faqConfigComponent.addToFaqFormArray();
+        this.faqConfigComponent.changeIsEdit(false);
+        console.log('===added item', this.form.value);
+      }
+      return;
+    }
+
+    console.log('==submitting');
+
     if (!this.form.valid) {
       console.error(this.form.errors);
       return;
     }
     console.log(
       '===is form changed',
-      isEqual(this.originalFormValue, this.form.value)
+      !isEqual(this.originalFormValue, this.form.value)
     );
     if (isEqual(this.originalFormValue, this.form.value)) {
       console.warn('nothing changed from current website configuration');
@@ -275,6 +290,10 @@ export class WebsiteConfigComponent implements OnInit, AfterViewInit {
   }
 
   onCancel() {
+    if (this.activeNav === 'faq' && this.faqConfigComponent.isEdit) {
+      this.faqConfigComponent.changeIsEdit(false);
+      return;
+    }
     this.redirectToDashboardPage();
   }
 

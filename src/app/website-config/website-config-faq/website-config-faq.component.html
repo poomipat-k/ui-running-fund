@@ -4,7 +4,7 @@
     <h1 class="header">คำถามที่พบบ่อย (FAQ)</h1>
     <div class="mgt-18">
       <app-com-button>
-        <div class="button" (click)="onAddQuestionClick()">
+        <div class="button" (click)="changeIsEdit(true)">
           <svg
             width="32"
             height="32"
@@ -48,6 +48,12 @@
         width="70.2rem"
         height="4.4rem"
       ></app-com-input-text>
+      @if (!questionControl.valid && questionControl.touched) {
+      <div class="error mgl-28">
+        <img src="/assets/error_icon.svg" alt="error icon" />
+        <p class="error__text">กรุณากรอกคำถาม</p>
+      </div>
+      }
     </div>
 
     <div class="addQuestion__item">
@@ -59,6 +65,12 @@
         width="70.2rem"
         height="19.8rem"
       ></app-com-textarea>
+      @if (!answerControl.valid && answerControl.touched) {
+      <div class="error mgl-28">
+        <img src="/assets/error_icon.svg" alt="error icon" />
+        <p class="error__text">กรุณากรอกคำตอบ</p>
+      </div>
+      }
     </div>
   </div>
   }
