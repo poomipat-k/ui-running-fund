@@ -1,4 +1,4 @@
-export class LandingPageBanner {
+export class Banner {
   id: string;
   fullPath: string;
   objectKey: string;

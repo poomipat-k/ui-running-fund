@@ -1,9 +1,9 @@
-import { LandingPageBanner } from './landing-page-banner';
+import { Banner } from './banner';
 
 export class LandingPage {
   websiteConfigId: number;
   content: string;
-  banner: LandingPageBanner[];
+  banner: Banner[];
 
   constructor() {}
 }

@@ -10,15 +10,20 @@
       bg__carousel: true
     }"
   >
-    <img
+    <a
+      [href]="item.linkTo"
+      target="_blank"
       [ngClass]="{
         carousel__item: true,
         'carousel__item--blur': blurList[$index]
       }"
-      [src]="slides[$index]"
-      alt="carousel image"
-      (load)="imageLoad($index)"
-    />
+    >
+      <img
+        [src]="slides[$index].fullPath"
+        alt="carousel image"
+        (load)="imageLoad($index)"
+      />
+    </a>
     <!-- Start -->
     <div
       [ngClass]="{
