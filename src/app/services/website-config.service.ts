@@ -27,7 +27,7 @@ export class WebsiteConfigService {
   ): Observable<CommonSuccessResponse> {
     return this.http
       .put<CommonSuccessResponse>(
-        `${this.baseApiUrl}/admin/website/config`,
+        `${this.baseApiUrl}/admin/cms/website/config`,
         formData
       )
       .pipe(catchError(this.handleError));

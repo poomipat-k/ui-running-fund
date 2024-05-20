@@ -85,7 +85,7 @@ const routeConfig: Routes = [
     title: 'รายละเอียดการประเมิณโครงการ',
   },
   {
-    path: 'admin/website/config',
+    path: 'admin/cms/website/config',
     loadComponent: () =>
       import('./website-config/website-config.component').then(
         (mod) => mod.WebsiteConfigComponent
