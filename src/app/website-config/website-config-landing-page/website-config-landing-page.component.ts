@@ -113,8 +113,8 @@ export class WebsiteConfigLandingPageComponent
     this.editorInit = {
       base_url: '/tinymce',
       suffix: '.min',
-      font_size_formats:
-        '8pt 10pt 12pt 14pt 16pt 18pt 20pt 24pt 30pt 36pt 48pt 60pt 72pt',
+      font_size_formats: '10px 12px 14px 16px 18px 20px 24px 28px 32px 48px',
+      line_height_formats: '10px 16px 18px 20px 24px 30px 33px 36px',
       images_file_types: 'jpeg,jpg,jpe,jfi,jif,jfif,png,gif,bmp,webp,svg',
       images_reuse_filename: true,
       block_unsupported_drop: true,

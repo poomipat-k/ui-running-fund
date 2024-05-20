@@ -1,27 +1,32 @@
 @import "../../styles.scss";
 
-.paddingContainer {
-  padding-left: 15rem;
-  padding-right: 15rem;
-  padding-bottom: 16.2rem;
+.carousel {
+  display: block;
+  height: 45rem;
+}
+
+.container {
+  display: flex;
+  justify-content: space-between;
+  padding-left: 12.3rem;
+  padding-right: 8rem;
 }
 
 .text {
   font-family: $custom-font-looped;
-  font-weight: 400;
-  font-size: 1.8rem;
-  line-height: 3rem;
-
   color: #344054;
 }
 
-.nav {
-  &__container {
-    display: flex;
-    gap: 3.1rem;
-    justify-content: space-between;
-  }
+.contentContainer {
+  flex: 2;
+}
 
+.fixedContainer {
+  flex: 1;
+  display: block;
+}
+
+.nav {
   &__link {
     text-decoration: none;
   }
@@ -29,14 +34,20 @@
   &__button {
     display: flex;
     justify-content: center;
-    padding: 2.4rem 2rem;
+    padding: 2rem;
     align-items: center;
     gap: 2rem;
-    background-color: #fff;
     outline: none;
     border: none;
     border-radius: 16px;
-    background-color: #ffe3ce;
+    background-color: #ffbe88;
+    position: relative;
+
+    border: 1px solid green;
+
+    margin: auto;
+
+    box-shadow: 0 3px 0 0 #f05036;
 
     cursor: pointer;
 
@@ -51,22 +62,36 @@
 
   &__text {
     font-family: $custom-font;
-    font-weight: 500;
-    font-size: 2rem;
-    line-height: 3.3rem;
-    color: #000;
+    font-weight: 600;
+    font-size: 1.8rem;
+    line-height: 3rem;
+    color: #344054;
     text-align: left;
   }
 
   &__svg {
-    width: 4rem;
-    height: 4rem;
+    width: 2.4rem;
+    height: 2.4rem;
   }
 }
 
+.star {
+  position: absolute;
+  top: -4.5rem;
+  left: -4.5rem;
+  width: 5.5rem;
+}
+
+.flag {
+  position: absolute;
+  top: -8.6rem;
+  right: -15rem;
+  width: 20rem;
+}
+
 .width {
-  &-307 {
-    min-width: 307px;
+  &-272 {
+    min-width: 272px;
     width: auto;
   }
   &-400 {
@@ -76,10 +101,13 @@
 }
 
 .mgt {
-  &-74 {
-    margin-top: 74px;
+  &-5 {
+    margin-top: 5px;
   }
-  &-116 {
-    margin-top: 116px;
+  &-83 {
+    margin-top: 83px;
+  }
+  &-96 {
+    margin-top: 96px;
   }
 }

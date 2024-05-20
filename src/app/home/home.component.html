@@ -1,48 +1,74 @@
-<app-com-carousel [slides]="sliderItems" [intervalMs]="3000"></app-com-carousel>
+<div class="carousel">
+  <app-com-carousel
+    [slides]="sliderItems"
+    [intervalMs]="3000"
+  ></app-com-carousel>
+</div>
 
-<div class="paddingContainer">
-  <div class="content text mgt-116" [innerHTML]="content | safeHtml"></div>
+<div class="container">
+  <div
+    class="contentContainer text mgt-96"
+    [innerHTML]="content | safeHtml"
+  ></div>
 
-  <img
+  <!-- <img
     src="https://running-fund-static-store.s3.ap-southeast-1.amazonaws.com/cms/landing/1716191416881-mceu_13253316711716191416873.svg"
     alt="failed to load svg"
-  />
-  <div class="nav__container mgt-74">
+  /> -->
+
+  <div class="fixedContainer mgt-83">
     <!-- How to Create -->
     <a routerLink="/how-to-create" class="nav__link">
-      <button class="nav__button width-307">
+      <button class="nav__button width-272">
         <div class="nav__svg">
           <svg
-            width="40"
-            height="41"
-            viewBox="0 0 40 41"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
           >
-            <mask
-              id="mask0_2996_28220"
-              style="mask-type: alpha"
-              maskUnits="userSpaceOnUse"
-              x="0"
-              y="0"
-              width="40"
-              height="41"
-            >
-              <rect y="0.5" width="40" height="40" fill="#D9D9D9" />
-            </mask>
-            <g mask="url(#mask0_2996_28220)">
-              <path
-                d="M13.3055 30.2229H26.6944V27.4451H13.3055V30.2229ZM13.3055 23.2784H26.6944V20.5007H13.3055V23.2784ZM9.44438 37.1673C8.69438 37.1673 8.04392 36.8919 7.493 36.3409C6.94208 35.79 6.66663 35.1396 6.66663 34.3896V6.61174C6.66663 5.86174 6.94208 5.21128 7.493 4.66036C8.04392 4.10944 8.69438 3.83398 9.44438 3.83398H23.9166L33.3333 13.2507V34.3896C33.3333 35.1396 33.0578 35.79 32.5069 36.3409C31.956 36.8919 31.3055 37.1673 30.5555 37.1673H9.44438ZM22.5278 14.5562V6.61174H9.44438V34.3896H30.5555V14.5562H22.5278Z"
-                fill="#9C2A10"
-              />
-            </g>
+            <path
+              d="M14.9805 7.01562C14.9805 7.01562 15.4805 7.51562 15.9805 8.51562C15.9805 8.51562 17.5687 6.01562 18.9805 5.51562"
+              stroke="#344054"
+              stroke-width="1.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+            <path
+              d="M9.99485 2.02141C7.49638 1.91562 5.56612 2.20344 5.56612 2.20344C4.34727 2.29059 2.01146 2.97391 2.01148 6.9646C2.0115 10.9214 1.98564 15.7993 2.01148 17.744C2.01148 18.932 2.7471 21.7034 5.29326 21.8519C8.3881 22.0324 13.9627 22.0708 16.5205 21.8519C17.2051 21.8133 19.4846 21.2758 19.7731 18.7957C20.072 16.2264 20.0125 14.4407 20.0125 14.0157"
+              stroke="#344054"
+              stroke-width="1.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+            <path
+              d="M21.9999 7.01562C21.9999 9.77706 19.7591 12.0156 16.995 12.0156C14.231 12.0156 11.9902 9.77706 11.9902 7.01562C11.9902 4.2542 14.231 2.01562 16.995 2.01562C19.7591 2.01562 21.9999 4.2542 21.9999 7.01562Z"
+              stroke="#344054"
+              stroke-width="1.5"
+              stroke-linecap="round"
+            />
+            <path
+              d="M6.98047 13.0156H10.9805"
+              stroke="#344054"
+              stroke-width="1.5"
+              stroke-linecap="round"
+            />
+            <path
+              d="M6.98047 17.0156H14.9805"
+              stroke="#344054"
+              stroke-width="1.5"
+              stroke-linecap="round"
+            />
           </svg>
         </div>
         <div class="nav__text">วิธีสร้างใบขอทุนสนับสนุน</div>
+
+        <img src="/assets/landing_star.png" alt="star" class="star" />
+        <img src="/assets/landing_flag.png" alt="flag" class="flag" />
       </button>
     </a>
-  </div>
-  <div class="mgt-74">
-    <app-com-faq></app-com-faq>
+
+    <img src="/assets/landing_page_run.png" alt="running img" class="mgt-5" />
   </div>
 </div>
