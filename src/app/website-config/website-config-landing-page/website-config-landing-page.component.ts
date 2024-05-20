@@ -95,26 +95,6 @@ export class WebsiteConfigLandingPageComponent
     );
 
     this.initRichTextEditor();
-
-    this.subs.push(
-      this.websiteConfigService.getLandingPage().subscribe((result) => {
-        if (result) {
-          this.form.patchValue({
-            content: result.content,
-          });
-          result.banner?.forEach((b) => {
-            this.bannerFormArray.push(
-              new FormGroup({
-                id: new FormControl(b.id ?? null),
-                objectKey: new FormControl(b.objectKey ?? null),
-                linkTo: new FormControl(b.linkTo ?? null),
-                fullPath: new FormControl(b.fullPath ?? null),
-              })
-            );
-          });
-        }
-      })
-    );
   }
 
   ngAfterViewInit(): void {

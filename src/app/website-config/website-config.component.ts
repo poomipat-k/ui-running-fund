@@ -76,6 +76,11 @@ export class WebsiteConfigComponent implements OnInit, AfterViewInit {
   get landingGroup(): FormGroup {
     return this.form.get('landing') as FormGroup;
   }
+
+  get bannerFormArray(): FormArray {
+    return this.form.get('landing.banner') as FormArray;
+  }
+
   get dashboardGroup(): FormGroup {
     return this.form.get('dashboard') as FormGroup;
   }
@@ -89,6 +94,7 @@ export class WebsiteConfigComponent implements OnInit, AfterViewInit {
     }
 
     // Load dashboard data
+    this.loadLandingPageData();
     this.getDashboardPeriod();
   }
 
@@ -128,6 +134,31 @@ export class WebsiteConfigComponent implements OnInit, AfterViewInit {
         fromDateBeforeToDateValidator()
       ),
     });
+  }
+
+  private loadLandingPageData() {
+    this.subs.push(
+      this.websiteConfigService.getLandingPage().subscribe((result) => {
+        if (result) {
+          this.form.patchValue({
+            landing: {
+              content: result.content,
+            },
+          });
+          result.banner?.forEach((b) => {
+            this.bannerFormArray.push(
+              new FormGroup({
+                id: new FormControl(b.id ?? null),
+                objectKey: new FormControl(b.objectKey ?? null),
+                linkTo: new FormControl(b.linkTo ?? null),
+                fullPath: new FormControl(b.fullPath ?? null),
+              })
+            );
+          });
+          this.originalFormValue = this.form.value;
+        }
+      })
+    );
   }
 
   private loadDashboardData(pageNo: number) {
@@ -194,24 +225,20 @@ export class WebsiteConfigComponent implements OnInit, AfterViewInit {
       console.error(this.form.errors);
       return;
     }
-    console.log('==originalFormValue', this.originalFormValue);
-    console.log('==form ', this.form.value);
     console.log(
-      '===isEqual(this.originalFormValue, this.form.value)',
+      '===is form changed',
       isEqual(this.originalFormValue, this.form.value)
     );
     if (isEqual(this.originalFormValue, this.form.value)) {
-      console.log('==1');
       console.warn('nothing changed from current website configuration');
       this.successPopupText = 'ไม่มีการเปลี่ยนแปลงข้อมูล';
       this.showSuccessPopup = true;
       setTimeout(() => {
         this.showSuccessPopup = false;
         this.redirectToDashboardPage();
-      }, 200000);
+      }, 2000);
       return;
     }
-    console.log('==2');
 
     this.subs.push(
       this.websiteConfigService
@@ -223,7 +250,7 @@ export class WebsiteConfigComponent implements OnInit, AfterViewInit {
             setTimeout(() => {
               this.showSuccessPopup = false;
               this.redirectToDashboardPage();
-            }, 200000);
+            }, 2000);
           }
         })
     );
