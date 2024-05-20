@@ -2,7 +2,7 @@
   @if (!isEdit) {
   <div class="pdb-178">
     <h1 class="header">คำถามที่พบบ่อย (FAQ)</h1>
-    <div class="mgt-18">
+    <div class="mgt-10">
       <app-com-button>
         <div class="button" (click)="changeIsEdit(true)">
           <svg
@@ -35,6 +35,34 @@
         </div>
       </app-com-button>
     </div>
+
+    @if (formArray.controls.length > 0) {
+    <!-- table -->
+    <div class="table mgt-18">
+      <div class="table__row">
+        <div class="table__cell table__cell--header table__cell--no">No.</div>
+        <div class="table__cell table__cell--header table__cell--flex1">
+          คำถาม
+        </div>
+        <div class="table__cell table__cell--header table__cell--delete"></div>
+      </div>
+      @for (item of formArray.controls; track $index) {
+      <div class="table__row">
+        <div class="table__cell table__cell--no">{{ $index + 1 }}</div>
+        <div class="table__cell table__cell--flex1">
+          {{ item.value.question }}
+        </div>
+        <div class="table__cell table__cell--delete">
+          <img
+            src="/assets/close_icon.svg"
+            alt="X"
+            (click)="onDeleteQuestion($index)"
+          />
+        </div>
+      </div>
+      }
+    </div>
+    }
   </div>
   } @else {
   <div class="addQuestion pdb-49">

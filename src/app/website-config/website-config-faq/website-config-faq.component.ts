@@ -58,6 +58,11 @@ export class WebsiteConfigFaqComponent implements OnInit {
         answer: new FormControl(this.form.value.answer, Validators.required),
       })
     );
+    this.form.reset();
+  }
+
+  onDeleteQuestion(index: number) {
+    this.formArray.removeAt(index);
   }
 
   private markFieldsTouched() {
