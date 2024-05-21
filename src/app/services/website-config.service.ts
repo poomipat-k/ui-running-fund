@@ -6,6 +6,7 @@ import { environment } from '../../environments/environment';
 import { AdminUpdateWebsiteConfig } from '../shared/models/admin-update-website-config';
 import { CmsConfig } from '../shared/models/cms-config';
 import { CommonSuccessResponse } from '../shared/models/common-success-response';
+import { FAQ } from '../shared/models/faq';
 import { LandingPage } from '../shared/models/landing-page';
 
 @Injectable({
@@ -26,6 +27,12 @@ export class WebsiteConfigService {
   getCmsData() {
     return this.http
       .get<CmsConfig>(`${this.baseApiUrl}/content/cms`)
+      .pipe(catchError(this.handleError));
+  }
+
+  getFAQ() {
+    return this.http
+      .get<FAQ[]>(`${this.baseApiUrl}/content/faq`)
       .pipe(catchError(this.handleError));
   }
 

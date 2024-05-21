@@ -9,6 +9,8 @@ import { InputTextComponent } from '../components/input-text/input-text.componen
 import { SuccessPopupComponent } from '../components/success-popup/success-popup.component';
 import { TextareaComponent } from '../components/textarea/textarea.component';
 import { ContactUsService } from '../services/contact-us.service';
+import { WebsiteConfigService } from '../services/website-config.service';
+import { AccordionItem } from '../shared/models/accordion-item';
 
 @Component({
   selector: 'app-asking-for-help',
@@ -31,10 +33,15 @@ export class AskingForHelpComponent implements OnInit, OnDestroy {
   private readonly scroller: ViewportScroller = inject(ViewportScroller);
   private readonly contactUsService: ContactUsService =
     inject(ContactUsService);
+  private readonly websiteConfigService: WebsiteConfigService =
+    inject(WebsiteConfigService);
+
   protected enableScroll = true;
 
   protected showSuccessPopup = false;
   protected successPopupText = 'ส่งข้อความขอความช่วยเหลือสำเร็จ';
+
+  protected faqList: AccordionItem[] = [];
 
   subs: Subscription[] = [];
 
@@ -49,6 +56,8 @@ export class AskingForHelpComponent implements OnInit, OnDestroy {
       lastName: new FormControl(null, [Validators.required]),
       message: new FormControl(null, [Validators.required]),
     });
+
+    this.getFaq();
   }
 
   ngOnDestroy(): void {
@@ -119,5 +128,18 @@ export class AskingForHelpComponent implements OnInit, OnDestroy {
       }
     }
     return '';
+  }
+
+  private getFaq() {
+    this.subs.push(
+      this.websiteConfigService.getFAQ().subscribe((faqList) => {
+        if (faqList) {
+          this.faqList = faqList?.map((faq) => ({
+            header: faq.question,
+            content: faq.answer,
+          }));
+        }
+      })
+    );
   }
 }

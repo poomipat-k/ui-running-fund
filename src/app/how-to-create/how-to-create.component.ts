@@ -2,11 +2,14 @@ import { CommonModule, ViewportScroller } from '@angular/common';
 import { Component, OnInit, inject } from '@angular/core';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { ButtonComponent } from '../components/button/button/button.component';
 import { FaqComponent } from '../components/faq/faq.component';
 import { ThemeService } from '../services/theme.service';
+import { WebsiteConfigService } from '../services/website-config.service';
 import { IntersectionElementDirective } from '../shared/directives/intersection-element.directive';
 import { BackgroundColor } from '../shared/enums/background-color';
+import { AccordionItem } from '../shared/models/accordion-item';
 
 @Component({
   selector: 'app-how-to-create',
@@ -25,6 +28,12 @@ export class HowToCreateComponent implements OnInit {
   private readonly themeService: ThemeService = inject(ThemeService);
   private readonly domSanitizer: DomSanitizer = inject(DomSanitizer);
   private readonly scroller: ViewportScroller = inject(ViewportScroller);
+  private readonly websiteConfigService: WebsiteConfigService =
+    inject(WebsiteConfigService);
+
+  private readonly subs: Subscription[] = [];
+
+  protected faqList: AccordionItem[] = [];
 
   protected howToCreateText = `Corem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eu turpis molestie, dictum est a, mattis tellus. Sed dignissim, metus nec fringilla accumsan, risus sem sollicitudin lacus, ut interdum tellus elit sed risus. Maecenas eget condimentum velit, sit amet feugiat lectus. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Praesent auctor purus luctus enim egestas, ac scelerisque ante pulvinar. Donec ut rhoncus ex. Suspendisse ac rhoncus nisl, eu tempor urna. Curabitur vel bibendum lorem. Morbi convallis convallis diam sit amet lacinia. Aliquam in elementum tellus
                  Curabitur tempor quis eros tempus lacinia. Nam bibendum pellentesque quam a convallis. Sed ut vulputate nisi. Integer in felis sed leo vestibulum venenatis. Suspendisse quis arcu sem. Aenean feugiat ex eu vestibulum vestibulum. Morbi a eleifend magna. Nam metus lacus, porttitor eu mauris a, blandit ultrices nibh. Mauris sit amet magna non ligula vestibulum eleifend. Nulla varius volutpat turpis sed lacinia. Nam eget mi in purus lobortis eleifend. Sed nec ante dictum sem condimentum ullamcorper quis venenatis nisi. Proin vitae facilisis nisi, ac posuere leo.
@@ -59,6 +68,21 @@ Curabitur tempor quis eros tempus lacinia. Nam bibendum pellentesque quam a conv
 
     this.safeVideoUrl = this.domSanitizer.bypassSecurityTrustResourceUrl(
       this.youtubeUrl
+    );
+
+    this.getFaq();
+  }
+
+  private getFaq() {
+    this.subs.push(
+      this.websiteConfigService.getFAQ().subscribe((faqList) => {
+        if (faqList) {
+          this.faqList = faqList?.map((faq) => ({
+            header: faq.question,
+            content: faq.answer,
+          }));
+        }
+      })
     );
   }
 
