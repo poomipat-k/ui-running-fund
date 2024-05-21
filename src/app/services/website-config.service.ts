@@ -4,6 +4,7 @@ import { Observable, catchError, throwError } from 'rxjs';
 import { environment } from '../../environments/environment';
 
 import { AdminUpdateWebsiteConfig } from '../shared/models/admin-update-website-config';
+import { CmsConfig } from '../shared/models/cms-config';
 import { CommonSuccessResponse } from '../shared/models/common-success-response';
 import { LandingPage } from '../shared/models/landing-page';
 
@@ -19,6 +20,12 @@ export class WebsiteConfigService {
   getLandingPage() {
     return this.http
       .get<LandingPage>(`${this.baseApiUrl}/content/landing`)
+      .pipe(catchError(this.handleError));
+  }
+
+  getCmsData() {
+    return this.http
+      .get<CmsConfig>(`${this.baseApiUrl}/content/cms`)
       .pipe(catchError(this.handleError));
   }
 

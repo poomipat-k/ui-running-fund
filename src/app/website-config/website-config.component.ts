@@ -106,7 +106,7 @@ export class WebsiteConfigComponent implements OnInit, AfterViewInit {
     }
 
     // Load dashboard data
-    this.loadLandingPageData();
+    this.loadCmsData();
     this.getDashboardPeriod();
   }
 
@@ -156,22 +156,34 @@ export class WebsiteConfigComponent implements OnInit, AfterViewInit {
     this.originalFormValue = this.form.value;
   }
 
-  private loadLandingPageData() {
+  private loadCmsData() {
     this.subs.push(
-      this.websiteConfigService.getLandingPage().subscribe((result) => {
+      this.websiteConfigService.getCmsData().subscribe((result) => {
+        console.log('==result', result);
         if (result) {
           this.form.patchValue({
             landing: {
-              content: result.content,
+              content: result.landing.content,
             },
           });
-          result.banner?.forEach((b) => {
+          // banners
+          result.landing.banner?.forEach((b) => {
             this.bannerFormArray.push(
               new FormGroup({
                 id: new FormControl(b.id ?? null),
                 objectKey: new FormControl(b.objectKey ?? null),
                 linkTo: new FormControl(b.linkTo ?? null),
                 fullPath: new FormControl(b.fullPath ?? null),
+              })
+            );
+          });
+          // faq list
+          result.faq?.forEach((faq) => {
+            this.faqFormArray.push(
+              new FormGroup({
+                id: new FormControl(faq.id ?? null),
+                question: new FormControl(faq.question ?? null),
+                answer: new FormControl(faq.answer ?? null),
               })
             );
           });
