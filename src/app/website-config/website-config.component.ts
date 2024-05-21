@@ -62,7 +62,7 @@ export class WebsiteConfigComponent implements OnInit, AfterViewInit {
   protected sideNavItems: WebsiteConfigSideNav[] = [
     {
       display: 'Landing Page',
-      value: 'landingPage',
+      value: 'landing',
     },
     {
       display: 'Dashboard',
@@ -304,11 +304,16 @@ export class WebsiteConfigComponent implements OnInit, AfterViewInit {
     console.log('==submitting');
 
     if (!this.form.valid) {
-      console.error(this.form.errors);
+      console.error(this.form);
+
+      const errorId = this.getFirstErrorIdWithPrefix(this.form, '');
+      console.error('errorId', errorId);
+      const errorNav = errorId.split('.')[0];
+      this.activeNav = errorNav;
       return;
     }
     console.log(
-      '===is form changed',
+      '===isForm changed',
       !isEqual(this.originalFormValue, this.form.value)
     );
     if (isEqual(this.originalFormValue, this.form.value)) {
@@ -336,6 +341,29 @@ export class WebsiteConfigComponent implements OnInit, AfterViewInit {
           }
         })
     );
+  }
+
+  // DFS to get formControl error first then check formGroup
+  private getFirstErrorIdWithPrefix(
+    rootGroup: FormGroup,
+    prefix: string
+  ): string {
+    const keys = Object.keys(rootGroup.controls);
+    for (const k of keys) {
+      if ((rootGroup.controls[k] as FormGroup)?.controls) {
+        const val = this.getFirstErrorIdWithPrefix(
+          rootGroup.controls[k] as FormGroup,
+          prefix ? `${prefix}.${k}` : k
+        );
+        if (val) {
+          return val;
+        }
+      }
+      if (!rootGroup.controls[k].valid) {
+        return prefix ? `${prefix}.${k}` : k;
+      }
+    }
+    return '';
   }
 
   onCancel() {
