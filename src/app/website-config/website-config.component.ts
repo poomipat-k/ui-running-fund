@@ -173,12 +173,12 @@ export class WebsiteConfigComponent implements OnInit, AfterViewInit {
           // }),
         ]),
         contact: new FormGroup({
-          email: new FormControl(null, Validators.required),
-          phoneNumber: new FormControl(null, Validators.required),
-          fromHour: new FormControl(null, Validators.required),
-          fromMinute: new FormControl(null, Validators.required),
-          toHour: new FormControl(null, Validators.required),
-          toMinute: new FormControl(null, Validators.required),
+          // email: new FormControl(null, Validators.required),
+          // phoneNumber: new FormControl(null, Validators.required),
+          // fromHour: new FormControl(null, Validators.required),
+          // fromMinute: new FormControl(null, Validators.required),
+          // toHour: new FormControl(null, Validators.required),
+          // toMinute: new FormControl(null, Validators.required),
         }),
       }),
     });

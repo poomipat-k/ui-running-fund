@@ -142,6 +142,11 @@ export class WebsiteConfigLandingPageComponent
           concatMap((files) => {
             if (files.length > 0) {
               const formData = new FormData();
+              const formPayload = {
+                name: 'banner',
+                pathPrefix: 'cms/landing_banner',
+              };
+              formData.append('form', JSON.stringify(formPayload));
               formData.append('banner', files[0]);
               return this.s3Service.uploadFileToStaticBucket(formData);
             }

@@ -49,6 +49,14 @@ export class WebsiteConfigFooterComponent implements AfterViewInit, OnDestroy {
     this.footerLogoFormArray.removeAt(index);
   }
 
+  protected getImageFileName(objectKey: string): string {
+    if (!objectKey) {
+      return '';
+    }
+    const splits = objectKey.split('/');
+    return splits[splits.length - 1];
+  }
+
   private watchFileChangesAndUploadFormData() {
     this.subs.push(
       this.footerLogoFilesSubject
@@ -56,7 +64,13 @@ export class WebsiteConfigFooterComponent implements AfterViewInit, OnDestroy {
           concatMap((files) => {
             if (files.length > 0) {
               const formData = new FormData();
-              formData.append('footerLogo', files[0]);
+              const name = 'footerLogo';
+              const formPayload = {
+                name,
+                pathPrefix: 'cms/footer',
+              };
+              formData.append('form', JSON.stringify(formPayload));
+              formData.append(name, files[0]);
               return this.s3Service.uploadFileToStaticBucket(formData);
             }
             return of(new S3UploadResponse());
