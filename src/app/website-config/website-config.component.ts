@@ -107,7 +107,6 @@ export class WebsiteConfigComponent implements OnInit, AfterViewInit {
 
     // Load dashboard data
     this.loadCmsData();
-    this.getDashboardPeriod();
   }
 
   ngAfterViewInit(): void {
@@ -164,6 +163,14 @@ export class WebsiteConfigComponent implements OnInit, AfterViewInit {
           this.form.patchValue({
             landing: {
               content: result.landing.content,
+            },
+            dashboard: {
+              fromYear: result.dashboard.fromYear,
+              fromMonth: result.dashboard.fromMonth,
+              fromDay: result.dashboard.fromDay,
+              toYear: result.dashboard.toYear,
+              toMonth: result.dashboard.toMonth,
+              toDay: result.dashboard.toDay,
             },
           });
           // banners
@@ -315,36 +322,5 @@ export class WebsiteConfigComponent implements OnInit, AfterViewInit {
 
   private getStatusDisplay(row: AdminDashboardDateConfigPreviewRow): string {
     return `standard__${row.projectStatus}`;
-  }
-
-  private getDashboardPeriod() {
-    this.subs.push(
-      this.projectService.getReviewPeriod().subscribe((p) => {
-        const fromDate = new Date(p.fromDate);
-        const rawToDate = new Date(p.toDate);
-        const toDate = new Date(rawToDate.getTime() - 1000);
-        const localFromDate = fromDate.toLocaleDateString('en-US', {
-          timeZone: 'Asia/bangkok',
-        });
-        const localToDate = toDate.toLocaleDateString('en-US', {
-          timeZone: 'Asia/bangkok',
-        });
-        const [fromMonth, fromDay, fromYear] = localFromDate
-          ?.split('/')
-          .map((s) => +s);
-        const [toMonth, toDay, toYear] = localToDate?.split('/').map((s) => +s);
-        this.form.patchValue({
-          dashboard: {
-            fromYear,
-            fromMonth,
-            fromDay,
-            toYear,
-            toMonth,
-            toDay,
-          },
-        });
-        this.originalFormValue = this.form.value;
-      })
-    );
   }
 }
