@@ -1,0 +1,65 @@
+<div class="container">
+  <h1 class="header">Landing Page Setting</h1>
+  <h2 class="subHeader mgt-13">Banner Setting</h2>
+
+  <div class="mgt-11">
+    <div>
+      <app-com-upload-button
+        #uploadButton
+        [filesSubject]="footerLogoFilesSubject"
+        [disabled]="false"
+        text="เพิ่ม Footer"
+        accept="image/jpg, image/jpeg, image/png, image/svg+xml"
+        [showFilesList]="false"
+        [multiple]="false"
+      ></app-com-upload-button>
+    </div>
+  </div>
+  <!-- Banners display table -->
+  <div class="table mgt-18">
+    <div class="table__row">
+      <div class="table__cell table__cell--header table__cell--no">No.</div>
+      <div class="table__cell table__cell--header table__cell--flex1">
+        File Name
+      </div>
+      <div class="table__cell table__cell--header table__cell--flex1">
+        Link to url
+      </div>
+      <div class="table__cell table__cell--header table__cell--preview">
+        Preview
+      </div>
+      <div class="table__cell table__cell--header table__cell--delete"></div>
+    </div>
+    @for (item of footerLogoFormArray.controls; track $index) {
+    <div class="table__row">
+      <div class="table__cell table__cell--no">{{ $index + 1 }}</div>
+      <div class="table__cell table__cell--flex1">
+        <!-- {{ getImageFileName(item.value.objectKey) }} -->
+      </div>
+      <div class="table__cell table__cell--flex1">
+        <app-com-input-text
+          placeholder="link to url"
+          [form]="getLogoFormGroup($index)"
+          controlName="linkTo"
+        ></app-com-input-text>
+      </div>
+      <div class="table__cell table__cell--preview">
+        <img
+          class="table__imagePreview"
+          [src]="item.value.fullPath"
+          alt="preview"
+        />
+      </div>
+      <div class="table__cell table__cell--delete">
+        <img
+          src="/assets/close_icon.svg"
+          alt="X"
+          (click)="onDeleteLogo($index)"
+        />
+      </div>
+    </div>
+    }
+  </div>
+
+  <h2 class="subHeader mgt-71">ข้อมูลติดต่อ</h2>
+</div>

@@ -37,6 +37,11 @@
         #FAQ
         [formArray]="faqFormArray"
       ></app-website-config-faq>
+      } @case ('footer') {
+      <app-website-config-footer
+        [form]="footerFormGroup"
+        [footerLogoFilesSubject]="footerLogoFilesSubject"
+      ></app-website-config-footer>
       } }
       <!-- Button -->
       <div class="button__container mgl-34">

@@ -1,0 +1,81 @@
+@import "../../../styles.scss";
+
+.container {
+  padding: 1.8rem 1.6rem 8.4rem 3.4rem;
+}
+.header {
+  font-family: $custom-font;
+  font-weight: 600;
+  font-size: 2.4rem;
+  line-height: 4rem;
+  color: #000;
+}
+
+.subHeader {
+  font-family: $custom-font;
+  font-weight: 600;
+  font-size: 2rem;
+  line-height: 3.3rem;
+  color: #000;
+}
+
+.table {
+  display: flex;
+  flex-direction: column;
+
+  &__row {
+    display: flex;
+    border-bottom: 1px solid #0000005c;
+  }
+
+  &__cell {
+    padding: 1rem;
+    font-family: $custom-font;
+    font-weight: 400;
+    font-size: 1.6rem;
+    line-height: 2.4rem;
+    color: #344054;
+
+    &--header {
+      font-weight: 500;
+    }
+
+    &--no {
+      flex: 0 0 4.5rem;
+    }
+
+    &--flex1 {
+      flex: 1;
+    }
+
+    &--preview {
+      flex: 0 0 15.4rem;
+    }
+
+    &--delete {
+      flex: 0 0 4.4rem;
+      align-self: center;
+    }
+  }
+
+  &__imagePreview {
+    height: 3rem;
+    width: auto;
+  }
+}
+
+.mgt {
+  &-11 {
+    margin-top: 11px;
+  }
+  &-13 {
+    margin-top: 13px;
+  }
+  &-18 {
+    margin-top: 18px;
+  }
+
+  &-71 {
+    margin-top: 71px;
+  }
+}

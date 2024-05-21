@@ -30,9 +30,7 @@ import {
 import { InputTextComponent } from '../../components/input-text/input-text.component';
 import { UploadButtonComponent } from '../../components/upload-button/upload-button.component';
 import { S3Service } from '../../services/s3.service';
-import { WebsiteConfigService } from '../../services/website-config.service';
 import { S3UploadResponse } from '../../shared/models/s3-upload-response';
-import { SafeHtmlPipe } from '../../shared/pipe/safe-html.pipe';
 
 @Component({
   selector: 'app-website-config-landing-page',
@@ -41,7 +39,7 @@ import { SafeHtmlPipe } from '../../shared/pipe/safe-html.pipe';
     EditorModule,
     FormsModule,
     ReactiveFormsModule,
-    SafeHtmlPipe,
+    // SafeHtmlPipe,
     UploadButtonComponent,
     InputTextComponent,
   ],
@@ -62,8 +60,6 @@ export class WebsiteConfigLandingPageComponent
   private readonly subs: Subscription[] = [];
 
   private readonly s3Service: S3Service = inject(S3Service);
-  private readonly websiteConfigService: WebsiteConfigService =
-    inject(WebsiteConfigService);
 
   protected editorInit: EditorComponent['init'] = {};
   protected editorPlugins =

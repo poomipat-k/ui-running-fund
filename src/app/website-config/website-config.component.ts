@@ -24,6 +24,7 @@ import { WebsiteConfigSideNav } from '../shared/models/website-config-side-nav';
 import { fromDateBeforeToDateValidator } from '../shared/validators/fromDateBeforeToDate';
 import { WebsiteConfigDashboardComponent } from './website-config-dashboard/website-config-dashboard.component';
 import { WebsiteConfigFaqComponent } from './website-config-faq/website-config-faq.component';
+import { WebsiteConfigFooterComponent } from './website-config-footer/website-config-footer.component';
 import { WebsiteConfigLandingPageComponent } from './website-config-landing-page/website-config-landing-page.component';
 
 @Component({
@@ -35,6 +36,7 @@ import { WebsiteConfigLandingPageComponent } from './website-config-landing-page
     SuccessPopupComponent,
     CommonModule,
     WebsiteConfigFaqComponent,
+    WebsiteConfigFooterComponent,
   ],
   templateUrl: './website-config.component.html',
   styleUrl: './website-config.component.scss',
@@ -51,6 +53,8 @@ export class WebsiteConfigComponent implements OnInit, AfterViewInit {
   protected dashboardActivePage = 1;
 
   protected bannerFilesSubject = new BehaviorSubject<File[]>([]);
+  protected footerLogoFilesSubject = new BehaviorSubject<File[]>([]);
+
   protected originalFormValue: AdminUpdateWebsiteConfig;
   protected dashboardData: TableCell[][] = [];
   protected dashboardItemCount = 0;
@@ -67,6 +71,10 @@ export class WebsiteConfigComponent implements OnInit, AfterViewInit {
     {
       display: 'คำถามที่พบบ่อย (FAQ)',
       value: 'faq',
+    },
+    {
+      display: 'Footer',
+      value: 'footer',
     },
   ];
   protected showSuccessPopup = false;
@@ -96,13 +104,17 @@ export class WebsiteConfigComponent implements OnInit, AfterViewInit {
     return this.form.get('faq') as FormArray;
   }
 
+  get footerFormGroup(): FormGroup {
+    return this.form.get('footer') as FormGroup;
+  }
+
   ngOnInit(): void {
     this.themeService.changeBackgroundColor(BackgroundColor.white);
     this.initForm();
 
     if (this.sideNavItems[0]) {
       // Todo
-      this.activeNav = this.sideNavItems[2].value;
+      this.activeNav = this.sideNavItems[3].value;
     }
 
     // Load dashboard data
@@ -151,6 +163,24 @@ export class WebsiteConfigComponent implements OnInit, AfterViewInit {
         //   answer: new FormControl(null, Validators.required),
         // }),
       ]),
+      footer: new FormGroup({
+        logo: new FormArray([
+          // new FormGroup({
+          //   id: new FormControl(null),
+          //   objectKey: new FormControl(null),
+          //   linkTo: new FormControl(null),
+          //   fullPath: new FormControl(null),
+          // }),
+        ]),
+        contact: new FormGroup({
+          email: new FormControl(null, Validators.required),
+          phoneNumber: new FormControl(null, Validators.required),
+          fromHour: new FormControl(null, Validators.required),
+          fromMinute: new FormControl(null, Validators.required),
+          toHour: new FormControl(null, Validators.required),
+          toMinute: new FormControl(null, Validators.required),
+        }),
+      }),
     });
     this.originalFormValue = this.form.value;
   }
