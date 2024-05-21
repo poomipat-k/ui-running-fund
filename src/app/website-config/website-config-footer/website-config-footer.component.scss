@@ -19,6 +19,44 @@
   color: #000;
 }
 
+.contact {
+  display: flex;
+  flex-direction: column;
+  gap: 1.8rem;
+
+  &__item {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+
+    &-label {
+      font-family: $custom-font;
+      font-weight: 500;
+      font-size: 1.6rem;
+      line-height: 2.7rem;
+      color: #000;
+    }
+  }
+}
+
+.op {
+  display: flex;
+  gap: 1rem;
+
+  &__item {
+    display: flex;
+    gap: 4px;
+  }
+
+  &__text {
+    font-family: $custom-font;
+    font-weight: 400;
+    font-size: 1.6rem;
+    line-height: 2rem;
+    color: #344054;
+  }
+}
+
 .table {
   display: flex;
   flex-direction: column;
@@ -65,6 +103,9 @@
 }
 
 .mgt {
+  &-10 {
+    margin-top: 10px;
+  }
   &-11 {
     margin-top: 11px;
   }

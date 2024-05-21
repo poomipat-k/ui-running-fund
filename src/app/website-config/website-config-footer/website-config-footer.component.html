@@ -61,5 +61,89 @@
     }
   </div>
 
-  <h2 class="subHeader mgt-71">ข้อมูลติดต่อ</h2>
+  <div class="mgt-71">
+    <h2 class="subHeader">ข้อมูลติดต่อ</h2>
+    <div class="contact">
+      <!-- Email -->
+      <div class="contact__item">
+        <div class="contact__item-label">E-mail</div>
+        <div>
+          <app-com-input-text
+            placeholder="กรอกอีเมล"
+            [form]="footerContact"
+            controlName="email"
+            width="70.2rem"
+            height="4.4rem"
+          ></app-com-input-text>
+        </div>
+      </div>
+      <!-- PhoneNumber -->
+      <div class="contact__item">
+        <div class="contact__item-label">E-mail</div>
+        <div>
+          <app-com-input-text
+            placeholder="กรอกเบอร์โทรศัพท์"
+            [form]="footerContact"
+            controlName="phoneNumber"
+            width="70.2rem"
+            height="4.4rem"
+            appOnlyNumber
+          ></app-com-input-text>
+        </div>
+      </div>
+
+      <div class="contact__item">
+        <div class="contact__item-label">เวลาทำการ</div>
+        <div class="op">
+          <div class="op__item">
+            <div>
+              <app-com-input-text
+                placeholder="09"
+                [form]="footerContact"
+                controlName="fromHour"
+                width="5rem"
+                height="4.4rem"
+                appOnlyNumber
+              ></app-com-input-text>
+            </div>
+            <p class="op__text mgt-10">:</p>
+            <div>
+              <app-com-input-text
+                placeholder="00"
+                [form]="footerContact"
+                controlName="fromMinute"
+                width="5rem"
+                height="4.4rem"
+                appOnlyNumber
+              ></app-com-input-text>
+            </div>
+          </div>
+          <p class="op__item op__text mgt-10">ถึง</p>
+          <div class="op__item">
+            <div>
+              <app-com-input-text
+                placeholder="17"
+                [form]="footerContact"
+                controlName="toHour"
+                width="5rem"
+                height="4.4rem"
+                appOnlyNumber
+              ></app-com-input-text>
+            </div>
+            <p class="op__text mgt-10">:</p>
+            <div>
+              <app-com-input-text
+                placeholder="00"
+                [form]="footerContact"
+                controlName="toMinute"
+                width="5rem"
+                height="4.4rem"
+                appOnlyNumber
+              ></app-com-input-text>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

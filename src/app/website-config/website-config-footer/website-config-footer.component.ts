@@ -11,12 +11,13 @@ import { BehaviorSubject, Subscription, concatMap, of } from 'rxjs';
 import { InputTextComponent } from '../../components/input-text/input-text.component';
 import { UploadButtonComponent } from '../../components/upload-button/upload-button.component';
 import { S3Service } from '../../services/s3.service';
+import { OnlyNumberDirective } from '../../shared/directives/only-number.directive';
 import { S3UploadResponse } from '../../shared/models/s3-upload-response';
 
 @Component({
   selector: 'app-website-config-footer',
   standalone: true,
-  imports: [UploadButtonComponent, InputTextComponent],
+  imports: [UploadButtonComponent, InputTextComponent, OnlyNumberDirective],
   templateUrl: './website-config-footer.component.html',
   styleUrl: './website-config-footer.component.scss',
 })
@@ -31,6 +32,10 @@ export class WebsiteConfigFooterComponent implements AfterViewInit, OnDestroy {
 
   get footerLogoFormArray(): FormArray {
     return this.form.get('logo') as FormArray;
+  }
+
+  get footerContact(): FormGroup {
+    return this.form.get('contact') as FormGroup;
   }
 
   ngAfterViewInit(): void {
