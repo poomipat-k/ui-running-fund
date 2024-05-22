@@ -108,6 +108,10 @@ export class WebsiteConfigComponent implements OnInit, AfterViewInit {
     return this.form.get('footer') as FormGroup;
   }
 
+  get footerLogoFormArray(): FormArray {
+    return this.form.get('footer.logo') as FormArray;
+  }
+
   ngOnInit(): void {
     this.themeService.changeBackgroundColor(BackgroundColor.white);
     this.initForm();
@@ -202,6 +206,9 @@ export class WebsiteConfigComponent implements OnInit, AfterViewInit {
               toMonth: result.dashboard.toMonth,
               toDay: result.dashboard.toDay,
             },
+            footer: {
+              contact: result.footer.contact,
+            },
           });
           // banners
           result.landing.banner?.forEach((b) => {
@@ -224,6 +231,18 @@ export class WebsiteConfigComponent implements OnInit, AfterViewInit {
               })
             );
           });
+          // footer logos
+          result.footer.logo?.forEach((logo) => {
+            this.footerLogoFormArray.push(
+              new FormGroup({
+                id: new FormControl(logo?.id),
+                objectKey: new FormControl(logo?.objectKey),
+                linkTo: new FormControl(logo?.linkTo),
+                fullPath: new FormControl(logo?.fullPath),
+              })
+            );
+          });
+
           this.originalFormValue = this.form.value;
         }
       })

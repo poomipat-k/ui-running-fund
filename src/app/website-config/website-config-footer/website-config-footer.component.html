@@ -9,7 +9,7 @@
         [filesSubject]="footerLogoFilesSubject"
         [disabled]="false"
         text="เพิ่ม Footer"
-        accept="image/jpg, image/jpeg, image/png"
+        [accept]="acceptMimes"
         [showFilesList]="false"
         [multiple]="false"
       ></app-com-upload-button>
@@ -93,7 +93,6 @@
             controlName="phoneNumber"
             width="70.2rem"
             height="4.4rem"
-            appOnlyNumber
           ></app-com-input-text>
           @if (!phoneNumberControl.valid && phoneNumberControl.touched) {
           <div class="error mgt-4">

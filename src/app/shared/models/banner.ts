@@ -1,4 +1,4 @@
-export class Banner {
+export class ImageRef {
   id: string;
   fullPath: string;
   objectKey: string;

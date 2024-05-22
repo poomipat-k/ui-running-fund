@@ -3,21 +3,11 @@
 
   <div class="footer__container">
     <div class="footer__group-left">
-      <img
-        class="footer__logo--1"
-        src="/assets/footer_sss.svg"
-        alt="Sor Sor Sor logo"
-      />
-      <img
-        class="footer__logo--1 margin-left-footer-1"
-        src="/assets/footer_thai_active.svg"
-        alt="Thai active logo"
-      />
-      <img
-        class="footer__logo--2 margin-left-footer-1"
-        src="/assets/footer_running_club.svg"
-        alt="Running club logo"
-      />
+      <div class="footer__logo">
+        @for (logo of logos; track $index) {
+        <img [src]="logo.fullPath" alt="footer logo" />
+        }
+      </div>
       <div class="margin-left-32">
         <p class="footer__credit footer__credit--header">
           มูลนิธิสมาพันธ์ชมรมเดิน-วิ่งเพื่อสุขภาพไทย
@@ -33,10 +23,11 @@
       <div class="footer__contact-details">
         <p>
           <span class="font-semi-bold">อีเมล</span>
-          off.thaijoggingclub&#64;gmail.com
+          <!-- off.thaijoggingclub&#64;gmail.com -->
+          {{ email }}
         </p>
-        <p><span class="font-semi-bold">โทร</span> 02-115-0598</p>
-        <p><span class="font-semi-bold">เวลาทำการ</span> 09.00 - 17.00 น.</p>
+        <p><span class="font-semi-bold">โทร</span> {{ phoneNumber }}</p>
+        <p><span class="font-semi-bold">เวลาทำการ</span> {{ operatingHour }}</p>
       </div>
     </div>
   </div>

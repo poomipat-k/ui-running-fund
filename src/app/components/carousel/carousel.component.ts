@@ -7,7 +7,7 @@ import {
   OnInit,
   ViewChild,
 } from '@angular/core';
-import { Banner } from '../../shared/models/banner';
+import { ImageRef } from '../../shared/models/banner';
 
 @Component({
   selector: 'app-com-carousel',
@@ -17,7 +17,7 @@ import { Banner } from '../../shared/models/banner';
   styleUrl: './carousel.component.scss',
 })
 export class CarouselComponent implements OnInit, OnDestroy {
-  @Input() slides: Banner[] = [];
+  @Input() slides: ImageRef[] = [];
   @Input() intervalMs = 3000;
 
   protected blurList: boolean[] = [];

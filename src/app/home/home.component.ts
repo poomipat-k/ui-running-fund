@@ -9,7 +9,7 @@ import { DashboardReviewerComponent } from '../dashboard-reviewer/dashboard-revi
 import { ThemeService } from '../services/theme.service';
 import { WebsiteConfigService } from '../services/website-config.service';
 import { BackgroundColor } from '../shared/enums/background-color';
-import { Banner } from '../shared/models/banner';
+import { ImageRef } from '../shared/models/banner';
 import { SafeHtmlPipe } from '../shared/pipe/safe-html.pipe';
 
 @Component({
@@ -34,7 +34,7 @@ export class HomeComponent implements OnInit {
 
   private readonly subs: Subscription[] = [];
 
-  protected sliderItems: Banner[] = [];
+  protected sliderItems: ImageRef[] = [];
   protected content = '';
   ngOnInit(): void {
     this.themeService.changeBackgroundColor(BackgroundColor.white);

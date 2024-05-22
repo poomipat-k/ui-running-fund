@@ -1,9 +1,9 @@
-import { Banner } from './banner';
+import { ImageRef } from './banner';
 
 export class LandingPage {
   websiteConfigId: number;
   content: string;
-  banner: Banner[];
+  banner: ImageRef[];
 
   constructor() {}
 }

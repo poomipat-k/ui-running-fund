@@ -30,6 +30,9 @@ export class WebsiteConfigFooterComponent implements AfterViewInit, OnDestroy {
   private readonly subs: Subscription[] = [];
   private readonly s3Service: S3Service = inject(S3Service);
 
+  // protected acceptMimes = 'image/jpg, image/jpeg, image/png, image/svg+xml';
+  protected acceptMimes = 'image/*';
+
   get footerLogoFormArray(): FormArray {
     return this.form.get('logo') as FormArray;
   }
@@ -91,6 +94,7 @@ export class WebsiteConfigFooterComponent implements AfterViewInit, OnDestroy {
       this.footerLogoFilesSubject
         .pipe(
           concatMap((files) => {
+            console.log('===watchFile files', files);
             if (files.length > 0) {
               const formData = new FormData();
               const name = 'footerLogo';
@@ -105,24 +109,59 @@ export class WebsiteConfigFooterComponent implements AfterViewInit, OnDestroy {
             return of(new S3UploadResponse());
           })
         )
-        .subscribe((response: S3UploadResponse) => {
-          if (response.fullPath && response.objectKey) {
-            this.footerLogoFormArray.push(
-              new FormGroup({
-                id: new FormControl(null),
-                objectKey: new FormControl(response.objectKey),
-                linkTo: new FormControl(null),
-                fullPath: new FormControl(response.fullPath),
-              })
-            );
-            console.log(
-              '===added to footerLogoFormArray',
-              this.footerLogoFormArray.value
-            );
+        .subscribe({
+          next: (response: S3UploadResponse) => {
+            console.log('==sub response', response);
+            if (response.fullPath && response.objectKey) {
+              this.footerLogoFormArray.push(
+                new FormGroup({
+                  id: new FormControl(null),
+                  objectKey: new FormControl(response.objectKey),
+                  linkTo: new FormControl(null),
+                  fullPath: new FormControl(response.fullPath),
+                })
+              );
+              console.log(
+                '===added to footerLogoFormArray',
+                this.footerLogoFormArray.value
+              );
+              this.uploadButtonComponent.clearFiles();
+              console.log('==cleared');
+            }
+          },
+          error: (err) => {
+            console.log('==upload error', err);
             this.uploadButtonComponent.clearFiles();
-            console.log('==cleared');
-          }
+            console.log('==error cleared');
+          },
         })
     );
   }
 }
+
+// {
+//   next: (result) => {
+//     this.apiLoading = false;
+//     if (result) {
+//       // TODO: uncomment this
+//       this.form.disable();
+//       this.showSuccessPopup = true;
+//       setTimeout(() => {
+//         this.showSuccessPopup = false;
+//         // TODO: uncomment this
+//         this.incrementStep();
+//       }, 2000);
+//     }
+//   },
+//   error: (err) => {
+//     console.error(err);
+//     this.apiLoading = false;
+//     this.showErrorPopup = true;
+//     setTimeout(() => {
+//       this.showErrorPopup = false;
+//     }, 2000);
+//   },
+//   complete: () => {
+//     this.apiLoading = false;
+//   },
+// }
