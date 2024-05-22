@@ -10,12 +10,14 @@
       bg__carousel: true
     }"
   >
+    @if (item.linkTo) {
     <a
       [href]="item.linkTo"
       target="_blank"
       [ngClass]="{
         carousel__item: true,
-        'carousel__item--blur': blurList[$index]
+        'carousel__item--blur': blurList[$index],
+        carousel__pointer: item.linkTo
       }"
     >
       <img
@@ -24,6 +26,17 @@
         (load)="imageLoad($index)"
       />
     </a>
+    } @else {
+    <img
+      [src]="slides[$index].fullPath"
+      alt="carousel image"
+      (load)="imageLoad($index)"
+      [ngClass]="{
+      carousel__item: true,
+      'carousel__item--blur': blurList[$index],
+    }"
+    />
+    }
     <!-- Start -->
     <div
       [ngClass]="{

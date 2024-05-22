@@ -44,7 +44,6 @@ export class HomeComponent implements OnInit {
         if (result) {
           this.sliderItems = result.banner || [];
           this.content = result.content;
-          console.log('==result', result);
         }
       })
     );
