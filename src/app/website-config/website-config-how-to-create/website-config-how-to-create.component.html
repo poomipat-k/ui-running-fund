@@ -1,0 +1,29 @@
+<div class="container">
+  <h1 class="header">แก้ไขเนื้อหา</h1>
+  <div class="group mgt-13">
+    @for (item of formArray.controls; track $index) {
+    <div class="group__container">
+      <div class="group__item">
+        <label class="group__item__label">{{ genLabelName($index) }}</label>
+        <app-com-input-text
+          [placeholder]="genPlaceHolder($index)"
+          [form]="getFormGroup($index)"
+          controlName="header"
+        ></app-com-input-text>
+      </div>
+      <div [formGroup]="getFormGroup($index)" class="mgt-6">
+        <label class="group__item__label">{{ genContentName($index) }}</label>
+        <editor
+          #editor
+          formControlName="content"
+          licenseKey="gpl"
+          [init]="editorInit"
+          [plugins]="editorPlugins"
+          [toolbar]="editorToolbar"
+        ></editor>
+        <!-- (change)="modelChangeFn($event)" -->
+      </div>
+    </div>
+    }
+  </div>
+</div>

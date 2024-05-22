@@ -11,7 +11,6 @@ import {
   FormArray,
   FormControl,
   FormGroup,
-  FormsModule,
   ReactiveFormsModule,
 } from '@angular/forms';
 import {
@@ -37,7 +36,6 @@ import { S3UploadResponse } from '../../shared/models/s3-upload-response';
   standalone: true,
   imports: [
     EditorModule,
-    FormsModule,
     ReactiveFormsModule,
     // SafeHtmlPipe,
     UploadButtonComponent,

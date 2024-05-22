@@ -37,6 +37,10 @@
         #FAQ
         [formArray]="faqFormArray"
       ></app-website-config-faq>
+      } @case ('howToCreate') {
+      <app-website-config-how-to-create
+        [formArray]="howToCreateFormArray"
+      ></app-website-config-how-to-create>
       } @case ('footer') {
       <app-website-config-footer
         [form]="footerFormGroup"

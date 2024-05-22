@@ -25,6 +25,7 @@ import { fromDateBeforeToDateValidator } from '../shared/validators/fromDateBefo
 import { WebsiteConfigDashboardComponent } from './website-config-dashboard/website-config-dashboard.component';
 import { WebsiteConfigFaqComponent } from './website-config-faq/website-config-faq.component';
 import { WebsiteConfigFooterComponent } from './website-config-footer/website-config-footer.component';
+import { WebsiteConfigHowToCreateComponent } from './website-config-how-to-create/website-config-how-to-create.component';
 import { WebsiteConfigLandingPageComponent } from './website-config-landing-page/website-config-landing-page.component';
 
 @Component({
@@ -37,6 +38,7 @@ import { WebsiteConfigLandingPageComponent } from './website-config-landing-page
     CommonModule,
     WebsiteConfigFaqComponent,
     WebsiteConfigFooterComponent,
+    WebsiteConfigHowToCreateComponent,
   ],
   templateUrl: './website-config.component.html',
   styleUrl: './website-config.component.scss',
@@ -71,6 +73,10 @@ export class WebsiteConfigComponent implements OnInit, AfterViewInit {
     {
       display: 'คำถามที่พบบ่อย (FAQ)',
       value: 'faq',
+    },
+    {
+      display: 'วิธีสร้างใบขอทุน',
+      value: 'howToCreate',
     },
     {
       display: 'Footer',
@@ -112,13 +118,17 @@ export class WebsiteConfigComponent implements OnInit, AfterViewInit {
     return this.form.get('footer.logo') as FormArray;
   }
 
+  get howToCreateFormArray(): FormArray {
+    return this.form.get('howToCreate') as FormArray;
+  }
+
   ngOnInit(): void {
     this.themeService.changeBackgroundColor(BackgroundColor.white);
     this.initForm();
 
     if (this.sideNavItems[0]) {
       // Todo
-      this.activeNav = this.sideNavItems[0].value;
+      this.activeNav = this.sideNavItems[3].value;
     }
 
     // Load dashboard data
@@ -166,6 +176,12 @@ export class WebsiteConfigComponent implements OnInit, AfterViewInit {
         //   question: new FormControl(null, Validators.required),
         //   answer: new FormControl(null, Validators.required),
         // }),
+      ]),
+      howToCreate: new FormArray([
+        new FormGroup({
+          header: new FormControl(null),
+          content: new FormControl(null),
+        }),
       ]),
       footer: new FormGroup({
         logo: new FormArray([

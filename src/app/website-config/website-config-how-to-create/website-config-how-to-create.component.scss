@@ -1,0 +1,56 @@
+@import "../../../styles.scss";
+
+.container {
+  padding: 1.8rem 0 8.9rem 3rem;
+}
+
+.header {
+  font-family: $custom-font;
+  font-weight: 600;
+  font-size: 2.4rem;
+  line-height: 4rem;
+  color: #000;
+}
+
+.subHeader {
+  font-family: $custom-font;
+  font-weight: 600;
+  font-size: 2rem;
+  line-height: 3.3rem;
+  color: #000;
+}
+
+.group {
+  display: flex;
+  flex-direction: column;
+  gap: 5.7rem;
+
+  &__container {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  &__item {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+
+    &__label {
+      font-family: $custom-font;
+      font-weight: 600;
+      font-size: 2rem;
+      line-height: 3.3rem;
+      color: #000;
+    }
+  }
+}
+
+.mgt {
+  &-6 {
+    margin-top: 6px;
+  }
+  &-13 {
+    margin-top: 13px;
+  }
+}
