@@ -75,11 +75,17 @@
             width="70.2rem"
             height="4.4rem"
           ></app-com-input-text>
+          @if (!emailControl.valid && emailControl.touched) {
+          <div class="error mgt-4">
+            <img src="/assets/error_icon.svg" alt="error icon" />
+            <p class="error__text">กรุณากรอกอีเมล</p>
+          </div>
+          }
         </div>
       </div>
       <!-- PhoneNumber -->
       <div class="contact__item">
-        <div class="contact__item-label">E-mail</div>
+        <div class="contact__item-label">เบอร์โทรศัพท์</div>
         <div>
           <app-com-input-text
             placeholder="กรอกเบอร์โทรศัพท์"
@@ -89,6 +95,12 @@
             height="4.4rem"
             appOnlyNumber
           ></app-com-input-text>
+          @if (!phoneNumberControl.valid && phoneNumberControl.touched) {
+          <div class="error mgt-4">
+            <img src="/assets/error_icon.svg" alt="error icon" />
+            <p class="error__text">กรุณากรอกเบอร์โทรศัพท์</p>
+          </div>
+          }
         </div>
       </div>
 
@@ -105,6 +117,12 @@
                 height="4.4rem"
                 appOnlyNumber
               ></app-com-input-text>
+              @if (!fromHourControl.valid && fromHourControl.touched) {
+              <div class="error mgt-4">
+                <img src="/assets/error_icon.svg" alt="error icon" />
+                <p class="error__text">ชั่วโมง</p>
+              </div>
+              }
             </div>
             <p class="op__text mgt-10">:</p>
             <div>
@@ -116,6 +134,12 @@
                 height="4.4rem"
                 appOnlyNumber
               ></app-com-input-text>
+              @if (!fromMinuteControl.valid && fromMinuteControl.touched) {
+              <div class="error mgt-4">
+                <img src="/assets/error_icon.svg" alt="error icon" />
+                <p class="error__text">นาที</p>
+              </div>
+              }
             </div>
           </div>
           <p class="op__item op__text mgt-10">ถึง</p>
@@ -129,6 +153,12 @@
                 height="4.4rem"
                 appOnlyNumber
               ></app-com-input-text>
+              @if (!toHourControl.valid && toHourControl.touched) {
+              <div class="error mgt-4">
+                <img src="/assets/error_icon.svg" alt="error icon" />
+                <p class="error__text">ชั่วโมง</p>
+              </div>
+              }
             </div>
             <p class="op__text mgt-10">:</p>
             <div>
@@ -140,6 +170,12 @@
                 height="4.4rem"
                 appOnlyNumber
               ></app-com-input-text>
+              @if (!toMinuteControl.valid && toMinuteControl.touched) {
+              <div class="error mgt-4">
+                <img src="/assets/error_icon.svg" alt="error icon" />
+                <p class="error__text">นาที</p>
+              </div>
+              }
             </div>
           </div>
         </div>

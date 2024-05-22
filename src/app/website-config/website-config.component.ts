@@ -114,7 +114,7 @@ export class WebsiteConfigComponent implements OnInit, AfterViewInit {
 
     if (this.sideNavItems[0]) {
       // Todo
-      this.activeNav = this.sideNavItems[3].value;
+      this.activeNav = this.sideNavItems[0].value;
     }
 
     // Load dashboard data
@@ -302,6 +302,7 @@ export class WebsiteConfigComponent implements OnInit, AfterViewInit {
     }
 
     console.log('==submitting');
+    this.markFieldsTouched();
 
     if (!this.form.valid) {
       console.error(this.form);
@@ -341,6 +342,10 @@ export class WebsiteConfigComponent implements OnInit, AfterViewInit {
           }
         })
     );
+  }
+
+  private markFieldsTouched() {
+    this.form.markAllAsTouched();
   }
 
   // DFS to get formControl error first then check formGroup

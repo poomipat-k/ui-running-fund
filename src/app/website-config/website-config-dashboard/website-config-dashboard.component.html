@@ -58,7 +58,7 @@
         ></app-com-select-dropdown>
       </div>
     </div>
-    @if (!form.valid) {
+    @if (!form.valid && form.touched) {
     <div class="error mgt-10">
       <img src="/assets/error_icon.svg" alt="error icon" />
       <p class="error__text mgt-10">วันที่ที่เลือกไม่ถูกต้อง</p>

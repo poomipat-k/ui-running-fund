@@ -38,6 +38,30 @@ export class WebsiteConfigFooterComponent implements AfterViewInit, OnDestroy {
     return this.form.get('contact') as FormGroup;
   }
 
+  get emailControl(): FormControl {
+    return this.form.get('contact.email') as FormControl;
+  }
+
+  get phoneNumberControl(): FormControl {
+    return this.form.get('contact.phoneNumber') as FormControl;
+  }
+
+  get fromHourControl(): FormControl {
+    return this.form.get('contact.fromHour') as FormControl;
+  }
+
+  get fromMinuteControl(): FormControl {
+    return this.form.get('contact.fromMinute') as FormControl;
+  }
+
+  get toHourControl(): FormControl {
+    return this.form.get('contact.toHour') as FormControl;
+  }
+
+  get toMinuteControl(): FormControl {
+    return this.form.get('contact.toMinute') as FormControl;
+  }
+
   ngAfterViewInit(): void {
     this.watchFileChangesAndUploadFormData();
   }
