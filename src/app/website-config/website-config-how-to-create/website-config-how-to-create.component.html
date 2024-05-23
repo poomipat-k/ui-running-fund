@@ -8,7 +8,7 @@
     @for (item of formArray.controls; track $index) {
     <div class="group__container">
       <div class="group__item">
-        <button class="deleteButton" (click)="removeFormItem($index)">
+        <button class="deleteButton" (click)="removeFormItemClick($index)">
           <svg
             width="24"
             height="24"
@@ -61,3 +61,9 @@
     }
   </div>
 </div>
+
+<app-com-cancel-confirm-modal
+  #deleteItemModal
+  text="ยืนยันการลบ"
+  (confirmed)="doRemoveFormItem()"
+></app-com-cancel-confirm-modal>

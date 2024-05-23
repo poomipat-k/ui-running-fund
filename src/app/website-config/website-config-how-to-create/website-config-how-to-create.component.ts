@@ -1,4 +1,4 @@
-import { Component, Input, inject } from '@angular/core';
+import { Component, Input, ViewChild, inject } from '@angular/core';
 import {
   FormArray,
   FormControl,
@@ -8,17 +8,28 @@ import {
 } from '@angular/forms';
 import { EditorComponent, EditorModule } from '@tinymce/tinymce-angular';
 import { concatMap, lastValueFrom, map } from 'rxjs';
+import { CancelConfirmModalComponent } from '../../components/cancel-confirm-modal/cancel-confirm-modal.component';
 import { InputTextComponent } from '../../components/input-text/input-text.component';
 import { S3Service } from '../../services/s3.service';
 
 @Component({
   selector: 'app-website-config-how-to-create',
   standalone: true,
-  imports: [ReactiveFormsModule, EditorModule, InputTextComponent],
+  imports: [
+    ReactiveFormsModule,
+    EditorModule,
+    InputTextComponent,
+    CancelConfirmModalComponent,
+  ],
   templateUrl: './website-config-how-to-create.component.html',
   styleUrl: './website-config-how-to-create.component.scss',
 })
 export class WebsiteConfigHowToCreateComponent {
+  @ViewChild('deleteItemModal')
+  deleteItemModalComponent: CancelConfirmModalComponent;
+
+  protected removingItemIndex = 0;
+
   @Input() formArray: FormArray;
 
   private readonly s3Service: S3Service = inject(S3Service);
@@ -63,8 +74,14 @@ export class WebsiteConfigHowToCreateComponent {
     );
   }
 
-  removeFormItem(index: number) {
-    this.formArray.removeAt(index);
+  removeFormItemClick(index: number) {
+    this.removingItemIndex = index;
+    this.deleteItemModalComponent.showModal();
+  }
+
+  doRemoveFormItem() {
+    this.formArray.removeAt(this.removingItemIndex);
+    this.deleteItemModalComponent.closeModal();
   }
 
   private initRichTextEditor() {
