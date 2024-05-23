@@ -1,5 +1,11 @@
 import { Component, Input, inject } from '@angular/core';
-import { FormArray, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import {
+  FormArray,
+  FormControl,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { EditorComponent, EditorModule } from '@tinymce/tinymce-angular';
 import { concatMap, lastValueFrom, map } from 'rxjs';
 import { InputTextComponent } from '../../components/input-text/input-text.component';
@@ -48,6 +54,19 @@ export class WebsiteConfigHowToCreateComponent {
     return `Step ${index + 1}`;
   }
 
+  addFormItem() {
+    this.formArray.push(
+      new FormGroup({
+        header: new FormControl(null, Validators.required),
+        content: new FormControl(null, Validators.required),
+      })
+    );
+  }
+
+  removeFormItem(index: number) {
+    this.formArray.removeAt(index);
+  }
+
   private initRichTextEditor() {
     this.editorInit = {
       base_url: '/tinymce',
@@ -58,7 +77,7 @@ export class WebsiteConfigHowToCreateComponent {
       images_reuse_filename: true,
       block_unsupported_drop: true,
       images_upload_handler: (blobInfo) => {
-        const objectKey = `cms/landing/${Date.now()}-${blobInfo.filename()}`;
+        const objectKey = `cms/howToCreate/${Date.now()}-${blobInfo.filename()}`;
         const file = new File([blobInfo.blob()], objectKey);
         const promise = lastValueFrom(
           this.s3Service.getPutPresigned(objectKey).pipe(
