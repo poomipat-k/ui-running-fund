@@ -8,6 +8,7 @@ import { CmsConfig } from '../shared/models/cms-config';
 import { CommonSuccessResponse } from '../shared/models/common-success-response';
 import { FAQ } from '../shared/models/faq';
 import { Footer } from '../shared/models/footer';
+import { HowToCreate } from '../shared/models/how-to-create';
 import { LandingPage } from '../shared/models/landing-page';
 
 @Injectable({
@@ -34,6 +35,12 @@ export class WebsiteConfigService {
   getFAQ() {
     return this.http
       .get<FAQ[]>(`${this.baseApiUrl}/content/faq`)
+      .pipe(catchError(this.handleError));
+  }
+
+  getHowToCreate() {
+    return this.http
+      .get<HowToCreate[]>(`${this.baseApiUrl}/content/how-to-create`)
       .pipe(catchError(this.handleError));
   }
 
