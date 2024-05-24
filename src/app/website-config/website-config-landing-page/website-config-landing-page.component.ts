@@ -82,12 +82,6 @@ export class WebsiteConfigLandingPageComponent
   }
 
   ngOnInit(): void {
-    // this.subs.push(
-    //   this.form.valueChanges.subscribe((values) => {
-    //     console.log('==values:', values);
-    //   })
-    // );
-
     this.initRichTextEditor();
   }
 
@@ -161,9 +155,7 @@ export class WebsiteConfigLandingPageComponent
                 fullPath: new FormControl(response.fullPath),
               })
             );
-            console.log('===added to formArray', this.bannerFormArray.value);
             this.uploadButtonComponent.clearFiles();
-            console.log('==cleared');
           }
         })
     );
@@ -179,10 +171,5 @@ export class WebsiteConfigLandingPageComponent
 
   onDeleteBanner(index: number) {
     this.bannerFormArray.removeAt(index);
-  }
-
-  modelChangeFn(e: any) {
-    this.form.patchValue({ content: e });
-    console.log(this.contentControl.value);
   }
 }

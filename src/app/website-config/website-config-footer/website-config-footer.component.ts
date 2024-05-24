@@ -94,7 +94,6 @@ export class WebsiteConfigFooterComponent implements AfterViewInit, OnDestroy {
       this.footerLogoFilesSubject
         .pipe(
           concatMap((files) => {
-            console.log('===watchFile files', files);
             if (files.length > 0) {
               const formData = new FormData();
               const name = 'footerLogo';
@@ -111,7 +110,6 @@ export class WebsiteConfigFooterComponent implements AfterViewInit, OnDestroy {
         )
         .subscribe({
           next: (response: S3UploadResponse) => {
-            console.log('==sub response', response);
             if (response.fullPath && response.objectKey) {
               this.footerLogoFormArray.push(
                 new FormGroup({

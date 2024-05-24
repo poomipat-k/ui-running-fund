@@ -9,37 +9,40 @@
 
   <div class="mainContainer">
     <div class="nav mgt-55">
+      @for (item of howToCreateList; track $index) {
       <a
         routerLink="/how-to-create"
-        [fragment]="section1Header"
+        [fragment]="item.header"
         [ngClass]="{
           nav__text: true,
-          'nav__text--active': navActiveIndex === 1
+          'nav__text--active': navActiveIndex === $index + 1
         }"
-        >{{ section1Header }}</a
+        >{{ item.header }}</a
       >
-      <a
-        routerLink="/how-to-create"
-        [fragment]="section2Header"
-        [ngClass]="{
-          nav__text: true,
-          'nav__text--active': navActiveIndex === 2
-        }"
-        >{{ section2Header }}</a
-      >
-      <a
-        routerLink="/how-to-create"
-        [fragment]="section3Header"
-        [ngClass]="{
-          nav__text: true,
-          'nav__text--active': navActiveIndex === 3
-        }"
-        >{{ section3Header }}</a
-      >
+      }
     </div>
-    <!-- Content -->
-    <div>
-      <!-- Section 1 -->
+    <div class="content__container">
+      <h1 class="content__header mgb-15">วิธีสร้างใบขอทุนสนับสนุน</h1>
+      @for (item of howToCreateList; track $index) {
+      <div
+        appIntersectionElement
+        (isIntersecting)="isIntersecting($event, $index + 1)"
+        [isContinuous]="true"
+        [threshold]="0.8"
+        [debounceTime]="0"
+        rootMargin="-72px 0px -60% 0px"
+      >
+        <h1 [id]="item.header" class="content__subHeader">
+          {{ item.header }}
+        </h1>
+        <div class="mgt-15" [innerHTML]="item.content | safeHtml"></div>
+      </div>
+      @if ($index < howToCreateList.length - 1) {
+      <div class="hr mgt-40 mgb-40"></div>
+      } }
+    </div>
+
+    <!-- <div>
       <div
         appIntersectionElement
         (isIntersecting)="isIntersecting($event, 1)"
@@ -82,7 +85,7 @@
         </div>
       </div>
       <div class="hr mgt-70"></div>
-      <!-- Section 2 -->
+
       <div
         appIntersectionElement
         (isIntersecting)="isIntersecting($event, 2)"
@@ -98,7 +101,7 @@
         <p class="content__commonText mgt-15">{{ documentPreparation }}</p>
       </div>
       <div class="hr mgt-66"></div>
-      <!-- Section 3 -->
+
       <div
         appIntersectionElement
         (isIntersecting)="isIntersecting($event, 3)"
@@ -138,9 +141,12 @@
           </div>
         </div>
       </div>
-    </div>
+    </div> -->
   </div>
+
+  <!-- Horizontal line -->
   <div class="hr mgt-80"></div>
+  <!-- FAQ -->
   <div class="mgt-62">
     <app-com-faq [items]="faqList"></app-com-faq>
   </div>

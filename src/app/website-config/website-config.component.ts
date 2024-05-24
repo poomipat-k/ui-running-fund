@@ -331,7 +331,6 @@ export class WebsiteConfigComponent implements OnInit, AfterViewInit {
       if (this.faqConfigComponent.validToBeAdded()) {
         this.faqConfigComponent.addToFaqFormArray();
         this.faqConfigComponent.changeIsEdit(false);
-        console.log('===added item', this.form.value);
       }
       return;
     }

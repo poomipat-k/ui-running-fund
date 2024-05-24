@@ -44,11 +44,6 @@ export class WebsiteConfigHowToCreateComponent {
     this.initRichTextEditor();
   }
 
-  // modelChangeFn(e: any) {
-  //   this.form.patchValue({ content: e });
-  //   console.log(this.contentControl.value);
-  // }
-
   getFormGroup(index: number): FormGroup {
     return this.formArray.at(index) as FormGroup;
   }

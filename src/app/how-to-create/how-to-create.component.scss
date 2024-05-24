@@ -35,6 +35,10 @@
 }
 
 .content {
+  &__container {
+    flex: 1;
+  }
+
   &__header {
     font-family: $custom-font;
     font-weight: 600;
@@ -45,8 +49,8 @@
 
   &__subHeader {
     font-family: $custom-font;
-    font-weight: 500;
-    font-size: 1.8rem;
+    font-weight: 600;
+    font-size: 2rem;
     line-height: 3rem;
     color: #344054;
   }
@@ -54,7 +58,7 @@
   &__commonText {
     font-family: $custom-font-looped;
     font-weight: 400;
-    font-size: 1.8rem;
+    font-size: 2rem;
     line-height: 3rem;
     color: #344054;
     white-space: pre-wrap;
@@ -138,6 +142,9 @@
   &-26 {
     margin-top: 26px;
   }
+  &-40 {
+    margin-top: 40px;
+  }
   &-53 {
     margin-top: 53px;
   }
@@ -155,5 +162,14 @@
   }
   &-80 {
     margin-top: 80px;
+  }
+}
+
+.mgb {
+  &-15 {
+    margin-bottom: 15px;
+  }
+  &-40 {
+    margin-bottom: 40px;
   }
 }
