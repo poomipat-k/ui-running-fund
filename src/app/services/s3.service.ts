@@ -44,8 +44,10 @@ export class S3Service {
       .pipe(catchError(this.handleError));
   }
 
-  putPresigned(url: string, file: File) {
-    return this.http.put<any>(url, file).pipe(catchError(this.handleError));
+  putPresigned(url: string, file: File, options?: any) {
+    return this.http
+      .put<any>(url, file, options)
+      .pipe(catchError(this.handleError));
   }
 
   private handleError(error: HttpErrorResponse) {

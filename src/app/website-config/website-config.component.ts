@@ -178,10 +178,10 @@ export class WebsiteConfigComponent implements OnInit, AfterViewInit {
         // }),
       ]),
       howToCreate: new FormArray([
-        new FormGroup({
-          header: new FormControl(null, Validators.required),
-          content: new FormControl(null, Validators.required),
-        }),
+        // new FormGroup({
+        //   header: new FormControl(null, Validators.required),
+        //   content: new FormControl(null, Validators.required),
+        // }),
       ]),
       footer: new FormGroup({
         logo: new FormArray([

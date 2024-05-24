@@ -94,13 +94,18 @@ export class WebsiteConfigHowToCreateComponent {
       images_reuse_filename: true,
       block_unsupported_drop: true,
       images_upload_handler: (blobInfo) => {
-        const objectKey = `cms/howToCreate/${Date.now()}-${blobInfo.filename()}`;
+        const objectKey = `cms/how_to_create/${Date.now()}-${blobInfo.filename()}`;
         const file = new File([blobInfo.blob()], objectKey);
         const promise = lastValueFrom(
           this.s3Service.getPutPresigned(objectKey).pipe(
             concatMap((putPresignedObject) => {
               return this.s3Service
-                .putPresigned(putPresignedObject.presigned.URL, file)
+                .putPresigned(putPresignedObject.presigned.URL, file, {
+                  headers: {
+                    'Content-Type':
+                      blobInfo.blob()?.type ?? 'application/octet-stream',
+                  },
+                })
                 .pipe(
                   map(() => {
                     return putPresignedObject.fullPath;
