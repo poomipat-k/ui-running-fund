@@ -84,10 +84,13 @@ export class WebsiteConfigHowToCreateComponent {
       base_url: '/tinymce',
       suffix: '.min',
       font_size_formats: '10px 12px 14px 16px 18px 20px 24px 28px 32px 48px',
-      line_height_formats: '10px 16px 18px 20px 24px 30px 33px 36px',
+      line_height_formats:
+        '10px 16px 18px 20px 24px 27px 30px 33px 36px 40px 48px',
       images_file_types: 'jpeg,jpg,jpe,jfi,jif,jfif,png,gif,bmp,webp,svg',
       images_reuse_filename: true,
+      image_advtab: true,
       block_unsupported_drop: true,
+      content_style: 'img {max-width: 100%;}',
       images_upload_handler: (blobInfo) => {
         const objectKey = `cms/how_to_create/${Date.now()}-${blobInfo.filename()}`;
         const file = new File([blobInfo.blob()], objectKey);

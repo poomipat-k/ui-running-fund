@@ -208,7 +208,7 @@ export class WebsiteConfigComponent implements OnInit, AfterViewInit {
   private loadCmsData() {
     this.subs.push(
       this.websiteConfigService.getCmsData().subscribe((result) => {
-        console.log('==result', result);
+        console.log('==cms result:', result);
         if (result) {
           this.form.patchValue({
             landing: {
@@ -244,6 +244,16 @@ export class WebsiteConfigComponent implements OnInit, AfterViewInit {
                 id: new FormControl(faq.id ?? null),
                 question: new FormControl(faq.question ?? null),
                 answer: new FormControl(faq.answer ?? null),
+              })
+            );
+          });
+          // howToCreate list
+          result.howToCreate?.forEach((howToCreate) => {
+            this.howToCreateFormArray.push(
+              new FormGroup({
+                id: new FormControl(howToCreate.id ?? null),
+                header: new FormControl(howToCreate.header ?? null),
+                content: new FormControl(howToCreate.content ?? null),
               })
             );
           });
@@ -335,7 +345,6 @@ export class WebsiteConfigComponent implements OnInit, AfterViewInit {
       return;
     }
 
-    console.log('==submitting');
     this.markFieldsTouched();
 
     if (!this.form.valid) {
@@ -347,10 +356,7 @@ export class WebsiteConfigComponent implements OnInit, AfterViewInit {
       this.activeNav = errorNav;
       return;
     }
-    console.log(
-      '===isForm changed',
-      !isEqual(this.originalFormValue, this.form.value)
-    );
+
     if (isEqual(this.originalFormValue, this.form.value)) {
       console.warn('nothing changed from current website configuration');
       this.successPopupText = 'ไม่มีการเปลี่ยนแปลงข้อมูล';

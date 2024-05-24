@@ -119,47 +119,13 @@ export class WebsiteConfigFooterComponent implements AfterViewInit, OnDestroy {
                   fullPath: new FormControl(response.fullPath),
                 })
               );
-              console.log(
-                '===added to footerLogoFormArray',
-                this.footerLogoFormArray.value
-              );
               this.uploadButtonComponent.clearFiles();
-              console.log('==cleared');
             }
           },
           error: (err) => {
-            console.log('==upload error', err);
             this.uploadButtonComponent.clearFiles();
-            console.log('==error cleared');
           },
         })
     );
   }
 }
-
-// {
-//   next: (result) => {
-//     this.apiLoading = false;
-//     if (result) {
-//       // TODO: uncomment this
-//       this.form.disable();
-//       this.showSuccessPopup = true;
-//       setTimeout(() => {
-//         this.showSuccessPopup = false;
-//         // TODO: uncomment this
-//         this.incrementStep();
-//       }, 2000);
-//     }
-//   },
-//   error: (err) => {
-//     console.error(err);
-//     this.apiLoading = false;
-//     this.showErrorPopup = true;
-//     setTimeout(() => {
-//       this.showErrorPopup = false;
-//     }, 2000);
-//   },
-//   complete: () => {
-//     this.apiLoading = false;
-//   },
-// }
