@@ -9,6 +9,15 @@
 
   <div class="mainContainer">
     <div class="nav mgt-55">
+      <a
+        routerLink="/how-to-create"
+        [fragment]="headerText"
+        [ngClass]="{
+          nav__text: true,
+          'nav__text--active': navActiveIndex === 0
+        }"
+        >{{ headerText }}</a
+      >
       @for (item of howToCreateList; track $index) {
       <a
         routerLink="/how-to-create"
@@ -22,15 +31,26 @@
       }
     </div>
     <div class="content__container">
-      <h1 class="content__header mgb-15">วิธีสร้างใบขอทุนสนับสนุน</h1>
+      <div
+        appIntersectionElement
+        (isIntersecting)="isIntersecting($event, 0)"
+        [isContinuous]="true"
+        [threshold]="0"
+        [debounceTime]="0"
+        [rootMargin]="intersectionRootMargin"
+      >
+        <h1 [id]="headerText" class="content__header mgb-15">
+          {{ headerText }}
+        </h1>
+      </div>
       @for (item of howToCreateList; track $index) {
       <div
         appIntersectionElement
         (isIntersecting)="isIntersecting($event, $index + 1)"
         [isContinuous]="true"
-        [threshold]="0.8"
+        [threshold]="0"
         [debounceTime]="0"
-        rootMargin="-72px 0px -60% 0px"
+        [rootMargin]="intersectionRootMargin"
       >
         <h1 [id]="item.header" class="content__subHeader">
           {{ item.header }}
@@ -41,107 +61,6 @@
       <div class="hr mgt-40 mgb-40"></div>
       } }
     </div>
-
-    <!-- <div>
-      <div
-        appIntersectionElement
-        (isIntersecting)="isIntersecting($event, 1)"
-        [isContinuous]="true"
-        [threshold]="0.6"
-        [debounceTime]="0"
-        rootMargin="-72px 0px 0px 0px"
-      >
-        <h1 [id]="section1Header" class="content__header">
-          {{ section1Header }}
-        </h1>
-        <div class="mgt-15">
-          <app-com-button (click)="onDownloadDocumentClick()">
-            <div class="button-content">
-              <div>ดาวน์โหลดตัวอย่างเอกสาร</div>
-              <svg
-                width="16"
-                height="16"
-                viewBox="0 0 16 16"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M8 12L3 7L4.4 5.55L7 8.15V0H9V8.15L11.6 5.55L13 7L8 12ZM2 16C1.45 16 0.979167 15.8042 0.6850 15.4125C0.195833 15.0208 0 14.55 0 14V11H2V14H14V11H16V14C16 14.55 15.8042 15.0208 15.4125 15.4125C15.0208 15.8042 14.55 16 14 16H2Z"
-                  fill="#344054"
-                />
-              </svg>
-            </div>
-          </app-com-button>
-        </div>
-        <p class="content__commonText mgt-19">{{ howToCreateText }}</p>
-        <h3 class="content__subHeader mgt-26">คลิปสอนการสร้างใบขอทุน</h3>
-        <div class="mgt-14">
-          <iframe
-            [src]="safeVideoUrl"
-            frameborder="0"
-            allowfullscreen
-            class="video"
-          ></iframe>
-        </div>
-      </div>
-      <div class="hr mgt-70"></div>
-
-      <div
-        appIntersectionElement
-        (isIntersecting)="isIntersecting($event, 2)"
-        [isContinuous]="true"
-        [threshold]="0.6"
-        [debounceTime]="0"
-        rootMargin="-72px 0px 0px 0px"
-        class="mgt-53"
-      >
-        <h1 [id]="section2Header" class="content__header">
-          {{ section2Header }}
-        </h1>
-        <p class="content__commonText mgt-15">{{ documentPreparation }}</p>
-      </div>
-      <div class="hr mgt-66"></div>
-
-      <div
-        appIntersectionElement
-        (isIntersecting)="isIntersecting($event, 3)"
-        [isContinuous]="true"
-        [threshold]="0.6"
-        [debounceTime]="0"
-        rootMargin="-72px 0px 0px 0px"
-        class="mgt-53"
-      >
-        <h1 [id]="section3Header" class="content__header">
-          {{ section3Header }}
-        </h1>
-        <p class="content__commonText mgt-24">{{ howToRegisterAndLogin }}</p>
-
-        <div class="authContainer mgt-24">
-          <div>
-            <h3 class="content__subHeader">คลิปสอนการลงทะเบียน</h3>
-            <div class="mgt-10">
-              <iframe
-                [src]="safeVideoUrl"
-                frameborder="0"
-                allowfullscreen
-                class="video"
-              ></iframe>
-            </div>
-          </div>
-          <div>
-            <h3 class="content__subHeader">คลิปสอนการเข้าสู่ระบบ</h3>
-            <div class="mgt-10">
-              <iframe
-                [src]="safeVideoUrl"
-                frameborder="0"
-                allowfullscreen
-                class="video"
-              ></iframe>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div> -->
   </div>
 
   <!-- Horizontal line -->
@@ -151,3 +70,5 @@
     <app-com-faq [items]="faqList"></app-com-faq>
   </div>
 </div>
+
+<div class="intersectionBox"></div>

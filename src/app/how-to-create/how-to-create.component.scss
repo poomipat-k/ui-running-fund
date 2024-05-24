@@ -65,27 +65,6 @@
   }
 }
 
-.button-content {
-  display: flex;
-  gap: 4px;
-  align-items: center;
-  padding: 1.2rem 1.6rem 1.2rem 1.4rem;
-
-  font-family: $custom-font;
-  font-weight: 500;
-  font-size: 1.6rem;
-  line-height: 2.7rem;
-  text-align: center;
-
-  &:hover svg path {
-    fill: #fb6514;
-  }
-
-  &:active svg path {
-    fill: #9c2a10;
-  }
-}
-
 .address {
   display: flex;
   gap: 4px;
@@ -112,53 +91,18 @@
   border-top: 1px solid rgba(102, 112, 133, 0.5);
 }
 
-.video {
-  border-radius: 1.6rem;
-  width: 41.8rem;
-  height: 26rem;
-}
-
-.authContainer {
-  display: flex;
-  gap: 3.8rem;
-}
-
 .mgt {
-  &-10 {
-    margin-top: 10px;
-  }
-  &-14 {
-    margin-top: 14px;
-  }
   &-15 {
     margin-top: 15px;
   }
-  &-19 {
-    margin-top: 19px;
-  }
-  &-24 {
-    margin-top: 24px;
-  }
-  &-26 {
-    margin-top: 26px;
-  }
   &-40 {
     margin-top: 40px;
-  }
-  &-53 {
-    margin-top: 53px;
   }
   &-55 {
     margin-top: 55px;
   }
   &-62 {
     margin-top: 62px;
-  }
-  &-66 {
-    margin-top: 66px;
-  }
-  &-70 {
-    margin-top: 70px;
   }
   &-80 {
     margin-top: 80px;
@@ -172,4 +116,13 @@
   &-40 {
     margin-bottom: 40px;
   }
+}
+
+.intersectionBox {
+  position: fixed;
+  top: 7.2rem;
+  left: 0;
+  width: 100vw;
+  height: calc(15% - 7.2rem);
+  border: 2px solid blue;
 }

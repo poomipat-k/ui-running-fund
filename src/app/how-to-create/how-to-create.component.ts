@@ -1,9 +1,7 @@
 import { CommonModule, ViewportScroller } from '@angular/common';
 import { Component, OnInit, inject } from '@angular/core';
-import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { ButtonComponent } from '../components/button/button/button.component';
 import { FaqComponent } from '../components/faq/faq.component';
 import { ThemeService } from '../services/theme.service';
 import { WebsiteConfigService } from '../services/website-config.service';
@@ -18,7 +16,6 @@ import { SafeHtmlPipe } from '../shared/pipe/safe-html.pipe';
   standalone: true,
   imports: [
     RouterModule,
-    ButtonComponent,
     FaqComponent,
     IntersectionElementDirective,
     CommonModule,
@@ -29,7 +26,6 @@ import { SafeHtmlPipe } from '../shared/pipe/safe-html.pipe';
 })
 export class HowToCreateComponent implements OnInit {
   private readonly themeService: ThemeService = inject(ThemeService);
-  private readonly domSanitizer: DomSanitizer = inject(DomSanitizer);
   private readonly scroller: ViewportScroller = inject(ViewportScroller);
   private readonly websiteConfigService: WebsiteConfigService =
     inject(WebsiteConfigService);
@@ -37,27 +33,15 @@ export class HowToCreateComponent implements OnInit {
   private readonly subs: Subscription[] = [];
 
   protected faqList: AccordionItem[] = [];
-
+  protected headerText = 'วิธีสร้างใบขอทุนสนับสนุน';
   protected howToCreateList: HowToCreate[] = [];
 
-  protected section1Header = 'วิธีสร้างใบขอทุนสนับสนุน';
-  protected section2Header = 'ควรเตรียมเอกสารอะไรก่อนยื่นขอทุน';
-  protected section3Header =
-    'วิธีการลงทะเบียนและเข้าสู่ระบบเพื่อเข้าใช้งานเว็บไซต์';
-
-  protected youtubeUrl = 'https://www.youtube.com/embed/lJIrF4YjHfQ';
-  protected safeVideoUrl: SafeResourceUrl;
-
-  protected navActiveIndex = 1;
+  protected navActiveIndex = 0;
+  protected intersectionRootMargin = '-72px 0px -85% 0px';
 
   ngOnInit(): void {
     this.themeService.changeBackgroundColor(BackgroundColor.white);
     this.scroller.setOffset([0, 80]);
-
-    this.safeVideoUrl = this.domSanitizer.bypassSecurityTrustResourceUrl(
-      this.youtubeUrl
-    );
-
     this.getFaq();
     this.getHowToCreate();
   }
@@ -86,8 +70,11 @@ export class HowToCreateComponent implements OnInit {
   }
 
   isIntersecting(intersecting: boolean, index: number) {
-    if (intersecting && index) {
+    console.log('===intersect', { index, intersecting });
+    if (intersecting && index >= 0) {
       this.navActiveIndex = index;
+      console.log('==this.navActiveIndex', this.navActiveIndex);
+      console.log('=======');
     }
   }
 }
