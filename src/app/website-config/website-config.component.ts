@@ -208,7 +208,6 @@ export class WebsiteConfigComponent implements OnInit, AfterViewInit {
   private loadCmsData() {
     this.subs.push(
       this.websiteConfigService.getCmsData().subscribe((result) => {
-        console.log('==cms result:', result);
         if (result) {
           this.form.patchValue({
             landing: {

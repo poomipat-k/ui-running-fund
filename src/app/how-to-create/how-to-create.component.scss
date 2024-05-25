@@ -118,11 +118,12 @@
   }
 }
 
+// For debugging purpose
 .intersectionBox {
   position: fixed;
-  top: 7.2rem;
+  top: 12rem;
   left: 0;
   width: 100vw;
-  height: calc(15% - 7.2rem);
-  border: 2px solid blue;
+  height: calc(10% - 120px);
+  border: 1px solid blue;
 }

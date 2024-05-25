@@ -10,6 +10,7 @@
   <div class="mainContainer">
     <div class="nav mgt-55">
       <a
+        (click)="onNavItemClick(0)"
         routerLink="/how-to-create"
         [fragment]="headerText"
         [ngClass]="{
@@ -20,6 +21,7 @@
       >
       @for (item of howToCreateList; track $index) {
       <a
+        (click)="onNavItemClick($index + 1)"
         routerLink="/how-to-create"
         [fragment]="item.header"
         [ngClass]="{
@@ -31,28 +33,32 @@
       }
     </div>
     <div class="content__container">
-      <div
-        appIntersectionElement
-        (isIntersecting)="isIntersecting($event, 0)"
-        [isContinuous]="true"
-        [threshold]="0"
-        [debounceTime]="0"
-        [rootMargin]="intersectionRootMargin"
-      >
-        <h1 [id]="headerText" class="content__header mgb-15">
+      <div>
+        <h1
+          [id]="headerText"
+          class="content__header mgb-15"
+          appIntersectionElement
+          (isIntersecting)="isIntersecting($event, 0)"
+          [isContinuous]="true"
+          [threshold]="0"
+          [debounceTime]="0"
+          [rootMargin]="intersectionRootMargin"
+        >
           {{ headerText }}
         </h1>
       </div>
       @for (item of howToCreateList; track $index) {
-      <div
-        appIntersectionElement
-        (isIntersecting)="isIntersecting($event, $index + 1)"
-        [isContinuous]="true"
-        [threshold]="0"
-        [debounceTime]="0"
-        [rootMargin]="intersectionRootMargin"
-      >
-        <h1 [id]="item.header" class="content__subHeader">
+      <div>
+        <h1
+          [id]="item.header"
+          class="content__subHeader"
+          appIntersectionElement
+          (isIntersecting)="isIntersecting($event, $index + 1)"
+          [isContinuous]="true"
+          [threshold]="0"
+          [debounceTime]="0"
+          [rootMargin]="intersectionRootMargin"
+        >
           {{ item.header }}
         </h1>
         <div class="mgt-15" [innerHTML]="item.content | safeHtml"></div>
@@ -71,4 +77,5 @@
   </div>
 </div>
 
-<div class="intersectionBox"></div>
+<!-- For debugging -->
+<!-- <div class="intersectionBox"></div> -->

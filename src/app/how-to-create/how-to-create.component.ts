@@ -37,11 +37,12 @@ export class HowToCreateComponent implements OnInit {
   protected howToCreateList: HowToCreate[] = [];
 
   protected navActiveIndex = 0;
-  protected intersectionRootMargin = '-72px 0px -85% 0px';
+  protected intersectionRootMargin = '-120px 0px -90% 0px';
+  protected scrollerOffset: [number, number] = [0, 110]; // [x, y]
 
   ngOnInit(): void {
     this.themeService.changeBackgroundColor(BackgroundColor.white);
-    this.scroller.setOffset([0, 80]);
+    this.scroller.setOffset(this.scrollerOffset);
     this.getFaq();
     this.getHowToCreate();
   }
@@ -70,11 +71,12 @@ export class HowToCreateComponent implements OnInit {
   }
 
   isIntersecting(intersecting: boolean, index: number) {
-    console.log('===intersect', { index, intersecting });
     if (intersecting && index >= 0) {
       this.navActiveIndex = index;
-      console.log('==this.navActiveIndex', this.navActiveIndex);
-      console.log('=======');
     }
+  }
+
+  onNavItemClick(index: number) {
+    this.navActiveIndex = index;
   }
 }
