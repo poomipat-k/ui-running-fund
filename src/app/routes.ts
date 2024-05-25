@@ -3,7 +3,6 @@ import { AskingForHelpComponent } from './asking-for-help/asking-for-help.compon
 import { EmailActivateSuccessComponent } from './email-activate-success/email-activate-success.component';
 import { ForgotPasswordEmailSentComponent } from './forgot-password-email-sent/forgot-password-email-sent.component';
 import { HomeComponent } from './home/home.component';
-import { HowToCreateComponent } from './how-to-create/how-to-create.component';
 import { LoginComponent } from './login/login.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { ResetPasswordSuccessComponent } from './reset-password-success/reset-password-success.component';
@@ -22,7 +21,10 @@ const routeConfig: Routes = [
   },
   {
     path: 'how-to-create',
-    component: HowToCreateComponent,
+    loadComponent: () =>
+      import('./how-to-create/how-to-create.component').then(
+        (mod) => mod.HowToCreateComponent
+      ),
     title: 'วิธีสร้างใบขอทุนสนับสนุน',
   },
   {

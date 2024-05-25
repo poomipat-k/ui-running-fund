@@ -127,8 +127,7 @@ export class WebsiteConfigComponent implements OnInit, AfterViewInit {
     this.initForm();
 
     if (this.sideNavItems[0]) {
-      // Todo
-      this.activeNav = this.sideNavItems[3].value;
+      this.activeNav = this.sideNavItems[0].value;
     }
 
     // Load dashboard data

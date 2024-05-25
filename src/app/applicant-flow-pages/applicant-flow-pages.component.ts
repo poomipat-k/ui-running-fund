@@ -11,6 +11,7 @@ import { Router } from '@angular/router';
 import { cloneDeep } from 'lodash-es';
 import { BehaviorSubject, Subscription } from 'rxjs';
 
+import { environment } from '../../environments/environment';
 import { ErrorPopupComponent } from '../components/error-popup/error-popup.component';
 import { ProgressBarStepsComponent } from '../components/progress-bar-steps/progress-bar-steps.component';
 import { SuccessPopupComponent } from '../components/success-popup/success-popup.component';
@@ -117,7 +118,7 @@ export class ApplicantFlowPagesComponent implements OnInit, OnDestroy {
   protected currentStep = 0;
 
   protected applicantSelfScoreCriteria: ApplicantCriteria[] = [];
-  protected devModeOn = false;
+  protected devModeOn = true;
 
   constructor() {
     this.incrementStep = this.incrementStep.bind(this);
@@ -131,7 +132,7 @@ export class ApplicantFlowPagesComponent implements OnInit, OnDestroy {
     // Change page
     // TODO: comment this line
     // this.currentStep = 4;
-    this.devModeOn = true;
+    this.devModeOn = !environment.production;
 
     this.subToUploadFileSubjects();
   }
