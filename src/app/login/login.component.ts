@@ -9,6 +9,7 @@ import {
 } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
 import { Subscription, catchError, throwError } from 'rxjs';
+import { environment } from '../../environments/environment';
 import { ThemeService } from '../services/theme.service';
 import { UserService } from '../services/user.service';
 import { BackgroundColor } from '../shared/enums/background-color';
@@ -22,6 +23,8 @@ import { BackgroundColor } from '../shared/enums/background-color';
 })
 export class LoginComponent {
   protected form: FormGroup;
+
+  protected loginBanner = environment.loginBanner;
 
   private userService: UserService = inject(UserService);
   private router: Router = inject(Router);

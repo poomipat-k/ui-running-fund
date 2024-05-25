@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit, inject } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { environment } from '../../environments/environment';
 import { CarouselComponent } from '../components/carousel/carousel.component';
 import { FaqComponent } from '../components/faq/faq.component';
 import { DashboardApplicantComponent } from '../dashboard-applicant/dashboard-applicant.component';
@@ -33,6 +34,8 @@ export class HomeComponent implements OnInit {
     inject(WebsiteConfigService);
 
   private readonly subs: Subscription[] = [];
+
+  protected homeFixedImage = environment.homeFixedImage;
 
   protected sliderItems: ImageRef[] = [];
   protected content = '';
