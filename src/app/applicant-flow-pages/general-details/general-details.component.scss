@@ -208,6 +208,29 @@
   }
 }
 
+.vip {
+  display: flex;
+  gap: 1rem;
+
+  &__fee {
+    display: flex;
+    gap: 8px;
+
+    &__text {
+      font-family: $custom-font-looped;
+      font-weight: 400;
+      font-size: 1.6rem;
+      line-height: 2.7rem;
+      color: #000;
+    }
+
+    &__error {
+      margin-left: 13.4rem;
+      margin-top: 1rem;
+    }
+  }
+}
+
 .removeButton {
   outline: none;
   border: none;

@@ -7,8 +7,10 @@ import { TableComponent } from '../components/table/table.component';
 import { DateService } from '../services/date.service';
 import { ProjectService } from '../services/project.service';
 import { ThemeService } from '../services/theme.service';
+import { STATUS_ORDER } from '../shared/constants/status-order';
 import { BackgroundColor } from '../shared/enums/background-color';
 import { ColumnTypeEnum } from '../shared/enums/column-type';
+import { ApplicantDashboardRow } from '../shared/models/applicant-dashboard-row';
 import { FilterOption } from '../shared/models/filter-option';
 import { TableCell } from '../shared/models/table-cell';
 import { TableColumn } from '../shared/models/table-column';
@@ -65,37 +67,37 @@ export class DashboardApplicantComponent implements OnInit, OnDestroy {
       id: 1,
       display: 'เรียงตามตัวอักษร',
       name: 'ชื่อโครงการ',
-      order: 'ASC',
+      isAsc: true,
     },
     {
       id: 2,
       display: 'วันที่สร้าง ใหม่ - เก่า',
       name: 'วันที่สร้าง',
-      order: 'DESC',
+      isAsc: false,
     },
     {
       id: 3,
       display: 'วันที่สร้าง เก่า - ใหม่',
       name: 'วันที่สร้าง',
-      order: 'ASC',
+      isAsc: true,
     },
     {
       id: 4,
       display: 'วันที่แก้ไขล่าสุด ใหม่ - เก่า',
       name: 'วันที่แก้ไขล่าสุด',
-      order: 'DESC',
+      isAsc: false,
     },
     {
       id: 5,
       display: 'วันที่แก้ไขล่าสุด เก่า - ใหม่',
       name: 'วันที่แก้ไขล่าสุด',
-      order: 'ASC',
+      isAsc: true,
     },
     {
       id: 6,
       display: 'สถานะการกลั่นกรอง',
       name: 'priority',
-      order: 'ASC',
+      isAsc: true,
     },
   ];
 
@@ -135,9 +137,8 @@ export class DashboardApplicantComponent implements OnInit, OnDestroy {
                 display: row.projectName,
                 value: row.projectName,
               },
-
               {
-                display: row.projectStatus,
+                display: this.getStatusDisplay(row),
                 value: row.projectStatus,
               },
               {
@@ -158,13 +159,27 @@ export class DashboardApplicantComponent implements OnInit, OnDestroy {
     );
   }
 
+  private getStatusDisplay(row: ApplicantDashboardRow): string {
+    const statusVal = STATUS_ORDER[row?.projectStatus];
+    if (!statusVal) {
+      return '';
+    }
+    if (statusVal >= STATUS_ORDER.Approved) {
+      return 'applicant__Approved';
+    } else if (statusVal === STATUS_ORDER.Reviewed) {
+      // Reviewed is considered to be Reviewing from applicant POV
+      return 'applicant__Reviewing';
+    }
+    return `applicant__${row.projectStatus}`;
+  }
+
   onCreateProjectClicked() {
     this.routerService.navigate(['/proposal/create']);
   }
 
   onTableRowClicked(row: TableCell[]) {
     if (row.length > 0) {
-      this.routerService.navigate(['project', 'applicant', row[0].value]);
+      this.routerService.navigate(['applicant', 'project', row[0].value]);
     }
   }
 
@@ -206,26 +221,25 @@ export class DashboardApplicantComponent implements OnInit, OnDestroy {
     if (columnIndex === -1) {
       return;
     }
-    const isAsc = option.order === 'ASC';
     if (this.columns[columnIndex].format === 'datetime') {
       data.sort((a, b) => {
         const aDate = new Date(a[columnIndex].value);
         const bDate = new Date(b[columnIndex].value);
         if (aDate > bDate) {
-          return isAsc ? 1 : -1;
+          return option.isAsc ? 1 : -1;
         }
         if (aDate < bDate) {
-          return isAsc ? -1 : 1;
+          return option.isAsc ? -1 : 1;
         }
         return 0;
       });
     } else {
       data.sort((a, b) => {
         if (a[columnIndex].value > b[columnIndex].value) {
-          return isAsc ? 1 : -1;
+          return option.isAsc ? 1 : -1;
         }
         if (a[columnIndex].value < b[columnIndex].value) {
-          return isAsc ? -1 : 1;
+          return option.isAsc ? -1 : 1;
         }
         return 0;
       });

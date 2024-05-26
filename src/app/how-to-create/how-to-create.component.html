@@ -1,0 +1,81 @@
+<div class="container">
+  <nav class="address">
+    <a routerLink="/" class="address__text address__link">หน้าแรก</a>
+    <div class="address__text">/</div>
+    <div class="address__text address__text--bold">
+      วิธีสร้างใบขอทุนสนับสนุน
+    </div>
+  </nav>
+
+  <div class="mainContainer">
+    <div class="nav mgt-55">
+      <a
+        (click)="onNavItemClick(0)"
+        routerLink="/how-to-create"
+        [fragment]="headerText"
+        [ngClass]="{
+          nav__text: true,
+          'nav__text--active': navActiveIndex === 0
+        }"
+        >{{ headerText }}</a
+      >
+      @for (item of howToCreateList; track $index) {
+      <a
+        (click)="onNavItemClick($index + 1)"
+        routerLink="/how-to-create"
+        [fragment]="item.header"
+        [ngClass]="{
+          nav__text: true,
+          'nav__text--active': navActiveIndex === $index + 1
+        }"
+        >{{ item.header }}</a
+      >
+      }
+    </div>
+    <div class="content__container">
+      <div>
+        <h1
+          [id]="headerText"
+          class="content__header mgb-15"
+          appIntersectionElement
+          (isIntersecting)="isIntersecting($event, 0)"
+          [isContinuous]="true"
+          [threshold]="0"
+          [debounceTime]="0"
+          [rootMargin]="intersectionRootMargin"
+        >
+          {{ headerText }}
+        </h1>
+      </div>
+      @for (item of howToCreateList; track $index) {
+      <div>
+        <h1
+          [id]="item.header"
+          class="content__subHeader"
+          appIntersectionElement
+          (isIntersecting)="isIntersecting($event, $index + 1)"
+          [isContinuous]="true"
+          [threshold]="0"
+          [debounceTime]="0"
+          [rootMargin]="intersectionRootMargin"
+        >
+          {{ item.header }}
+        </h1>
+        <div class="mgt-15" [innerHTML]="item.content | safeHtml"></div>
+      </div>
+      @if ($index < howToCreateList.length - 1) {
+      <div class="hr mgt-40 mgb-40"></div>
+      } }
+    </div>
+  </div>
+
+  <!-- Horizontal line -->
+  <div class="hr mgt-80"></div>
+  <!-- FAQ -->
+  <div class="mgt-62">
+    <app-com-faq [items]="faqList"></app-com-faq>
+  </div>
+</div>
+
+<!-- For debugging -->
+<!-- <div class="intersectionBox"></div> -->

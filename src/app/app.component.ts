@@ -1,4 +1,10 @@
-import { AfterViewInit, Component, OnDestroy, inject } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  OnDestroy,
+  OnInit,
+  inject,
+} from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { Subscription, delay } from 'rxjs';
 import { FooterComponent } from './footer/footer.component';
@@ -13,7 +19,7 @@ import { BackgroundColor } from './shared/enums/background-color';
   styleUrls: ['./app.component.scss'],
   imports: [RouterModule, NavbarComponent, FooterComponent],
 })
-export class AppComponent implements AfterViewInit, OnDestroy {
+export class AppComponent implements AfterViewInit, OnInit, OnDestroy {
   private readonly subs: Subscription[] = [];
 
   protected backgroundColor = BackgroundColor.white;
@@ -28,6 +34,8 @@ export class AppComponent implements AfterViewInit, OnDestroy {
         return 'background--gray';
     }
   }
+
+  ngOnInit(): void {}
 
   ngOnDestroy(): void {
     this.subs.forEach((s) => s.unsubscribe());

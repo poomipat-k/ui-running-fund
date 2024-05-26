@@ -1,0 +1,242 @@
+@import "../../styles.scss";
+
+.pageContainer {
+  padding: 6rem 12.2rem 6.9rem 12.2rem;
+}
+
+.pageHeader {
+  font-family: $custom-font;
+  font-weight: 600;
+  font-size: 2.4rem;
+  line-height: 2.8rem;
+  color: #344054;
+}
+
+.dateContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.dateRow {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.dateGroup {
+  display: flex;
+  gap: 4px;
+}
+
+.dash {
+  font-family: $custom-font;
+  font-weight: 600;
+  font-size: 1.6rem;
+  line-height: 2rem;
+  color: #344054;
+}
+
+.summary {
+  display: flex;
+  justify-content: space-between;
+
+  &__subHeader {
+    font-family: $custom-font;
+    font-weight: 400;
+    font-size: 1.8rem;
+    line-height: 2rem;
+    color: #101828;
+  }
+
+  &__details {
+    font-family: $custom-font;
+    font-weight: 600;
+    font-size: 2.9rem;
+    line-height: 2.8rem;
+    color: #344054;
+
+    &--highlight {
+      color: #f47920;
+    }
+  }
+}
+
+.dashboard {
+  &__header {
+    font-family: $custom-font;
+    font-weight: 600;
+    font-size: 2.4rem;
+    line-height: 2.8rem;
+    color: #344054;
+  }
+
+  &__count {
+    font-family: $custom-font;
+    font-weight: 400;
+    font-size: 1.6rem;
+    line-height: 2rem;
+    color: #667085;
+  }
+
+  &__control {
+    display: flex;
+    justify-content: space-between;
+  }
+}
+
+.button-content {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  padding: 1.2rem 1.6rem 1.2rem 1.4rem;
+
+  font-family: $custom-font;
+  font-weight: 500;
+  font-size: 1.6rem;
+  line-height: 2.7rem;
+  text-align: center;
+
+  &:hover svg path {
+    fill: #fb6514;
+  }
+
+  &:active svg path {
+    fill: #9c2a10;
+  }
+
+  &__description {
+    margin-top: 4px;
+    font-family: $custom-font;
+    font-weight: 400;
+    font-size: 1.2rem;
+    line-height: 2rem;
+    color: #344054;
+    text-align: right;
+  }
+}
+
+.hr {
+  border-top: 1px solid #0000005c;
+}
+
+.searchFilter {
+  &__Container {
+    display: flex;
+    gap: 8px;
+  }
+
+  &__item {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  &__label {
+    font-family: $custom-font;
+    font-weight: 500;
+    font-size: 1.4rem;
+    line-height: 2rem;
+    color: #344054;
+  }
+
+  &__button {
+    height: 4.4rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    align-self: flex-end;
+    background-color: #667085;
+
+    border: none;
+    outline: none;
+
+    border-radius: 8px;
+    padding: 1rem 1.4rem;
+
+    font-family: $custom-font;
+    font-weight: 500;
+    font-size: 1.6rem;
+    line-height: 2.4rem;
+    color: #fff;
+    cursor: pointer;
+
+    &:hover {
+      filter: brightness(110%);
+    }
+
+    &:active {
+      filter: brightness(90%);
+    }
+  }
+}
+
+.pagingContainer {
+  display: flex;
+  justify-content: center;
+}
+
+.error {
+  display: flex;
+  font-family: $custom-font-looped;
+  font-size: 1.3rem;
+  font-weight: 400;
+  line-height: normal;
+  color: #ec4a0a;
+
+  &__text {
+    margin-left: 4px;
+  }
+}
+
+.flexCenter {
+  display: flex;
+  justify-content: center;
+}
+
+.mgt {
+  &-8 {
+    margin-top: 8px;
+  }
+
+  &-10 {
+    margin-top: 10px;
+  }
+
+  &-12 {
+    margin-top: 12px;
+  }
+
+  &-17 {
+    margin-top: 17px;
+  }
+
+  &-18 {
+    margin-top: 18px;
+  }
+
+  &-21 {
+    margin-top: 21px;
+  }
+
+  &-24 {
+    margin-top: 24px;
+  }
+
+  &-25 {
+    margin-top: 25px;
+  }
+
+  &-30 {
+    margin-top: 30px;
+  }
+
+  &-33 {
+    margin-top: 33px;
+  }
+
+  &-39 {
+    margin-top: 39px;
+  }
+}

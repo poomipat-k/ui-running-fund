@@ -1,0 +1,90 @@
+<div class="container">
+  <h2 class="header">Dashboard</h2>
+  <h3 class="subHeader mgt-9">ช่วงเวลาที่แสดงบน Dashboard</h3>
+  <!-- Date form -->
+  <div class="dateContainer mgt-19">
+    <div class="dateRow">
+      <div class="dateGroup">
+        <app-com-select-dropdown
+          [form]="form"
+          [items]="yearOptions"
+          placeholder="ปี"
+          width="8.3rem"
+          controlName="fromYear"
+          [onChange]="onFromYearOrMonthChanged"
+        ></app-com-select-dropdown>
+        <app-com-select-dropdown
+          [form]="form"
+          [items]="monthOptions"
+          placeholder="เดือน"
+          width="14.1rem"
+          controlName="fromMonth"
+          [onChange]="onFromYearOrMonthChanged"
+        ></app-com-select-dropdown>
+        <app-com-select-dropdown
+          [form]="form"
+          [items]="fromDaysInMonthOptions"
+          placeholder="วันที่"
+          width="9.9rem"
+          controlName="fromDay"
+          emptyMessage="กรุณาเลือกปีและวัน"
+        ></app-com-select-dropdown>
+      </div>
+      <p class="dash">-</p>
+      <div class="dateGroup">
+        <app-com-select-dropdown
+          [form]="form"
+          [items]="yearOptions"
+          placeholder="ปี"
+          width="8.3rem"
+          controlName="toYear"
+          [onChange]="onToYearOrMonthChanged"
+        ></app-com-select-dropdown>
+        <app-com-select-dropdown
+          [form]="form"
+          [items]="monthOptions"
+          placeholder="เดือน"
+          width="14.1rem"
+          controlName="toMonth"
+          [onChange]="onToYearOrMonthChanged"
+        ></app-com-select-dropdown>
+        <app-com-select-dropdown
+          [form]="form"
+          [items]="toDaysInMonthOptions"
+          placeholder="วันที่"
+          width="9.9rem"
+          controlName="toDay"
+          emptyMessage="กรุณาเลือกปีและวัน"
+        ></app-com-select-dropdown>
+      </div>
+    </div>
+    @if (!form.valid && form.touched) {
+    <div class="error mgt-10">
+      <img src="/assets/error_icon.svg" alt="error icon" />
+      <p class="error__text mgt-10">วันที่ที่เลือกไม่ถูกต้อง</p>
+    </div>
+    }
+  </div>
+  <!-- Dashboard -->
+  <div class="mgt-31">
+    <p class="countText">ทั้งหมด {{ count }} โครงการ</p>
+    <div class="mgt-19">
+      <app-com-table
+        [columns]="columns"
+        [data]="dashboardData"
+        emptyText="ไม่มีโครงการ ณ ขณะนี้"
+        [rowClickable]="false"
+        contentFontSize="16px"
+      ></app-com-table>
+      <!-- Pagination -->
+      <div class="pagingContainer mgt-27">
+        <app-com-pagination
+          [count]="count"
+          [pageSize]="5"
+          [activePage]="activePage"
+          (currentPage)="onDashboardPageChanged($event)"
+        ></app-com-pagination>
+      </div>
+    </div>
+  </div>
+</div>

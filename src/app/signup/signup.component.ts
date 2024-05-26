@@ -9,7 +9,8 @@ import {
 } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
 import { Subscription, catchError, throwError } from 'rxjs';
-import { ModalComponent } from '../components/modal/modal.component';
+import { PrivacyPolicyComponent } from '../components/privacy-policy/privacy-policy.component';
+import { TacComponent } from '../components/tac/tac.component';
 import { ThemeService } from '../services/theme.service';
 import { UserService } from '../services/user.service';
 import { BackgroundColor } from '../shared/enums/background-color';
@@ -19,13 +20,19 @@ import { confirmPasswordMatchValidator } from '../shared/validators/confirmPassw
 @Component({
   selector: 'app-signup',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, RouterModule, ModalComponent],
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    RouterModule,
+    TacComponent,
+    PrivacyPolicyComponent,
+  ],
   templateUrl: './signup.component.html',
   styleUrl: './signup.component.scss',
 })
 export class SignupComponent {
-  @ViewChild('tacModal') tacModal: ModalComponent;
-  @ViewChild('privacyModal') privacyModal: ModalComponent;
+  @ViewChild('tacModal') tacModal: TacComponent;
+  @ViewChild('privacyModal') privacyModal: PrivacyPolicyComponent;
 
   protected form: FormGroup;
 

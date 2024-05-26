@@ -1,0 +1,134 @@
+.container {
+  height: 45rem;
+  overflow: hidden;
+
+  display: flex;
+  position: relative;
+
+  scroll-behavior: smooth;
+  scroll-snap-type: x mandatory;
+  background-color: #d9d9d9;
+}
+
+.carousel {
+  &__container {
+    min-width: 100vw;
+    height: 45rem;
+    display: flex;
+    justify-content: center;
+
+    scroll-snap-align: center;
+  }
+
+  &__item {
+    display: flex;
+    max-width: 100%;
+    max-height: 45rem;
+    width: auto;
+    height: auto;
+    cursor: default;
+
+    &--blur {
+      filter: blur(8px);
+    }
+  }
+
+  &__pointer {
+    cursor: pointer;
+  }
+
+  &__iconContainer {
+    &--left {
+      position: absolute;
+      top: 20.5rem;
+      cursor: pointer;
+      transform: translateX(calc(-50vw + 12.2rem));
+      // opacity: 0.5;
+
+      &:hover {
+        opacity: 1;
+      }
+      &:hover #backIcon {
+        fill: #d9d9d9;
+      }
+
+      &:active {
+        opacity: 1;
+      }
+      &:active #backIcon {
+        fill: #b9b9b9;
+      }
+    }
+
+    &--right {
+      position: absolute;
+      top: 20.5rem;
+      cursor: pointer;
+      transform: translateX(calc(50vw - 12.2rem));
+      // opacity: 0.5;
+
+      &:hover {
+        opacity: 1;
+      }
+      &:hover #nextIcon {
+        fill: #d9d9d9;
+        opacity: 1;
+      }
+
+      &:active {
+        opacity: 1;
+      }
+      &:active #nextIcon {
+        fill: #b9b9b9;
+        opacity: 1;
+      }
+    }
+  }
+}
+
+.nav {
+  &__container {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+
+    transform: translateY(-4.9rem);
+
+    opacity: 0.4;
+    transition: opacity 300ms ease-in;
+
+    &:hover {
+      opacity: 1;
+    }
+  }
+
+  &__item {
+    width: 2rem;
+    height: 2rem;
+    border-radius: 50%;
+    background-color: #fff;
+    cursor: pointer;
+
+    transition: all 300ms linear;
+
+    &--active {
+      background-color: #a5a8ae;
+    }
+  }
+}
+
+.bg {
+  &__carousel {
+    background-color: #344054;
+  }
+}
+
+.opacity {
+  &-0 {
+    opacity: 0;
+  }
+}
+
+.overflowXScroll {
+  overflow-x: scroll;
+}

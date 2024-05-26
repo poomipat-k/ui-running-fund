@@ -201,7 +201,7 @@ export class ExperienceComponent implements OnInit, OnDestroy {
       return;
     }
     if (!this.thisSeriesFormGroup.get('history')) {
-      const historyFormGroup = this.generateHistoryFormGroup();
+      const historyFormGroup = this.generateThisHistoryFormGroup();
       this.thisSeriesFormGroup.addControl('history', historyFormGroup);
       // Add subscription to add Validators.required once some field in completed row is not null
       const thisSeriesCompleted2 = this.form.get(
@@ -270,7 +270,7 @@ export class ExperienceComponent implements OnInit, OnDestroy {
     });
   }
 
-  private generateHistoryFormGroup(): FormGroup {
+  private generateThisHistoryFormGroup(): FormGroup {
     return new FormGroup({
       ordinalNumber: new FormControl(null, [
         Validators.required,
@@ -285,7 +285,6 @@ export class ExperienceComponent implements OnInit, OnDestroy {
           Validators.max(this.currentYear + 543),
           Validators.min(this.currentYear - 3 + 543),
         ]),
-        name: new FormControl(null, Validators.required),
         participant: new FormControl(null, [
           Validators.required,
           Validators.min(0),
@@ -296,7 +295,6 @@ export class ExperienceComponent implements OnInit, OnDestroy {
           Validators.max(this.currentYear + 543),
           Validators.min(this.currentYear - 3 + 543),
         ]),
-        name: new FormControl(null),
         participant: new FormControl(null, [Validators.min(0)]),
       }),
       completed3: new FormGroup({
@@ -304,7 +302,6 @@ export class ExperienceComponent implements OnInit, OnDestroy {
           Validators.max(this.currentYear + 543),
           Validators.min(this.currentYear - 3 + 543),
         ]),
-        name: new FormControl(null),
         participant: new FormControl(null, [Validators.min(0)]),
       }),
     });

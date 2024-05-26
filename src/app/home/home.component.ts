@@ -1,10 +1,17 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit, inject } from '@angular/core';
-import { Router } from '@angular/router';
+import { RouterModule } from '@angular/router';
+import { Subscription } from 'rxjs';
+import { environment } from '../../environments/environment';
+import { CarouselComponent } from '../components/carousel/carousel.component';
+import { FaqComponent } from '../components/faq/faq.component';
 import { DashboardApplicantComponent } from '../dashboard-applicant/dashboard-applicant.component';
 import { DashboardReviewerComponent } from '../dashboard-reviewer/dashboard-reviewer.component';
-import { UserService } from '../services/user.service';
-import { User } from '../shared/models/user';
+import { ThemeService } from '../services/theme.service';
+import { WebsiteConfigService } from '../services/website-config.service';
+import { BackgroundColor } from '../shared/enums/background-color';
+import { ImageRef } from '../shared/models/banner';
+import { SafeHtmlPipe } from '../shared/pipe/safe-html.pipe';
 
 @Component({
   selector: 'app-home',
@@ -13,19 +20,35 @@ import { User } from '../shared/models/user';
     CommonModule,
     DashboardApplicantComponent,
     DashboardReviewerComponent,
+    FaqComponent,
+    CarouselComponent,
+    RouterModule,
+    SafeHtmlPipe,
   ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
 })
 export class HomeComponent implements OnInit {
-  private userService: UserService = inject(UserService);
-  private router: Router = inject(Router);
+  private readonly themeService: ThemeService = inject(ThemeService);
+  private readonly websiteConfigService: WebsiteConfigService =
+    inject(WebsiteConfigService);
 
-  protected user: User;
+  private readonly subs: Subscription[] = [];
+
+  protected homeFixedImage = environment.homeFixedImage;
+
+  protected sliderItems: ImageRef[] = [];
+  protected content = '';
   ngOnInit(): void {
-    const currentUser = this.userService.getCurrentInMemoryUser();
-    this.user = currentUser;
+    this.themeService.changeBackgroundColor(BackgroundColor.white);
 
-    this.router.navigate(['/dashboard']);
+    this.subs.push(
+      this.websiteConfigService.getLandingPage().subscribe((result) => {
+        if (result) {
+          this.sliderItems = result.banner || [];
+          this.content = result.content;
+        }
+      })
+    );
   }
 }
