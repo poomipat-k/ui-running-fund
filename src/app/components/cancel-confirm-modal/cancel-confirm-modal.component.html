@@ -1,0 +1,12 @@
+<app-com-modal #modal [width]="width" [height]="height" [padding]="padding">
+  <div class="container">
+    <img src="/assets/trash_bin_icon.svg" alt="trash bin icon" class="icon" />
+    <p class="text mgt-27">{{ text }}</p>
+    <div class="button__container mgt-46">
+      <button class="button button--cancel" (click)="closeModal()">
+        ยกเลิก
+      </button>
+      <button class="button button--confirm" (click)="onConfirm()">ใช่</button>
+    </div>
+  </div>
+</app-com-modal>

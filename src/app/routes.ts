@@ -1,4 +1,5 @@
 import { Routes } from '@angular/router';
+import { AskingForHelpComponent } from './asking-for-help/asking-for-help.component';
 import { EmailActivateSuccessComponent } from './email-activate-success/email-activate-success.component';
 import { ForgotPasswordEmailSentComponent } from './forgot-password-email-sent/forgot-password-email-sent.component';
 import { HomeComponent } from './home/home.component';
@@ -6,6 +7,7 @@ import { LoginComponent } from './login/login.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { ResetPasswordSuccessComponent } from './reset-password-success/reset-password-success.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
+import { adminAuthGuard } from './shared/guard/admin-auth.guard';
 import { applicantAuthGuard } from './shared/guard/applicant-auth.guard';
 import { authGuard } from './shared/guard/auth.guard';
 import { reviewerAuthGuard } from './shared/guard/reviewer-auth.guard';
@@ -15,7 +17,20 @@ const routeConfig: Routes = [
   {
     path: '',
     component: HomeComponent,
-    title: 'Login',
+    title: 'หน้าหลัก',
+  },
+  {
+    path: 'how-to-create',
+    loadComponent: () =>
+      import('./how-to-create/how-to-create.component').then(
+        (mod) => mod.HowToCreateComponent
+      ),
+    title: 'วิธีสร้างใบขอทุนสนับสนุน',
+  },
+  {
+    path: 'help',
+    component: AskingForHelpComponent,
+    title: 'ขอความช่วยเหลือ',
   },
   {
     path: 'proposal/create',
@@ -23,7 +38,7 @@ const routeConfig: Routes = [
       import('./applicant-flow-pages/applicant-flow-pages.component').then(
         (mod) => mod.ApplicantFlowPagesComponent
       ),
-    title: 'Create a proposal',
+    title: 'สร้างใบขอทุนสนับสนุน',
     canActivate: [applicantAuthGuard],
   },
   {
@@ -32,7 +47,7 @@ const routeConfig: Routes = [
       import('./dashboard/dashboard.component').then(
         (mod) => mod.DashboardComponent
       ),
-    title: 'Dashboard',
+    title: 'แดชบอร์ด',
     canActivate: [authGuard],
   },
   {
@@ -42,22 +57,43 @@ const routeConfig: Routes = [
         (mod) => mod.ReviewerFlowPagesComponent
       ),
     canActivate: [reviewerAuthGuard],
+    title: 'รีวิวโครงการ',
   },
   {
-    path: 'project/applicant/:projectCode',
+    path: 'applicant/project/:projectCode',
     loadComponent: () =>
       import(
         './applicant-project-details/applicant-project-details.component'
       ).then((mod) => mod.ApplicantProjectDetailsComponent),
     canActivate: [applicantAuthGuard],
+    title: 'รายละเอียดโครงการ',
   },
   {
-    path: 'project/applicant/review-details/:projectCode/:reviewerId',
+    path: 'admin/project/:projectCode',
+    loadComponent: () =>
+      import(
+        './applicant-project-details/applicant-project-details.component'
+      ).then((mod) => mod.ApplicantProjectDetailsComponent),
+    canActivate: [adminAuthGuard],
+    title: 'รายละเอียดโครงการ',
+  },
+  {
+    path: 'admin/project/review-details/:projectCode/:reviewerId',
     loadComponent: () =>
       import('./reviewer-flow-pages/reviewer-flow-pages.component').then(
         (mod) => mod.ReviewerFlowPagesComponent
       ),
-    canActivate: [applicantAuthGuard],
+    canActivate: [adminAuthGuard],
+    title: 'รายละเอียดการประเมิณโครงการ',
+  },
+  {
+    path: 'admin/cms/website/config',
+    loadComponent: () =>
+      import('./website-config/website-config.component').then(
+        (mod) => mod.WebsiteConfigComponent
+      ),
+    canActivate: [adminAuthGuard],
+    title: 'จัดการเว็บไซต์',
   },
   {
     path: 'login',
@@ -73,7 +109,7 @@ const routeConfig: Routes = [
   {
     path: 'signup/success',
     component: SignupSuccessComponent,
-    title: 'Signup success',
+    title: 'Signup successfully',
   },
   {
     path: 'signup/activate/:activateCode',

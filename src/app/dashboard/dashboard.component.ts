@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit, inject } from '@angular/core';
+import { DashboardAdminComponent } from '../dashboard-admin/dashboard-admin.component';
 import { DashboardApplicantComponent } from '../dashboard-applicant/dashboard-applicant.component';
 import { DashboardReviewerComponent } from '../dashboard-reviewer/dashboard-reviewer.component';
 import { UserService } from '../services/user.service';
@@ -12,6 +13,7 @@ import { User } from '../shared/models/user';
     CommonModule,
     DashboardApplicantComponent,
     DashboardReviewerComponent,
+    DashboardAdminComponent,
   ],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.scss',

@@ -1,0 +1,238 @@
+<div class="pageContainer">
+  <h1 class="pageHeader">Summary</h1>
+  <div class="dateContainer mgt-12">
+    <div>
+      <div class="dateRow">
+        <div class="dateGroup">
+          <app-com-select-dropdown
+            [form]="summaryDateGroup"
+            [items]="yearOptions"
+            placeholder="ปี"
+            width="9.9rem"
+            controlName="fromYear"
+            [onChange]="onFromYearOrMonthChanged"
+          ></app-com-select-dropdown>
+          <app-com-select-dropdown
+            [form]="summaryDateGroup"
+            [items]="monthOptions"
+            placeholder="เดือน"
+            width="14.1rem"
+            controlName="fromMonth"
+            [onChange]="onFromYearOrMonthChanged"
+          ></app-com-select-dropdown>
+          <app-com-select-dropdown
+            [form]="summaryDateGroup"
+            [items]="fromDaysInMonthOptions"
+            placeholder="วันที่"
+            width="9rem"
+            controlName="fromDay"
+            emptyMessage="กรุณาเลือกปีและวัน"
+          ></app-com-select-dropdown>
+        </div>
+        <p class="dash">-</p>
+        <div class="dateGroup">
+          <app-com-select-dropdown
+            [form]="summaryDateGroup"
+            [items]="yearOptions"
+            placeholder="ปี"
+            width="9.9rem"
+            controlName="toYear"
+            [onChange]="onToYearOrMonthChanged"
+          ></app-com-select-dropdown>
+          <app-com-select-dropdown
+            [form]="summaryDateGroup"
+            [items]="monthOptions"
+            placeholder="เดือน"
+            width="14.1rem"
+            controlName="toMonth"
+            [onChange]="onToYearOrMonthChanged"
+          ></app-com-select-dropdown>
+          <app-com-select-dropdown
+            [form]="summaryDateGroup"
+            [items]="toDaysInMonthOptions"
+            placeholder="วันที่"
+            width="9rem"
+            controlName="toDay"
+            emptyMessage="กรุณาเลือกปีและวัน"
+          ></app-com-select-dropdown>
+        </div>
+      </div>
+      @if (!summaryDateGroup.valid &&
+      (summaryDateGroup.errors?.['invalidFromDate'] ||
+      summaryDateGroup.errors?.['invalidToDate'] ||
+      summaryDateGroup.errors?.['fromDateLaterThanToDate'])) {
+      <div class="error flexCenter">
+        <img src="/assets/error_icon.svg" alt="error icon" />
+        <p class="error__text mgt-10">วันที่ที่เลือกไม่ถูกต้อง</p>
+      </div>
+      }
+    </div>
+    <div>
+      <div (click)="onDownloadReport()">
+        <app-com-button>
+          <div class="button-content">
+            <div>ดาวน์โหลด Data</div>
+            <svg
+              width="16"
+              height="16"
+              viewBox="0 0 16 16"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M8 12L3 7L4.4 5.55L7 8.15V0H9V8.15L11.6 5.55L13 7L8 12ZM2 16C1.45 16 0.979167 15.8042 0.5875 15.4125C0.195833 15.0208 0 14.55 0 14V11H2V14H14V11H16V14C16 14.55 15.8042 15.0208 15.4125 15.4125C15.0208 15.8042 14.55 16 14 16H2Z"
+                fill="#344054"
+              />
+            </svg>
+          </div>
+        </app-com-button>
+        <p class="button-content__description">ไฟล์ CSV (.csv)</p>
+      </div>
+    </div>
+  </div>
+  <!-- Summary Data -->
+  <div class="summary mgt-21">
+    <div>
+      <p class="summary__subHeader">จำนวนโครงการที่ขอทุนสนับสนุน</p>
+      <div class="summary__details mgt-17">
+        <span class="summary__details summary__details--highlight">
+          {{ numberFormatter.format(summaryData.projectCount || 0) }}
+        </span>
+        โครงการ
+      </div>
+    </div>
+    <div>
+      <p class="summary__subHeader">จำนวนโครงการที่ได้สนับสนุน</p>
+      <div class="summary__details mgt-17">
+        <span class="summary__details summary__details--highlight"
+          >{{ numberFormatter.format(summaryData.approvedProjectCount || 0) }}
+        </span>
+        โครงการ
+      </div>
+    </div>
+    <div>
+      <p class="summary__subHeader">จำนวนเงินที่ให้ทุน</p>
+      <div class="summary__details mgt-17">
+        <span class="summary__details summary__details--highlight"
+          >{{ numberFormatter.format(summaryData.approvedFundSum || 0) }}
+        </span>
+        บาท
+      </div>
+    </div>
+    <div>
+      <p class="summary__subHeader">ค่าเฉลี่ยเงินสนับสนุนแต่ละโครงการ</p>
+      <div class="summary__details mgt-17">
+        <span class="summary__details summary__details--highlight"
+          >{{ numberFormatter.format(summaryData.averageFund || 0) }}
+        </span>
+        บาท
+      </div>
+    </div>
+  </div>
+  <div class="hr mgt-30"></div>
+  <!-- Search filter -->
+  <div class="searchFilter__Container mgt-33">
+    <div class="searchFilter__item">
+      <p class="searchFilter__label">รหัสโครงการ</p>
+      <app-com-input-text
+        placeholder="ค้นหารหัสโครงการ..."
+        [form]="searchFormGroup"
+        controlName="projectCode"
+        width="19.6rem"
+      ></app-com-input-text>
+    </div>
+
+    <div class="searchFilter__item">
+      <p class="searchFilter__label">ชื่อโครงการ</p>
+      <app-com-input-text
+        placeholder="ค้นหาชื่อโครงการหรือค้นหาโดย keyword..."
+        [form]="searchFormGroup"
+        controlName="projectName"
+        width="44.1rem"
+      ></app-com-input-text>
+    </div>
+
+    <div class="searchFilter__item">
+      <p class="searchFilter__label">ค้นหาจากสถานะ</p>
+      <app-com-select-dropdown
+        [form]="searchFormGroup"
+        [items]="statusSearchOptions"
+        placeholder="เลือกการค้นหา"
+        width="28.6rem"
+        controlName="projectStatus"
+      ></app-com-select-dropdown>
+    </div>
+
+    <button class="searchFilter__button" (click)="onSearchClick()">
+      ค้นหา
+    </button>
+  </div>
+
+  <!-- Request Dashboard -->
+  <div class="mgt-39">
+    <h2 class="dashboard__header">โครงการที่ขอทุนสนับสนุน</h2>
+    <div class="dashboard__control mgt-8">
+      <p class="dashboard__count">
+        ทั้งหมด
+        {{ numberFormatter.format(requestDashboardItemCount) }}
+        โครงการ
+      </p>
+      <app-com-filter
+        [filterOptions]="requestFilterOptions"
+        (selectedFilter)="onSortRequestFilterChanged($event)"
+      ></app-com-filter>
+    </div>
+    <div class="mgt-24">
+      <app-com-table
+        [columns]="requestColumns"
+        [data]="requestData"
+        emptyText="ไม่มีโครงการ ณ ขณะนี้"
+        [rowClickable]="true"
+        (rowClicked)="onRequestTableRowClicked($event)"
+        contentFontSize="16px"
+      ></app-com-table>
+      <div class="pagingContainer mgt-18">
+        <app-com-pagination
+          [count]="requestDashboardItemCount"
+          [pageSize]="5"
+          [activePage]="requestCurrentPage"
+          (currentPage)="onRequestDashboardPageChanged($event)"
+        ></app-com-pagination>
+      </div>
+    </div>
+  </div>
+
+  <!-- Started Dashboard -->
+  <div class="mgt-25">
+    <h2 class="dashboard__header">โครงการที่ได้รับทุนและเริ่มโครงการแล้ว</h2>
+    <div class="dashboard__control mgt-10">
+      <p class="dashboard__count">
+        ทั้งหมด
+        {{ numberFormatter.format(startedDashboardItemCount) }}
+        โครงการ
+      </p>
+      <app-com-filter
+        [filterOptions]="startedFilterOptions"
+        (selectedFilter)="onSortStartedFilterChanged($event)"
+      ></app-com-filter>
+    </div>
+    <div class="mgt-24">
+      <app-com-table
+        [columns]="startedColumns"
+        [data]="startedData"
+        emptyText="ไม่มีโครงการ ณ ขณะนี้"
+        [rowClickable]="true"
+        (rowClicked)="onRequestTableRowClicked($event)"
+        contentFontSize="16px"
+      ></app-com-table>
+      <div class="pagingContainer mgt-18">
+        <app-com-pagination
+          [count]="startedDashboardItemCount"
+          [pageSize]="5"
+          [activePage]="startedCurrentPage"
+          (currentPage)="onStartedDashboardPageChanged($event)"
+        ></app-com-pagination>
+      </div>
+    </div>
+  </div>
+</div>

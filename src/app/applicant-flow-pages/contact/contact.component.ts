@@ -8,7 +8,9 @@ import { RadioComponent } from '../../components/radio/radio.component';
 import { SelectDropdownComponent } from '../../components/select-dropdown/select-dropdown.component';
 import { TextareaComponent } from '../../components/textarea/textarea.component';
 import { AddressService } from '../../services/address.service';
+import { ThemeService } from '../../services/theme.service';
 import { OnlyNumberDirective } from '../../shared/directives/only-number.directive';
+import { BackgroundColor } from '../../shared/enums/background-color';
 import { RadioOption } from '../../shared/models/radio-option';
 
 @Component({
@@ -32,22 +34,56 @@ export class ContactComponent implements OnInit, OnDestroy {
   @Input() devModeOn = false;
 
   private readonly addressService: AddressService = inject(AddressService);
+  private readonly themeService: ThemeService = inject(ThemeService);
 
   protected formTouched = false;
 
   protected provinceOptions: RadioOption[] = [];
-  protected districtOptions: RadioOption[] = [];
-  protected subdistrictOptions: RadioOption[] = [];
-  protected postcodeOptions: RadioOption[] = [];
+
+  protected projectHeadDistrictOptions: RadioOption[] = [];
+  protected projectHeadSubdistrictOptions: RadioOption[] = [];
+  protected projectHeadPostcodeOptions: RadioOption[] = [];
+
+  protected projectManagerDistrictOptions: RadioOption[] = [];
+  protected projectManagerSubdistrictOptions: RadioOption[] = [];
+  protected projectManagerPostcodeOptions: RadioOption[] = [];
+
+  protected projectCoordinatorDistrictOptions: RadioOption[] = [];
+  protected projectCoordinatorSubdistrictOptions: RadioOption[] = [];
+  protected projectCoordinatorPostcodeOptions: RadioOption[] = [];
 
   private readonly scroller: ViewportScroller = inject(ViewportScroller);
+
+  get projectHeadEmailControl(): FormControl {
+    return this.form.get('contact.projectHead.email') as FormControl;
+  }
+
+  get projectManagerEmailControl(): FormControl {
+    return this.form.get('contact.projectManager.email') as FormControl;
+  }
 
   get projectCoordinatorEmailControl(): FormControl {
     return this.form.get('contact.projectCoordinator.email') as FormControl;
   }
 
+  get projectHeadLineIdControl(): FormControl {
+    return this.form.get('contact.projectHead.lineId') as FormControl;
+  }
+
+  get projectManagerLineIdControl(): FormControl {
+    return this.form.get('contact.projectManager.lineId') as FormControl;
+  }
+
   get projectCoordinatorLineIdControl(): FormControl {
     return this.form.get('contact.projectCoordinator.lineId') as FormControl;
+  }
+
+  get projectHeadPhoneNumberControl(): FormControl {
+    return this.form.get('contact.projectHead.phoneNumber') as FormControl;
+  }
+
+  get projectManagerPhoneNumberControl(): FormControl {
+    return this.form.get('contact.projectManager.phoneNumber') as FormControl;
   }
 
   get projectCoordinatorPhoneNumberControl(): FormControl {
@@ -56,7 +92,15 @@ export class ContactComponent implements OnInit, OnDestroy {
     ) as FormControl;
   }
 
-  get coordinatorAddressFormGroup(): FormGroup {
+  get projectHeadAddressFormGroup(): FormGroup {
+    return this.form.get('contact.projectHead.address') as FormGroup;
+  }
+
+  get projectManagerAddressFormGroup(): FormGroup {
+    return this.form.get('contact.projectManager.address') as FormGroup;
+  }
+
+  get projectCoordinatorAddressFormGroup(): FormGroup {
     return this.form.get('contact.projectCoordinator.address') as FormGroup;
   }
 
@@ -152,61 +196,89 @@ export class ContactComponent implements OnInit, OnDestroy {
       this.onProjectCoordinatorSameAsProjectManagerChanged.bind(this);
     this.onRaceDirectorWhoChanged = this.onRaceDirectorWhoChanged.bind(this);
 
-    this.onProvinceChanged = this.onProvinceChanged.bind(this);
-    this.onDistrictChanged = this.onDistrictChanged.bind(this);
-    this.onSubdistrictChanged = this.onSubdistrictChanged.bind(this);
+    // On Province changed
+    this.onProjectHeadProvinceChanged =
+      this.onProjectHeadProvinceChanged.bind(this);
+    this.onProjectManagerProvinceChanged =
+      this.onProjectManagerProvinceChanged.bind(this);
+    this.onProjectCoordinatorProvinceChanged =
+      this.onProjectCoordinatorProvinceChanged.bind(this);
+
+    // On district changed
+    this.onProjectHeadDistrictChanged =
+      this.onProjectHeadDistrictChanged.bind(this);
+    this.onProjectManagerDistrictChanged =
+      this.onProjectManagerDistrictChanged.bind(this);
+    this.onProjectCoordinatorDistrictChanged =
+      this.onProjectCoordinatorDistrictChanged.bind(this);
+
+    // On subdistrict changed
+    this.onProjectHeadSubdistrictChanged =
+      this.onProjectHeadSubdistrictChanged.bind(this);
+    this.onProjectManagerSubdistrictChanged =
+      this.onProjectManagerSubdistrictChanged.bind(this);
+    this.onProjectCoordinatorSubdistrictChanged =
+      this.onProjectCoordinatorSubdistrictChanged.bind(this);
   }
 
   ngOnInit(): void {
+    this.themeService.changeBackgroundColor(BackgroundColor.white);
+
     this.getProvinces();
 
+    this.configAddress('projectHead');
+    this.configAddress('projectManager');
+    this.configAddress('projectCoordinator');
+  }
+
+  private configAddress(groupName: string) {
     const provinceId =
-      this.form.value?.contact?.projectCoordinator?.address?.provinceId;
+      this.form.value?.contact?.[groupName]?.address?.provinceId;
     const districtId =
-      this.form.value?.contact?.projectCoordinator?.address?.districtId;
+      this.form.value?.contact?.[groupName]?.address?.districtId;
     const subdistrictId =
-      this.form.value?.contact?.projectCoordinator?.address?.subdistrictId;
+      this.form.value?.contact?.[groupName]?.address?.subdistrictId;
 
     // load address data when init
     if (provinceId) {
-      this.getDistrictsByProvinceId(provinceId);
+      this.getDistrictsByProvinceId(provinceId, groupName);
     }
     if (districtId) {
-      this.getSubdistrictsByDistrictId(districtId);
+      this.getSubdistrictsByDistrictId(districtId, groupName);
     }
     if (subdistrictId) {
-      this.getPostcodeBySubdistrictId(subdistrictId);
+      this.getPostcodeBySubdistrictId(subdistrictId, groupName);
     }
 
     // load address data when some field changed
     const provinceControl = this.form.get(
-      'contact.projectCoordinator.address.provinceId'
+      `contact.${groupName}.address.provinceId`
     ) as FormControl;
     const districtControl = this.form.get(
-      'contact.projectCoordinator.address.districtId'
+      `contact.${groupName}.address.districtId`
     ) as FormControl;
     const subdistrictControl = this.form.get(
-      'contact.projectCoordinator.address.subdistrictId'
+      `contact.${groupName}.address.subdistrictId`
     ) as FormControl;
 
     this.subs.push(
       provinceControl.valueChanges.subscribe((provinceId) => {
         if (provinceId) {
-          this.getDistrictsByProvinceId(provinceId);
+          this.getDistrictsByProvinceId(provinceId, groupName);
         }
       })
     );
     this.subs.push(
       districtControl.valueChanges.subscribe((districtId) => {
         if (districtId) {
-          this.getSubdistrictsByDistrictId(districtId);
+          this.getSubdistrictsByDistrictId(districtId, groupName);
         }
       })
     );
     this.subs.push(
-      subdistrictControl.valueChanges.subscribe((subdistrict) => {
-        if (subdistrict) {
-          this.getPostcodeBySubdistrictId(subdistrict);
+      subdistrictControl.valueChanges.subscribe((subdistrictId) => {
+        if (subdistrictId) {
+          this.getPostcodeBySubdistrictId(subdistrictId, groupName);
         }
       })
     );
@@ -218,7 +290,7 @@ export class ContactComponent implements OnInit, OnDestroy {
 
   public validToGoNext(): boolean {
     if (this.projectManagerSameAsProjectHead) {
-      this.patchProjectManager();
+      this.patchProjectManagerAsProjectHead();
     }
 
     if (this.projectCoordinatorSameAsProjectHead) {
@@ -254,23 +326,59 @@ export class ContactComponent implements OnInit, OnDestroy {
     }
   }
 
-  onProvinceChanged() {
-    this.coordinatorAddressFormGroup.patchValue({
+  onProjectHeadProvinceChanged() {
+    this.projectHeadAddressFormGroup.patchValue({
       districtId: null,
       subdistrictId: null,
       postcodeId: null,
     });
   }
 
-  onDistrictChanged() {
-    this.coordinatorAddressFormGroup.patchValue({
+  onProjectManagerProvinceChanged() {
+    this.projectManagerAddressFormGroup.patchValue({
+      districtId: null,
       subdistrictId: null,
       postcodeId: null,
     });
   }
 
-  onSubdistrictChanged() {
-    this.coordinatorAddressFormGroup.patchValue({ postcodeId: null });
+  onProjectCoordinatorProvinceChanged() {
+    this.projectCoordinatorAddressFormGroup.patchValue({
+      districtId: null,
+      subdistrictId: null,
+      postcodeId: null,
+    });
+  }
+
+  onProjectHeadDistrictChanged() {
+    this.projectHeadAddressFormGroup.patchValue({
+      subdistrictId: null,
+      postcodeId: null,
+    });
+  }
+
+  onProjectManagerDistrictChanged() {
+    this.projectManagerAddressFormGroup.patchValue({
+      subdistrictId: null,
+      postcodeId: null,
+    });
+  }
+
+  onProjectCoordinatorDistrictChanged() {
+    this.projectCoordinatorAddressFormGroup.patchValue({
+      subdistrictId: null,
+      postcodeId: null,
+    });
+  }
+
+  onProjectHeadSubdistrictChanged() {
+    this.projectHeadAddressFormGroup.patchValue({ postcodeId: null });
+  }
+  onProjectManagerSubdistrictChanged() {
+    this.projectManagerAddressFormGroup.patchValue({ postcodeId: null });
+  }
+  onProjectCoordinatorSubdistrictChanged() {
+    this.projectCoordinatorAddressFormGroup.patchValue({ postcodeId: null });
   }
 
   protected onProjectManagerSameAsProjectHeadChanged() {
@@ -306,6 +414,16 @@ export class ContactComponent implements OnInit, OnDestroy {
       lastName: null,
       organizationPosition: null,
       eventPosition: null,
+      address: {
+        address: null,
+        provinceId: null,
+        districtId: null,
+        subdistrictId: null,
+        postcodeId: null,
+      },
+      email: null,
+      lineId: null,
+      phoneNumber: null,
     });
     this.projectManagerGroup.markAsPristine();
     this.projectManagerGroup.markAsUntouched();
@@ -319,30 +437,30 @@ export class ContactComponent implements OnInit, OnDestroy {
       lastName: null,
       organizationPosition: null,
       eventPosition: null,
+      address: {
+        address: null,
+        provinceId: null,
+        districtId: null,
+        subdistrictId: null,
+        postcodeId: null,
+      },
+      email: null,
+      lineId: null,
+      phoneNumber: null,
     });
-    const fields = [
-      'prefix',
-      'firstName',
-      'lastName',
-      'organizationPosition',
-      'eventPosition',
-    ];
-    fields.forEach((field) => {
-      group.get(field)?.markAsPristine();
-      group.get(field)?.markAsUntouched();
-    });
-  }
-
-  private patchProjectManager() {
-    const { prefix, firstName, lastName, organizationPosition, eventPosition } =
-      this.projectHeadGroup.value;
-    this.projectManagerGroup.patchValue({
-      prefix,
-      firstName,
-      lastName,
-      organizationPosition,
-      eventPosition,
-    });
+    // const fields = [
+    //   'prefix',
+    //   'firstName',
+    //   'lastName',
+    //   'organizationPosition',
+    //   'eventPosition',
+    // ];
+    // fields.forEach((field) => {
+    //   group.get(field)?.markAsPristine();
+    //   group.get(field)?.markAsUntouched();
+    // });
+    this.projectCoordinatorGroup.markAsPristine();
+    this.projectCoordinatorGroup.markAsUntouched();
   }
 
   private isFormValid(): boolean {
@@ -357,6 +475,7 @@ export class ContactComponent implements OnInit, OnDestroy {
 
     const fromGroup = this.form.get('contact') as FormGroup;
     const errorId = this.getFirstErrorIdWithPrefix(fromGroup, '');
+    console.error('errorId:', errorId);
     if (errorId && this.enableScroll) {
       this.scrollToId(errorId);
     }
@@ -376,63 +495,122 @@ export class ContactComponent implements OnInit, OnDestroy {
     );
   }
 
-  private getDistrictsByProvinceId(provinceId: number) {
+  private getDistrictsByProvinceId(provinceId: number, groupName: string) {
     this.subs.push(
       this.addressService
         .getDistrictsByProvinceId(provinceId)
         .subscribe((result) => {
           if (result && result?.length > 0) {
-            this.districtOptions = result.map((d) => ({
+            const districtList = result.map((d) => ({
               id: d.id,
               value: d.id,
               display: d.name,
             }));
+            if (groupName === 'projectHead') {
+              this.projectHeadDistrictOptions = districtList;
+            } else if (groupName === 'projectManager') {
+              this.projectManagerDistrictOptions = districtList;
+            } else if (groupName === 'projectCoordinator') {
+              this.projectCoordinatorDistrictOptions = districtList;
+            }
           }
         })
     );
   }
 
-  private getSubdistrictsByDistrictId(districtId: number) {
+  private getSubdistrictsByDistrictId(districtId: number, groupName: string) {
     this.subs.push(
       this.addressService
         .getSubdistrictsByDistrictId(districtId)
         .subscribe((result) => {
           if (result && result?.length > 0) {
-            this.subdistrictOptions = result.map((d) => ({
+            const subdistrictList = result.map((d) => ({
               id: d.id,
               value: d.id,
               display: d.name,
             }));
+            if (groupName === 'projectHead') {
+              this.projectHeadSubdistrictOptions = subdistrictList;
+            } else if (groupName === 'projectManager') {
+              this.projectManagerSubdistrictOptions = subdistrictList;
+            } else if (groupName === 'projectCoordinator') {
+              this.projectCoordinatorSubdistrictOptions = subdistrictList;
+            }
           }
         })
     );
   }
 
-  private getPostcodeBySubdistrictId(subdistrictId: number) {
+  private getPostcodeBySubdistrictId(subdistrictId: number, groupName: string) {
     this.subs.push(
       this.addressService
         .getPostcodesBySubdistrictId(subdistrictId)
         .subscribe((result) => {
           if (result && result?.length > 0) {
-            this.postcodeOptions = result.map((post) => ({
+            const postcodeList = result.map((post) => ({
               id: post.id,
               value: post.id,
               display: post.code,
             }));
+            if (groupName === 'projectHead') {
+              this.projectHeadPostcodeOptions = postcodeList;
+            } else if (groupName === 'projectManager') {
+              this.projectManagerPostcodeOptions = postcodeList;
+            } else if (groupName === 'projectCoordinator') {
+              this.projectCoordinatorPostcodeOptions = postcodeList;
+            }
           }
         })
     );
   }
 
+  private patchProjectManagerAsProjectHead() {
+    const {
+      prefix,
+      firstName,
+      lastName,
+      organizationPosition,
+      eventPosition,
+      address,
+      email,
+      lineId,
+      phoneNumber,
+    } = this.projectHeadGroup.value;
+    this.projectManagerGroup.patchValue({
+      prefix,
+      firstName,
+      lastName,
+      organizationPosition,
+      eventPosition,
+      address: { ...address },
+      email,
+      lineId,
+      phoneNumber,
+    });
+  }
+
   private patchProjectCoordinator(copyFrom: FormGroup) {
-    const { prefix, firstName, lastName, organizationPosition, eventPosition } =
-      copyFrom.value;
+    const {
+      prefix,
+      firstName,
+      lastName,
+      organizationPosition,
+      eventPosition,
+      address,
+      email,
+      lineId,
+      phoneNumber,
+    } = copyFrom.value;
     this.projectCoordinatorGroup.patchValue({
       prefix,
       firstName,
       lastName,
       organizationPosition,
       eventPosition,
+      address: { ...address },
+      email,
+      lineId,
+      phoneNumber,
     });
   }
 
@@ -468,36 +646,56 @@ export class ContactComponent implements OnInit, OnDestroy {
     group.patchValue({
       projectHead: {
         prefix: 'Mr',
-        firstName: 'A',
-        lastName: 'B',
-        organizationPosition: 'software eng',
-        eventPosition: 'Judge',
-      },
-      projectManager: {
-        sameAsProjectHead: true,
-        prefix: 'Mr',
-        firstName: 'A',
-        lastName: 'B',
-        organizationPosition: 'software eng',
-        eventPosition: 'Judge',
-      },
-      projectCoordinator: {
-        sameAsProjectHead: true,
-        sameAsProjectManager: false,
-        prefix: 'Mr',
-        firstName: 'A',
+        firstName: 'projectHead',
         lastName: 'B',
         organizationPosition: 'software eng',
         eventPosition: 'Judge',
         address: {
-          address: 'A',
-          provinceId: 3,
-          districtId: 59,
-          subdistrictId: 235,
-          postcodeId: 246,
+          address: 'projectHead address',
+          provinceId: 1,
+          districtId: 1,
+          subdistrictId: 1,
+          postcodeId: 1,
         },
-        email: 'test@test.com',
-        lineId: '@aabb',
+        email: 'head@test.com',
+        lineId: '@head',
+        phoneNumber: '091111111',
+      },
+      projectManager: {
+        sameAsProjectHead: false,
+        prefix: 'Mr',
+        firstName: 'projectManager',
+        lastName: 'B',
+        organizationPosition: 'software eng',
+        eventPosition: 'Judge',
+        address: {
+          address: 'projectManager address',
+          provinceId: 2,
+          districtId: 10,
+          subdistrictId: 60,
+          postcodeId: 60,
+        },
+        email: 'projectManager@test.com',
+        lineId: '@projectManager',
+        phoneNumber: '091111111',
+      },
+      projectCoordinator: {
+        sameAsProjectHead: false,
+        sameAsProjectManager: false,
+        prefix: 'Mr',
+        firstName: 'projectCoordinator',
+        lastName: 'B',
+        organizationPosition: 'software eng',
+        eventPosition: 'Judge',
+        address: {
+          address: 'projectCoordinator address',
+          provinceId: 6,
+          districtId: 113,
+          subdistrictId: 652,
+          postcodeId: 666,
+        },
+        email: 'coordinator@test.com',
+        lineId: '@coordinator',
         phoneNumber: '0902029423',
       },
       raceDirector: {

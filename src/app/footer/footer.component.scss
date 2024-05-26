@@ -7,7 +7,7 @@
   padding-top: 1.6rem;
 
   &__horizontal-line {
-    border-top: 1px solid #667085;
+    border-top: 1px solid rgba(102, 112, 133, 0.5);
     padding-bottom: 2.4rem;
   }
 
@@ -51,21 +51,8 @@
   }
 
   &__logo {
-    &--1 {
-      height: 5.3rem;
-
-      @media only screen and (min-width: $bp1) {
-        height: 6.5rem;
-      }
-    }
-
-    &--2 {
-      height: 5.7rem;
-
-      @media only screen and (min-width: $bp1) {
-        height: 7rem;
-      }
-    }
+    display: flex;
+    gap: 1.4rem;
   }
 
   &__contact-us {

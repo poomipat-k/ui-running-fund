@@ -164,25 +164,6 @@
             } }
           </div>
 
-          <label class="label">ชื่องาน</label>
-          <div>
-            <app-com-input-text
-              [id]="'thisSeries.history.completed' + item + '.name'"
-              placeholder="โปรดระบุชื่องาน"
-              [form]="getThisSeriesCompletedFormGroup(item)"
-              controlName="name"
-              width="34.8rem"
-            ></app-com-input-text>
-            @if (!getThisSeriesCompletedFormGroup(item).get('name')?.valid &&
-            getThisSeriesCompletedFormGroup(item).get('name')?.touched &&
-            formTouched) {
-            <div class="error mgt-10">
-              <img src="/assets/error_icon.svg" alt="error icon" />
-              <p class="error__text">กรุณาระบุชื่องาน</p>
-            </div>
-            }
-          </div>
-
           <label class="label">จำนวนผู้เข้าร่วม</label>
           <div>
             <app-com-input-number
@@ -210,7 +191,8 @@
 
     <div class="section">
       <h3 class="section__header section__header--with-ask">
-        4.2 นอกจากการจัดกิจกรรมนี้ ท่านมีประสบการณ์จัดงานวิ่งอื่น ๆ หรือไม่
+        4.2 นอกจากการจัดกิจกรรมตามข้อเสนอโครงการในครั้งนี้
+        ท่านมีประสบการณ์จัดงานวิ่งอื่น ๆ หรือไม่
       </h3>
       <div class="pdl-20">
         <app-com-radio

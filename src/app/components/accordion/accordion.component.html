@@ -1,0 +1,64 @@
+@for (item of data; track $index) {
+<div class="itemContainer">
+  <div
+    [ngClass]="{
+      header__container: true,
+      'header__container--active': isActive($index)
+    }"
+    (click)="onHeaderClick($index)"
+  >
+    <h2
+      [ngClass]="{
+        header__text: true,
+        'header__text--active': isActive($index)
+      }"
+    >
+      {{ item.header }}
+    </h2>
+    <div
+      [ngClass]="{
+        header__icon: true,
+        'header__icon--rotate': isActive($index)
+      }"
+    >
+      <svg
+        width="32"
+        height="32"
+        viewBox="0 0 32 32"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <mask
+          id="mask0_2347_8096"
+          style="mask-type: alpha"
+          maskUnits="userSpaceOnUse"
+          x="0"
+          y="0"
+          width="32"
+          height="32"
+        >
+          <rect
+            y="32"
+            width="32"
+            height="32"
+            transform="rotate(-90 0 32)"
+            fill="#D9D9D9"
+          />
+        </mask>
+        <g mask="url(#mask0_2347_8096)">
+          <path
+            d="M22 16C22 16.2631 21.9587 16.5097 21.876 16.7399C21.7933 16.9701 21.6527 17.1839 21.4542 17.3812L12.3244 26.4574C11.9606 26.8191 11.4975 27 10.9351 27C10.3728 27 9.90967 26.8191 9.5458 26.4574C9.18193 26.0957 9 25.6353 9 25.0762C9 24.5172 9.18193 24.0568 9.5458 23.6951L17.2863 16L9.5458 8.30493C9.18193 7.9432 9 7.48281 9 6.92377C9 6.36472 9.18193 5.90434 9.5458 5.5426C9.90967 5.18087 10.3728 5 10.9351 5C11.4975 5 11.9606 5.18087 12.3244 5.5426L21.4542 14.6188C21.6527 14.8161 21.7933 15.0299 21.876 15.2601C21.9587 15.4903 22 15.7369 22 16Z"
+            fill="#D9D9D9"
+            [ngClass]="{ 'header__icon--red': isActive($index) }"
+          />
+        </g>
+      </svg>
+    </div>
+  </div>
+  @if (isActive($index)) {
+  <div class="content__container" @collapse>
+    <p class="content__text">{{ item.content }}</p>
+  </div>
+  }
+</div>
+}

@@ -6,6 +6,7 @@ export class TableColumn {
   class?: string;
   type?: ColumnTypeEnum;
   bold?: boolean;
+  width?: string;
   compact?: boolean;
 
   constructor() {}

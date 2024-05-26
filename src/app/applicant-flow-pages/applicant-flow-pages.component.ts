@@ -1,13 +1,5 @@
 import { CommonModule } from '@angular/common';
-import {
-  ChangeDetectorRef,
-  Component,
-  ElementRef,
-  OnDestroy,
-  OnInit,
-  ViewChild,
-  inject,
-} from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild, inject } from '@angular/core';
 import {
   FormArray,
   FormControl,
@@ -17,20 +9,18 @@ import {
 } from '@angular/forms';
 import { Router } from '@angular/router';
 import { cloneDeep } from 'lodash-es';
-import { BehaviorSubject, Subscription, concatMap, from } from 'rxjs';
+import { BehaviorSubject, Subscription } from 'rxjs';
 
-import html2canvas from 'html2canvas';
+import { environment } from '../../environments/environment';
 import { ErrorPopupComponent } from '../components/error-popup/error-popup.component';
 import { ProgressBarStepsComponent } from '../components/progress-bar-steps/progress-bar-steps.component';
 import { SuccessPopupComponent } from '../components/success-popup/success-popup.component';
 import { ArrowForwardComponent } from '../components/svg/arrow-forward/arrow-forward.component';
 import { DateService } from '../services/date.service';
 import { ProjectService } from '../services/project.service';
-import { ScreenshotService } from '../services/screenshot.service';
 import { ThemeService } from '../services/theme.service';
 import { BackgroundColor } from '../shared/enums/background-color';
 import { ApplicantCriteria } from '../shared/models/applicant-criteria';
-import { ScreenshotPage } from '../shared/models/screenshot-page';
 import { requiredCheckBoxToBeCheckedValidator } from '../shared/validators/requiredCheckbox';
 import { requiredCheckBoxFormArrayToBeCheckedValidator } from '../shared/validators/requiredCheckboxFormArray';
 import { AttachmentComponent } from './attachment/attachment.component';
@@ -67,7 +57,6 @@ import { SuccessComponent } from './success/success.component';
   styleUrl: './applicant-flow-pages.component.scss',
 })
 export class ApplicantFlowPagesComponent implements OnInit, OnDestroy {
-  @ViewChild('captureTarget') captureTarget: ElementRef;
   @ViewChild('collaborateComponent') collaborateComponent: CollaborateComponent;
   @ViewChild('generalDetailsComponent')
   generalDetailsComponent: GeneralDetailsComponent;
@@ -81,16 +70,10 @@ export class ApplicantFlowPagesComponent implements OnInit, OnDestroy {
   private readonly themeService: ThemeService = inject(ThemeService);
   private readonly projectService: ProjectService = inject(ProjectService);
   private readonly dateService: DateService = inject(DateService);
-  private readonly changeDetectorRef: ChangeDetectorRef =
-    inject(ChangeDetectorRef);
-  private readonly screenshotService: ScreenshotService =
-    inject(ScreenshotService);
 
   private readonly subs: Subscription[] = [];
   private router: Router = inject(Router);
 
-  private screenshots: ScreenshotPage[] = new Array(6);
-  private fileType = 'image/png';
   private readonly minHistoryYear = 2010;
 
   // Files upload variables
@@ -108,8 +91,6 @@ export class ApplicantFlowPagesComponent implements OnInit, OnDestroy {
 
   protected eventDetailsFiles: File[] = [];
   protected eventDetailsFilesSubject = new BehaviorSubject<File[]>([]);
-
-  protected screenshotFiles: File[] = [];
 
   // Files upload end
 
@@ -137,7 +118,7 @@ export class ApplicantFlowPagesComponent implements OnInit, OnDestroy {
   protected currentStep = 0;
 
   protected applicantSelfScoreCriteria: ApplicantCriteria[] = [];
-  protected devModeOn = false;
+  protected devModeOn = true;
 
   constructor() {
     this.incrementStep = this.incrementStep.bind(this);
@@ -149,8 +130,9 @@ export class ApplicantFlowPagesComponent implements OnInit, OnDestroy {
     this.initForm();
     this.loadApplicantSelfScoreCriteria();
     // Change page
-    // this.currentStep = 6;
-    this.devModeOn = true;
+    // TODO: comment this line
+    // this.currentStep = 4;
+    this.devModeOn = !environment.production;
 
     this.subToUploadFileSubjects();
   }
@@ -270,6 +252,13 @@ export class ApplicantFlowPagesComponent implements OnInit, OnDestroy {
             requiredCheckBoxFormArrayToBeCheckedValidator()
           ),
           vip: new FormControl(null, Validators.required),
+          vipFee: new FormControl(
+            {
+              value: null,
+              disabled: true,
+            },
+            [Validators.required, Validators.min(0)]
+          ),
         }),
         expectedParticipants: new FormControl(null, Validators.required),
         hasOrganizer: new FormControl(null, Validators.required),
@@ -281,6 +270,20 @@ export class ApplicantFlowPagesComponent implements OnInit, OnDestroy {
           lastName: new FormControl(null, Validators.required),
           organizationPosition: new FormControl(null, Validators.required),
           eventPosition: new FormControl(null, Validators.required),
+          address: new FormGroup({
+            address: new FormControl(null, Validators.required),
+            provinceId: new FormControl(null, Validators.required),
+            districtId: new FormControl(null, Validators.required),
+            subdistrictId: new FormControl(null, Validators.required),
+            postcodeId: new FormControl(null, Validators.required),
+          }),
+          email: new FormControl(null, [Validators.required]),
+          lineId: new FormControl(null, [Validators.required]),
+          phoneNumber: new FormControl(null, [
+            Validators.required,
+            // Allow only number len >= 9
+            Validators.pattern('[0-9]{9,}'),
+          ]),
         }),
         projectManager: new FormGroup({
           sameAsProjectHead: new FormControl(false),
@@ -289,6 +292,20 @@ export class ApplicantFlowPagesComponent implements OnInit, OnDestroy {
           lastName: new FormControl(null, Validators.required),
           organizationPosition: new FormControl(null, Validators.required),
           eventPosition: new FormControl(null, Validators.required),
+          address: new FormGroup({
+            address: new FormControl(null, Validators.required),
+            provinceId: new FormControl(null, Validators.required),
+            districtId: new FormControl(null, Validators.required),
+            subdistrictId: new FormControl(null, Validators.required),
+            postcodeId: new FormControl(null, Validators.required),
+          }),
+          email: new FormControl(null, [Validators.required]),
+          lineId: new FormControl(null, [Validators.required]),
+          phoneNumber: new FormControl(null, [
+            Validators.required,
+            // Allow only number len >= 9
+            Validators.pattern('[0-9]{9,}'),
+          ]),
         }),
         projectCoordinator: new FormGroup({
           sameAsProjectHead: new FormControl(false),
@@ -364,6 +381,7 @@ export class ApplicantFlowPagesComponent implements OnInit, OnDestroy {
               ambulance: new FormControl(false),
               firstAid: new FormControl(false),
               aed: new FormControl(false),
+              volunteerDoctor: new FormControl(false),
               insurance: new FormControl(false),
               other: new FormControl(false),
             },
@@ -434,7 +452,6 @@ export class ApplicantFlowPagesComponent implements OnInit, OnDestroy {
                 Validators.max(currentYear + 543),
                 Validators.min(this.minHistoryYear + 543),
               ]),
-              name: new FormControl(null, Validators.required),
               participant: new FormControl(null, [
                 Validators.required,
                 Validators.min(0),
@@ -445,7 +462,6 @@ export class ApplicantFlowPagesComponent implements OnInit, OnDestroy {
                 Validators.max(currentYear + 543),
                 Validators.min(this.minHistoryYear + 543),
               ]),
-              name: new FormControl(null),
               participant: new FormControl(null, [Validators.min(0)]),
             }),
             completed3: new FormGroup({
@@ -453,7 +469,6 @@ export class ApplicantFlowPagesComponent implements OnInit, OnDestroy {
                 Validators.max(currentYear + 543),
                 Validators.min(this.minHistoryYear + 543),
               ]),
-              name: new FormControl(null),
               participant: new FormControl(null, [Validators.min(0)]),
             }),
           }),
@@ -541,56 +556,32 @@ export class ApplicantFlowPagesComponent implements OnInit, OnDestroy {
     }
 
     if (this.currentStep === 0 && this.collaborateComponent.validToGoNext()) {
-      this.capture(
-        this.currentStep,
-        [this.captureTarget.nativeElement],
-        this.incrementStep
-      );
+      this.incrementStep();
     } else if (
       this.currentStep === 1 &&
       this.generalDetailsComponent.validToGoNext()
     ) {
-      this.capture(
-        this.currentStep,
-        [this.captureTarget.nativeElement],
-        this.incrementStep
-      );
+      this.incrementStep();
     } else if (
       this.currentStep === 2 &&
       this.contactComponent.validToGoNext()
     ) {
-      this.capture(
-        this.currentStep,
-        [this.captureTarget.nativeElement],
-        this.incrementStep
-      );
+      this.incrementStep();
     } else if (
       this.currentStep === 3 &&
       this.planAndDetailsComponent.validToGoNext()
     ) {
-      this.capture(
-        this.currentStep,
-        this.planAndDetailsComponent.getCaptureElementRefs(),
-        this.incrementStep
-      );
+      this.incrementStep();
     } else if (
       this.currentStep === 4 &&
       this.experienceComponent.validToGoNext()
     ) {
-      this.capture(
-        this.currentStep,
-        [this.captureTarget.nativeElement],
-        this.incrementStep
-      );
+      this.incrementStep();
     } else if (
       this.currentStep === 5 &&
       this.fundRequestComponent.validToGoNext()
     ) {
-      this.capture(
-        this.currentStep,
-        [this.captureTarget.nativeElement],
-        this.incrementStep
-      );
+      this.incrementStep();
     } else if (
       this.currentStep === 6 &&
       this.attachmentComponent.validToGoNext()
@@ -660,65 +651,35 @@ export class ApplicantFlowPagesComponent implements OnInit, OnDestroy {
       }
     }
 
+    formData.append('form', JSON.stringify(this.getSubmitFormData()));
     // upload snapshots
     this.subs.push(
-      from(
-        Promise.all(
-          this.screenshots
-            .map((p) => {
-              return p.page.map((ss) =>
-                this.dataUrlToFile(ss.base64, `${ss.name}.${ss.fileExtension}`)
-              );
-            })
-            .flat()
-        )
-      )
-        .pipe(
-          concatMap((screenshotFiles) => {
-            if (screenshotFiles.length === 0) {
-              throw new Error('screenshotFiles is empty');
-            }
-            for (let i = 0; i < screenshotFiles.length; i++) {
-              // CollaborationFiles is an optional
-              if (i !== 0 && !screenshotFiles[i]) {
-                throw new Error(
-                  'ไม่สามารถสร้าง screenshot เพื่ออัพโหลดแบบฟอร์มได้'
-                );
-              }
-              formData.append('screenshotFiles', screenshotFiles[i]);
-            }
-
-            formData.append('form', JSON.stringify(this.getSubmitFormData()));
-
-            return this.projectService.addProject(formData);
-          })
-        )
-        .subscribe({
-          next: (result) => {
-            this.apiLoading = false;
-            if (result) {
-              // TODO: uncomment this
-              this.form.disable();
-              this.showSuccessPopup = true;
-              setTimeout(() => {
-                this.showSuccessPopup = false;
-                // TODO: uncomment this
-                this.incrementStep();
-              }, 2000);
-            }
-          },
-          error: (err) => {
-            console.error(err);
-            this.apiLoading = false;
-            this.showErrorPopup = true;
+      this.projectService.addProject(formData).subscribe({
+        next: (result) => {
+          this.apiLoading = false;
+          if (result) {
+            // TODO: uncomment this
+            this.form.disable();
+            this.showSuccessPopup = true;
             setTimeout(() => {
-              this.showErrorPopup = false;
+              this.showSuccessPopup = false;
+              // TODO: uncomment this
+              this.incrementStep();
             }, 2000);
-          },
-          complete: () => {
-            this.apiLoading = false;
-          },
-        })
+          }
+        },
+        error: (err) => {
+          console.error(err);
+          this.apiLoading = false;
+          this.showErrorPopup = true;
+          setTimeout(() => {
+            this.showErrorPopup = false;
+          }, 2000);
+        },
+        complete: () => {
+          this.apiLoading = false;
+        },
+      })
     );
   }
 
@@ -759,49 +720,5 @@ export class ApplicantFlowPagesComponent implements OnInit, OnDestroy {
 
   private incrementStep(): void {
     this.currentStep += 1;
-  }
-
-  private capture(
-    pageIndex: number,
-    targetElements: HTMLElement[],
-    callbackFn?: () => void
-  ) {
-    this.screenshotService.changeCapturingStateTo(true);
-    // manually detect changes to update view since Angular can't update view in-time
-    // before we took a screenshot
-    this.changeDetectorRef.detectChanges();
-
-    from(
-      Promise.all(
-        targetElements.map((element) => {
-          return html2canvas(element, {
-            logging: false,
-          });
-        })
-      )
-    ).subscribe({
-      next: (canvasInPage) => {
-        this.screenshots[pageIndex] = {
-          page: canvasInPage.map((canvas, ssIndex) => {
-            const base64 = canvas.toDataURL(this.fileType);
-            const name = `p${pageIndex}-${ssIndex + 1}`;
-            const fileExtension = 'png';
-            return { name, fileExtension, base64 };
-          }),
-        };
-        if (callbackFn) {
-          callbackFn();
-        }
-      },
-      complete: () => {
-        this.screenshotService.changeCapturingStateTo(false);
-      },
-    });
-  }
-
-  async dataUrlToFile(dataUrl: string, fileName: string): Promise<File> {
-    const res: Response = await fetch(dataUrl);
-    const blob: Blob = await res.blob();
-    return new File([blob], fileName, { type: this.fileType });
   }
 }

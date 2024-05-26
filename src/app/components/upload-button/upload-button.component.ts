@@ -23,10 +23,12 @@ export class UploadButtonComponent implements OnInit, OnDestroy {
   @Input() text = 'เลือกไฟล์';
   @Input() disabled = false;
   @Input() accept = 'image/jpg, image/jpeg, image/png, .pdf, .doc, .docx ';
+  @Input() showFilesList = true;
+  @Input() multiple = true;
 
   private readonly subs: Subscription[] = [];
 
-  files: File[] = [];
+  public files: File[] = [];
 
   ngOnInit(): void {
     if (this.filesSubject) {
@@ -48,7 +50,7 @@ export class UploadButtonComponent implements OnInit, OnDestroy {
 
     if (fileList && fileList?.length > 0) {
       const newFiles: File[] = [];
-      for (let i = 0; i < fileList.length; i++) {
+      for (let i = 0; i < fileList?.length; i++) {
         const file = fileList.item(i);
         if (file) {
           newFiles.push(file);
@@ -77,6 +79,16 @@ export class UploadButtonComponent implements OnInit, OnDestroy {
           }
         }
         this.fileButton.nativeElement.files = dt.files;
+      }
+    }
+  }
+
+  clearFiles() {
+    if (this.filesSubject) {
+      if (this.fileButton.nativeElement?.files?.length > 0) {
+        const dt = new DataTransfer();
+        this.fileButton.nativeElement.files = dt.files;
+        this.filesSubject.next([]);
       }
     }
   }

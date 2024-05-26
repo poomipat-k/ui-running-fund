@@ -11,6 +11,8 @@ import { UserService } from '../../services/user.service';
 
 const refreshTokenFragmentUrl = '/refresh-token';
 
+const statusForbidden = 403;
+
 export const authInterceptor: HttpInterceptorFn = (req, next) => {
   const withCredentialReq = req.clone({ withCredentials: true });
   const userService: UserService = inject(UserService);
@@ -18,7 +20,7 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
   return next(withCredentialReq).pipe(
     catchError((error: HttpErrorResponse) => {
       if (
-        error?.status === 403 &&
+        error?.status === statusForbidden &&
         !error?.url?.includes(refreshTokenFragmentUrl)
       ) {
         return doRefreshToken(withCredentialReq, next, userService, router);
@@ -40,7 +42,7 @@ const doRefreshToken = (
       return next(req);
     }),
     catchError((error) => {
-      if (error?.status === 403) {
+      if (error?.status === statusForbidden) {
         userService.logout().subscribe();
         router.navigate(['/login']);
       }

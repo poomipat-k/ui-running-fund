@@ -1,0 +1,42 @@
+@import "../../../styles.scss";
+
+.pagingContainer {
+  display: flex;
+  gap: 6px;
+}
+
+.pagingButton {
+  width: 31px;
+  height: 31px;
+  border-radius: 8px;
+  border: 1px solid #d0d5dd;
+  box-shadow: 0px 1px 2px 0px #1018280d;
+
+  font-family: $inter;
+  font-weight: 400;
+  font-size: 1.4rem;
+  line-height: 1.7rem;
+  color: #667085;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  cursor: pointer;
+
+  &--active {
+    color: #fff;
+    border: none;
+    background-color: #fd853a;
+  }
+}
+
+.dot {
+  font-family: $inter;
+  font-weight: 400;
+  font-size: 1.8rem;
+  line-height: 2.2rem;
+  color: #000;
+
+  align-self: flex-end;
+}

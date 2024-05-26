@@ -8,7 +8,6 @@ import { ProjectService } from '../services/project.service';
 import { S3Service } from '../services/s3.service';
 import { ThemeService } from '../services/theme.service';
 import { BackgroundColor } from '../shared/enums/background-color';
-import { BadgeType } from '../shared/enums/badge-type';
 import { ColumnTypeEnum } from '../shared/enums/column-type';
 import { FilterOption } from '../shared/models/filter-option';
 import { ReviewPeriod } from '../shared/models/review-period';
@@ -74,20 +73,20 @@ export class DashboardReviewerComponent {
       id: 1,
       display: 'เรียงตามตัวอักษร',
       name: 'ชื่อโครงการ',
-      order: 'ASC',
+      isAsc: true,
     },
     {
       id: 2,
       display: 'ใหม่ - เก่า',
       name: 'วันที่สร้าง',
-      order: 'DESC',
+      isAsc: false,
     },
-    { id: 3, display: 'เก่า - ใหม่', name: 'วันที่สร้าง', order: 'ASC' },
+    { id: 3, display: 'เก่า - ใหม่', name: 'วันที่สร้าง', isAsc: true },
     {
       id: 4,
       display: 'สถานะการกลั่นกรอง',
       name: 'priority',
-      order: 'ASC',
+      isAsc: true,
     },
   ];
 
@@ -122,7 +121,12 @@ export class DashboardReviewerComponent {
             this.fromDate = this.dateService.dateToStringWithShortMonth(
               p.fromDate
             );
-            this.toDate = this.dateService.dateToStringWithShortMonth(p.toDate);
+
+            const rawToDate = new Date(p.toDate);
+            const toDate = new Date(rawToDate.getTime() - 1000);
+            this.toDate = this.dateService.dateToStringWithShortMonth(
+              toDate.toISOString()
+            );
             this.reviewPeriod = p;
             return this.projectService.getReviewDashboard(
               this.reviewPeriod?.fromDate,
@@ -170,8 +174,8 @@ export class DashboardReviewerComponent {
                 },
                 {
                   display: row.reviewId
-                    ? BadgeType.Reviewed
-                    : BadgeType.PendingReview,
+                    ? 'reviewer__Reviewed'
+                    : 'reviewer__PendingReview',
                   value: row.reviewId,
                 },
                 {
@@ -235,26 +239,25 @@ export class DashboardReviewerComponent {
     if (columnIndex === -1) {
       return;
     }
-    const isAsc = option.order === 'ASC';
     if (this.columns[columnIndex].format === 'datetime') {
       data.sort((a, b) => {
         const aDate = new Date(a[columnIndex].value);
         const bDate = new Date(b[columnIndex].value);
         if (aDate > bDate) {
-          return isAsc ? 1 : -1;
+          return option.isAsc ? 1 : -1;
         }
         if (aDate < bDate) {
-          return isAsc ? -1 : 1;
+          return option.isAsc ? -1 : 1;
         }
         return 0;
       });
     } else {
       data.sort((a, b) => {
         if (a[columnIndex].value > b[columnIndex].value) {
-          return isAsc ? 1 : -1;
+          return option.isAsc ? 1 : -1;
         }
         if (a[columnIndex].value < b[columnIndex].value) {
-          return isAsc ? -1 : 1;
+          return option.isAsc ? -1 : 1;
         }
         return 0;
       });

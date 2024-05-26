@@ -18,6 +18,7 @@ export class TableComponent {
   @Input() stripeRows = true;
   @Input() headerGray = false;
   @Input() rowClickable = false;
+  @Input() contentFontSize = '';
 
   @Output() rowClicked = new EventEmitter<TableCell[]>();
 }

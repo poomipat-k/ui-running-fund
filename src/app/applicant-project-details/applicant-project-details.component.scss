@@ -54,7 +54,6 @@
 .review {
   &__container {
     display: flex;
-    padding-right: 7rem;
   }
 }
 
@@ -62,24 +61,7 @@
   display: flex;
   flex-direction: column;
   gap: 5px;
-}
-
-.history {
-  display: flex;
-  flex-direction: column;
-  gap: 1.3rem;
-}
-
-.reviewedAt {
-  display: flex;
-  flex-direction: column;
-  gap: 1.3rem;
-}
-
-.score {
-  display: flex;
-  flex-direction: column;
-  gap: 1.3rem;
+  width: 18.5rem;
 }
 
 .details {
@@ -92,6 +74,44 @@
     font-weight: 400;
     font-size: 1.8rem;
     line-height: 3rem;
+  }
+}
+
+.otherFiles {
+  display: flex;
+  gap: 1.1rem;
+  align-items: center;
+
+  &__downloadLink {
+    display: flex;
+    align-items: center;
+    padding: 1rem;
+    gap: 7px;
+    cursor: pointer;
+  }
+
+  &__text {
+    font-family: $inter;
+    font-weight: 400;
+    font-size: 1.8rem;
+    line-height: 2.2rem;
+    text-decoration: underline;
+    color: #000;
+  }
+}
+
+.overview-table {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.row {
+  display: flex;
+  flex: 1;
+
+  &--applicant {
+    justify-content: space-around;
   }
 }
 
@@ -177,22 +197,13 @@
   font-size: 2rem;
   line-height: 3.3rem;
   font-weight: 600;
-
-  &__light {
-    font-family: $custom-font;
-    font-weight: 400;
-    font-size: 1.8rem;
-    line-height: 3rem;
-    color: #000;
-    margin-left: 1.1rem;
-  }
 }
 
 .summary {
   &__container {
     display: flex;
     flex-direction: column;
-    gap: 1.2rem;
+    padding-right: 3.4rem;
   }
 
   &__header {
@@ -233,13 +244,13 @@
     &__col {
       display: flex;
       flex-direction: column;
-      gap: 1.3rem;
     }
   }
 
   &__money {
     display: flex;
     gap: 1.4rem;
+    align-items: center;
 
     &__text {
       font-family: $custom-font;
@@ -274,6 +285,22 @@
     font-size: 1.8rem;
     line-height: 3rem;
     color: #000;
+  }
+}
+
+.error {
+  display: flex;
+  position: absolute;
+  margin-top: 2px;
+
+  font-family: $custom-font-looped;
+  font-size: 1.3rem;
+  font-weight: 400;
+  line-height: normal;
+  color: #ec4a0a;
+
+  &__text {
+    margin-left: 4px;
   }
 }
 
@@ -341,6 +368,9 @@
 }
 
 .mgt {
+  &-4 {
+    margin-top: 4px;
+  }
   &-6 {
     margin-top: 6px;
   }
@@ -357,16 +387,32 @@
     margin-top: 1.6rem;
   }
 
+  &-18 {
+    margin-top: 1.8rem;
+  }
+
+  &-21 {
+    margin-top: 2.1rem;
+  }
+
   &-25 {
     margin-top: 2.5rem;
   }
 
-  &-35 {
-    margin-top: 3.5rem;
+  &-27 {
+    margin-top: 2.7rem;
   }
 
-  &-43 {
-    margin-top: 4.3rem;
+  &-29 {
+    margin-top: 2.9rem;
+  }
+
+  &-33 {
+    margin-top: 3.3rem;
+  }
+
+  &-35 {
+    margin-top: 3.5rem;
   }
 
   &-48 {
@@ -396,18 +442,24 @@
   &-80 {
     margin-left: 8rem;
   }
-
-  &-124 {
-    margin-left: 12.4rem;
-  }
-
-  &-139 {
-    margin-left: 13.9rem;
-  }
 }
 
-.flex-1 {
-  flex: 1;
+.flex {
+  &-1 {
+    flex: 1;
+  }
+
+  &-basis {
+    &-history {
+      flex: 1;
+    }
+    &-date {
+      flex: 0 0 18rem;
+    }
+    &-score {
+      flex: 0 0 10rem;
+    }
+  }
 }
 
 .navLink {
@@ -430,5 +482,14 @@
     visibility: visible; /* Show the snackbar */
     -webkit-animation: fadein 0.5s, fadeout 0.5s 1.5s;
     animation: fadein 0.5s, fadeout 0.5s 1.5s;
+  }
+}
+
+.pdr {
+  &-48 {
+    padding-right: 4.8rem;
+  }
+  &-70 {
+    padding-right: 7rem;
   }
 }

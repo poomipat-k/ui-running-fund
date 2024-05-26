@@ -20,11 +20,37 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
   private readonly subs: Subscription[] = [];
 
+  get isAdmin(): boolean {
+    return this.currentUser.userRole === 'admin';
+  }
+
+  get isApplicant(): boolean {
+    return this.currentUser.userRole === 'applicant';
+  }
+
+  get isReviewer(): boolean {
+    return this.currentUser.userRole === 'reviewer';
+  }
+
+  get isLoggedIn(): boolean {
+    return this.currentUser.id > 0;
+  }
+
   constructor() {}
 
   ngOnInit(): void {
     this.subs.push(
       this.userService.currentUserSubject$.subscribe((user) => {
+        if (user.id) {
+          this.currentUser = user;
+          return;
+        }
+        const lsUser = localStorage.getItem('loggedInUser');
+        if (lsUser) {
+          const jsonLocalStorageUser: User = JSON.parse(lsUser);
+          this.currentUser = jsonLocalStorageUser;
+          return;
+        }
         this.currentUser = user;
       })
     );

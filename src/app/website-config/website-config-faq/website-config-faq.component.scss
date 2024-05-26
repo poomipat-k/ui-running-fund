@@ -1,0 +1,136 @@
+@import "../../../styles.scss";
+
+.container {
+  padding: 1.8rem 1.6rem 0 3.4rem;
+}
+
+.header {
+  font-family: $custom-font;
+  font-weight: 600;
+  font-size: 2.4rem;
+  line-height: 4rem;
+  color: #000;
+}
+
+.addQuestion {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+
+  &__item {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  &__label {
+    font-family: $custom-font;
+    font-weight: 500;
+    font-size: 1.6rem;
+    line-height: 2.7rem;
+    color: #000;
+  }
+}
+
+.table {
+  display: flex;
+  flex-direction: column;
+
+  &__row {
+    display: flex;
+    height: 4.4rem;
+    border-bottom: 1px solid #0000005c;
+  }
+
+  &__cell {
+    padding: 1rem;
+    font-family: $custom-font;
+    font-weight: 400;
+    font-size: 1.6rem;
+    line-height: 2.4rem;
+    color: #344054;
+
+    &--header {
+      font-weight: 500;
+    }
+
+    &--no {
+      flex: 0 0 4.5rem;
+      text-align: center;
+    }
+
+    &--flex1 {
+      flex: 1;
+    }
+
+    &--delete {
+      flex: 0 0 4.4rem;
+      align-self: center;
+      text-align: center;
+      cursor: pointer;
+    }
+  }
+
+  &__imagePreview {
+    height: 3rem;
+    width: auto;
+  }
+}
+
+.button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 4px;
+  padding: 9px 16px 9px 14px;
+
+  &__text {
+    font-family: $custom-font;
+    font-weight: 500;
+    font-size: 1.6rem;
+    line-height: 2.7rem;
+  }
+
+  &__icon {
+    fill: #344054;
+  }
+
+  &:hover &__icon {
+    fill: #fb6514;
+  }
+  &:active &__icon {
+    fill: #9c2a10;
+  }
+}
+
+.mgt {
+  &-10 {
+    margin-top: 10px;
+  }
+
+  &-18 {
+    margin-top: 18px;
+  }
+}
+
+.pdb {
+  &-49 {
+    padding-bottom: 49px;
+  }
+  &-178 {
+    padding-bottom: 178px;
+  }
+}
+
+.error {
+  display: flex;
+  font-family: $custom-font-looped;
+  font-size: 1.3rem;
+  font-weight: 400;
+  line-height: normal;
+  color: #ec4a0a;
+
+  &__text {
+    margin-left: 4px;
+  }
+}

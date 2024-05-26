@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { SvgCheckComponent } from '../../components/svg/svg-check/svg-check.component';
 
 @Component({
@@ -8,4 +8,6 @@ import { SvgCheckComponent } from '../../components/svg/svg-check/svg-check.comp
   templateUrl: './success.component.html',
   styleUrl: './success.component.scss',
 })
-export class SuccessComponent {}
+export class SuccessComponent {
+  @Input() text = 'สร้างใบขอทุนสนับสนุนเรียบร้อยแล้ว';
+}

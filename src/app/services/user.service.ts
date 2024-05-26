@@ -106,6 +106,7 @@ export class UserService {
   public setUser(user: User): void {
     this.currentUserSubject.next(user);
     this.loggedInUser = user;
+    this.setLocalStorageUser(user);
   }
 
   public logout(): Observable<CommonSuccessResponse> {
@@ -114,12 +115,21 @@ export class UserService {
       .pipe(
         tap((result) => {
           if (result.success) {
+            this.removeLocalStorageUser();
             this.loggedInUser = new User();
             this.currentUserSubject.next(this.loggedInUser);
           }
         }),
         catchError(this.handleError)
       );
+  }
+
+  private setLocalStorageUser(user: User): void {
+    localStorage.setItem('loggedInUser', JSON.stringify(user));
+  }
+
+  private removeLocalStorageUser(): void {
+    localStorage.removeItem('loggedInUser');
   }
 
   public refreshAccessToken(): Observable<CommonSuccessResponse> {

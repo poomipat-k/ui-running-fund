@@ -1,5 +1,5 @@
 @if (data.length) {
-<table [ngClass]="{ 'table margin-top-24': true, stripe: stripeRows }">
+<table [ngClass]="{ table: true, stripe: stripeRows }">
   <thead>
     <tr [ngClass]="{ 'table__header--gray': headerGray }">
       @for (col of columns; track $index) {
@@ -10,6 +10,7 @@
           col.class,
           col.compact ? 'table__cell--header-compact' : ''
         ]"
+        [ngStyle]="{ width: col.width ? col.width : '' }"
       >
         {{ col.name }}
       </th>
@@ -27,9 +28,14 @@
       <td
         [class]="[
           'table__cell',
+          columns[$index].class,
           columns[$index].bold ? 'table__cell--bold' : '',
           columns[$index].compact ? 'table__cell--compact' : ''
         ]"
+        [ngStyle]="{
+          'font-size': contentFontSize ? contentFontSize : '',
+          width: columns[$index].width ? columns[$index].width : ''
+        }"
       >
         <app-table-cell-template
           [cellType]="columns[$index].type"
@@ -44,7 +50,7 @@
   </tbody>
 </table>
 } @else {
-<table class="table margin-top-24">
+<table class="table">
   <thead>
     <tr>
       @for (col of columns; track $index) {
@@ -55,6 +61,7 @@
           col.class,
           col.compact ? 'table__cell--header-compact' : ''
         ]"
+        [ngStyle]="{ width: col.width ? col.width : '' }"
       >
         {{ col.name }}
       </th>

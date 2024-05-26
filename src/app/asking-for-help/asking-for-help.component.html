@@ -1,0 +1,136 @@
+<div class="container">
+  <nav class="nav">
+    <a routerLink="/" class="nav__text nav__link">หน้าแรก</a>
+    <div class="nav__text">/</div>
+    <div class="nav__text nav__text--bold">ขอความช่วยเหลือ</div>
+  </nav>
+  <!-- Contact Us -->
+  <div class="contactUs mgt-45">
+    <h2 class="contactUs__header">ติดต่อเรา</h2>
+    <div class="contactUs__tel">
+      <p class="contactUs__tel-label">เบอร์โทร:</p>
+      <div class="contactUs__tel-details">
+        <div class="contactUs__tel-details-item">
+          <p class="contactUs__tel__text">คุณปลายรุ้ง</p>
+          <p class="contactUs__tel__text">099-999-9999,</p>
+        </div>
+        <div class="contactUs__tel-details-item">
+          <p class="contactUs__tel__text">คุณมิ้นท์</p>
+          <p class="contactUs__tel__text">099-999-9999</p>
+        </div>
+      </div>
+    </div>
+    <div class="contactUs__facebook">
+      <img src="/assets/fb_messenger.png" alt="facebook messenger image" />
+      <div class="contactUs__facebook-text">
+        Facebook messenger:
+        <u class="contactUs__facebook-text contactUs__facebook-text--light"
+          >ThaiJogging</u
+        >
+      </div>
+    </div>
+
+    <div class="contactUs__line">
+      <img src="/assets/line_icon.png" alt="Line icon" />
+      <div class="contactUs__line-text">Line ID:</div>
+      <div class="contactUs__line-text contactUs__line-text--light">
+        ThaiJogging
+      </div>
+    </div>
+  </div>
+
+  <!-- Form -->
+  <div class="form__container mgt-57">
+    <h1 class="form__header">ส่งข้อความ</h1>
+    <div class="form__item">
+      <div class="form__item-label">ที่อยู่อีเมล*</div>
+      <app-com-input-text
+        id="email"
+        placeholder="กรอกที่อยู่อีเมล"
+        [form]="form"
+        controlName="email"
+        width="61.6rem"
+        height="6rem"
+        fontSize="1.8rem"
+      ></app-com-input-text>
+      @if (!emailControl.valid && emailControl.touched && formTouched) {
+      <div class="error mgt-10">
+        <img src="/assets/error_icon.svg" alt="error icon" />
+        <p class="error__text">กรุณากรอกที่อยู่อีเมล</p>
+      </div>
+      }
+    </div>
+
+    <div class="form__item">
+      <div class="form__item-label">ชื่อจริง*</div>
+      <app-com-input-text
+        id="firstName"
+        placeholder="กรอกชื่อจริง"
+        [form]="form"
+        controlName="firstName"
+        width="61.6rem"
+        height="6rem"
+        fontSize="1.8rem"
+      ></app-com-input-text>
+      @if (!form.get('firstName')?.valid && form.get('firstName')?.touched &&
+      formTouched) {
+      <div class="error mgt-10">
+        <img src="/assets/error_icon.svg" alt="error icon" />
+        <p class="error__text">กรุณากรอกชื่อจริง</p>
+      </div>
+      }
+    </div>
+
+    <div class="form__item">
+      <div class="form__item-label">นามสกุล*</div>
+      <app-com-input-text
+        id="lastName"
+        placeholder="กรอกนามสกุล"
+        [form]="form"
+        controlName="lastName"
+        width="61.6rem"
+        height="6rem"
+        fontSize="1.8rem"
+      ></app-com-input-text>
+      @if (!form.get('lastName')?.valid && form.get('lastName')?.touched &&
+      formTouched) {
+      <div class="error mgt-10">
+        <img src="/assets/error_icon.svg" alt="error icon" />
+        <p class="error__text">กรุณากรอกนามสกุล</p>
+      </div>
+      }
+    </div>
+
+    <div class="form__item">
+      <div class="form__item-label">ข้อความ*</div>
+      <app-com-textarea
+        [form]="form"
+        controlName="message"
+        placeholder="รายละเอียดข้อความ"
+        width="61.6rem"
+        height="18.4rem"
+      ></app-com-textarea>
+      @if (!form.get('message')?.valid && form.get('message')?.touched &&
+      formTouched) {
+      <div class="error mgt-10">
+        <img src="/assets/error_icon.svg" alt="error icon" />
+        <p class="error__text">กรุณากรอกรายละเอียดข้อความ</p>
+      </div>
+      }
+    </div>
+
+    <button class="button" (click)="onSubmitClick()">ส่งข้อความ</button>
+  </div>
+  <div class="hr mgt-97"></div>
+  <div class="mgt-62">
+    <app-com-faq [items]="faqList"></app-com-faq>
+  </div>
+</div>
+
+@if (showSuccessPopup) {
+<div [ngClass]="{ popup: true, 'popup--show': showSuccessPopup }">
+  <app-com-success-popup
+    [displayText]="successPopupText"
+  ></app-com-success-popup>
+</div>
+}

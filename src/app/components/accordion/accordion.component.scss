@@ -1,0 +1,61 @@
+@import "../../../styles.scss";
+
+.itemContainer {
+  border-bottom: 1px solid #6670855c;
+
+  max-height: 30rem;
+  transition: transform 3000ms ease-out;
+}
+
+.header {
+  &__container {
+    height: 7.2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+
+    &--active {
+      height: 7.2rem;
+    }
+  }
+
+  &__text {
+    font-family: $custom-font;
+    font-weight: 500;
+    font-size: 2rem;
+    line-height: 3.3rem;
+    color: #344054;
+
+    &--active {
+      color: #ec4a0a;
+    }
+  }
+
+  &__icon {
+    fill: #d9d9d9;
+    transform: rotate(0deg);
+    transition: all 300ms ease-out;
+    &--red {
+      fill: #ec4a0a;
+    }
+
+    &--rotate {
+      transform: rotate(90deg);
+    }
+  }
+}
+
+.content {
+  &__container {
+    padding: 0 4.7rem 2.1rem 0;
+  }
+
+  &__text {
+    font-family: $custom-font-looped;
+    font-weight: 400;
+    font-size: 1.8rem;
+    line-height: 3rem;
+    color: #344054;
+  }
+}

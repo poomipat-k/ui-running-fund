@@ -1,0 +1,67 @@
+<div class="pageContainer">
+  <h1 class="header">จัดการเว็บไซต์</h1>
+  <div class="container mgt-25">
+    <!-- SideNav -->
+    <div class="sideNav">
+      @for (item of sideNavItems; track $index) { @if (activeNav === item.value)
+      {
+      <nav class="sideNav__text sideNav__text--active">{{ item.display }}</nav>
+
+      } @else {
+      <nav class="sideNav__text" (click)="onNavItemClick(item)">
+        {{ item.display }}
+      </nav>
+      } }
+    </div>
+    <div class="verticalLine"></div>
+    <!-- Content -->
+    <div class="content">
+      @switch (activeNav) { @case ('landing') {
+      <div class="mgb-79">
+        <app-website-config-landing-page
+          [form]="landingGroup"
+          [bannerFilesSubject]="bannerFilesSubject"
+        ></app-website-config-landing-page>
+      </div>
+      } @case ('dashboard') {
+      <app-website-config-dashboard
+        #dashboard
+        [form]="dashboardGroup"
+        [dashboardData]="dashboardData"
+        [count]="dashboardItemCount"
+        (currentPageChanged)="onDashboardPageChanged($event)"
+        [activePage]="dashboardActivePage"
+      ></app-website-config-dashboard>
+      } @case ('faq') {
+      <app-website-config-faq
+        #FAQ
+        [formArray]="faqFormArray"
+      ></app-website-config-faq>
+      } @case ('howToCreate') {
+      <app-website-config-how-to-create
+        [formArray]="howToCreateFormArray"
+      ></app-website-config-how-to-create>
+      } @case ('footer') {
+      <app-website-config-footer
+        [form]="footerFormGroup"
+        [footerLogoFilesSubject]="footerLogoFilesSubject"
+      ></app-website-config-footer>
+      } }
+      <!-- Button -->
+      <div class="button__container mgl-34">
+        <button class="button button--next" (click)="onSave()">บันทึก</button>
+        <button class="button button--cancel" (click)="onCancel()">
+          ยกเลิก
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+@if (showSuccessPopup) {
+<div [ngClass]="{ popup: true, 'popup--show': showSuccessPopup }">
+  <app-com-success-popup
+    [displayText]="successPopupText"
+  ></app-com-success-popup>
+</div>
+}
