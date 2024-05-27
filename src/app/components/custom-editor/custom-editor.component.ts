@@ -1,39 +1,20 @@
-import { Component, Input, ViewChild, inject } from '@angular/core';
-import {
-  FormArray,
-  FormControl,
-  FormGroup,
-  ReactiveFormsModule,
-  Validators,
-} from '@angular/forms';
+import { Component, Input, OnInit, inject } from '@angular/core';
+import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { EditorComponent, EditorModule } from '@tinymce/tinymce-angular';
 import { concatMap, lastValueFrom, map } from 'rxjs';
-import { CancelConfirmModalComponent } from '../../components/cancel-confirm-modal/cancel-confirm-modal.component';
-import { CustomEditorComponent } from '../../components/custom-editor/custom-editor.component';
-import { InputTextComponent } from '../../components/input-text/input-text.component';
 import { S3Service } from '../../services/s3.service';
 
 @Component({
-  selector: 'app-website-config-how-to-create',
+  selector: 'app-com-custom-editor',
   standalone: true,
-  imports: [
-    ReactiveFormsModule,
-    EditorModule,
-    InputTextComponent,
-    CancelConfirmModalComponent,
-    CustomEditorComponent,
-  ],
-  templateUrl: './website-config-how-to-create.component.html',
-  styleUrl: './website-config-how-to-create.component.scss',
+  imports: [EditorModule, ReactiveFormsModule],
+  templateUrl: './custom-editor.component.html',
+  styleUrl: './custom-editor.component.scss',
 })
-export class WebsiteConfigHowToCreateComponent {
-  @ViewChild('deleteItemModal')
-  deleteItemModalComponent: CancelConfirmModalComponent;
-
-  protected imageUploadPrefix = 'cms/how_to_create';
-  protected removingItemIndex = 0;
-
-  @Input() formArray: FormArray;
+export class CustomEditorComponent implements OnInit {
+  @Input() form: FormGroup;
+  @Input() controlName: string;
+  @Input() imageUploadPrefix = 'cms/etc';
 
   private readonly s3Service: S3Service = inject(S3Service);
 
@@ -45,41 +26,6 @@ export class WebsiteConfigHowToCreateComponent {
 
   ngOnInit(): void {
     this.initRichTextEditor();
-  }
-
-  getFormGroup(index: number): FormGroup {
-    return this.formArray.at(index) as FormGroup;
-  }
-
-  genLabelName(index: number): string {
-    return `หัวข้อ ${index + 1}`;
-  }
-
-  genContentName(index: number): string {
-    return `เนื้อหา ${index + 1}`;
-  }
-
-  genPlaceHolder(index: number): string {
-    return `Step ${index + 1}`;
-  }
-
-  addFormItem() {
-    this.formArray.push(
-      new FormGroup({
-        header: new FormControl(null, Validators.required),
-        content: new FormControl(null, Validators.required),
-      })
-    );
-  }
-
-  removeFormItemClick(index: number) {
-    this.removingItemIndex = index;
-    this.deleteItemModalComponent.showModal();
-  }
-
-  doRemoveFormItem() {
-    this.formArray.removeAt(this.removingItemIndex);
-    this.deleteItemModalComponent.closeModal();
   }
 
   private initRichTextEditor() {
@@ -95,7 +41,9 @@ export class WebsiteConfigHowToCreateComponent {
       block_unsupported_drop: true,
       content_style: 'img {max-width: 100%;}',
       images_upload_handler: (blobInfo) => {
-        const objectKey = `cms/how_to_create/${Date.now()}-${blobInfo.filename()}`;
+        const objectKey = `${
+          this.imageUploadPrefix
+        }/${Date.now()}-${blobInfo.filename()}`;
         const file = new File([blobInfo.blob()], objectKey);
         const promise = lastValueFrom(
           this.s3Service.getPutPresigned(objectKey).pipe(
