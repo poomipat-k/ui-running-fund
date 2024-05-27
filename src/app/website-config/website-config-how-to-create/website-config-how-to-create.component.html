@@ -54,7 +54,7 @@
           }
         </div>
       </div>
-      <div [formGroup]="getFormGroup($index)" class="mgt-6">
+      <div class="mgt-6">
         <label class="group__item__label">{{ genContentName($index) }}</label>
         <div>
           <app-com-custom-editor
@@ -62,13 +62,6 @@
             controlName="content"
             [imageUploadPrefix]="imageUploadPrefix"
           ></app-com-custom-editor>
-          <!-- <editor
-            formControlName="content"
-            licenseKey="gpl"
-            [init]="editorInit"
-            [plugins]="editorPlugins"
-            [toolbar]="editorToolbar"
-          ></editor> -->
           @if (!getFormGroup($index).get('content')?.valid &&
           getFormGroup($index).get('content')?.touched) {
           <div class="error mgt-6">

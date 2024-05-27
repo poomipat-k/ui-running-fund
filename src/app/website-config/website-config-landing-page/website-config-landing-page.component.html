@@ -65,19 +65,11 @@
   </div>
 
   <h2 class="subHeader mgt-57">Text Setting</h2>
-  <div [formGroup]="form" class="mgt-6">
-    <editor
-      #editor
-      formControlName="content"
-      licenseKey="gpl"
-      [init]="editorInit"
-      [plugins]="editorPlugins"
-      [toolbar]="editorToolbar"
-    ></editor>
+  <div class="mgt-6">
+    <app-com-custom-editor
+      [form]="form"
+      controlName="content"
+      [imageUploadPrefix]="editorImageUploadPrefix"
+    ></app-com-custom-editor>
   </div>
-
-  <!-- <div
-    class="editorContent mgt-10"
-    [innerHTML]="contentControl.value || '' | safeHtml"
-  ></div> -->
 </div>
