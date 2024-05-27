@@ -15,12 +15,15 @@
     // min-height: 11.2rem;
     display: flex;
     justify-content: space-between;
+    gap: 4rem;
   }
 
   &__group-left {
     display: flex;
     flex: 1;
+    justify-content: flex-start;
     align-items: center;
+    gap: 3.2rem;
     // max-height: 5.7rem;
 
     @media only screen and (min-width: $bp1) {
@@ -60,6 +63,7 @@
     gap: 1.4rem;
     align-items: flex-start;
     flex-flow: row wrap;
+    flex: 1;
   }
 
   &__img {
@@ -94,8 +98,4 @@
   @media only screen and (min-width: $bp1) {
     margin-left: 1.4rem;
   }
-}
-
-.margin-left-32 {
-  margin-left: 3.2rem;
 }
