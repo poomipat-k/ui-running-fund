@@ -3,7 +3,6 @@
 
 .footer {
   width: 100%;
-  // min-height: $footer-height;
   padding-top: 1.6rem;
 
   &__horizontal-line {
@@ -12,23 +11,15 @@
   }
 
   &__container {
-    // min-height: 11.2rem;
     display: flex;
     justify-content: space-between;
-    gap: 4rem;
   }
 
   &__group-left {
     display: flex;
-    flex: 1;
     justify-content: flex-start;
-    align-items: center;
+    align-items: flex-start;
     gap: 3.2rem;
-    // max-height: 5.7rem;
-
-    @media only screen and (min-width: $bp1) {
-      // max-height: 7rem;
-    }
   }
 
   &__group-right {
@@ -38,9 +29,15 @@
     flex: 0 0 26rem;
   }
 
-  &__credit {
-    // flex: 0 0 42rem;
+  &__logo {
+    display: flex;
+    gap: 1.4rem;
+    align-items: flex-start;
+    flex: 1;
+  }
 
+  &__credit {
+    flex: 0 0 42rem;
     &--header {
       font-family: $custom-font;
       font-size: 2rem;
@@ -56,14 +53,6 @@
       line-height: 2.475rem;
       color: $black;
     }
-  }
-
-  &__logo {
-    display: flex;
-    gap: 1.4rem;
-    align-items: flex-start;
-    flex-flow: row wrap;
-    flex: 1;
   }
 
   &__img {
