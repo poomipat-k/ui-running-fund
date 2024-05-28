@@ -430,10 +430,6 @@ export class WebsiteConfigComponent implements OnInit, AfterViewInit {
     this.redirectToDashboardPage();
   }
 
-  private hardReloadPage() {
-    window.location.reload();
-  }
-
   private redirectToDashboardPage() {
     this.router.navigate(['/dashboard']);
   }
