@@ -66,7 +66,11 @@
   </div>
   } @else {
   <div class="addQuestion pdb-49">
+    @if (action === "add") {
     <h1 class="header">เพิ่มคำถามที่พบบ่อย ( Add FAQ)</h1>
+    } @else if (action === 'edit') {
+    <h1 class="header">แก้ไขคำถามที่พบบ่อย ( Edit FAQ)</h1>
+    }
     <div class="addQuestion__item">
       <label for="question" class="addQuestion__label">คำถาม</label>
       <app-com-input-text

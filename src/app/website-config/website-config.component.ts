@@ -225,6 +225,7 @@ export class WebsiteConfigComponent implements OnInit, AfterViewInit {
             },
           });
           // banners
+          this.bannerFormArray.clear();
           result.landing.banner?.forEach((b) => {
             this.bannerFormArray.push(
               new FormGroup({
@@ -236,6 +237,7 @@ export class WebsiteConfigComponent implements OnInit, AfterViewInit {
             );
           });
           // faq list
+          this.faqFormArray.clear();
           result.faq?.forEach((faq) => {
             this.faqFormArray.push(
               new FormGroup({
@@ -246,6 +248,7 @@ export class WebsiteConfigComponent implements OnInit, AfterViewInit {
             );
           });
           // howToCreate list
+          this.howToCreateFormArray.clear();
           result.howToCreate?.forEach((howToCreate) => {
             this.howToCreateFormArray.push(
               new FormGroup({
@@ -256,6 +259,7 @@ export class WebsiteConfigComponent implements OnInit, AfterViewInit {
             );
           });
           // footer logos
+          this.footerLogoFormArray.clear();
           result.footer.logo?.forEach((logo) => {
             this.footerLogoFormArray.push(
               new FormGroup({
@@ -357,7 +361,6 @@ export class WebsiteConfigComponent implements OnInit, AfterViewInit {
       this.showSuccessPopup = true;
       setTimeout(() => {
         this.showSuccessPopup = false;
-        this.redirectToDashboardPage();
       }, 2000);
       return;
     }
@@ -369,9 +372,10 @@ export class WebsiteConfigComponent implements OnInit, AfterViewInit {
           if (result.success) {
             this.successPopupText = 'อัพเดตข้อมูลเว็บไซต์เรียบร้อยแล้ว';
             this.showSuccessPopup = true;
+            this.loadCmsData();
             setTimeout(() => {
               this.showSuccessPopup = false;
-              this.redirectToDashboardPage();
+              this.loadCmsData();
             }, 2000);
           }
         })
@@ -424,6 +428,10 @@ export class WebsiteConfigComponent implements OnInit, AfterViewInit {
       return;
     }
     this.redirectToDashboardPage();
+  }
+
+  private hardReloadPage() {
+    window.location.reload();
   }
 
   private redirectToDashboardPage() {
