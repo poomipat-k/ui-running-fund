@@ -334,12 +334,8 @@ export class WebsiteConfigComponent implements OnInit, AfterViewInit {
 
   onSave() {
     // FAQ edit mode
-    if (this.activeNav === 'faq' && this.faqConfigComponent.isEdit) {
-      // add a new faq item to faq formArray
-      if (this.faqConfigComponent.validToBeAdded()) {
-        this.faqConfigComponent.addToFaqFormArray();
-        this.faqConfigComponent.changeIsEdit(false);
-      }
+    if (this.activeNav === 'faq' && this.faqConfigComponent.isEditing) {
+      this.handleFAQsaved();
       return;
     }
 
@@ -382,6 +378,19 @@ export class WebsiteConfigComponent implements OnInit, AfterViewInit {
     );
   }
 
+  private handleFAQsaved() {
+    // add a new faq item to faq formArray
+    if (!this.faqConfigComponent.validToBeSubmit()) {
+      return;
+    }
+    if (this.faqConfigComponent.action === 'add') {
+      this.faqConfigComponent.addToFaqFormArray();
+    } else if (this.faqConfigComponent.action === 'edit') {
+      this.faqConfigComponent.editFaqItem();
+    }
+    this.faqConfigComponent.changeIsEditingTo(false);
+  }
+
   private markFieldsTouched() {
     this.form.markAllAsTouched();
   }
@@ -410,8 +419,8 @@ export class WebsiteConfigComponent implements OnInit, AfterViewInit {
   }
 
   onCancel() {
-    if (this.activeNav === 'faq' && this.faqConfigComponent.isEdit) {
-      this.faqConfigComponent.changeIsEdit(false);
+    if (this.activeNav === 'faq' && this.faqConfigComponent.isEditing) {
+      this.faqConfigComponent.changeIsEditingTo(false);
       return;
     }
     this.redirectToDashboardPage();

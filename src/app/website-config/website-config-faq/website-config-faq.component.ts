@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ButtonComponent } from '../../components/button/button/button.component';
 import { InputTextComponent } from '../../components/input-text/input-text.component';
@@ -14,9 +14,9 @@ import { TextareaComponent } from '../../components/textarea/textarea.component'
 export class WebsiteConfigFaqComponent implements OnInit {
   @Input() formArray: FormArray;
 
-  @Output() faqEditModeChanged = new EventEmitter<boolean>();
-
-  public isEdit = false;
+  public isEditing = false;
+  public action: 'add' | 'edit' = 'add';
+  protected editingIndex = -1;
 
   protected form: FormGroup;
   protected formTouched = false;
@@ -36,7 +36,7 @@ export class WebsiteConfigFaqComponent implements OnInit {
     });
   }
 
-  public validToBeAdded(): boolean {
+  public validToBeSubmit(): boolean {
     if (!this.formTouched) {
       this.formTouched = true;
     }
@@ -61,7 +61,21 @@ export class WebsiteConfigFaqComponent implements OnInit {
     this.form.reset();
   }
 
-  onDeleteQuestion(index: number) {
+  public editFaqItem() {
+    const index = this.editingIndex;
+    const control = this.formArray.at(index);
+    if (!control) {
+      console.warn(`faq[${index}] control not found`);
+      return;
+    }
+    control.patchValue({
+      question: this.form.value?.question,
+      answer: this.form.value?.answer,
+    });
+  }
+
+  onDeleteQuestion(event: MouseEvent, index: number) {
+    event.stopPropagation();
     this.formArray.removeAt(index);
   }
 
@@ -73,9 +87,33 @@ export class WebsiteConfigFaqComponent implements OnInit {
     return this.form?.valid ?? false;
   }
 
-  changeIsEdit(isEdit: boolean) {
-    this.isEdit = isEdit;
-    this.faqEditModeChanged.emit(isEdit);
+  changeIsEditingTo(isEditing: boolean) {
+    this.isEditing = isEditing;
+  }
+
+  changeActionTo(action: 'add' | 'edit') {
+    this.action = action;
+  }
+
+  onAddNewItemButtonClick() {
+    this.form.reset();
+    this.changeActionTo('add');
+    this.changeIsEditingTo(true);
+  }
+
+  onFaqItemRowClick(index: number) {
+    this.form.reset();
+    this.changeActionTo('edit');
+    this.changeIsEditingTo(true);
+    const editingControl = this.formArray.at(index);
+    if (!editingControl) {
+      return;
+    }
+    this.editingIndex = index;
+    this.form.patchValue({
+      question: editingControl.value.question,
+      answer: editingControl.value.answer,
+    });
   }
 
   getFaqItemFormGroup(index: number) {
