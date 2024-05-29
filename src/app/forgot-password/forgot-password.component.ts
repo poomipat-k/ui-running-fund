@@ -9,6 +9,7 @@ import {
 } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Subscription, catchError, throwError } from 'rxjs';
+import { environment } from '../../environments/environment';
 import { CaptchaComponent } from '../components/captcha/captcha.component';
 import { ModalComponent } from '../components/modal/modal.component';
 import { ThemeService } from '../services/theme.service';
@@ -32,6 +33,7 @@ export class ForgotPasswordComponent implements OnInit, OnDestroy {
   @ViewChild('captchaComponent') captchaComponent: CaptchaComponent;
 
   protected form: FormGroup;
+  protected bannerUrl = environment.loginBanner;
 
   private readonly themeService: ThemeService = inject(ThemeService);
   private router: Router = inject(Router);
