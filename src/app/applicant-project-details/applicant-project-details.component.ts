@@ -1,5 +1,5 @@
 import { Component, Input, OnDestroy, OnInit, inject } from '@angular/core';
-import { BehaviorSubject, Subscription } from 'rxjs';
+import { BehaviorSubject, Subscription, concatMap } from 'rxjs';
 
 import { CommonModule, ViewportScroller } from '@angular/common';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
@@ -215,7 +215,6 @@ export class ApplicantProjectDetailsComponent implements OnInit, OnDestroy {
     );
 
     this.loadProjectDetails();
-    this.loadProjectFiles();
 
     this.subToSelectedFilesChanged();
   }
@@ -250,16 +249,54 @@ export class ApplicantProjectDetailsComponent implements OnInit, OnDestroy {
     this.subs.push(
       this.projectService
         .getApplicantProjectDetails(this.projectCode)
-        .subscribe((result: ApplicantDetailsItem[]) => {
-          if (result && result.length > 0) {
-            this.pathDisplay = `${this.projectCode} ${result[0].projectName}`;
-            this.data = result;
-            if (this.isAdmin) {
-              this.reloadAdminFormData();
+        .pipe(
+          concatMap((result: ApplicantDetailsItem[]) => {
+            if (result && result.length > 0) {
+              this.pathDisplay = `${this.projectCode} ${result[0].projectName}`;
+              this.data = result;
+
+              if (this.isAdmin) {
+                this.reloadAdminFormData();
+                return this.projectService.listApplicantFiles(
+                  this.projectCode,
+                  result[0].userId
+                );
+              } else {
+                return this.projectService.listApplicantFiles(this.projectCode);
+              }
+            } else {
+              console.error(`project ${this.projectCode} does not exist`);
+              this.router.navigate(['/dashboard']);
+              return [];
             }
-          } else {
-            console.error(`project ${this.projectCode} does not exist`);
-            this.router.navigate(['/dashboard']);
+          })
+        )
+        .subscribe((s3ObjectList) => {
+          if (s3ObjectList && s3ObjectList.length > 0) {
+            this.s3ObjectItems.collaboration = this.filterFileByType(
+              s3ObjectList,
+              'หนังสือนำส่ง'
+            );
+            this.s3ObjectItems.marketing = this.filterFileByType(
+              s3ObjectList,
+              'เอกสารแนบ/ป้ายประชาสัมพันธ์กิจกรรม'
+            );
+            this.s3ObjectItems.route = this.filterFileByType(
+              s3ObjectList,
+              'เอกสารแนบ/เส้นทางจุดเริ่มต้นถึงจุดสิ้นสุดและเส้นทางวิ่งในทุกระยะ'
+            );
+            this.s3ObjectItems.eventMap = this.filterFileByType(
+              s3ObjectList,
+              'เอกสารแนบ/แผนผังบริเวณการจัดงาน'
+            );
+            this.s3ObjectItems.eventDetails = this.filterFileByType(
+              s3ObjectList,
+              'เอกสารแนบ/กำหนดการการจัดกิจกรรม'
+            );
+            this.s3ObjectItems.addition = this.filterFileByType(
+              s3ObjectList,
+              'addition'
+            );
           }
         })
     );
@@ -300,41 +337,6 @@ export class ApplicantProjectDetailsComponent implements OnInit, OnDestroy {
       return `/applicant/project/review-details/${this.projectCode}/${item.reviewerId}`;
     }
     return '';
-  }
-
-  loadProjectFiles() {
-    this.subs.push(
-      this.projectService
-        .listApplicantFiles(this.projectCode, 3)
-        .subscribe((s3ObjectList) => {
-          if (s3ObjectList && s3ObjectList.length > 0) {
-            this.s3ObjectItems.collaboration = this.filterFileByType(
-              s3ObjectList,
-              'หนังสือนำส่ง'
-            );
-            this.s3ObjectItems.marketing = this.filterFileByType(
-              s3ObjectList,
-              'เอกสารแนบ/ป้ายประชาสัมพันธ์กิจกรรม'
-            );
-            this.s3ObjectItems.route = this.filterFileByType(
-              s3ObjectList,
-              'เอกสารแนบ/เส้นทางจุดเริ่มต้นถึงจุดสิ้นสุดและเส้นทางวิ่งในทุกระยะ'
-            );
-            this.s3ObjectItems.eventMap = this.filterFileByType(
-              s3ObjectList,
-              'เอกสารแนบ/แผนผังบริเวณการจัดงาน'
-            );
-            this.s3ObjectItems.eventDetails = this.filterFileByType(
-              s3ObjectList,
-              'เอกสารแนบ/กำหนดการการจัดกิจกรรม'
-            );
-            this.s3ObjectItems.addition = this.filterFileByType(
-              s3ObjectList,
-              'addition'
-            );
-          }
-        })
-    );
   }
 
   private filterFileByType(
@@ -488,7 +490,6 @@ export class ApplicantProjectDetailsComponent implements OnInit, OnDestroy {
         .subscribe({
           next: (result) => {
             if (result) {
-              this.loadProjectFiles();
               this.loadProjectDetails();
               this.displaySuccessPopup();
               setTimeout(() => {
@@ -580,7 +581,7 @@ export class ApplicantProjectDetailsComponent implements OnInit, OnDestroy {
       this.projectService.addAdditionalFiles(formData).subscribe({
         next: (result) => {
           if (result?.success) {
-            this.loadProjectFiles();
+            // this.loadProjectFiles();
             this.displaySuccessPopup();
             setTimeout(() => {
               this.closeSuccessPopup();
