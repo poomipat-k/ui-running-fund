@@ -304,6 +304,10 @@
   }
 }
 
+.cursorPointer {
+  cursor: pointer;
+}
+
 .button {
   &__container {
     display: flex;
