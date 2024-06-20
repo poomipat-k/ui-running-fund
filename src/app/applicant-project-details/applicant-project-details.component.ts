@@ -609,6 +609,7 @@ export class ApplicantProjectDetailsComponent implements OnInit, OnDestroy {
       this.projectService.addAdditionalFiles(formData).subscribe({
         next: (result) => {
           if (result?.success) {
+            this.loadProjectDetails();
             this.displaySuccessPopup();
             setTimeout(() => {
               this.closeSuccessPopup();
