@@ -74,7 +74,9 @@ export class ApplicantProjectDetailsComponent implements OnInit, OnDestroy {
   protected data: ApplicantDetailsItem[] = [];
 
   protected additionFiles: File[] = [];
+  protected etcFiles: File[] = [];
   protected additionFilesSubject = new BehaviorSubject<File[]>([]);
+  protected etcFilesSubject = new BehaviorSubject<File[]>([]);
 
   protected applicantEditMode = false;
   protected adminEditMode = false;
@@ -92,6 +94,8 @@ export class ApplicantProjectDetailsComponent implements OnInit, OnDestroy {
     eventDetails: S3ObjectMetadata[];
     // additional files
     addition: S3ObjectMetadata[];
+    // etc files
+    etc: S3ObjectMetadata[];
     // to satisfy ts in .html file
     [key: string]: S3ObjectMetadata[];
   } = {
@@ -101,6 +105,7 @@ export class ApplicantProjectDetailsComponent implements OnInit, OnDestroy {
     eventMap: [],
     eventDetails: [],
     addition: [],
+    etc: [],
   };
 
   protected projectStatusSecondaryOptions: RadioOption[] = [
@@ -243,6 +248,12 @@ export class ApplicantProjectDetailsComponent implements OnInit, OnDestroy {
         this.additionFiles = files;
       })
     );
+
+    this.subs.push(
+      this.etcFilesSubject.subscribe((files) => {
+        this.etcFiles = files;
+      })
+    );
   }
 
   loadProjectDetails() {
@@ -272,6 +283,7 @@ export class ApplicantProjectDetailsComponent implements OnInit, OnDestroy {
           })
         )
         .subscribe((s3ObjectList) => {
+          console.log('==s3ObjectList', s3ObjectList);
           if (s3ObjectList && s3ObjectList.length > 0) {
             this.s3ObjectItems.collaboration = this.filterFileByType(
               s3ObjectList,
@@ -296,6 +308,10 @@ export class ApplicantProjectDetailsComponent implements OnInit, OnDestroy {
             this.s3ObjectItems.addition = this.filterFileByType(
               s3ObjectList,
               'addition'
+            );
+            this.s3ObjectItems.etc = this.filterFileByType(
+              s3ObjectList,
+              'เอกสารแนบ/เอกสารอื่นๆ'
             );
           }
         })
@@ -436,6 +452,7 @@ export class ApplicantProjectDetailsComponent implements OnInit, OnDestroy {
 
   changeToApplicantViewMode() {
     this.additionFilesSubject.next([]);
+    this.etcFilesSubject.next([]);
     this.applicantEditMode = false;
   }
 
@@ -481,6 +498,11 @@ export class ApplicantProjectDetailsComponent implements OnInit, OnDestroy {
     if (this.additionFiles) {
       for (let i = 0; i < this.additionFiles.length; i++) {
         formData.append('additionFiles', this.additionFiles[i]);
+      }
+    }
+    if (this.etcFiles) {
+      for (let i = 0; i < this.etcFiles.length; i++) {
+        formData.append('etcFiles', this.etcFiles[i]);
       }
     }
 
@@ -577,11 +599,16 @@ export class ApplicantProjectDetailsComponent implements OnInit, OnDestroy {
       }
     }
 
+    if (this.etcFiles) {
+      for (let i = 0; i < this.etcFiles.length; i++) {
+        formData.append('etcFiles', this.etcFiles[i]);
+      }
+    }
+
     this.subs.push(
       this.projectService.addAdditionalFiles(formData).subscribe({
         next: (result) => {
           if (result?.success) {
-            // this.loadProjectFiles();
             this.displaySuccessPopup();
             setTimeout(() => {
               this.closeSuccessPopup();
