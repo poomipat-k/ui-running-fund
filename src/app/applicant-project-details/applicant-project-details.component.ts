@@ -64,6 +64,9 @@ export class ApplicantProjectDetailsComponent implements OnInit, OnDestroy {
   private readonly userService: UserService = inject(UserService);
   private readonly subs: Subscription[] = [];
 
+  protected successPopupText = 'อัพโหลดไฟล์สำเร็จ';
+  protected failPopupText = 'อัพโหลดไฟล์ไม่สำเร็จ โปรดลองอีกครั้ง';
+
   protected form: FormGroup;
 
   protected showSuccessPopup = false;
@@ -513,6 +516,7 @@ export class ApplicantProjectDetailsComponent implements OnInit, OnDestroy {
           next: (result) => {
             if (result) {
               this.loadProjectDetails();
+              this.successPopupText = 'แก้ไขข้อมูลสำเร็จ';
               this.displaySuccessPopup();
               setTimeout(() => {
                 this.closeSuccessPopup();
@@ -522,6 +526,7 @@ export class ApplicantProjectDetailsComponent implements OnInit, OnDestroy {
           },
           error: (err) => {
             console.error(err);
+            this.failPopupText = 'แก้ไขข้อมูลไม่สำเร็จ';
             this.displayErrorPopup();
             setTimeout(() => {
               this.closeErrorPopup();
@@ -610,6 +615,7 @@ export class ApplicantProjectDetailsComponent implements OnInit, OnDestroy {
         next: (result) => {
           if (result?.success) {
             this.loadProjectDetails();
+            this.successPopupText = 'อัพโหลดไฟล์สำเร็จ';
             this.displaySuccessPopup();
             setTimeout(() => {
               this.closeSuccessPopup();
@@ -619,6 +625,7 @@ export class ApplicantProjectDetailsComponent implements OnInit, OnDestroy {
         },
         error: (err) => {
           console.error(err);
+          this.failPopupText = 'อัพโหลดไฟล์ไม่สำเร็จ';
           this.displayErrorPopup();
           setTimeout(() => {
             this.closeErrorPopup();
