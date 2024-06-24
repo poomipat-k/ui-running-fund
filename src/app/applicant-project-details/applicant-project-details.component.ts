@@ -286,7 +286,6 @@ export class ApplicantProjectDetailsComponent implements OnInit, OnDestroy {
           })
         )
         .subscribe((s3ObjectList) => {
-          console.log('==s3ObjectList', s3ObjectList);
           if (s3ObjectList && s3ObjectList.length > 0) {
             this.s3ObjectItems.collaboration = this.filterFileByType(
               s3ObjectList,
