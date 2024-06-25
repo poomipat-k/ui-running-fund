@@ -39,67 +39,28 @@
     color: #000;
   }
 
-  &__tel {
-    display: flex;
-    gap: 6px;
-
-    &__text {
-      font-family: $custom-font;
-      font-weight: 400;
-      font-size: 2rem;
-      line-height: 3.3rem;
-      color: #344054;
-    }
-
-    &-label {
-      font-family: $custom-font;
-      font-weight: 500;
-      font-size: 2rem;
-      line-height: 3.3rem;
-      color: #344054;
-    }
-
-    &-details {
-      display: flex;
-      gap: 1rem;
-
-      &-item {
-        display: flex;
-        gap: 6px;
-      }
-    }
-  }
-
-  &__facebook {
-    display: flex;
-    gap: 8px;
-    align-items: center;
-
-    &-text {
-      font-family: $custom-font;
-      font-weight: 500;
-      font-size: 2rem;
-      line-height: 3.3rem;
-
-      &--light {
-        font-weight: 400;
-      }
-    }
-  }
-
   &__line {
     display: flex;
-    gap: 8px;
+    gap: 12px;
+  }
 
-    &-text {
-      font-family: $custom-font;
-      font-weight: 500;
-      font-size: 2rem;
-      line-height: 3.3rem;
+  &__text {
+    font-family: $custom-font;
+    font-weight: 400;
+    font-size: 2rem;
+    line-height: 3.3rem;
+    color: #344054;
+  }
 
-      &--light {
-        font-weight: 400;
-      }
+  &__label {
+    font-family: $custom-font;
+    font-weight: 500;
+    font-size: 2rem;
+    line-height: 3.3rem;
+    color: #344054;
+
+    &--address {
+      flex: 0 0 4.3rem;
     }
   }
 }

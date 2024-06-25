@@ -194,6 +194,11 @@ export class ReviewerFlowPagesComponent implements OnInit, OnDestroy {
       this.pageIndex--;
       return;
     }
+    // when reviewerId is not undefined then it mean admin view the review result
+    if (this.reviewerId && this.projectCode) {
+      this.routerService.navigate([`/admin/project/${this.projectCode}`]);
+      return;
+    }
     this.routerService.navigate(['/dashboard']);
   }
 

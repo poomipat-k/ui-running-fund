@@ -114,6 +114,21 @@
   }
 }
 
+.noAlc {
+  &__text {
+    font-family: $custom-font-looped;
+    font-weight: 400;
+    font-size: 1.6rem;
+    line-height: 2.7rem;
+    color: #000;
+  }
+
+  &__important {
+    font-weight: 500;
+    text-decoration: underline;
+  }
+}
+
 .line {
   display: flex;
   gap: 8px;

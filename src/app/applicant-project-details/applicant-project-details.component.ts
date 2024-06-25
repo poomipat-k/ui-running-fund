@@ -1,5 +1,5 @@
 import { Component, Input, OnDestroy, OnInit, inject } from '@angular/core';
-import { BehaviorSubject, Subscription } from 'rxjs';
+import { BehaviorSubject, Subscription, concatMap } from 'rxjs';
 
 import { CommonModule, ViewportScroller } from '@angular/common';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
@@ -64,6 +64,9 @@ export class ApplicantProjectDetailsComponent implements OnInit, OnDestroy {
   private readonly userService: UserService = inject(UserService);
   private readonly subs: Subscription[] = [];
 
+  protected successPopupText = 'อัพโหลดไฟล์สำเร็จ';
+  protected failPopupText = 'อัพโหลดไฟล์ไม่สำเร็จ โปรดลองอีกครั้ง';
+
   protected form: FormGroup;
 
   protected showSuccessPopup = false;
@@ -74,7 +77,9 @@ export class ApplicantProjectDetailsComponent implements OnInit, OnDestroy {
   protected data: ApplicantDetailsItem[] = [];
 
   protected additionFiles: File[] = [];
+  protected etcFiles: File[] = [];
   protected additionFilesSubject = new BehaviorSubject<File[]>([]);
+  protected etcFilesSubject = new BehaviorSubject<File[]>([]);
 
   protected applicantEditMode = false;
   protected adminEditMode = false;
@@ -92,6 +97,8 @@ export class ApplicantProjectDetailsComponent implements OnInit, OnDestroy {
     eventDetails: S3ObjectMetadata[];
     // additional files
     addition: S3ObjectMetadata[];
+    // etc files
+    etc: S3ObjectMetadata[];
     // to satisfy ts in .html file
     [key: string]: S3ObjectMetadata[];
   } = {
@@ -101,6 +108,7 @@ export class ApplicantProjectDetailsComponent implements OnInit, OnDestroy {
     eventMap: [],
     eventDetails: [],
     addition: [],
+    etc: [],
   };
 
   protected projectStatusSecondaryOptions: RadioOption[] = [
@@ -215,7 +223,6 @@ export class ApplicantProjectDetailsComponent implements OnInit, OnDestroy {
     );
 
     this.loadProjectDetails();
-    this.loadProjectFiles();
 
     this.subToSelectedFilesChanged();
   }
@@ -244,22 +251,70 @@ export class ApplicantProjectDetailsComponent implements OnInit, OnDestroy {
         this.additionFiles = files;
       })
     );
+
+    this.subs.push(
+      this.etcFilesSubject.subscribe((files) => {
+        this.etcFiles = files;
+      })
+    );
   }
 
   loadProjectDetails() {
     this.subs.push(
       this.projectService
         .getApplicantProjectDetails(this.projectCode)
-        .subscribe((result: ApplicantDetailsItem[]) => {
-          if (result && result.length > 0) {
-            this.pathDisplay = `${this.projectCode} ${result[0].projectName}`;
-            this.data = result;
-            if (this.isAdmin) {
-              this.reloadAdminFormData();
+        .pipe(
+          concatMap((result: ApplicantDetailsItem[]) => {
+            if (result && result.length > 0) {
+              this.pathDisplay = `${this.projectCode} ${result[0].projectName}`;
+              this.data = result;
+
+              if (this.isAdmin) {
+                this.reloadAdminFormData();
+                return this.projectService.listApplicantFiles(
+                  this.projectCode,
+                  result[0].userId
+                );
+              } else {
+                return this.projectService.listApplicantFiles(this.projectCode);
+              }
+            } else {
+              console.error(`project ${this.projectCode} does not exist`);
+              this.router.navigate(['/dashboard']);
+              return [];
             }
-          } else {
-            console.error(`project ${this.projectCode} does not exist`);
-            this.router.navigate(['/dashboard']);
+          })
+        )
+        .subscribe((s3ObjectList) => {
+          if (s3ObjectList && s3ObjectList.length > 0) {
+            this.s3ObjectItems.collaboration = this.filterFileByType(
+              s3ObjectList,
+              'หนังสือนำส่ง'
+            );
+            this.s3ObjectItems.marketing = this.filterFileByType(
+              s3ObjectList,
+              'เอกสารแนบ/ป้ายประชาสัมพันธ์กิจกรรม'
+            );
+            this.s3ObjectItems.route = this.filterFileByType(
+              s3ObjectList,
+              'เอกสารแนบ/เส้นทางจุดเริ่มต้นถึงจุดสิ้นสุดและเส้นทางวิ่งในทุกระยะ'
+            );
+            this.s3ObjectItems.eventMap = this.filterFileByType(
+              s3ObjectList,
+              'เอกสารแนบ/แผนผังบริเวณการจัดงาน'
+            );
+            this.s3ObjectItems.eventDetails = this.filterFileByType(
+              s3ObjectList,
+              'เอกสารแนบ/กำหนดการการจัดกิจกรรม'
+            );
+            this.s3ObjectItems.addition = this.filterFileByType(
+              s3ObjectList,
+              'addition'
+            );
+            this.s3ObjectItems.etc = this.filterFileByType(
+              s3ObjectList,
+              'เอกสารแนบ/เอกสารอื่นๆ'
+            );
           }
         })
     );
@@ -300,41 +355,6 @@ export class ApplicantProjectDetailsComponent implements OnInit, OnDestroy {
       return `/applicant/project/review-details/${this.projectCode}/${item.reviewerId}`;
     }
     return '';
-  }
-
-  loadProjectFiles() {
-    this.subs.push(
-      this.projectService
-        .listApplicantFiles(this.projectCode, 3)
-        .subscribe((s3ObjectList) => {
-          if (s3ObjectList && s3ObjectList.length > 0) {
-            this.s3ObjectItems.collaboration = this.filterFileByType(
-              s3ObjectList,
-              'หนังสือนำส่ง'
-            );
-            this.s3ObjectItems.marketing = this.filterFileByType(
-              s3ObjectList,
-              'เอกสารแนบ/ป้ายประชาสัมพันธ์กิจกรรม'
-            );
-            this.s3ObjectItems.route = this.filterFileByType(
-              s3ObjectList,
-              'เอกสารแนบ/เส้นทางจุดเริ่มต้นถึงจุดสิ้นสุดและเส้นทางวิ่งในทุกระยะ'
-            );
-            this.s3ObjectItems.eventMap = this.filterFileByType(
-              s3ObjectList,
-              'เอกสารแนบ/แผนผังบริเวณการจัดงาน'
-            );
-            this.s3ObjectItems.eventDetails = this.filterFileByType(
-              s3ObjectList,
-              'เอกสารแนบ/กำหนดการการจัดกิจกรรม'
-            );
-            this.s3ObjectItems.addition = this.filterFileByType(
-              s3ObjectList,
-              'addition'
-            );
-          }
-        })
-    );
   }
 
   private filterFileByType(
@@ -434,6 +454,7 @@ export class ApplicantProjectDetailsComponent implements OnInit, OnDestroy {
 
   changeToApplicantViewMode() {
     this.additionFilesSubject.next([]);
+    this.etcFilesSubject.next([]);
     this.applicantEditMode = false;
   }
 
@@ -481,6 +502,11 @@ export class ApplicantProjectDetailsComponent implements OnInit, OnDestroy {
         formData.append('additionFiles', this.additionFiles[i]);
       }
     }
+    if (this.etcFiles) {
+      for (let i = 0; i < this.etcFiles.length; i++) {
+        formData.append('etcFiles', this.etcFiles[i]);
+      }
+    }
 
     this.subs.push(
       this.projectService
@@ -488,8 +514,8 @@ export class ApplicantProjectDetailsComponent implements OnInit, OnDestroy {
         .subscribe({
           next: (result) => {
             if (result) {
-              this.loadProjectFiles();
               this.loadProjectDetails();
+              this.successPopupText = 'แก้ไขข้อมูลสำเร็จ';
               this.displaySuccessPopup();
               setTimeout(() => {
                 this.closeSuccessPopup();
@@ -499,6 +525,7 @@ export class ApplicantProjectDetailsComponent implements OnInit, OnDestroy {
           },
           error: (err) => {
             console.error(err);
+            this.failPopupText = 'แก้ไขข้อมูลไม่สำเร็จ';
             this.displayErrorPopup();
             setTimeout(() => {
               this.closeErrorPopup();
@@ -576,11 +603,18 @@ export class ApplicantProjectDetailsComponent implements OnInit, OnDestroy {
       }
     }
 
+    if (this.etcFiles) {
+      for (let i = 0; i < this.etcFiles.length; i++) {
+        formData.append('etcFiles', this.etcFiles[i]);
+      }
+    }
+
     this.subs.push(
       this.projectService.addAdditionalFiles(formData).subscribe({
         next: (result) => {
           if (result?.success) {
-            this.loadProjectFiles();
+            this.loadProjectDetails();
+            this.successPopupText = 'อัพโหลดไฟล์สำเร็จ';
             this.displaySuccessPopup();
             setTimeout(() => {
               this.closeSuccessPopup();
@@ -590,6 +624,7 @@ export class ApplicantProjectDetailsComponent implements OnInit, OnDestroy {
         },
         error: (err) => {
           console.error(err);
+          this.failPopupText = 'อัพโหลดไฟล์ไม่สำเร็จ';
           this.displayErrorPopup();
           setTimeout(() => {
             this.closeErrorPopup();

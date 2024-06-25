@@ -304,6 +304,10 @@
   }
 }
 
+.cursorPointer {
+  cursor: pointer;
+}
+
 .button {
   &__container {
     display: flex;
@@ -417,6 +421,10 @@
 
   &-48 {
     margin-top: 4.8rem;
+  }
+
+  &-60 {
+    margin-top: 60px;
   }
 
   &-69 {

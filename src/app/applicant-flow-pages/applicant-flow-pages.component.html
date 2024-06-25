@@ -82,14 +82,17 @@
         [routeSubject]="routeFilesSubject"
         [eventMapSubject]="eventMapFilesSubject"
         [eventDetailsSubject]="eventDetailsFilesSubject"
+        [etcSubject]="etcFilesSubject"
         [marketingCount]="marketingFiles.length || 0"
         [routeCount]="routeFiles.length || 0"
         [eventMapCount]="eventMapFiles.length || 0"
         [eventDetailsCount]="eventDetailsFiles.length || 0"
+        [etcCount]="etcFiles.length || 0"
         [marketingUploadButtonTouched]="marketingUploadButtonTouched"
         [routeUploadButtonTouched]="routeUploadButtonTouched"
         [eventMapUploadButtonTouched]="eventMapUploadButtonTouched"
         [eventDetailsUploadButtonTouched]="eventDetailsUploadButtonTouched"
+        [etcUploadButtonTouched]="etcUploadButtonTouched"
       >
       </app-applicant-attachment>
       }@case (7) {
@@ -148,11 +151,15 @@
 
   @if (showSuccessPopup) {
   <div [ngClass]="{ popup: true, 'popup--show': showSuccessPopup }">
-    <app-com-success-popup displayText="รีวิวเรียบร้อย"></app-com-success-popup>
+    <app-com-success-popup
+      displayText="ส่งข้อเสนอโครงการเรียบร้อย"
+    ></app-com-success-popup>
   </div>
   } @else if (showErrorPopup) {
   <div [ngClass]="{ popup: true, 'popup--show': showSuccessPopup }">
-    <app-com-error-popup displayText="รีวิวไม่สำเร็จ โปรดลองอีกครั้ง">
+    <app-com-error-popup
+      displayText="ส่งข้อเสนอโครงการไม่สำเร็จ โปรดลองอีกครั้ง"
+    >
     </app-com-error-popup>
   </div>
   }

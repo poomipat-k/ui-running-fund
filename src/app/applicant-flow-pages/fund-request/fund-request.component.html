@@ -59,6 +59,34 @@
           }
         </div>
       </div>
+
+      <p class="noAlc__text" id="budget.noAlcoholSponsor">
+        กรุณากดยืนยันว่าโครงการที่ท่านส่งยื่นขอรับการสนับสนุนในครั้งนี้
+        ไม่ได้รับการสนับสนุนจากผลิตภัณฑ์เครื่องดื่มแอลกอฮอล์และบุหรี่
+        รวมทั้งผลิตภัณฑ์อื่น ๆ ที่มีตราสัญลักษณ์ของเครื่องดื่มแอลกอฮอล์
+        หากพบภายหลังจากพิจารณาสนับสนุนทุนไปแล้ว
+        <span class="noAlc__text noAlc__important"
+          >ขอเพิกถอนสิทธิ์การสนับสนุนทันทีและอาจมีผลต่อการพิจารณาสนับสนุนโครงการอื่นๆ
+          ในอนาคต</span
+        >
+      </p>
+      <div>
+        <app-com-checkbox
+          [form]="budgetFormGroup"
+          controlName="noAlcoholSponsor"
+          display="ข้าพเจ้าขอยืนยันและยินยอมต่อเงื่อนไขการสนับสนุน"
+          gap="8px"
+          fontSize="16px"
+        >
+        </app-com-checkbox>
+        @if (!budgetFormGroup.get('noAlcoholSponsor')?.valid &&
+        budgetFormGroup.get('noAlcoholSponsor')?.touched && formTouched) {
+        <div class="error mgt-10">
+          <img src="/assets/error_icon.svg" alt="error icon" />
+          <p class="error__text">กรุณายืนยันและยินยอมต่อเงื่อนไขการสนับสนุน</p>
+        </div>
+        }
+      </div>
     </div>
   </div>
 

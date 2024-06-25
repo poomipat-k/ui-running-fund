@@ -6,17 +6,17 @@
       <div class="footer__logo">
         @for (logo of logos; track $index) { @if (logo.linkTo) {
         <a [href]="logo.linkTo" target="_blank">
-          <img [src]="logo.fullPath" alt="footer logo" />
+          <img [src]="logo.fullPath" alt="footer logo" class="footer__img" />
         </a>
         } @else {
-        <img [src]="logo.fullPath" alt="footer logo" />
+        <img [src]="logo.fullPath" alt="footer logo" class="footer__img" />
         } }
       </div>
-      <div class="margin-left-32">
-        <p class="footer__credit footer__credit--header">
+      <div class="footer__credit">
+        <p class="footer__credit--header">
           มูลนิธิสมาพันธ์ชมรมเดิน-วิ่งเพื่อสุขภาพไทย
         </p>
-        <p class="footer__credit footer__credit--details">
+        <p class="footer__credit--details">
           สนับสนุนโดย สำนักงานกองทุนสนับสนุนการสร้างเสริมสุขภาพ (สสส.)
         </p>
       </div>

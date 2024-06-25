@@ -1,6 +1,7 @@
-import { Component, inject } from '@angular/core';
+import { ChangeDetectorRef, Component, inject } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { Subscription, concatMap } from 'rxjs';
+
 import { FilterComponent } from '../components/filter/filter.component';
 import { TableComponent } from '../components/table/table.component';
 import { DateService } from '../services/date.service';
@@ -11,6 +12,7 @@ import { BackgroundColor } from '../shared/enums/background-color';
 import { ColumnTypeEnum } from '../shared/enums/column-type';
 import { FilterOption } from '../shared/models/filter-option';
 import { ReviewPeriod } from '../shared/models/review-period';
+import { ReviewerDashboardRow } from '../shared/models/reviewer-dashboard-row';
 import { TableCell } from '../shared/models/table-cell';
 import { TableColumn } from '../shared/models/table-column';
 import { User } from '../shared/models/user';
@@ -28,11 +30,13 @@ export class DashboardReviewerComponent {
 
   private readonly themeService: ThemeService = inject(ThemeService);
   private readonly s3Service: S3Service = inject(S3Service);
+  private readonly changeDetectorRef: ChangeDetectorRef;
 
   private reviewPeriod: ReviewPeriod;
 
   protected fromDate: string;
   protected toDate: string;
+  protected apiData: ReviewerDashboardRow[] = [];
   protected data: TableCell[][] = [];
 
   protected columns: TableColumn[] = [
@@ -72,16 +76,16 @@ export class DashboardReviewerComponent {
     {
       id: 1,
       display: 'เรียงตามตัวอักษร',
-      name: 'ชื่อโครงการ',
+      name: 'projectName',
       isAsc: true,
     },
     {
       id: 2,
       display: 'ใหม่ - เก่า',
-      name: 'วันที่สร้าง',
+      name: 'projectCreatedAt',
       isAsc: false,
     },
-    { id: 3, display: 'เก่า - ใหม่', name: 'วันที่สร้าง', isAsc: true },
+    { id: 3, display: 'เก่า - ใหม่', name: 'projectCreatedAt', isAsc: true },
     {
       id: 4,
       display: 'สถานะการกลั่นกรอง',
@@ -136,7 +140,9 @@ export class DashboardReviewerComponent {
         )
         .subscribe((result) => {
           if (result) {
-            const newData = result.map((row) => {
+            this.apiData = result;
+            this.sortByStatusCreatedAt(this.apiData);
+            const newData = this.apiData.map((row, index) => {
               return [
                 {
                   display: row.projectCode,
@@ -160,7 +166,7 @@ export class DashboardReviewerComponent {
                     this.subs.push(
                       this.s3Service
                         .getAttachmentsPresigned(
-                          `${row.projectCode}/zip/${row.projectCode}_เอกสารแนบ.zip`,
+                          `${this.apiData[index].projectCode}/zip/${this.apiData[index].projectCode}_เอกสารแนบ.zip`,
                           row.userId
                         )
                         .subscribe((result) => {
@@ -186,7 +192,6 @@ export class DashboardReviewerComponent {
                 },
               ];
             });
-            this.sortByStatusCreatedAt(newData);
             this.data = newData;
           }
         })
@@ -194,73 +199,94 @@ export class DashboardReviewerComponent {
   }
 
   onSortFilterChanged(option: FilterOption) {
-    if (option.name === 'priority') {
-      this.sortByStatusCreatedAt(this.data);
+    if (!this.apiData) {
       return;
     }
-    this.sortRows(this.data, option);
+
+    this.sortData(this.apiData, option);
+    const newData = this.apiData.map((row) => {
+      return [
+        {
+          display: row.projectCode,
+          value: row.projectCode,
+        },
+        {
+          display: this.dateService.dateToStringWithShortMonth(
+            row.projectCreatedAt
+          ),
+          value: row.projectCreatedAt,
+        },
+        {
+          display: row.projectName,
+          value: row.projectName,
+        },
+        // Download attachment icon
+        {
+          display: 'ok', // anything not '' will work
+          value: 'ok', // anything not '' will work
+          // passing onClick here will make no impact, it still use the first onClick when load the data from API
+        },
+        {
+          display: row.reviewId
+            ? 'reviewer__Reviewed'
+            : 'reviewer__PendingReview',
+          value: row.reviewId,
+        },
+        {
+          display: this.dateService.dateToStringWithShortMonth(row.reviewedAt),
+          value: row.reviewedAt,
+        },
+      ];
+    });
+    this.data = newData;
   }
 
-  private sortByStatusCreatedAt(data: TableCell[][]) {
-    if (!this.data) {
-      return;
+  private sortData(data: ReviewerDashboardRow[], option: FilterOption): void {
+    switch (option.name) {
+      case 'projectName': {
+        data.sort((a, b) => {
+          if (a.projectName > b.projectName) {
+            return option.isAsc ? 1 : -1;
+          }
+          if (a.projectName < b.projectName) {
+            return option.isAsc ? -1 : 1;
+          }
+          return 0;
+        });
+        break;
+      }
+      case 'projectCreatedAt': {
+        data.sort((a, b) => {
+          const aDate = new Date(a.projectCreatedAt);
+          const bDate = new Date(b.projectCreatedAt);
+          return this.dateCompareAsc(aDate, bDate, option.isAsc);
+        });
+        break;
+      }
+      case 'priority': {
+        this.sortByStatusCreatedAt(data);
+        break;
+      }
     }
-    const statusIndex = this.columns.findIndex(
-      (c) => c.name === 'สถานะการกลั่นกรอง'
-    );
-    const createdIndex = this.columns.findIndex(
-      (c) => c.name === 'วันที่สร้าง'
-    );
+  }
+
+  private sortByStatusCreatedAt(data: ReviewerDashboardRow[]) {
     data.sort((a, b) => {
-      const aDate = new Date(a[createdIndex].value);
-      const bDate = new Date(b[createdIndex].value);
-      return (
-        a[statusIndex].display.localeCompare(b[statusIndex].display) ||
-        this.dateCompareAsc(aDate, bDate)
-      );
+      const aDate = new Date(a.projectCreatedAt);
+      const bDate = new Date(b.projectCreatedAt);
+      const aReviewed = !!a.reviewId ? 1 : 0;
+      const bReviewed = !!b.reviewId ? 1 : 0;
+      return aReviewed - bReviewed || this.dateCompareAsc(aDate, bDate, true);
     });
   }
 
-  private dateCompareAsc(aDate: Date, bDate: Date) {
+  private dateCompareAsc(aDate: Date, bDate: Date, isAsc: boolean) {
     if (aDate > bDate) {
-      return 1;
+      return isAsc ? 1 : -1;
     }
     if (aDate < bDate) {
-      return -1;
+      return isAsc ? -1 : 1;
     }
     return 0;
-  }
-
-  private sortRows(data: TableCell[][], option: FilterOption) {
-    if (!this.data) {
-      return;
-    }
-    const columnIndex = this.columns.findIndex((c) => c.name === option.name);
-    if (columnIndex === -1) {
-      return;
-    }
-    if (this.columns[columnIndex].format === 'datetime') {
-      data.sort((a, b) => {
-        const aDate = new Date(a[columnIndex].value);
-        const bDate = new Date(b[columnIndex].value);
-        if (aDate > bDate) {
-          return option.isAsc ? 1 : -1;
-        }
-        if (aDate < bDate) {
-          return option.isAsc ? -1 : 1;
-        }
-        return 0;
-      });
-    } else {
-      data.sort((a, b) => {
-        if (a[columnIndex].value > b[columnIndex].value) {
-          return option.isAsc ? 1 : -1;
-        }
-        if (a[columnIndex].value < b[columnIndex].value) {
-          return option.isAsc ? -1 : 1;
-        }
-        return 0;
-      });
-    }
   }
 }

@@ -225,6 +225,7 @@ export class WebsiteConfigComponent implements OnInit, AfterViewInit {
             },
           });
           // banners
+          this.bannerFormArray.clear();
           result.landing.banner?.forEach((b) => {
             this.bannerFormArray.push(
               new FormGroup({
@@ -236,6 +237,7 @@ export class WebsiteConfigComponent implements OnInit, AfterViewInit {
             );
           });
           // faq list
+          this.faqFormArray.clear();
           result.faq?.forEach((faq) => {
             this.faqFormArray.push(
               new FormGroup({
@@ -246,6 +248,7 @@ export class WebsiteConfigComponent implements OnInit, AfterViewInit {
             );
           });
           // howToCreate list
+          this.howToCreateFormArray.clear();
           result.howToCreate?.forEach((howToCreate) => {
             this.howToCreateFormArray.push(
               new FormGroup({
@@ -256,6 +259,7 @@ export class WebsiteConfigComponent implements OnInit, AfterViewInit {
             );
           });
           // footer logos
+          this.footerLogoFormArray.clear();
           result.footer.logo?.forEach((logo) => {
             this.footerLogoFormArray.push(
               new FormGroup({
@@ -334,12 +338,8 @@ export class WebsiteConfigComponent implements OnInit, AfterViewInit {
 
   onSave() {
     // FAQ edit mode
-    if (this.activeNav === 'faq' && this.faqConfigComponent.isEdit) {
-      // add a new faq item to faq formArray
-      if (this.faqConfigComponent.validToBeAdded()) {
-        this.faqConfigComponent.addToFaqFormArray();
-        this.faqConfigComponent.changeIsEdit(false);
-      }
+    if (this.activeNav === 'faq' && this.faqConfigComponent.isEditing) {
+      this.handleFAQsaved();
       return;
     }
 
@@ -361,7 +361,6 @@ export class WebsiteConfigComponent implements OnInit, AfterViewInit {
       this.showSuccessPopup = true;
       setTimeout(() => {
         this.showSuccessPopup = false;
-        this.redirectToDashboardPage();
       }, 2000);
       return;
     }
@@ -373,13 +372,27 @@ export class WebsiteConfigComponent implements OnInit, AfterViewInit {
           if (result.success) {
             this.successPopupText = 'อัพเดตข้อมูลเว็บไซต์เรียบร้อยแล้ว';
             this.showSuccessPopup = true;
+            this.loadCmsData();
             setTimeout(() => {
               this.showSuccessPopup = false;
-              this.redirectToDashboardPage();
+              this.loadCmsData();
             }, 2000);
           }
         })
     );
+  }
+
+  private handleFAQsaved() {
+    // add a new faq item to faq formArray
+    if (!this.faqConfigComponent.validToBeSubmit()) {
+      return;
+    }
+    if (this.faqConfigComponent.action === 'add') {
+      this.faqConfigComponent.addToFaqFormArray();
+    } else if (this.faqConfigComponent.action === 'edit') {
+      this.faqConfigComponent.editFaqItem();
+    }
+    this.faqConfigComponent.changeIsEditingTo(false);
   }
 
   private markFieldsTouched() {
@@ -410,8 +423,8 @@ export class WebsiteConfigComponent implements OnInit, AfterViewInit {
   }
 
   onCancel() {
-    if (this.activeNav === 'faq' && this.faqConfigComponent.isEdit) {
-      this.faqConfigComponent.changeIsEdit(false);
+    if (this.activeNav === 'faq' && this.faqConfigComponent.isEditing) {
+      this.faqConfigComponent.changeIsEditingTo(false);
       return;
     }
     this.redirectToDashboardPage();

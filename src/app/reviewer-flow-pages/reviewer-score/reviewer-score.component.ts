@@ -2,6 +2,7 @@ import { CommonModule, ViewportScroller } from '@angular/common';
 import { Component, Input, OnInit, inject } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 
+import { environment } from '../../../environments/environment';
 import { CheckboxComponent } from '../../components/checkbox/checkbox.component';
 import { RadioComponent } from '../../components/radio/radio.component';
 import { CheckboxOption } from '../../shared/models/checkbox-option';
@@ -25,7 +26,7 @@ import { criteriaGroup } from '../data/criteria-group';
 export class ReviewerScoreComponent implements OnInit {
   @Input() form: FormGroup;
   @Input() criteriaList: ReviewCriteria[] = [];
-  @Input() devModeOn = false;
+  @Input() devModeOn = true;
 
   private readonly scroller: ViewportScroller = inject(ViewportScroller);
 
@@ -129,6 +130,7 @@ export class ReviewerScoreComponent implements OnInit {
 
   ngOnInit(): void {
     this.groupHeaders = criteriaGroup;
+    this.devModeOn = !environment.production;
   }
 
   onSummaryRadioChanged(): void {

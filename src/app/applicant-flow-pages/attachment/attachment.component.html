@@ -119,5 +119,28 @@
         </div>
       </div>
     </div>
+
+    <div class="section">
+      <h3 class="section__header">6.5 เอกสารอื่นๆ</h3>
+      <div class="uploadBox">
+        <div>
+          <app-com-upload-button
+            id="etc"
+            [filesSubject]="etcSubject"
+          ></app-com-upload-button>
+          @if (etcCount === 0 && etcUploadButtonTouched) {
+          <div class="error">
+            <img src="/assets/error_icon.svg" alt="error icon" />
+            <p class="error__text">กรุณาอัพโหลดไฟล์</p>
+          </div>
+          }
+        </div>
+        <div class="uploadBox__example">
+          <p class="uploadBox__text">
+            แนะนำไฟล์ประเภท PDF, JPG ขนาดไม่เกิน 25 MB
+          </p>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
