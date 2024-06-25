@@ -128,6 +128,7 @@
                   src="/assets/download_file_icon.svg"
                   alt="download file icon"
                   (click)="onDownloadItemClick(item.key)"
+                  class="cursorPointer"
                 />
               </div>
             </div>
@@ -182,6 +183,7 @@
                   src="/assets/download_file_icon.svg"
                   alt="download file icon"
                   (click)="onDownloadItemClick(item.key)"
+                  class="cursorPointer"
                 />
               </div>
             </div>
@@ -193,6 +195,45 @@
       </div>
       <!-- END Addition -->
     </div>
+
+    <!-- ETC -->
+    <div class="mgt-60">
+      <div class="otherFiles">
+        <h3 class="header">เอกสารอื่นๆ</h3>
+      </div>
+      <!-- Upload etc file button -->
+      @if (applicantEditMode || adminEditMode) {
+      <div class="mgt-16">
+        <app-com-upload-button
+          [filesSubject]="etcFilesSubject"
+        ></app-com-upload-button>
+      </div>
+      }
+
+      <div class="attachments mgt-6">
+        <div class="attachments__row">
+          <div class="attachments__fileAndDate">
+            @for (item of s3ObjectItems.etc; track $index) {
+            <div class="attachments__fileAndDate-row">
+              <p class="attachments__text">{{ item.display }}</p>
+              <div class="attachments__fileAndDate-textWithIcon">
+                <p class="attachments__text">{{ item.lastModified }}</p>
+                <img
+                  src="/assets/download_file_icon.svg"
+                  alt="download file icon"
+                  (click)="onDownloadItemClick(item.key)"
+                  class="cursorPointer"
+                />
+              </div>
+            </div>
+            @if ($index !== s3ObjectItems.etc.length - 1) {
+            <div class="hr"></div>
+            } }
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- END ETC -->
 
     <!-- Applicant view START -->
     @if (isApplicant) {
@@ -229,7 +270,7 @@
       }
     </div>
 
-    <!-- Admin Comment -->
+    <!-- Hide Admin Comment -->
     @if (!applicantEditMode) {
     <div class="mgt-33">
       <h3 class="remark__header">หมายเหตุ</h3>
@@ -244,7 +285,10 @@
       <button
         class="button button--next"
         (click)="onConfirmUpload()"
-        [disabled]="additionFiles.length === 0 || projectStatus !== 'Revise'"
+        [disabled]="
+          (additionFiles.length === 0 && etcFiles.length === 0) ||
+          projectStatus !== 'Revise'
+        "
       >
         บันทึก
       </button>
@@ -386,13 +430,12 @@
   @if (showSuccessPopup) {
   <div [ngClass]="{ popup: true, 'popup--show': showSuccessPopup }">
     <app-com-success-popup
-      displayText="อัพโหลดไฟล์สำเร็จ"
+      [displayText]="successPopupText"
     ></app-com-success-popup>
   </div>
   } @else if (showErrorPopup) {
   <div [ngClass]="{ popup: true, 'popup--show': showSuccessPopup }">
-    <app-com-error-popup displayText="อัพโหลดไฟล์ไม่สำเร็จ โปรดลองอีกครั้ง">
-    </app-com-error-popup>
+    <app-com-error-popup [displayText]="failPopupText"> </app-com-error-popup>
   </div>
   }
 </div>

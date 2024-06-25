@@ -28,6 +28,8 @@
     height: auto;
     cursor: default;
 
+    object-fit: cover;
+
     &--blur {
       filter: blur(8px);
     }

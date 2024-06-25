@@ -48,7 +48,7 @@
   }
 
   &__subHeader {
-    font-family: $custom-font;
+    font-family: $custom-font-looped;
     font-weight: 600;
     font-size: 2rem;
     line-height: 3rem;
@@ -61,7 +61,7 @@
     font-size: 2rem;
     line-height: 3rem;
     color: #344054;
-    white-space: pre-wrap;
+    // white-space: pre-wrap;
   }
 }
 

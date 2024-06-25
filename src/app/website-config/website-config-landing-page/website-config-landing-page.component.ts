@@ -3,29 +3,12 @@ import {
   Component,
   Input,
   OnDestroy,
-  OnInit,
   ViewChild,
   inject,
 } from '@angular/core';
-import {
-  FormArray,
-  FormControl,
-  FormGroup,
-  ReactiveFormsModule,
-} from '@angular/forms';
-import {
-  EditorComponent,
-  EditorModule,
-  TINYMCE_SCRIPT_SRC,
-} from '@tinymce/tinymce-angular';
-import {
-  BehaviorSubject,
-  Subscription,
-  concatMap,
-  lastValueFrom,
-  map,
-  of,
-} from 'rxjs';
+import { FormArray, FormControl, FormGroup } from '@angular/forms';
+import { BehaviorSubject, Subscription, concatMap, of } from 'rxjs';
+import { CustomEditorComponent } from '../../components/custom-editor/custom-editor.component';
 import { InputTextComponent } from '../../components/input-text/input-text.component';
 import { UploadButtonComponent } from '../../components/upload-button/upload-button.component';
 import { S3Service } from '../../services/s3.service';
@@ -34,21 +17,13 @@ import { S3UploadResponse } from '../../shared/models/s3-upload-response';
 @Component({
   selector: 'app-website-config-landing-page',
   standalone: true,
-  imports: [
-    EditorModule,
-    ReactiveFormsModule,
-    // SafeHtmlPipe,
-    UploadButtonComponent,
-    InputTextComponent,
-  ],
-  providers: [
-    { provide: TINYMCE_SCRIPT_SRC, useValue: 'tinymce/tinymce.min.js' },
-  ],
+  imports: [UploadButtonComponent, InputTextComponent, CustomEditorComponent],
+  providers: [],
   templateUrl: './website-config-landing-page.component.html',
   styleUrl: './website-config-landing-page.component.scss',
 })
 export class WebsiteConfigLandingPageComponent
-  implements OnInit, AfterViewInit, OnDestroy
+  implements AfterViewInit, OnDestroy
 {
   @ViewChild('uploadButton') uploadButtonComponent: UploadButtonComponent;
 
@@ -59,11 +34,7 @@ export class WebsiteConfigLandingPageComponent
 
   private readonly s3Service: S3Service = inject(S3Service);
 
-  protected editorInit: EditorComponent['init'] = {};
-  protected editorPlugins =
-    'preview autolink autosave save code visualblocks visualchars fullscreen image link media codesample table charmap nonbreaking anchor lists advlist wordcount help charmap quickbars emoticons';
-  protected editorToolbar =
-    'undo redo | blocks fontsize | bold italic underline strikethrough | align numlist bullist | link image | table media | lineheight outdent indent| forecolor backcolor removeformat | charmap emoticons | code fullscreen preview | save print | anchor codesample';
+  protected editorImageUploadPrefix = 'cms/landing';
 
   get dataGroup(): FormGroup {
     return this.form.get('data') as FormGroup;
@@ -81,10 +52,6 @@ export class WebsiteConfigLandingPageComponent
     return this.uploadButtonComponent?.files || [];
   }
 
-  ngOnInit(): void {
-    this.initRichTextEditor();
-  }
-
   ngAfterViewInit(): void {
     this.watchFileChangesAndUploadFormData();
   }
@@ -95,36 +62,6 @@ export class WebsiteConfigLandingPageComponent
 
   getBannerFormGroup(index: number): FormGroup {
     return this.bannerFormArray.at(index) as FormGroup;
-  }
-
-  private initRichTextEditor() {
-    this.editorInit = {
-      base_url: '/tinymce',
-      suffix: '.min',
-      font_size_formats: '10px 12px 14px 16px 18px 20px 24px 28px 32px 48px',
-      line_height_formats: '10px 16px 18px 20px 24px 30px 33px 36px',
-      images_file_types: 'jpeg,jpg,jpe,jfi,jif,jfif,png,gif,bmp,webp,svg',
-      images_reuse_filename: true,
-      block_unsupported_drop: true,
-      images_upload_handler: (blobInfo) => {
-        const objectKey = `cms/landing/${Date.now()}-${blobInfo.filename()}`;
-        const file = new File([blobInfo.blob()], objectKey);
-        const promise = lastValueFrom(
-          this.s3Service.getPutPresigned(objectKey).pipe(
-            concatMap((putPresignedObject) => {
-              return this.s3Service
-                .putPresigned(putPresignedObject.presigned.URL, file)
-                .pipe(
-                  map(() => {
-                    return putPresignedObject.fullPath;
-                  })
-                );
-            })
-          )
-        );
-        return promise;
-      },
-    };
   }
 
   private watchFileChangesAndUploadFormData() {

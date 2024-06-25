@@ -260,7 +260,7 @@ export class DashboardAdminComponent implements OnInit, OnDestroy {
     {
       id: 1,
       value: '',
-      display: '',
+      display: 'ทั้งหมด',
     },
     {
       id: 2,

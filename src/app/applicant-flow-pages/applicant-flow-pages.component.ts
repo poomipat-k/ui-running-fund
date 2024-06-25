@@ -92,6 +92,9 @@ export class ApplicantFlowPagesComponent implements OnInit, OnDestroy {
   protected eventDetailsFiles: File[] = [];
   protected eventDetailsFilesSubject = new BehaviorSubject<File[]>([]);
 
+  protected etcFiles: File[] = [];
+  protected etcFilesSubject = new BehaviorSubject<File[]>([]);
+
   // Files upload end
 
   protected collaborationUploadButtonTouched = false;
@@ -99,6 +102,7 @@ export class ApplicantFlowPagesComponent implements OnInit, OnDestroy {
   protected routeUploadButtonTouched = false;
   protected eventMapUploadButtonTouched = false;
   protected eventDetailsUploadButtonTouched = false;
+  protected etcUploadButtonTouched = false;
 
   protected showSuccessPopup = false;
   protected showErrorPopup = false;
@@ -131,7 +135,7 @@ export class ApplicantFlowPagesComponent implements OnInit, OnDestroy {
     this.loadApplicantSelfScoreCriteria();
     // Change page
     // TODO: comment this line
-    // this.currentStep = 4;
+    // this.currentStep = 5;
     this.devModeOn = !environment.production;
 
     this.subToUploadFileSubjects();
@@ -169,6 +173,12 @@ export class ApplicantFlowPagesComponent implements OnInit, OnDestroy {
     this.subs.push(
       this.eventDetailsFilesSubject.subscribe((files) => {
         this.eventDetailsFiles = files;
+      })
+    );
+
+    this.subs.push(
+      this.etcFilesSubject.subscribe((files) => {
+        this.etcFiles = files;
       })
     );
   }
@@ -514,6 +524,7 @@ export class ApplicantFlowPagesComponent implements OnInit, OnDestroy {
             Validators.min(0),
           ]),
           supportOrganization: new FormControl(null, Validators.required),
+          noAlcoholSponsor: new FormControl(false, Validators.requiredTrue),
         }),
         request: new FormGroup({
           type: new FormGroup(
@@ -648,6 +659,11 @@ export class ApplicantFlowPagesComponent implements OnInit, OnDestroy {
     if (this.eventDetailsFiles) {
       for (let i = 0; i < this.eventDetailsFiles.length; i++) {
         formData.append('eventDetailsFiles', this.eventDetailsFiles[i]);
+      }
+    }
+    if (this.etcFiles) {
+      for (let i = 0; i < this.etcFiles.length; i++) {
+        formData.append('etcFiles', this.etcFiles[i]);
       }
     }
 

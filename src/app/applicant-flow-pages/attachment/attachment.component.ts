@@ -20,16 +20,19 @@ export class AttachmentComponent {
   @Input() routeSubject: BehaviorSubject<File[]>;
   @Input() eventMapSubject: BehaviorSubject<File[]>;
   @Input() eventDetailsSubject: BehaviorSubject<File[]>;
+  @Input() etcSubject: BehaviorSubject<File[]>;
 
   @Input() marketingCount = 0;
   @Input() routeCount = 0;
   @Input() eventMapCount = 0;
   @Input() eventDetailsCount = 0;
+  @Input() etcCount = 0;
 
   @Input() marketingUploadButtonTouched = false;
   @Input() routeUploadButtonTouched = false;
   @Input() eventMapUploadButtonTouched = false;
   @Input() eventDetailsUploadButtonTouched = false;
+  @Input() etcUploadButtonTouched = false;
 
   protected exampleMarketing = environment.exampleFiles.marketing;
   protected exampleRoute = environment.exampleFiles.route;
