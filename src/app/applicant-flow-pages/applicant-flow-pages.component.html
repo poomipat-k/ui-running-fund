@@ -157,10 +157,7 @@
   </div>
   } @else if (showErrorPopup) {
   <div [ngClass]="{ popup: true, 'popup--show': showSuccessPopup }">
-    <app-com-error-popup
-      displayText="ส่งข้อเสนอโครงการไม่สำเร็จ โปรดลองอีกครั้ง"
-    >
-    </app-com-error-popup>
+    <app-com-error-popup [displayText]="errorPopupText"> </app-com-error-popup>
   </div>
   }
 </div>
