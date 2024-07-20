@@ -25,6 +25,7 @@ export class UploadButtonComponent implements OnInit, OnDestroy {
   @Input() accept = 'image/jpg, image/jpeg, image/png, .pdf, .doc, .docx ';
   @Input() showFilesList = true;
   @Input() multiple = true;
+  @Input() fileLimit = 26214400; // bytes
 
   private readonly subs: Subscription[] = [];
 
