@@ -106,6 +106,7 @@ export class ApplicantFlowPagesComponent implements OnInit, OnDestroy {
 
   protected showSuccessPopup = false;
   protected showErrorPopup = false;
+  protected errorPopupText = 'ส่งข้อเสนอโครงการไม่สำเร็จ โปรดลองอีกครั้ง';
 
   protected apiLoading = false;
 
@@ -685,11 +686,13 @@ export class ApplicantFlowPagesComponent implements OnInit, OnDestroy {
           }
         },
         error: (err) => {
-          console.error(err);
+          console.error('submit error:', err);
           this.apiLoading = false;
           this.showErrorPopup = true;
+
           setTimeout(() => {
             this.showErrorPopup = false;
+            this.errorPopupText = 'ส่งข้อเสนอโครงการไม่สำเร็จ โปรดลองอีกครั้ง';
           }, 2000);
         },
         complete: () => {

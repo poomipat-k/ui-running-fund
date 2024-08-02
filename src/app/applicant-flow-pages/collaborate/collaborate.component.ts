@@ -36,13 +36,6 @@ export class CollaborateComponent {
     return !control?.valid && (control?.touched ?? false);
   }
 
-  get errorWrongFilesUpload(): boolean {
-    return (
-      this.form.get('collaborated')?.value === true &&
-      this.selectedFilesCount === 0
-    );
-  }
-
   protected radioOptions: RadioOption[] = [
     { id: 1, value: false, display: 'ไม่มีการประสานงาน' },
     { id: 2, value: true, display: 'มีการประสานงานและมีหนังสือนำส่ง' },
@@ -64,9 +57,6 @@ export class CollaborateComponent {
       return false;
     }
 
-    if (this.errorWrongFilesUpload) {
-      return false;
-    }
     return true;
   }
 

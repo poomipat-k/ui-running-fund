@@ -485,9 +485,10 @@ export class DashboardAdminComponent implements OnInit, OnDestroy {
       this.projectService
         .downloadReport(this.summaryDateGroup.value)
         .subscribe((result) => {
-          // %EF%BB%BF is for forcing excel to use UTF-8 encoding
+          const universalBOM = '\uFEFF';
           let exportData =
-            'data:text/csv;charset=utf-8,%EF%BB%BF' + encodeURI(result);
+            'data:text/csv;charset=utf-8,' +
+            encodeURIComponent(universalBOM + result);
           window.open(exportData);
         })
     );

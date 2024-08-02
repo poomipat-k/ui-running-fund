@@ -29,13 +29,6 @@
         [disabled]="uploadButtonDisabled"
       ></app-com-upload-button>
 
-      @if (errorWrongFilesUpload && uploadButtonTouched) {
-      <div class="error mgl-28">
-        <img src="/assets/error_icon.svg" alt="error icon" />
-        <p class="error__text">กรุณาอัพโหลดหนังสือนำส่ง</p>
-      </div>
-      }
-
       <div class="main__exampleBox">
         <a
           class="main__uploadExampleLink"
@@ -44,7 +37,7 @@
           >กดเพื่อดูตัวอย่างไฟล์
         </a>
         <p class="main__uploadLabel">
-          แนบหนังสือนำส่ง (PDF, JPG ขนาดไม่เกิน 25 MB)
+          แนบหนังสือนำส่ง (PDF, JPG ขนาดไม่เกิน 50 MB)
         </p>
       </div>
     </div>
