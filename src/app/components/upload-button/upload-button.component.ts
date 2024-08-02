@@ -25,6 +25,7 @@ export class UploadButtonComponent implements OnInit, OnDestroy {
   @Input() accept = 'image/jpg, image/jpeg, image/png, .pdf, .doc, .docx ';
   @Input() showFilesList = true;
   @Input() multiple = true;
+  @Input() fileSizeLimit = 52428800; // 50 mb
 
   private readonly subs: Subscription[] = [];
 
@@ -52,6 +53,12 @@ export class UploadButtonComponent implements OnInit, OnDestroy {
       const newFiles: File[] = [];
       for (let i = 0; i < fileList?.length; i++) {
         const file = fileList.item(i);
+        // Check if any of the file exceed 50mb
+        if (file?.size && file.size >= this.fileSizeLimit) {
+          alert('ไฟล์ที่อัพโหลดมีขนาดใหญ่เกิน 50mb');
+          this.clearFiles();
+          return;
+        }
         if (file) {
           newFiles.push(file);
         }
