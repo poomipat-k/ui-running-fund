@@ -433,9 +433,7 @@
       [displayText]="successPopupText"
     ></app-com-success-popup>
   </div>
-  } @else if (showErrorPopup) {
-  <div [ngClass]="{ popup: true, 'popup--show': showSuccessPopup }">
-    <app-com-error-popup [displayText]="failPopupText"> </app-com-error-popup>
-  </div>
   }
+  <app-com-error-popup [show]="showErrorPopup" [displayText]="failPopupText">
+  </app-com-error-popup>
 </div>
