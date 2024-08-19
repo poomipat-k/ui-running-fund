@@ -480,19 +480,6 @@
   text-align: center;
 }
 
-.popup {
-  position: absolute;
-  bottom: -16rem;
-  left: 50%;
-  transform: translateX(-50%);
-
-  &--show {
-    visibility: visible; /* Show the snackbar */
-    -webkit-animation: fadein 0.5s, fadeout 0.5s 1.5s;
-    animation: fadein 0.5s, fadeout 0.5s 1.5s;
-  }
-}
-
 .pdr {
   &-48 {
     padding-right: 4.8rem;

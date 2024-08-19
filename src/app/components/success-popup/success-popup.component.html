@@ -1,4 +1,5 @@
-<div class="container">
+@if (show) {
+<div class="container" @popup>
   <div class="check-container">
     <div class="check">
       <app-com-svg-check
@@ -11,3 +12,4 @@
     {{ displayText }}
   </div>
 </div>
+}
