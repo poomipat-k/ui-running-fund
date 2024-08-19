@@ -121,20 +121,6 @@
   }
 }
 
-.popup {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  z-index: $modal-z;
-
-  &--show {
-    visibility: visible; /* Show the snackbar */
-    -webkit-animation: fadein 0.5s, fadeout 0.5s 1.5s;
-    animation: fadein 0.5s, fadeout 0.5s 1.5s;
-  }
-}
-
 .mgt {
   &-25 {
     margin-top: 25px;

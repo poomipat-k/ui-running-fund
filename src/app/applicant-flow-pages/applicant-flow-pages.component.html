@@ -149,17 +149,13 @@
     </div>
   </div>
 
-  @if (showSuccessPopup) {
-  <div [ngClass]="{ popup: true, 'popup--show': showSuccessPopup }">
-    <app-com-success-popup
-      displayText="ส่งข้อเสนอโครงการเรียบร้อย"
-    ></app-com-success-popup>
-  </div>
-  } @else if (showErrorPopup) {
-  <div [ngClass]="{ popup: true, 'popup--show': showSuccessPopup }">
-    <app-com-error-popup [displayText]="errorPopupText"> </app-com-error-popup>
-  </div>
-  }
+  <app-com-success-popup
+    [show]="showSuccessPopup"
+    displayText="ส่งข้อเสนอโครงการเรียบร้อย"
+  ></app-com-success-popup>
+
+  <app-com-error-popup [show]="showErrorPopup" [displayText]="errorPopupText">
+  </app-com-error-popup>
 </div>
 
 @if (apiLoading) {
