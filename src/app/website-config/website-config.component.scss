@@ -121,6 +121,11 @@
   }
 }
 
+.popup {
+  position: fixed;
+  z-index: $modal-z;
+}
+
 .mgt {
   &-25 {
     margin-top: 25px;
