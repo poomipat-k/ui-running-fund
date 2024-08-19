@@ -323,8 +323,9 @@ export class ProjectService {
       );
     }
     // Return an observable with a user-facing error message.
-    return throwError(
-      () => new Error('[Project Service]: please try again later.')
-    );
+    const message = error?.error
+      ? `${error?.error?.message}, name: ${error?.error?.name || '-'}`
+      : '[Project Service]: Unknown error.';
+    return throwError(() => new Error(message));
   }
 }

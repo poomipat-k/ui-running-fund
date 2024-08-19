@@ -525,7 +525,8 @@ export class ApplicantProjectDetailsComponent implements OnInit, OnDestroy {
           },
           error: (err) => {
             console.error(err);
-            this.failPopupText = 'แก้ไขข้อมูลไม่สำเร็จ';
+            const errMessage = `แก้ไขข้อมูลไม่สำเร็จ\n\n${err}`;
+            this.failPopupText = errMessage;
             this.displayErrorPopup();
             setTimeout(() => {
               this.closeErrorPopup();
