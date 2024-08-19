@@ -379,6 +379,24 @@
             placeholder=""
             height="27.5rem"
           ></app-com-textarea>
+          <div class="mgt-4">
+            @if (!form.get('adminComment')?.valid &&
+            form.get('adminComment')?.touched && formTouched) {
+            <div class="error">
+              <img src="/assets/error_icon.svg" alt="error icon" />
+              <p class="error__text">หมายเหตุมีขนาดยาวเกิน 512 ตัวอักษร</p>
+            </div>
+            }
+            <p
+              [ngClass]="{
+                remark__wordCount: true,
+                'remark__wordCount--error':
+                  adminCommentCharCount > ADMIN_COMMENT_CHAR_LIMIT
+              }"
+            >
+              {{ adminCommentCharCount + "/" + ADMIN_COMMENT_CHAR_LIMIT }}
+            </p>
+          </div>
         </div>
       </div>
       } @else {

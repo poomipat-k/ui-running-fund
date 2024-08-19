@@ -88,6 +88,8 @@ export class ApplicantProjectDetailsComponent implements OnInit, OnDestroy {
   protected downloadButtonAction = '';
   protected reportTemplateUrl = environment.exampleFiles.reportTemplate;
 
+  protected ADMIN_COMMENT_CHAR_LIMIT = 512;
+
   protected statusCellType = ColumnTypeEnum.Badge;
   protected s3ObjectItems: {
     collaboration: S3ObjectMetadata[];
@@ -182,6 +184,10 @@ export class ApplicantProjectDetailsComponent implements OnInit, OnDestroy {
     return this.data?.[0]?.adminScore?.toString() || '-';
   }
 
+  get adminCommentCharCount(): number {
+    return this.form.get('adminComment')?.value?.length || 0;
+  }
+
   get fundApprovedAmount(): string {
     const amount = this.data?.[0]?.fundApprovedAmount || 0;
     if (amount > 0) {
@@ -240,7 +246,9 @@ export class ApplicantProjectDetailsComponent implements OnInit, OnDestroy {
         Validators.max(100),
       ]),
       fundApprovedAmount: new FormControl(null, [Validators.min(0)]),
-      adminComment: new FormControl(null),
+      adminComment: new FormControl(null, [
+        Validators.maxLength(this.ADMIN_COMMENT_CHAR_LIMIT),
+      ]),
     });
     this.form.disable();
   }

@@ -285,6 +285,21 @@
     font-size: 1.8rem;
     line-height: 3rem;
     color: #000;
+    white-space: pre-wrap;
+    word-break: break-word;
+  }
+
+  &__wordCount {
+    text-align: right;
+    font-family: $custom-font;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 20px;
+    color: #000;
+
+    &--error {
+      color: #ec4a0a;
+    }
   }
 }
 
