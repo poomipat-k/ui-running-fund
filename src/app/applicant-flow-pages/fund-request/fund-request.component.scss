@@ -102,6 +102,11 @@
   &__text {
     margin-left: 4px;
   }
+
+  &__absolute {
+    position: absolute;
+    transform: translateX(20px);
+  }
 }
 
 .fund {

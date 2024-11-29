@@ -136,7 +136,7 @@ export class ApplicantFlowPagesComponent implements OnInit, OnDestroy {
     this.loadApplicantSelfScoreCriteria();
     // Change page
     // TODO: comment this line
-    // this.currentStep = 4;
+    // this.currentStep = 5;
     this.devModeOn = !environment.production;
 
     this.subToUploadFileSubjects();
@@ -522,7 +522,7 @@ export class ApplicantFlowPagesComponent implements OnInit, OnDestroy {
         budget: new FormGroup({
           total: new FormControl(null, [
             Validators.required,
-            Validators.min(0),
+            Validators.min(1),
           ]),
           supportOrganization: new FormControl(null, Validators.required),
           noAlcoholSponsor: new FormControl(false, Validators.requiredTrue),
