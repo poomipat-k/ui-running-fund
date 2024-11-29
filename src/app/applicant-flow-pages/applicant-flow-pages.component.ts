@@ -74,7 +74,7 @@ export class ApplicantFlowPagesComponent implements OnInit, OnDestroy {
   private readonly subs: Subscription[] = [];
   private router: Router = inject(Router);
 
-  private readonly minHistoryYear = 2010;
+  private readonly minHistoryYear = 1957;
 
   // Files upload variables
   protected collaborationFiles: File[] = [];
@@ -136,7 +136,7 @@ export class ApplicantFlowPagesComponent implements OnInit, OnDestroy {
     this.loadApplicantSelfScoreCriteria();
     // Change page
     // TODO: comment this line
-    // this.currentStep = 5;
+    // this.currentStep = 4;
     this.devModeOn = !environment.production;
 
     this.subToUploadFileSubjects();

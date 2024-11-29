@@ -54,7 +54,7 @@ export class ExperienceComponent implements OnInit, OnDestroy {
   private readonly scroller: ViewportScroller = inject(ViewportScroller);
   private readonly dateService: DateService = inject(DateService);
 
-  protected readonly minHistoryYear = 2010;
+  protected readonly minHistoryYear = 1957;
 
   protected formTouched = false;
   private readonly thirtyDaysMonths = [4, 6, 9, 11];
