@@ -26,12 +26,20 @@
               width="17.3rem"
             ></app-com-input-number>
             @if (!form.get('fund.budget.total')?.valid &&
-            form.get('fund.budget.total')?.touched && formTouched) {
+            form.get('fund.budget.total')?.touched && formTouched) { @if
+            (form.get('fund.budget.total')?.errors?.['min']) {
+            <div class="error mgt-10">
+              <img src="/assets/error_icon.svg" alt="error icon" />
+              <p class="error__text error__absolute">
+                กรอกข้อมูลไม่ถูกต้อง กรุณากรอกใหม่ หรือติดต่อสมาพันธ์
+              </p>
+            </div>
+            } @else {
             <div class="error mgt-10">
               <img src="/assets/error_icon.svg" alt="error icon" />
               <p class="error__text">กรุณาระบุงบประมาณ</p>
             </div>
-            }
+            } }
           </div>
           <p class="total__unit">บาท</p>
         </div>

@@ -74,7 +74,7 @@ export class ApplicantFlowPagesComponent implements OnInit, OnDestroy {
   private readonly subs: Subscription[] = [];
   private router: Router = inject(Router);
 
-  private readonly minHistoryYear = 2010;
+  private readonly minHistoryYear = 1957;
 
   // Files upload variables
   protected collaborationFiles: File[] = [];
@@ -522,7 +522,7 @@ export class ApplicantFlowPagesComponent implements OnInit, OnDestroy {
         budget: new FormGroup({
           total: new FormControl(null, [
             Validators.required,
-            Validators.min(0),
+            Validators.min(1),
           ]),
           supportOrganization: new FormControl(null, Validators.required),
           noAlcoholSponsor: new FormControl(false, Validators.requiredTrue),
