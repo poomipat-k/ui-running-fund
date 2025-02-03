@@ -131,7 +131,8 @@ export class DashboardAdminComponent implements OnInit, OnDestroy {
       display: 'สถานะการกลั่นกรอง',
       name: 'priority',
       dbSortBy: [
-        "POSITION(project_history.status::text IN 'Reviewing,Reviewed,Revise,NotApproved,Approved')",
+        // "POSITION(project_history.status::text IN 'Reviewing,Reviewed,Revise,NotApproved,Approved')",
+        "POSITION(project_history.status::text IN 'Reviewing,Reviewed,Revise,Approved')",
         'project_history.created_at',
       ],
       isAsc: true,
@@ -179,7 +180,8 @@ export class DashboardAdminComponent implements OnInit, OnDestroy {
       display: 'สถานะการกลั่นกรอง',
       name: 'priority',
       dbSortBy: [
-        "POSITION(project_history.status::text IN 'Start,Completed')",
+        // "POSITION(project_history.status::text IN 'Start,Completed')",
+        "POSITION(project_history.status::text IN 'Start,Completed,NotApproved')",
         'project_history.created_at',
       ],
       isAsc: true,
