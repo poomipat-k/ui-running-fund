@@ -382,6 +382,7 @@ export class ApplicantProjectDetailsComponent implements OnInit, OnDestroy {
   }
 
   onDownloadFormPdfClicked() {
+    const windowRef = window.open();
     if (this.isApplicant) {
       this.subs.push(
         this.s3Service
@@ -389,8 +390,8 @@ export class ApplicantProjectDetailsComponent implements OnInit, OnDestroy {
             `${this.projectCode}/${this.projectCode}_แบบฟอร์ม.pdf`
           )
           .subscribe((result) => {
-            if (result?.URL) {
-              window.open(result.URL);
+            if (result?.URL && windowRef) {
+              windowRef.location = result.URL;
             }
           })
       );
@@ -402,8 +403,8 @@ export class ApplicantProjectDetailsComponent implements OnInit, OnDestroy {
             this.projectCreatedBy
           )
           .subscribe((result) => {
-            if (result?.URL) {
-              window.open(result.URL);
+            if (result?.URL && windowRef) {
+              windowRef.location = result.URL;
             }
           })
       );
@@ -411,6 +412,7 @@ export class ApplicantProjectDetailsComponent implements OnInit, OnDestroy {
   }
 
   onDownloadItemClick(objectKey: string) {
+    const windowRef = window.open();
     const split = objectKey.split(`/${this.projectCode}/`);
     if (!split || split.length === 0) {
       return;
@@ -421,8 +423,8 @@ export class ApplicantProjectDetailsComponent implements OnInit, OnDestroy {
         this.s3Service
           .getAttachmentsPresigned(`${this.projectCode}/${prefix}`)
           .subscribe((result) => {
-            if (result?.URL) {
-              window.open(result.URL);
+            if (result?.URL && windowRef) {
+              windowRef.location = result.URL;
             }
           })
       );
@@ -434,8 +436,8 @@ export class ApplicantProjectDetailsComponent implements OnInit, OnDestroy {
             this.projectCreatedBy
           )
           .subscribe((result) => {
-            if (result?.URL) {
-              window.open(result.URL);
+            if (result?.URL && windowRef) {
+              windowRef.location = result.URL;
             }
           })
       );
