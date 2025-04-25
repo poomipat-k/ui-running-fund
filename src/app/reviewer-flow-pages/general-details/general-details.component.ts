@@ -139,6 +139,7 @@ export class GeneralDetailsComponent implements OnDestroy {
   }
 
   onDownloadLinkClicked() {
+    const windowRef = window.open();
     this.subs.push(
       this.s3Service
         .getAttachmentsPresigned(
@@ -146,9 +147,9 @@ export class GeneralDetailsComponent implements OnDestroy {
           this.apiData.userId
         )
         .subscribe((result) => {
-          if (result?.URL) {
+          if (result?.URL && windowRef) {
             // Open the return s3 presigned url
-            window.open(result.URL);
+            windowRef.location = result.URL;
           }
         })
     );

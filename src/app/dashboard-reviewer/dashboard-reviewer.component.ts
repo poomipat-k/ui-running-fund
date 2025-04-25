@@ -162,6 +162,7 @@ export class DashboardReviewerComponent {
                   display: 'ok', // anything not '' will work
                   value: 'ok', // anything not '' will work
                   onClick: (e: MouseEvent) => {
+                    const windowRef = window.open();
                     e.stopPropagation();
                     this.subs.push(
                       this.s3Service
@@ -170,9 +171,9 @@ export class DashboardReviewerComponent {
                           row.userId
                         )
                         .subscribe((result) => {
-                          if (result?.URL) {
+                          if (result?.URL && windowRef) {
                             // Open the return s3 presigned url
-                            window.open(result.URL);
+                            windowRef.location = result.URL;
                           }
                         })
                     );
