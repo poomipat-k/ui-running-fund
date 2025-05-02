@@ -2,6 +2,7 @@ export const environment = {
   production: true,
   apiUrl: 'https://api.thaijogging.activethai.org/api/v1',
   reviewCriteriaVersion: 1,
+  disableCreateNewProject: true,
   homeFixedImage:
     'https://running-fund-static-store-prod.s3.ap-southeast-1.amazonaws.com/landing_page_run.png',
   loginBanner:

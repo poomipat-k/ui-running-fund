@@ -2,6 +2,7 @@ export const environment = {
   production: true,
   apiUrl: 'https://api.poomipat.net/api/v1',
   reviewCriteriaVersion: 1,
+  disableCreateNewProject: true,
   homeFixedImage:
     'https://running-fund-static-store.s3.ap-southeast-1.amazonaws.com/static/landing_page_run.png',
   loginBanner:

@@ -37,6 +37,20 @@
   &:active {
     background-color: #ffa167;
   }
+
+  &:disabled {
+    background-color: #a5a6a7;
+    box-shadow: 0px 2px 8px 0px rgba(126, 36, 16, 0.25);
+
+    color: #4d535c;
+    cursor: not-allowed;
+
+    &:hover {
+      background-color: #a5a6a7;
+      box-shadow: 0px 2px 8px 0px rgba(126, 36, 16, 0.25);
+      color: #4d535c;
+    }
+  }
 }
 
 .dashboard {

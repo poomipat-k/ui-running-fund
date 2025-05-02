@@ -1,5 +1,9 @@
 <div class="container">
-  <button class="button" (click)="onCreateProjectClicked()">
+  <button
+    class="button"
+    (click)="onCreateProjectClicked()"
+    [disabled]="disableCreateNewProject"
+  >
     <img src="/assets/add_icon.svg" alt="add icon" />
     <div>สร้างใบขอทุนสนับสนุน</div>
   </button>

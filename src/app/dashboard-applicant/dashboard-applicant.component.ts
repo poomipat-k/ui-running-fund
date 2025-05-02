@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { environment } from '../../environments/environment';
 import { FilterComponent } from '../components/filter/filter.component';
 import { TableComponent } from '../components/table/table.component';
 import { DateService } from '../services/date.service';
@@ -29,6 +30,7 @@ export class DashboardApplicantComponent implements OnInit, OnDestroy {
   private readonly subs: Subscription[] = [];
   private readonly dateService: DateService = inject(DateService);
 
+  protected disableCreateNewProject = false;
   protected data: TableCell[][] = [];
 
   protected columns: TableColumn[] = [
@@ -110,6 +112,7 @@ export class DashboardApplicantComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.themeService.changeBackgroundColor(BackgroundColor.white);
+    this.disableCreateNewProject = environment.disableCreateNewProject;
     this.loadApplicantDashboard();
   }
 

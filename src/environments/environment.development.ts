@@ -2,6 +2,7 @@ export const environment = {
   production: false,
   apiUrl: 'http://localhost:8080/api/v1',
   reviewCriteriaVersion: 1,
+  disableCreateNewProject: false,
   homeFixedImage:
     'https://running-fund-static-store.s3.ap-southeast-1.amazonaws.com/static/landing_page_run.png',
   loginBanner:
