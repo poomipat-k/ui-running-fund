@@ -2,12 +2,12 @@ import { CommonModule } from '@angular/common';
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { environment } from '../../environments/environment';
 import { FilterComponent } from '../components/filter/filter.component';
 import { TableComponent } from '../components/table/table.component';
 import { DateService } from '../services/date.service';
 import { ProjectService } from '../services/project.service';
 import { ThemeService } from '../services/theme.service';
+import { WebsiteConfigService } from '../services/website-config.service';
 import { STATUS_ORDER } from '../shared/constants/status-order';
 import { BackgroundColor } from '../shared/enums/background-color';
 import { ColumnTypeEnum } from '../shared/enums/column-type';
@@ -29,6 +29,8 @@ export class DashboardApplicantComponent implements OnInit, OnDestroy {
   private readonly projectService: ProjectService = inject(ProjectService);
   private readonly subs: Subscription[] = [];
   private readonly dateService: DateService = inject(DateService);
+  private readonly websiteConfigService: WebsiteConfigService =
+    inject(WebsiteConfigService);
 
   protected disableCreateNewProject = false;
   protected data: TableCell[][] = [];
@@ -112,12 +114,22 @@ export class DashboardApplicantComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.themeService.changeBackgroundColor(BackgroundColor.white);
-    this.disableCreateNewProject = environment.disableCreateNewProject;
+    this.loadOperationConfig();
     this.loadApplicantDashboard();
   }
 
   ngOnDestroy(): void {
     this.subs.forEach((s) => s.unsubscribe());
+  }
+
+  private loadOperationConfig() {
+    this.subs.push(
+      this.websiteConfigService
+        .getOperationConfig()
+        .subscribe((operationConfig) => {
+          this.disableCreateNewProject = !operationConfig.allowNewProject;
+        })
+    );
   }
 
   private loadApplicantDashboard() {
