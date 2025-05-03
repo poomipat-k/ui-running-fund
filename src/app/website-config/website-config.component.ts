@@ -157,6 +157,7 @@ export class WebsiteConfigComponent implements OnInit, AfterViewInit {
           // }),
         ]),
         content: new FormControl(null),
+        allowNewProject: new FormControl(null, Validators.required),
       }),
       dashboard: new FormGroup(
         {
@@ -211,6 +212,7 @@ export class WebsiteConfigComponent implements OnInit, AfterViewInit {
           this.form.patchValue({
             landing: {
               content: result.landing.content,
+              allowNewProject: result.landing.allowNewProject,
             },
             dashboard: {
               fromYear: result.dashboard.fromYear,
@@ -375,7 +377,6 @@ export class WebsiteConfigComponent implements OnInit, AfterViewInit {
             this.loadCmsData();
             setTimeout(() => {
               this.showSuccessPopup = false;
-              this.loadCmsData();
             }, 2000);
           }
         })

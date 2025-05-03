@@ -10,14 +10,21 @@ import { FormArray, FormControl, FormGroup } from '@angular/forms';
 import { BehaviorSubject, Subscription, concatMap, of } from 'rxjs';
 import { CustomEditorComponent } from '../../components/custom-editor/custom-editor.component';
 import { InputTextComponent } from '../../components/input-text/input-text.component';
+import { SelectDropdownComponent } from '../../components/select-dropdown/select-dropdown.component';
 import { UploadButtonComponent } from '../../components/upload-button/upload-button.component';
 import { S3Service } from '../../services/s3.service';
+import { RadioOption } from '../../shared/models/radio-option';
 import { S3UploadResponse } from '../../shared/models/s3-upload-response';
 
 @Component({
   selector: 'app-website-config-landing-page',
   standalone: true,
-  imports: [UploadButtonComponent, InputTextComponent, CustomEditorComponent],
+  imports: [
+    UploadButtonComponent,
+    InputTextComponent,
+    CustomEditorComponent,
+    SelectDropdownComponent,
+  ],
   providers: [],
   templateUrl: './website-config-landing-page.component.html',
   styleUrl: './website-config-landing-page.component.scss',
@@ -35,6 +42,11 @@ export class WebsiteConfigLandingPageComponent
   private readonly s3Service: S3Service = inject(S3Service);
 
   protected editorImageUploadPrefix = 'cms/landing';
+
+  protected allowNewProjects: RadioOption[] = [
+    { id: 1, value: true, display: 'เปิดรับ' },
+    { id: 2, value: false, display: 'ปิดรับ' },
+  ];
 
   get dataGroup(): FormGroup {
     return this.form.get('data') as FormGroup;

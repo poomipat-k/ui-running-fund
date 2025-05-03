@@ -1,6 +1,24 @@
 <div class="landingContainer">
   <h1 class="header">Landing Page Setting</h1>
-  <h2 class="subHeader mgt-10">Banner Setting</h2>
+  <!-- Allow new project config -->
+  <div class="mgt-21">
+    <h2 class="subHeader">ตั้งค่าการเปิดรับข้อเสนอโครงการ</h2>
+    <div class="newProjectConfig">
+      <app-com-select-dropdown
+        [form]="form"
+        [items]="allowNewProjects"
+        placeholder=""
+        width="10rem"
+        controlName="allowNewProject"
+        fontStyle="headless"
+      ></app-com-select-dropdown>
+      <p class="newProjectConfig__text">
+        *เว็บไซต์จะไม่เปิดรับข้อเสนอโครงการจนกว่าจะเปลี่ยนสถานะเป็น “เปิดรับ”
+      </p>
+    </div>
+  </div>
+
+  <h2 class="subHeader mgt-21">Banner Setting</h2>
 
   <div class="uploadContainer mgt-11">
     <div>

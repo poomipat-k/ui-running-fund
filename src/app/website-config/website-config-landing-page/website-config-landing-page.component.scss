@@ -19,6 +19,20 @@
   color: #000;
 }
 
+.newProjectConfig {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  &__text {
+    font-family: $custom-font;
+    font-weight: 400;
+    font-size: 1.6rem;
+    line-height: 2.4rem;
+    color: #ec4a0a;
+  }
+}
+
 .uploadContainer {
   display: flex;
   gap: 1.2rem;
@@ -90,11 +104,11 @@
   &-8 {
     margin-top: 8px;
   }
-  &-10 {
-    margin-top: 10px;
-  }
   &-11 {
     margin-top: 11px;
+  }
+  &-21 {
+    margin-top: 21px;
   }
   &-26 {
     margin-top: 26px;

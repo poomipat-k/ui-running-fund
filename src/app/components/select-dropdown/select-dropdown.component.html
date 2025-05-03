@@ -8,7 +8,9 @@
       [ngClass]="{
         input: true,
         'input--searching': showDropdown,
-        disabled: disabled
+        disabled: disabled,
+        withHead: fontStyle === 'withHead',
+        headless: fontStyle === 'headless'
       }"
       [placeholder]="placeholder"
       [value]="inputValue"
@@ -33,14 +35,18 @@
   <div
     [ngClass]="{
       'radio-container': true,
-      'radio-container--show': showDropdown
+      'radio-container--show': showDropdown,
     }"
     [style]="{ width: width }"
     (change)="onRadioValueChange()"
   >
     @for (item of filteredOptions; track item.id) {
     <label
-      class="radio__label"
+      [ngClass]="{
+        radio__label: true,
+        withHead: fontStyle === 'withHead',
+        headless: fontStyle === 'headless'
+      }"
       [style]="{ 'font-size': dropdownFontSize }"
       (click)="onDropdownClicked()"
     >
