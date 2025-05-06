@@ -10,6 +10,7 @@ import { FAQ } from '../shared/models/faq';
 import { Footer } from '../shared/models/footer';
 import { HowToCreate } from '../shared/models/how-to-create';
 import { LandingPage } from '../shared/models/landing-page';
+import { OperationConfig } from '../shared/models/operation-config';
 
 @Injectable({
   providedIn: 'root',
@@ -58,6 +59,12 @@ export class WebsiteConfigService {
         `${this.baseApiUrl}/admin/cms/website/config`,
         formData
       )
+      .pipe(catchError(this.handleError));
+  }
+
+  getOperationConfig() {
+    return this.http
+      .get<OperationConfig>(`${this.baseApiUrl}/operation/config`)
       .pipe(catchError(this.handleError));
   }
 

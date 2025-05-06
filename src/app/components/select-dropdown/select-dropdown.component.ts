@@ -31,6 +31,7 @@ export class SelectDropdownComponent implements OnInit, OnDestroy {
   @Input() width = '28.6rem';
   @Input() emptyMessage = 'ไม่พบข้อมูล';
   @Input() disabled = false;
+  @Input() fontStyle: 'withHead' | 'headless' = 'withHead';
   @Input() onChange: () => void;
 
   private readonly subs: Subscription[] = [];

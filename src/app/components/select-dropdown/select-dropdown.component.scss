@@ -125,3 +125,11 @@
 .disabled {
   cursor: not-allowed;
 }
+
+.withHead {
+  font-family: $custom-font-looped;
+}
+
+.headless {
+  font-family: $custom-font;
+}
